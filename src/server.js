@@ -265,14 +265,19 @@ app.get('/terms', (req, res) => {
   res.send(renderLegalPageHtml('terms'));
 });
 
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ ok: true, service: 'AbandonAlpha (#9)', port: PORT });
+});
+
 // Custom 404 Handler
 app.use((req, res) => {
   res.status(404).send(renderNotFoundHtml());
 });
 
+const HOST = process.env.HOST || '0.0.0.0';
 if (require.main === module) {
-  app.listen(PORT, '127.0.0.1', () => {
-    console.log(`[AbandonAlpha] Autonomous Checkout & Dunning Server live at http://127.0.0.1:${PORT}`);
+  app.listen(PORT, HOST, () => {
+    console.log(`[AbandonAlpha] Autonomous Checkout & Dunning Server live at http://${HOST}:${PORT}`);
   });
 }
 
