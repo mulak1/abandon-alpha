@@ -24,7 +24,7 @@ const {
 } = require('./views');
 
 const PORT = Number(process.env.PORT || 4109);
-const BASE_URL = process.env.BASE_URL || `http://127.0.0.1:${PORT}`;
+const BASE_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://127.0.0.1:${PORT}`).replace(/\/$/, '');
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
