@@ -1,5 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#070A10" stroke="#10B981" stroke-width="3"/>
-  <path d="M16 44L28 20L36 34L48 18" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="48" cy="18" r="5" fill="#6366F1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="AbandonAlpha Crest">
+  <defs>
+    <linearGradient id="aaVaultBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A2540"/>
+      <stop offset="55%" stop-color="#1E1B4B"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="aaEmeraldVec" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer Double-Bezel Squircle Vault -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#aaVaultBg)" stroke="#635BFF" stroke-width="2"/>
+  <rect x="6" y="6" width="52" height="52" rx="12" fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1"/>
+  <!-- Architectural Alpha (α) Loop + Upward Recovery Vector -->
+  <path d="M36 42 C29 46 20 43 18 35 C16 27 23 20 31 22 C37 23.5 40 30 43 37 L47 44" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M22 39 C28 39 35 32 45 18" fill="none" stroke="url(#aaEmeraldVec)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 17 H46 V28" fill="none" stroke="#34D399" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="27" cy="31" r="3" fill="#A5B4FC"/>
 </svg>

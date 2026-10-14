@@ -1,0 +1,17 @@
+{
+  "name": "AbandonAlpha — Autonomous Checkout & Stripe Dunning Engine",
+  "short_name": "AbandonAlpha",
+  "description": "Autonomous Checkout, Cart & Session Abandonment Recovery, Behavioral Exit-Intent Bandit & Stripe Failed-Payment Dunning Engine.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0A2540",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

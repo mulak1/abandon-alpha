@@ -39,7 +39,8 @@ async function runAuditRequest(presetType) {
     monthlySessions: Number(document.getElementById('input-sessions').value),
     aovUsd: Number(document.getElementById('input-aov').value),
     abandonRatePct: Number(document.getElementById('input-abandon').value),
-    failedCardRatePct: Number(document.getElementById('input-fail').value)
+    failedCardRatePct: Number(document.getElementById('input-fail').value),
+    website_url: document.getElementById('input-honeypot')?.value || ''
   };
 
   const res = await fetch('/api/audit-leakage', {
@@ -58,6 +59,11 @@ async function runAuditRequest(presetType) {
   document.getElementById('out-exit-recovered').textContent = `+${formatUsd(res.recoverableExitUsd)}/mo (${res.recoveredOrdersCount} orders)`;
   document.getElementById('out-dunning-recovered').textContent = `+${formatUsd(res.recoverableDunningUsd)}/mo`;
   document.getElementById('out-sdk-snippet').textContent = res.sdkSnippet;
+
+  const statusEl = document.getElementById('audit-form-status');
+  if (statusEl) {
+    statusEl.textContent = `✓ Audit synced for ${res.storeName} (${res.monthlySessions.toLocaleString()} sessions • +${formatUsd(res.totalRecoverableUsd)}/mo net recovery)`;
+  }
 
   if (Array.isArray(res.dunningBreakdown)) {
     const breakdownHtml = res.dunningBreakdown.slice(0, 3).map((d) => `
@@ -92,16 +98,16 @@ function renderPosteriorTable(arms, selectedId) {
     const isWin = arm.id === selectedId;
     const barWidth = Math.min(100, Math.max(12, Math.round(arm.posterior_mean_pct * 3.2)));
     return `
-      <tr style="${isWin ? 'background: rgba(99, 102, 241, 0.14);' : ''}">
+      <tr style="${isWin ? 'background: rgba(83, 58, 253, 0.07);' : ''}">
         <td>
-          <strong style="color:${isWin ? '#10B981' : '#F8FAFC'}">${arm.objection_code}</strong>
-          <div style="font-size:0.72rem; color:#94A3B8; font-family:var(--font-sans);">${arm.objection_label}</div>
+          <strong style="color:${isWin ? '#047857' : '#0A2540'}">${arm.objection_code}</strong>
+          <div style="font-size:0.72rem; color:#475569; font-family:var(--font-sans);">${arm.objection_label}</div>
         </td>
         <td><code class="text-indigo">${arm.offer_code}</code> (-${arm.discount_pct}%)</td>
         <td>${arm.alpha}</td>
         <td>${arm.beta}</td>
         <td>
-          <strong>${arm.posterior_mean_pct}%</strong>
+          <strong style="color:#0A2540;">${arm.posterior_mean_pct}%</strong>
           <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${barWidth}%"></div></div>
         </td>
         <td class="text-emerald">$${Math.round(arm.recovered_revenue_usd).toLocaleString()}</td>
@@ -159,7 +165,8 @@ async function runWebhookSimulation(e) {
     declineCode: document.getElementById('wh-decline-code').value,
     customerEmail: document.getElementById('wh-email').value,
     amountUsd: Number(document.getElementById('wh-amount').value || 149),
-    storeName: document.getElementById('input-store').value || 'AuraBotanics DTC'
+    storeName: document.getElementById('input-store').value || 'AuraBotanics DTC',
+    website_url: document.getElementById('wh-honeypot')?.value || ''
   };
 
   const res = await fetch('/api/webhook-simulate', {
@@ -225,6 +232,14 @@ async function modalSelectObjection(objectionCode) {
   }
 }
 
+function setCookieConsent(choice) {
+  try {
+    localStorage.setItem('aa_cookie_consent', choice);
+  } catch (_) {}
+  const banner = document.getElementById('cookie-consent-banner');
+  if (banner) banner.style.display = 'none';
+}
+
 window.AbandonAlphaTriggerModal = function () {
   openExitIntentModal();
 };
@@ -234,6 +249,12 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    if (localStorage.getItem('aa_cookie_consent')) {
+      const banner = document.getElementById('cookie-consent-banner');
+      if (banner) banner.style.display = 'none';
+    }
+  } catch (_) {}
   const armsRes = await fetch('/api/bandit-arms').then((r) => r.json()).catch(() => null);
   if (armsRes && armsRes.arms) {
     renderPosteriorTable(armsRes.arms, 'arm_c1_price_15off');

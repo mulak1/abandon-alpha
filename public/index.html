@@ -10,9 +10,16 @@
   <meta property="og:description" content="Calculate your store's monthly checkout &amp; failed-payment leakage in 10 seconds and test our live Beta-Bernoulli Thompson Sampling Bandit." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="http://127.0.0.1:4109/" />
+  <meta property="og:site_name" content="AbandonAlpha" />
   <meta property="og:image" content="http://127.0.0.1:4109/api/og?slug=home" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AbandonAlpha — Autonomous Checkout &amp; Stripe Dunning Engine" />
+  <meta name="twitter:description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe renewals automatically." />
+  <meta name="twitter:image" content="http://127.0.0.1:4109/api/og?slug=home" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
   <script type="application/ld+json">
   {
@@ -29,22 +36,53 @@
   }
   </script>
 </head>
-<body class="bg-obsidian text-slate">
+<body>
+  <a href="#grader" class="skip-link">Skip to interactive revenue grader</a>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a href="/" class="brand-logo">
-        <span class="brand-dot"></span>
-        <span class="brand-text">AbandonAlpha</span>
-        <span class="brand-tag">BANDIT + STRIPE DUNNING v4.2</span>
+      <a href="/" class="brand-logo" aria-label="AbandonAlpha Home">
+        <svg viewBox="0 0 64 64" width="36" height="36" role="img" aria-label="AbandonAlpha Vault Crest">
+          <defs>
+            <linearGradient id="hdrVaultBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0A2540"/>
+              <stop offset="55%" stop-color="#1E1B4B"/>
+              <stop offset="100%" stop-color="#533AFD"/>
+            </linearGradient>
+            <linearGradient id="hdrEmeraldVec" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#059669"/>
+              <stop offset="100%" stop-color="#34D399"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#hdrVaultBg)" stroke="#635BFF" stroke-width="2"/>
+          <rect x="6" y="6" width="52" height="52" rx="12" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1"/>
+          <path d="M36 42 C29 46 20 43 18 35 C16 27 23 20 31 22 C37 23.5 40 30 43 37 L47 44" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M22 39 C28 39 35 32 45 18" fill="none" stroke="url(#hdrEmeraldVec)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M35 17 H46 V28" fill="none" stroke="#34D399" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="27" cy="31" r="3" fill="#A5B4FC"/>
+        </svg>
+        <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
+        <span class="brand-tag">FINOPS + STRIPE v4.2</span>
       </a>
-      <nav class="main-nav">
-        <a href="#grader">Leakage Grader</a>
-        <a href="#bandit-lab">C1–C6 Bandit Simulator</a>
-        <a href="#webhook-lab">Stripe Webhook Lab</a>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <a href="/#grader">Leakage Grader</a>
+        <a href="/#bandit-lab">C1–C6 Bandit Lab</a>
+        <a href="/#webhook-lab">Stripe Webhook Lab</a>
         <a href="/directory">Playbook Directory (60)</a>
-        <a href="#pricing" class="btn btn-emerald btn-sm">Start Recovery ($49/mo)</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#grader" class="btn btn-indigo btn-sm">
+          <span>Calculate Recoverable MRR</span>
+          <span class="btn-icon-circle" aria-hidden="true">↗</span>
+        </a>
       </nav>
     </div>
+    <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
+      <a href="/#grader">Leakage Grader</a>
+      <a href="/#bandit-lab">C1–C6 Bandit</a>
+      <a href="/#webhook-lab">Webhook Lab</a>
+      <a href="/directory">60 Playbooks</a>
+      <a href="/#pricing">Pricing ($49)</a>
+    </nav>
   </header>
 
   <main>
@@ -52,9 +90,9 @@
     <section id="grader" class="hero-section">
       <div class="container hero-split">
         <div class="hero-left">
-          <div class="status-pill">AUTONOMOUS CHECKOUT BANDIT + STRIPE SMART DUNNING</div>
-          <h1 class="hero-h1">Stop Losing 71% of Checkouts &amp; Failed Stripe Renewals</h1>
-          <p class="hero-lead">Intercept abandoning buyers with a <strong>Beta-Bernoulli Thompson Sampling C1–C6 Bandit</strong> and recover failed Stripe charges by bank decline code.</p>
+          <div class="status-pill">INSTITUTIONAL CHECKOUT BANDIT + STRIPE SMART DUNNING</div>
+          <h1 class="hero-h1">Stop Losing 71% of Checkouts &amp; Failed <span class="serif-italic">Stripe</span> Renewals</h1>
+          <p class="hero-lead">Intercept abandoning buyers with a <strong>Beta-Bernoulli Thompson Sampling C1–C6 Bandit</strong> and recover failed Stripe charges by bank decline code—with 0% revenue tax.</p>
 
           <div class="preset-bar" role="group" aria-label="Industry Store Presets">
             <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
@@ -64,6 +102,7 @@
           </div>
 
           <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)">
+            <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="form-row-2">
               <div>
                 <label class="field-label" for="input-store">Store / SaaS Name</label>
@@ -90,13 +129,17 @@
                 <input id="input-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="35" required />
               </div>
               <div style="display:flex; align-items:flex-end;">
-                <button type="submit" id="run-audit-btn" class="btn btn-emerald btn-block">Audit Revenue Leakage</button>
+                <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block">
+                  <span>Audit Revenue Leakage</span>
+                  <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                </button>
               </div>
             </div>
             <div class="cta-row" style="margin-top:8px;">
               <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" onclick="openExitIntentModal()">Trigger Live Exit-Intent Modal</button>
               <a href="#bandit-lab" class="btn btn-ghost btn-sm">Inspect C1–C6 Bandit Posteriors</a>
             </div>
+            <div id="audit-form-status" class="mono-status" aria-live="polite"></div>
           </form>
         </div>
 
@@ -104,19 +147,19 @@
         <div class="telemetry-card" aria-live="polite">
           <div class="card-header-bar">
             <span class="mono-label">REAL-TIME LEAKAGE &amp; RECOVERY DIAGNOSTIC</span>
-            <span id="out-grade-badge" class="badge-live">GRADE: C (ACTION NEEDED)</span>
+            <span id="out-grade-badge" class="badge-live">GRADE: C (65/100)</span>
           </div>
 
           <div class="metric-duo">
             <div class="metric-tile tile-rose">
               <span class="tile-label">Monthly Leaked Revenue</span>
-              <strong id="out-total-leaked" class="tile-value text-rose">$214,685</strong>
-              <span id="out-leaked-sub" class="tile-sub">$210,496 Cart + $4,189 Failed Cards</span>
+              <strong id="out-total-leaked" class="tile-value text-rose">$214,523</strong>
+              <span id="out-leaked-sub" class="tile-sub">$210,496 Cart + $4,027 Failed Cards</span>
             </div>
             <div class="metric-tile tile-emerald">
               <span class="tile-label">Autonomous Monthly Recovery</span>
-              <strong id="out-total-recovered" class="tile-value text-emerald">+$36,876/mo</strong>
-              <span id="out-annual-recovered" class="tile-sub">+$442,512/yr Net Impact (752x ROI)</span>
+              <strong id="out-total-recovered" class="tile-value text-emerald">+$36,722/mo</strong>
+              <span id="out-annual-recovered" class="tile-sub">+$440,669/yr Net Impact (749.4x ROI)</span>
             </div>
           </div>
 
@@ -126,21 +169,21 @@
           </div>
           <div class="spec-row">
             <span class="spec-k">Stripe Smart Dunning Recovery (56.2% Lift)</span>
-            <strong id="out-dunning-recovered" class="spec-v text-emerald">+$2,355/mo</strong>
+            <strong id="out-dunning-recovered" class="spec-v text-emerald">+$2,201/mo</strong>
           </div>
 
           <div id="out-dunning-breakdown" style="margin-top:10px;">
             <div class="spec-row">
-              <span class="spec-k"><code>insufficient_funds</code> (Payday Window 62.4%)</span>
-              <span class="spec-v text-emerald">+$889/mo</span>
+              <span class="spec-k"><code>insufficient_funds</code> (62.4% recovery)</span>
+              <span class="spec-v text-emerald">+$854/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><code>do_not_honor</code> (+24h Cooled + SMS 47.8%)</span>
-              <span class="spec-v text-emerald">+$581/mo</span>
+              <span class="spec-k"><code>do_not_honor</code> (47.8% recovery)</span>
+              <span class="spec-v text-emerald">+$558/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><code>expired_card</code> (Instant Portal Link 54.2%)</span>
-              <span class="spec-v text-emerald">+$499/mo</span>
+              <span class="spec-k"><code>expired_card</code> (54.2% recovery)</span>
+              <span class="spec-v text-emerald">+$480/mo</span>
             </div>
           </div>
 
@@ -159,7 +202,7 @@
     <section id="bandit-lab" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <h2 class="section-h2">Live C1–C6 Objection &amp; Beta-Bernoulli Thompson Sampling Bandit</h2>
+          <h2 class="section-h2">Live C1–C6 Objection &amp; <span class="serif-italic">Thompson Sampling</span> Bandit</h2>
           <p class="section-sub">Click any checkout objection below to trigger a real-time Thompson Sampling draw (<code>Beta(α, β)</code>) in SQLite and watch the winning counter-offer and posterior probabilities update live.</p>
         </div>
 
@@ -197,14 +240,14 @@
               </button>
             </div>
 
-            <div class="code-snippet-box" id="bandit-selected-offer-box" style="border-color: var(--emerald);">
-              <div class="mono-label text-emerald">WINNING COUNTER-OFFER SERVED BY BANDIT</div>
+            <div class="code-snippet-box" id="bandit-selected-offer-box">
+              <div class="mono-label">WINNING COUNTER-OFFER SERVED BY BANDIT</div>
               <h3 id="bandit-offer-headline" style="font-size:1.05rem; margin:6px 0 4px;">Unlock 15% Instant Founders Rebate on This Order</h3>
-              <p id="bandit-offer-subtext" style="font-size:0.84rem; color:var(--text-secondary);">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes.</p>
+              <p id="bandit-offer-subtext" style="font-size:0.84rem;">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes.</p>
               <div class="spec-row" style="margin-top:8px; border-bottom:none;">
-                <span>Promo Code: <code id="bandit-offer-code" class="text-emerald">ALPHA15</code></span>
-                <span>Sampled θ̃: <strong id="bandit-sampled-theta" class="text-indigo">0.2314</strong></span>
-                <span>Net ERPV: <strong id="bandit-erpv" class="text-emerald">$24.42</strong></span>
+                <span>Promo Code: <code id="bandit-offer-code">ALPHA15</code></span>
+                <span>Sampled θ̃: <strong id="bandit-sampled-theta">0.2314</strong></span>
+                <span>Net ERPV: <strong id="bandit-erpv" style="color:#34D399;">$24.42</strong></span>
               </div>
             </div>
           </div>
@@ -241,12 +284,13 @@
     <section id="webhook-lab" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <h2 class="section-h2">Stripe Webhook (<code>checkout.session.expired</code> &amp; <code>invoice.payment_failed</code>) Simulator</h2>
+          <h2 class="section-h2">Stripe Webhook (<code>checkout.session.expired</code> &amp; <code>invoice.payment_failed</code>) <span class="serif-italic">Simulator</span></h2>
           <p class="section-sub">Simulate a live Stripe webhook payload and inspect the exact Visa/Mastercard-compliant retry schedule plus multi-channel Email/SMS recovery copy.</p>
         </div>
 
         <div class="webhook-grid">
           <form id="webhook-form" class="telemetry-card" onsubmit="runWebhookSimulation(event)">
+            <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="card-header-bar">
               <span class="mono-label">WEBHOOK EVENT CONFIGURATOR</span>
               <span class="badge-live">STRIPE API 2026</span>
@@ -282,7 +326,10 @@
               </div>
             </div>
 
-            <button type="submit" id="wh-submit-btn" class="btn btn-indigo btn-block" style="margin-top:8px;">Simulate Webhook &amp; Build Recovery Sequence</button>
+            <button type="submit" id="wh-submit-btn" class="btn btn-indigo btn-block" style="margin-top:8px;">
+              <span>Simulate Webhook &amp; Build Recovery Sequence</span>
+              <span class="btn-icon-circle" aria-hidden="true">↗</span>
+            </button>
           </form>
 
           <div class="telemetry-card">
@@ -291,7 +338,7 @@
               <span id="wh-out-recovery-rate" class="badge-emerald">Expected Recovery: 62.4%</span>
             </div>
 
-            <div id="wh-out-network-rule" style="font-size:0.82rem; color:var(--amber); margin-bottom:12px; font-family:var(--font-mono);">
+            <div id="wh-out-network-rule" style="font-size:0.82rem; color:var(--amber); background:var(--amber-soft); border:1px solid var(--amber-border); padding:8px 12px; border-radius:8px; margin-bottom:12px; font-family:var(--font-mono); font-weight:700;">
               Card Network Mandate: Max 4 retries in 30 days. Never retry within 1 hour.
             </div>
 
@@ -312,8 +359,8 @@
 
             <div class="code-snippet-box">
               <div class="mono-label">GENERATED MULTI-CHANNEL RECOVERY COPY (<span id="wh-out-model">deterministic-finops-v4</span>)</div>
-              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:var(--emerald); margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149) — Soft Decline</p>
-              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.78rem; color:var(--text-secondary); margin-top:6px;">Stripe notified us that your $149 invoice failed with bank code insufficient_funds. We have scheduled your optimal payday retry window or you can update via 1-Click Apple Pay.</pre>
+              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:#34D399; margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149) — Soft Decline</p>
+              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.78rem; margin-top:6px;">Stripe notified us that your $149 invoice failed with bank code insufficient_funds. We have scheduled your optimal payday retry window or you can update via 1-Click Apple Pay.</pre>
             </div>
           </div>
         </div>
@@ -324,7 +371,7 @@
     <section id="pricing" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <h2 class="section-h2">Zero Revenue-Share Tax. Flat-Rate Autonomous Recovery.</h2>
+          <h2 class="section-h2">Zero Revenue-Share Tax. <span class="serif-italic">Flat-Rate</span> Autonomous Recovery.</h2>
           <p class="section-sub">Unlike legacy dunning tools that tax 5%–15% of your recovered revenue, AbandonAlpha charges a flat monthly rate backed by a <strong>30-Day 5x ROI Guarantee</strong>.</p>
         </div>
 
@@ -342,14 +389,17 @@
               </ul>
             </div>
             <div>
-              <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">Start Starter Plan ($49/mo)</button>
+              <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">
+                <span>Start Starter Plan ($49/mo)</span>
+                <span class="btn-icon-circle" aria-hidden="true">↗</span>
+              </button>
             </div>
           </div>
 
           <div class="pricing-card featured">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="mono-label text-emerald">GROWTH AUTONOMOUS RECOVERY (MOST POPULAR)</span>
+                <span class="mono-label text-indigo">GROWTH AUTONOMOUS RECOVERY (RECOMMENDED)</span>
                 <span class="badge-live">0% REVENUE TAX</span>
               </div>
               <div class="price-tag">$149<span>/month flat</span></div>
@@ -362,7 +412,10 @@
               </ul>
             </div>
             <div>
-              <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">Start Growth Plan ($149/mo)</button>
+              <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
+                <span>Start Growth Plan ($149/mo)</span>
+                <span class="btn-icon-circle" aria-hidden="true">↗</span>
+              </button>
             </div>
           </div>
         </div>
@@ -372,7 +425,7 @@
             <span class="mono-label text-emerald">SELF-SERVE STRIPE CHECKOUT FULFILLMENT</span>
             <span id="checkout-session-badge" class="badge-live">ACTIVE</span>
           </div>
-          <p id="checkout-status-text" style="font-size:0.92rem; color:var(--text-primary);"></p>
+          <p id="checkout-status-text" style="font-size:0.92rem; color:var(--text-navy);"></p>
         </div>
       </div>
     </section>
@@ -382,11 +435,11 @@
   <div id="exit-intent-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
     <div class="exit-modal-card">
       <div class="card-header-bar">
-        <span class="mono-label text-emerald">BEHAVIORAL EXIT-INTENT INTERCEPTED (v_y = -0.94 px/ms)</span>
+        <span class="mono-label text-indigo">BEHAVIORAL EXIT-INTENT INTERCEPTED (v_y = -0.94 px/ms)</span>
         <button type="button" class="btn btn-ghost btn-sm" onclick="closeExitIntentModal()">Close [ESC]</button>
       </div>
-      <h2 id="exit-modal-title" style="font-size:1.35rem; margin-bottom:8px;">Wait — Before You Leave Your Checkout, What Stopped You Today?</h2>
-      <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:14px;">Tap your primary reason below and our Thompson Sampling Bandit will unlock a tailored checkout solution immediately:</p>
+      <h2 id="exit-modal-title" style="font-size:1.35rem; margin-bottom:8px; color:var(--text-navy);">Wait — Before You Leave Your Checkout, What Stopped You Today?</h2>
+      <p style="font-size:0.88rem; color:var(--text-slate); margin-bottom:14px;">Tap your primary reason below and our Thompson Sampling Bandit will unlock a tailored checkout solution immediately:</p>
 
       <div class="objection-buttons-grid">
         <button type="button" class="objection-btn" onclick="modalSelectObjection('C1_PRICE')">
@@ -407,13 +460,27 @@
         </button>
       </div>
 
-      <div id="modal-bandit-result" class="code-snippet-box" style="border-color:var(--emerald); margin-top:12px;">
-        <div class="mono-label text-emerald">INSTANT COUNTER-OFFER UNLOCKED</div>
+      <div id="modal-bandit-result" class="code-snippet-box" style="margin-top:12px;">
+        <div class="mono-label">INSTANT COUNTER-OFFER UNLOCKED</div>
         <strong id="modal-offer-headline" style="display:block; margin-top:4px; font-size:0.98rem;">Unlock 15% Instant Founders Rebate (Code: ALPHA15)</strong>
-        <p id="modal-offer-subtext" style="font-size:0.82rem; color:var(--text-secondary); margin-top:4px;">Click below to apply this offer and update the live SQLite Beta(α, β) posterior table.</p>
+        <p id="modal-offer-subtext" style="font-size:0.82rem; margin-top:4px;">Click below to apply this offer and update the live SQLite Beta(α, β) posterior table.</p>
       </div>
     </div>
   </div>
+
+  <!-- NON-OVERLAPPING DOCKED GDPR COOKIE & TELEMETRY CONSENT BAR (PRE-LAUNCH #5) -->
+  <aside id="cookie-consent-banner" class="cookie-consent-bar" aria-label="Cookie and Telemetry Consent">
+    <div class="container cookie-consent-inner">
+      <div>
+        <strong style="color:var(--text-navy);">GDPR &amp; Ephemeral Telemetry Notice:</strong>
+        We use zero-PII ephemeral cursor velocity vectors and optional Meta CAPI attribution cookies. Read our <a href="/privacy" style="color:var(--blurple); font-weight:700;">Privacy Policy</a>.
+      </div>
+      <div class="cookie-consent-actions">
+        <button type="button" id="cookie-reject-btn" class="btn btn-ghost btn-sm" onclick="setCookieConsent('essential_only')">Essential Only</button>
+        <button type="button" id="cookie-accept-btn" class="btn btn-indigo btn-sm" onclick="setCookieConsent('accepted')">Accept Telemetry</button>
+      </div>
+    </div>
+  </aside>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -421,6 +488,7 @@
         <strong>AbandonAlpha (#9)</strong> — Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
       </div>
       <div class="footer-links">
+        <a href="/#grader">Leakage Grader</a>
         <a href="/directory">60 SEO Playbooks</a>
         <a href="/lp">Paid-Social Landing (/lp)</a>
         <a href="/sitemap.xml">Sitemap.xml</a>
