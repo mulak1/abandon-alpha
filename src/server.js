@@ -23,12 +23,16 @@ const {
   renderNotFoundHtml
 } = require('./views');
 
+const fs = require('node:fs');
+const { attachExactBaselinePack } = require('./exact-baseline-api');
+
 const PORT = Number(process.env.PORT || 4109);
 const BASE_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://127.0.0.1:${PORT}`).replace(/\/$/, '');
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
+attachExactBaselinePack(app, { verticalId: 'abandon_alpha' });
 
 // Security headers & Rate-Limiting + Honeypot Spam Protection (pre-launch-checklist #4 & #18)
 const rateBuckets = new Map();
@@ -55,6 +59,12 @@ app.use((req, res, next) => {
     return res.status(400).json({ ok: false, error: 'Bot honeypot triggered' });
   }
   next();
+});
+
+// Explicit homepage handler so ExactBaseline enhancements inject cleanly before static middleware
+app.get('/', (req, res) => {
+  const indexHtml = fs.readFileSync(path.resolve(__dirname, '../public/index.html'), 'utf8');
+  res.status(200).type('html').send(indexHtml);
 });
 
 // Serve static files from /public
