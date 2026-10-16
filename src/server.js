@@ -27,7 +27,7 @@ const fs = require('node:fs');
 const { attachExactBaselinePack } = require('./exact-baseline-api');
 
 const PORT = Number(process.env.PORT || 4109);
-const BASE_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || `http://127.0.0.1:${PORT}`).replace(/\/$/, '');
+const BASE_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www.abandonalpha.com').replace(/\/$/, '');
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
@@ -61,9 +61,47 @@ app.use((req, res, next) => {
   next();
 });
 
+function renderHomepagePseoHubHtml() {
+  const allPages = getAllPseoPages();
+  const clusters = [
+    'Stripe Decline Codes',
+    'Stripe Webhooks & Dunning',
+    'Platform Playbooks',
+    'Bandit & Exit-Intent Science'
+  ];
+  const clusterBlocks = clusters.map((cat) => {
+    const items = allPages.filter((p) => p.category === cat).slice(0, 6);
+    return `
+      <div style="margin-top:20px;">
+        <h3 style="font-size:1.05rem; margin-bottom:10px; color:var(--text-navy);">${cat} (Featured 6 Playbooks)</h3>
+        <div class="related-links-grid">
+          ${items.map((p) => `
+            <a href="/seo/${p.slug}" class="related-card">
+              <span class="mono-label">${p.declineOrSignal} • +${p.recoverableLiftPct}% Lift</span>
+              <strong>${p.title.replace(/`/g, '')}</strong>
+            </a>
+          `).join('')}
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <section id="pseo-recovery-hub" class="lab-section">
+      <div class="container">
+        <div class="section-header-stack">
+          <div class="status-pill">24-PLAYBOOK STRIPE DECLINE CODE, WEBHOOK &amp; CHECKOUT RECOVERY HUB</div>
+          <h2 class="section-h2">Stripe Decline Code, Webhook &amp; Checkout <span class="serif-italic">Recovery Hub</span></h2>
+          <p class="section-sub">Explore 24 featured technical playbooks across all 4 FinOps clusters—or browse the <a href="/directory" style="color:var(--blurple); font-weight:700;">Complete 60-Playbook Directory</a> and <a href="/llms.txt" style="color:var(--blurple); font-weight:700;">/llms.txt Index</a>.</p>
+        </div>
+        ${clusterBlocks}
+      </div>
+    </section>`;
+}
+
 // Explicit homepage handler so ExactBaseline enhancements inject cleanly before static middleware
 app.get('/', (req, res) => {
-  const indexHtml = fs.readFileSync(path.resolve(__dirname, '../public/index.html'), 'utf8');
+  const rawHtml = fs.readFileSync(path.resolve(__dirname, '../public/index.html'), 'utf8');
+  const indexHtml = rawHtml.replace('</main>', `${renderHomepagePseoHubHtml()}\n  </main>`);
   res.status(200).type('html').send(indexHtml);
 });
 
@@ -234,7 +272,7 @@ app.get('/api/og', (req, res) => {
 app.get('/sitemap.xml', (req, res) => {
   const pages = getAllPseoPages();
   const now = new Date().toISOString().split('T')[0];
-  const staticUrls = ['/', '/directory', '/lp', '/privacy', '/terms'];
+  const staticUrls = ['/', '/directory', '/lp', '/llms.txt', '/llms-full.txt', '/privacy', '/terms'];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticUrls.map((u) => `  <url><loc>${BASE_URL}${u}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>`).join('\n')}
@@ -247,7 +285,76 @@ ${pages.map((p) => `  <url><loc>${BASE_URL}/seo/${p.slug}</loc><lastmod>${now}</
 // Day-1 robots.txt
 app.get('/robots.txt', (req, res) => {
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.send(`User-agent: *\nAllow: /\nDisallow: /api/\nAllow: /api/og\n\nSitemap: ${BASE_URL}/sitemap.xml\n`);
+  res.send(`User-agent: *\nAllow: /\nDisallow: /api/\nAllow: /api/og\n\nSitemap: ${BASE_URL}/sitemap.xml\nLLMs-Txt: ${BASE_URL}/llms.txt\nLLMs-Full-Txt: ${BASE_URL}/llms-full.txt\n`);
+});
+
+// Native /llms.txt & /llms-full.txt indexing all 60 PSEO_PAGES across 4 clusters
+app.get('/llms.txt', (req, res) => {
+  const pages = getAllPseoPages();
+  const clusters = [
+    'Stripe Decline Codes',
+    'Stripe Webhooks & Dunning',
+    'Platform Playbooks',
+    'Bandit & Exit-Intent Science'
+  ];
+  const lines = [
+    '# AbandonAlpha — Autonomous Checkout Abandonment Bandit & Stripe Failed-Payment Dunning Engine',
+    '',
+    '> Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe renewals automatically with Mouse-Velocity Exit-Intent Thompson Sampling Bandits (C1–C6) and Smart Decline-Code Dunning ($49/mo Starter, $149/mo Growth, 0% revenue tax, 30-Day 5x ROI Guarantee).',
+    '',
+    `- Canonical Homepage: ${BASE_URL}/`,
+    `- Full 60-Playbook Directory: ${BASE_URL}/directory`,
+    `- Full LLM Technical Corpus: ${BASE_URL}/llms-full.txt`,
+    `- Paid-Social Landing Page: ${BASE_URL}/lp`,
+    `- Sitemap: ${BASE_URL}/sitemap.xml`,
+    ''
+  ];
+
+  clusters.forEach((cat) => {
+    const items = pages.filter((p) => p.category === cat);
+    lines.push(`## ${cat} (${items.length} Playbooks)`);
+    items.forEach((p) => {
+      lines.push(`- [${p.title.replace(/`/g, '')}](${BASE_URL}/seo/${p.slug}): Signal \`${p.declineOrSignal}\` | +${p.recoverableLiftPct}% Recovery Lift (vs ${p.baselineAbandonmentOrFailPct}% baseline loss) | Smart Retry Window: ${p.recommendedTiming} | Winning Bandit Arm: ${p.winningBanditArm}`);
+    });
+    lines.push('');
+  });
+
+  res.status(200).setHeader('Content-Type', 'text/plain; charset=utf-8').send(lines.join('\n'));
+});
+
+app.get('/llms-full.txt', (req, res) => {
+  const pages = getAllPseoPages();
+  const lines = [
+    '# AbandonAlpha — Complete 60-Playbook Technical Reference & Benchmark Corpus (/llms-full.txt)',
+    '',
+    `Canonical Base URL: ${BASE_URL}`,
+    'Architecture: Beta-Bernoulli Thompson Sampling Multi-Armed Bandit (Arms C1–C6) + Visa/Mastercard-Compliant Stripe Webhook Dunning Engine (`checkout.session.expired` & `invoice.payment_failed`).',
+    'Pricing: $49/mo Starter Autonomous Recovery | $149/mo Growth Autonomous Recovery (0% revenue-share tax, 30-Day 5x ROI Guarantee).',
+    `Total Indexed Playbooks: ${pages.length} (20 Stripe Decline Codes, 14 Stripe Webhooks & Dunning, 14 Platform Playbooks, 12 Bandit & Exit-Intent Science)`,
+    ''
+  ];
+
+  pages.forEach((p, idx) => {
+    lines.push(`### ${idx + 1}. ${p.title.replace(/`/g, '')}`);
+    lines.push(`- URL: ${BASE_URL}/seo/${p.slug}`);
+    lines.push(`- Cluster: ${p.category}`);
+    lines.push(`- Target Keyword: ${p.targetKeyword}`);
+    lines.push(`- Decline / Signal Code: ${p.declineOrSignal}`);
+    lines.push(`- Target Stripe Webhook: ${p.webhookEvent}`);
+    lines.push(`- Baseline Loss / Decline Share: ${p.baselineAbandonmentOrFailPct}%`);
+    lines.push(`- AbandonAlpha Recovery Lift: +${p.recoverableLiftPct}%`);
+    lines.push(`- Smart Retry Window: ${p.recommendedTiming}`);
+    lines.push(`- Winning Bandit Arm: ${p.winningBanditArm}`);
+    lines.push(`- Benchmark Cashflow Impact: +$${p.monthlyRecoveredUsd.toLocaleString()}/mo (+$${p.annualRecoveredUsd.toLocaleString()}/yr)`);
+    lines.push(`- Summary: ${p.summary.replace(/`/g, '')}`);
+    p.faqs.forEach((f) => {
+      lines.push(`  - Q: ${f.q}`);
+      lines.push(`    A: ${f.a}`);
+    });
+    lines.push('');
+  });
+
+  res.status(200).setHeader('Content-Type', 'text/plain; charset=utf-8').send(lines.join('\n'));
 });
 
 // SSR Routes

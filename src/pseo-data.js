@@ -832,8 +832,14 @@ function getAllPseoPages() {
   return PSEO_PAGES;
 }
 
+const SLUG_ALIASES = {
+  'stripe-decline-code-expired-card-account-updater': 'stripe-decline-code-expired-card-dunning-flow'
+};
+
 function getPseoPageBySlug(slug) {
-  return PSEO_PAGES.find((p) => p.slug.toLowerCase() === String(slug || '').toLowerCase()) || null;
+  const normalized = String(slug || '').toLowerCase();
+  const targetSlug = SLUG_ALIASES[normalized] || normalized;
+  return PSEO_PAGES.find((p) => p.slug.toLowerCase() === targetSlug) || null;
 }
 
 module.exports = {

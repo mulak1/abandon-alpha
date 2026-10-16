@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AbandonAlpha — Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine</title>
   <meta name="description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe payments with Behavioral Mouse-Velocity Exit-Intent Bandits (C1–C6) and Smart Decline-Code Dunning." />
-  <link rel="canonical" href="http://127.0.0.1:4109/" />
+  <link rel="canonical" href="https://www.abandonalpha.com/" />
   <meta property="og:title" content="AbandonAlpha — Checkout Abandonment Bandit &amp; Stripe Dunning Engine" />
   <meta property="og:description" content="Calculate your store's monthly checkout &amp; failed-payment leakage in 10 seconds and test our live Beta-Bernoulli Thompson Sampling Bandit." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="http://127.0.0.1:4109/" />
+  <meta property="og:url" content="https://www.abandonalpha.com/" />
   <meta property="og:site_name" content="AbandonAlpha" />
-  <meta property="og:image" content="http://127.0.0.1:4109/api/og?slug=home" />
+  <meta property="og:image" content="https://www.abandonalpha.com/api/og?slug=home" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AbandonAlpha — Autonomous Checkout &amp; Stripe Dunning Engine" />
   <meta name="twitter:description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe renewals automatically." />
-  <meta name="twitter:image" content="http://127.0.0.1:4109/api/og?slug=home" />
+  <meta name="twitter:image" content="https://www.abandonalpha.com/api/og?slug=home" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
@@ -26,6 +26,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "AbandonAlpha",
+    "url": "https://www.abandonalpha.com/",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Web, Stripe, Shopify, WooCommerce, Next.js",
     "offers": [
@@ -174,17 +175,25 @@
 
           <div id="out-dunning-breakdown" style="margin-top:10px;">
             <div class="spec-row">
-              <span class="spec-k"><code>insufficient_funds</code> (62.4% recovery)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (62.4% recovery)</span>
               <span class="spec-v text-emerald">+$854/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><code>do_not_honor</code> (47.8% recovery)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (47.8% recovery)</span>
               <span class="spec-v text-emerald">+$558/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><code>expired_card</code> (54.2% recovery)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-account-updater"><code>expired_card</code></a> (54.2% recovery)</span>
               <span class="spec-v text-emerald">+$480/mo</span>
             </div>
+          </div>
+          <div style="margin-top:8px; font-size:0.78rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+            <span class="mono-label">Top Decline Playbooks:</span>
+            <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="color:var(--blurple); font-weight:700;"><code>insufficient_funds</code></a>
+            <span>•</span>
+            <a href="/seo/stripe-decline-code-do-not-honor-retry-schedule" style="color:var(--blurple); font-weight:700;"><code>do_not_honor</code></a>
+            <span>•</span>
+            <a href="/seo/stripe-decline-code-expired-card-account-updater" style="color:var(--blurple); font-weight:700;"><code>expired_card</code></a>
           </div>
 
           <div class="code-snippet-box">
@@ -192,7 +201,7 @@
               <span class="mono-label">1-CLICK EMBEDDABLE SDK SNIPPET</span>
               <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:0.74rem;" onclick="copySdkSnippet()">Copy Script Tag</button>
             </div>
-            <code id="out-sdk-snippet">&lt;script src="http://127.0.0.1:4109/sdk/abandon-alpha-sdk.js" data-merchant="aurabotanics-dtc" data-aov="92" data-bandit="thompson-c1-c6" async&gt;&lt;/script&gt;</code>
+            <code id="out-sdk-snippet">&lt;script src="https://www.abandonalpha.com/sdk/abandon-alpha-sdk.js" data-merchant="aurabotanics-dtc" data-aov="92" data-bandit="thompson-c1-c6" async&gt;&lt;/script&gt;</code>
           </div>
         </div>
       </div>
