@@ -32,7 +32,7 @@ async function submitLeakageAudit(e) {
   await runAuditRequest(currentPreset);
 }
 
-async function runAuditRequest(presetType) {
+async function runAuditRequest(presetType, isAutoInit) {
   const payload = {
     presetType: presetType || 'custom',
     storeName: document.getElementById('input-store').value,
@@ -43,9 +43,11 @@ async function runAuditRequest(presetType) {
     website_url: document.getElementById('input-honeypot')?.value || ''
   };
 
+  const headers = { 'Content-Type': 'application/json' };
+  if (isAutoInit) headers['x-auto-init'] = '1';
   const res = await fetch('/api/audit-leakage', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(payload)
   }).then((r) => r.json()).catch(() => null);
 
@@ -259,5 +261,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (armsRes && armsRes.arms) {
     renderPosteriorTable(armsRes.arms, 'arm_c1_price_15off');
   }
-  await runAuditRequest('shopify_dtc');
+  await runAuditRequest('shopify_dtc', true);
 });

@@ -224,7 +224,7 @@ function computeLeakageAudit(input = {}) {
   const letterGrade = gradeScore >= 80 ? 'A-' : gradeScore >= 68 ? 'B-' : gradeScore >= 54 ? 'C' : 'D+';
 
   const merchantSlug = storeName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'merchant-store';
-  const sdkSnippet = `<script src="http://127.0.0.1:4109/sdk/abandon-alpha-sdk.js" data-merchant="${merchantSlug}" data-aov="${aovUsd}" data-bandit="thompson-c1-c6" async></script>`;
+  const sdkSnippet = `<script src="https://www.abandonalpha.com/sdk/abandon-alpha-sdk.js" data-merchant="${merchantSlug}" data-aov="${aovUsd}" data-bandit="thompson-c1-c6" async></script>`;
 
   const webhookSequence = [
     {
