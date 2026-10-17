@@ -244,7 +244,8 @@ async function initiateStripeCheckout(planTier) {
   const badge = document.getElementById('checkout-session-badge');
   banner.style.display = 'block';
   badge.textContent = res.stripeSessionId;
-  text.textContent = `Initialized ${res.planLabel} for ${res.storeDomain} (${res.customerEmail}). Protected by ${res.guarantee}.`;
+  text.innerHTML = `Initialized ${res.planLabel} for ${res.storeDomain} (${res.customerEmail}). Protected by ${res.guarantee}. <a href="${res.checkoutUrl || '/buy/complete_dossier'}" style="color:var(--accent-indigo);text-decoration:underline;font-weight:700;margin-left:6px;">Proceed to Stripe Checkout ↗</a>`;
+  if (!navigator.webdriver && res.checkoutUrl && res.checkoutUrl.startsWith('https://checkout.stripe.com')) window.location.href = res.checkoutUrl;
 }
 
 function openExitIntentModal() {

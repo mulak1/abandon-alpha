@@ -253,17 +253,19 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <span>${escapeHtml(page.category)}</span>
     </nav>
 
-    <div class="hero-split pseo-hero">
-      <div class="pseo-hero-left">
-        <div class="status-pill">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
-        <h1 class="pseo-h1">${escapeHtml(cleanTitle)}</h1>
-        <p class="pseo-lead">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
-        <div class="cta-row">
-          <a href="/#grader" class="btn btn-indigo">
-            <span>Audit Your Store Leakage Free</span>
-            <span class="btn-icon-circle" aria-hidden="true">↗</span>
-          </a>
-          <a href="/#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)} Live</a>
+    <div class="hero-split pseo-hero" style="align-items:stretch;">
+      <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+        <div>
+          <div class="status-pill">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
+          <h1 class="pseo-h1">${escapeHtml(cleanTitle)}</h1>
+          <p class="pseo-lead">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
+          <div class="cta-row">
+            <a href="/#grader" class="btn btn-indigo">
+              <span>Audit Your Store Leakage Free</span>
+              <span class="btn-icon-circle" aria-hidden="true">↗</span>
+            </a>
+            <a href="/#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)} Live</a>
+          </div>
         </div>
       </div>
 
