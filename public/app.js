@@ -28,11 +28,27 @@ function applyPreset(presetKey, btnEl) {
 }
 
 async function submitLeakageAudit(e) {
-  if (e) e.preventDefault();
-  await runAuditRequest(currentPreset);
+  if (e && e.preventDefault) e.preventDefault();
+  await runAuditRequest(currentPreset, false, true);
+  return false;
 }
 
-async function runAuditRequest(presetType, isAutoInit) {
+function triggerHeaderMrrCalc(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const graderEl = document.getElementById('grader');
+  if (graderEl && graderEl.scrollIntoView) {
+    graderEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  runAuditRequest(currentPreset, false, true);
+  return false;
+}
+
+async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
+  const btn = document.getElementById('run-audit-btn');
+  const navBtn = document.getElementById('nav-calc-mrr-btn');
+  if (isManualTrigger && btn) btn.innerHTML = '<span>Calculating MRR...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
+  if (isManualTrigger && navBtn) navBtn.innerHTML = '<span>Calculating...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
+
   const payload = {
     presetType: presetType || 'custom',
     storeName: document.getElementById('input-store').value,
@@ -51,6 +67,8 @@ async function runAuditRequest(presetType, isAutoInit) {
     body: JSON.stringify(payload)
   }).then((r) => r.json()).catch(() => null);
 
+  if (btn) btn.innerHTML = '<span>Calculate Recoverable MRR</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
+  if (navBtn) navBtn.innerHTML = '<span>Calculate Recoverable MRR</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
   if (!res || !res.ok) return;
 
   document.getElementById('out-grade-badge').textContent = `GRADE: ${res.letterGrade} (${res.gradeScore}/100)`;
@@ -64,7 +82,20 @@ async function runAuditRequest(presetType, isAutoInit) {
 
   const statusEl = document.getElementById('audit-form-status');
   if (statusEl) {
-    statusEl.textContent = `✓ Audit synced for ${res.storeName} (${res.monthlySessions.toLocaleString()} sessions • +${formatUsd(res.totalRecoverableUsd)}/mo net recovery)`;
+    statusEl.textContent = `✓ Recoverable MRR Calculated for ${res.storeName}: +${formatUsd(res.totalRecoverableUsd)}/mo (+${formatUsd(res.annualizedRecoverableUsd)}/yr across ${res.monthlySessions.toLocaleString()} sessions)`;
+    statusEl.style.color = '#059669';
+    statusEl.style.fontWeight = '700';
+  }
+
+  const mrrTile = document.getElementById('recoverable-mrr-tile') || document.getElementById('out-total-recovered')?.parentElement;
+  if (isManualTrigger && mrrTile) {
+    mrrTile.style.transition = 'box-shadow 250ms ease, transform 250ms ease';
+    mrrTile.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.45)';
+    mrrTile.style.transform = 'scale(1.02)';
+    setTimeout(() => {
+      mrrTile.style.boxShadow = '';
+      mrrTile.style.transform = '';
+    }, 900);
   }
 
   if (Array.isArray(res.dunningBreakdown)) {

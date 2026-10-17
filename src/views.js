@@ -45,7 +45,7 @@ function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
         <a href="/#webhook-lab">Stripe Webhook Lab</a>
         <a href="/directory">Playbook Directory (60)</a>
         <a href="/#pricing">Pricing</a>
-        <a href="/#grader" class="btn btn-indigo btn-sm">
+        <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
           <span>Calculate Recoverable MRR</span>
           <span class="btn-icon-circle" aria-hidden="true">↗</span>
         </a>

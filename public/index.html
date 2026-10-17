@@ -71,7 +71,7 @@
         <a href="/#webhook-lab">Stripe Webhook Lab</a>
         <a href="/directory">Playbook Directory (60)</a>
         <a href="/#pricing">Pricing</a>
-        <a href="/#grader" class="btn btn-indigo btn-sm">
+        <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
           <span>Calculate Recoverable MRR</span>
           <span class="btn-icon-circle" aria-hidden="true">↗</span>
         </a>
@@ -89,20 +89,22 @@
   <main>
     <!-- ABOVE THE FOLD: MODULE A — FREE REVENUE LEAKAGE & DUNNING RECOVERY GRADER -->
     <section id="grader" class="hero-section">
-      <div class="container hero-split">
-        <div class="hero-left">
-          <div class="status-pill">INSTITUTIONAL CHECKOUT BANDIT + STRIPE SMART DUNNING</div>
-          <h1 class="hero-h1">Stop Losing 71% of Checkouts &amp; Failed <span class="serif-italic">Stripe</span> Renewals</h1>
-          <p class="hero-lead">Intercept abandoning buyers with a <strong>Beta-Bernoulli Thompson Sampling C1–C6 Bandit</strong> and recover failed Stripe charges by bank decline code—with 0% revenue tax.</p>
+      <div class="container hero-split" style="align-items:stretch;">
+        <div class="hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+          <div>
+            <div class="status-pill">INSTITUTIONAL CHECKOUT BANDIT + STRIPE SMART DUNNING</div>
+            <h1 class="hero-h1">Stop Losing 71% of Checkouts &amp; Failed <span class="serif-italic">Stripe</span> Renewals</h1>
+            <p class="hero-lead">Intercept abandoning buyers with a <strong>Beta-Bernoulli Thompson Sampling C1–C6 Bandit</strong> and recover failed Stripe charges by bank decline code—with 0% revenue tax.</p>
 
-          <div class="preset-bar" role="group" aria-label="Industry Store Presets">
-            <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
-            <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B Micro-SaaS ($25k MRR)</button>
-            <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">Creator Checkout ($40k/mo)</button>
-            <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
+            <div class="preset-bar" role="group" aria-label="Industry Store Presets">
+              <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
+              <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B Micro-SaaS ($25k MRR)</button>
+              <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">Creator Checkout ($40k/mo)</button>
+              <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
+            </div>
           </div>
 
-          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)">
+          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;margin-top:12px;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="form-row-2">
               <div>
@@ -131,7 +133,7 @@
               </div>
               <div style="display:flex; align-items:flex-end;">
                 <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block">
-                  <span>Audit Revenue Leakage</span>
+                  <span>Calculate Recoverable MRR</span>
                   <span class="btn-icon-circle" aria-hidden="true">↗</span>
                 </button>
               </div>
@@ -145,7 +147,7 @@
         </div>
 
         <!-- LIVE TELEMETRY & RECOVERY READOUT CARD -->
-        <div class="telemetry-card" aria-live="polite">
+        <div class="telemetry-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <div class="card-header-bar">
             <span class="mono-label">REAL-TIME LEAKAGE &amp; RECOVERY DIAGNOSTIC</span>
             <span id="out-grade-badge" class="badge-live">GRADE: C (65/100)</span>
@@ -157,7 +159,7 @@
               <strong id="out-total-leaked" class="tile-value text-rose">$214,523</strong>
               <span id="out-leaked-sub" class="tile-sub">$210,496 Cart + $4,027 Failed Cards</span>
             </div>
-            <div class="metric-tile tile-emerald">
+            <div class="metric-tile tile-emerald" id="recoverable-mrr-tile">
               <span class="tile-label">Autonomous Monthly Recovery</span>
               <strong id="out-total-recovered" class="tile-value text-emerald">+$36,722/mo</strong>
               <span id="out-annual-recovered" class="tile-sub">+$440,669/yr Net Impact (749.4x ROI)</span>
@@ -196,7 +198,7 @@
             <a href="/seo/stripe-decline-code-expired-card-account-updater" style="color:var(--blurple); font-weight:700;"><code>expired_card</code></a>
           </div>
 
-          <div class="code-snippet-box">
+          <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span class="mono-label">1-CLICK EMBEDDABLE SDK SNIPPET</span>
               <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:0.74rem;" onclick="copySdkSnippet()">Copy Script Tag</button>
