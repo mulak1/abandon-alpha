@@ -363,7 +363,12 @@ app.get('/directory', (req, res) => {
 });
 
 app.get('/seo/:slug', (req, res) => {
-  const page = getPseoPageBySlug(req.params.slug);
+  const SLUG_ALIASES = {
+    'stripe-decline-code-expired-card-account-updater': 'stripe-decline-code-expired-card-dunning-flow',
+    'stripe-webhook-idempotency-retry-architecture': 'stripe-invoice-payment-failed-webhook-retry-logic'
+  };
+  const rawSlug = String(req.params.slug || '');
+  const page = getPseoPageBySlug(SLUG_ALIASES[rawSlug] || rawSlug);
   if (!page) {
     return res.status(404).send(renderNotFoundHtml());
   }
