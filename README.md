@@ -1,12 +1,22 @@
 # AbandonAlpha — Checkout Bandit & Stripe Decline Recovery
 
-[![AbandonAlpha shopify_dtc](https://www.abandonalpha.com/badge/shopify_dtc.svg)](https://www.abandonalpha.com/?q=shopify_dtc&utm_source=github_readme) [![AbandonAlpha b2b_saas](https://www.abandonalpha.com/badge/b2b_saas.svg)](https://www.abandonalpha.com/?q=b2b_saas&utm_source=github_readme) [![AbandonAlpha creator_checkout](https://www.abandonalpha.com/badge/creator_checkout.svg)](https://www.abandonalpha.com/?q=creator_checkout&utm_source=github_readme)
+[![AbandonAlpha shopify_dtc](https://www.abandonalpha.com/badge/shopify_dtc.svg)](https://www.abandonalpha.com/scan/shopify_dtc?utm_source=github_readme) [![AbandonAlpha b2b_saas](https://www.abandonalpha.com/badge/b2b_saas.svg)](https://www.abandonalpha.com/scan/b2b_saas?utm_source=github_readme) [![AbandonAlpha creator_checkout](https://www.abandonalpha.com/badge/creator_checkout.svg)](https://www.abandonalpha.com/scan/creator_checkout?utm_source=github_readme)
+
+[![AbandonAlpha CNN Scorecard](https://www.abandonalpha.com/api/badge/cnn/shopify_dtc.svg)](https://www.abandonalpha.com/leaderboard?utm_source=github_cnn_card)
 
 > **Live Interactive Benchmark & Deliverable Compiler**: **[https://www.abandonalpha.com](https://www.abandonalpha.com/?utm_source=github_repo)**  
+> **Public Hall of Fame & Wall of Shame Leaderboard**: **[https://www.abandonalpha.com/leaderboard](https://www.abandonalpha.com/leaderboard)** ([Markdown](https://www.abandonalpha.com/leaderboard.md))  
 > **60-Page Programmatic Benchmark Directory**: **[https://www.abandonalpha.com/directory](https://www.abandonalpha.com/directory)**  
 > **AI Agent / LLM Manifest (`llms.txt`)**: **[https://www.abandonalpha.com/llms.txt](https://www.abandonalpha.com/llms.txt)** • **[OpenAPI 3.1 Spec](https://www.abandonalpha.com/openapi.json)** • **[MCP Server Registry](https://www.abandonalpha.com/.well-known/mcp-registry.json)**
 
 ---
+
+## 🏆 Live Public Scan Permalinks (`/scan/:target`) & Leaderboard
+
+- **[Public Scan: shopify_dtc](https://www.abandonalpha.com/scan/shopify_dtc)** ([Markdown Twin](https://www.abandonalpha.com/scan/shopify_dtc.md) • [CNN SVG Card](https://www.abandonalpha.com/api/badge/cnn/shopify_dtc.svg))
+- **[Public Scan: b2b_saas](https://www.abandonalpha.com/scan/b2b_saas)** ([Markdown Twin](https://www.abandonalpha.com/scan/b2b_saas.md) • [CNN SVG Card](https://www.abandonalpha.com/api/badge/cnn/b2b_saas.svg))
+- **[Public Scan: creator_checkout](https://www.abandonalpha.com/scan/creator_checkout)** ([Markdown Twin](https://www.abandonalpha.com/scan/creator_checkout.md) • [CNN SVG Card](https://www.abandonalpha.com/api/badge/cnn/creator_checkout.svg))
+- **[View Full Public Leaderboard (Hall of Fame A+ & Wall of Shame)](https://www.abandonalpha.com/leaderboard)**
 
 ## ⚡ Free Interactive Calculators & Micro-Tools (`/tools/:slug`)
 
@@ -22,11 +32,16 @@
 
 ---
 
-## 🛡️ Embed a Live AbandonAlpha SVG Score Badge in Your README or Docs
+## 🛡️ Embed a Live AbandonAlpha SVG Score Badge or CNN Scorecard in Your README
 
-Inspired by [`anuraghazra/github-readme-stats`](https://github.com/anuraghazra/github-readme-stats) and [`badges/shields`](https://github.com/badges/shields), you can embed a live, deterministic AbandonAlpha badge for any domain, brand, ingredient, or store:
+Inspired by [`anuraghazra/github-readme-stats`](https://github.com/anuraghazra/github-readme-stats) and [`badges/shields`](https://github.com/badges/shields), you can embed a live, deterministic AbandonAlpha badge or multi-metric CNN scorecard for any domain, brand, ingredient, or store:
 
-### Markdown Badge Snippet
+### Multi-Metric CNN Scorecard SVG (`440x128`)
+```markdown
+[![AbandonAlpha CNN Scorecard](https://www.abandonalpha.com/api/badge/cnn/shopify_dtc.svg)](https://www.abandonalpha.com/scan/shopify_dtc?utm_source=readme_cnn_card)
+```
+
+### Compact Shield Badge (`240x20`)
 ```markdown
 [![Verified by AbandonAlpha](https://www.abandonalpha.com/badge/shopify_dtc.svg)](https://www.abandonalpha.com/?q=shopify_dtc&utm_source=readme_badge)
 ```
@@ -51,6 +66,8 @@ AbandonAlpha implements the **Machine-Actionable Agent Discovery Triad** for zer
 | :--- | :--- | :--- |
 | **AnswerDotAI `llms.txt`** | [`https://www.abandonalpha.com/llms.txt`](https://www.abandonalpha.com/llms.txt) | Compact Markdown index of all 60+ benchmarks & tools |
 | **Full Corpus `llms-full.txt`** | [`https://www.abandonalpha.com/llms-full.txt`](https://www.abandonalpha.com/llms-full.txt) | Full deterministic benchmark corpus for RAG ingestion |
+| **Public Scan Sitemap** | [`https://www.abandonalpha.com/sitemap-scans.xml`](https://www.abandonalpha.com/sitemap-scans.xml) | Live XML sitemap of all public `/scan/:target` permalinks |
+| **CNN Sensor Inspection API** | [`https://www.abandonalpha.com/api/cnn/inspect`](https://www.abandonalpha.com/api/cnn/inspect) | Deterministic + CNN visual/acoustic sensor inspection |
 | **OpenAPI 3.1.0 Specification** | [`https://www.abandonalpha.com/openapi.json`](https://www.abandonalpha.com/openapi.json) | Public REST API schema for Custom GPTs & agent tool-calling |
 | **AI Plugin Manifest** | [`https://www.abandonalpha.com/.well-known/ai-plugin.json`](https://www.abandonalpha.com/.well-known/ai-plugin.json) | Standard agent plugin discovery manifest |
 | **MCP Server Registry** | [`https://www.abandonalpha.com/.well-known/mcp-registry.json`](https://www.abandonalpha.com/.well-known/mcp-registry.json) | Model Context Protocol JSON-RPC server (`POST /api/mcp/rpc`) |
