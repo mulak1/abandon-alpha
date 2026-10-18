@@ -40,9 +40,9 @@ function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
         <span class="brand-tag">${escapeHtml(tagText)}</span>
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
-        <a href="/#grader">Leakage Grader</a>
-        <a href="/#bandit-lab">C1–C6 Bandit Lab</a>
-        <a href="/#webhook-lab">Stripe Webhook Lab</a>
+        <a href="/#grader">Revenue Calculator</a>
+        <a href="/#bandit-lab">Exit-Offer Simulator</a>
+        <a href="/#webhook-lab">Stripe Retry Lab</a>
         <a href="/directory">Playbook Directory (60)</a>
         <a href="/#pricing">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
@@ -52,9 +52,9 @@ function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
       </nav>
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
-      <a href="/#grader">Leakage Grader</a>
-      <a href="/#bandit-lab">C1–C6 Bandit</a>
-      <a href="/#webhook-lab">Webhook Lab</a>
+      <a href="/#grader">Calculator</a>
+      <a href="/#bandit-lab">Exit Simulator</a>
+      <a href="/#webhook-lab">Stripe Lab</a>
       <a href="/directory">60 Playbooks</a>
       <a href="/#pricing">Pricing ($49)</a>
     </nav>
@@ -551,12 +551,12 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       <div class="lp-hero-copy">
         <div class="status-pill">FOR SHOPIFY BRANDS, SAAS FOUNDERS &amp; STRIPE MERCHANTS</div>
         <h1 class="lp-h1">71% of Your Checkout Visitors Leave Without Paying — Recover <span class="serif-italic">18%–31%</span> Automatically</h1>
-        <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Deploy our <strong>Behavioral Exit-Intent Thompson Bandit</strong> + <strong>Smart Stripe Dunning Engine</strong> in 60 seconds.</p>
+        <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Launch <strong>Smart Exit Counter-Offers</strong> + <strong>Payday-Timed Stripe Retries</strong> in 60 seconds.</p>
 
         <ul class="lp-proof-list">
-          <li><strong>Sub-15ms Velocity Exit Interception:</strong> Predicts tab closes via cursor trajectory (<code>v_y &lt; -0.65 px/ms</code>) and serves C1–C6 objection counter-offers before the visitor leaves.</li>
+          <li><strong>Smart Exit-Intent Counter-Offers:</strong> Detects when a buyer moves to close their checkout tab and offers the right 1-click incentive (discount, trial extension, or CFO quote) before they leave.</li>
           <li><strong>Decline-Code Smart Retries:</strong> Aligns <code>insufficient_funds</code> retries with payday deposit windows (62.4% recovery) and halts <code>expired_card</code> retries to avoid Visa/Mastercard fees.</li>
-          <li><strong>Meta CAPI ROAS Loop:</strong> Sends every recovered checkout back to Meta Conversions API with deterministic <code>event_id</code> deduplication.</li>
+          <li><strong>Meta Ads ROAS Sync:</strong> Sends every recovered checkout back to Meta Conversions API so your ad campaigns optimize for real buyers.</li>
         </ul>
 
         <div class="lp-trust-row">

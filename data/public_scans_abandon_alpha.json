@@ -1,18 +1,5 @@
 [
   {
-    "target": "stripe.com",
-    "grade": "B",
-    "score": 79,
-    "status": "WATCHLIST",
-    "kpi1": "+61.4% Recovery Lift",
-    "kpi2": "82% CTA Saliency",
-    "cnnReadout": "81.3% Checkout Confidence • 14ms ONNX Inference",
-    "issue": "Optimization Gap Detected — Unlock Production C1–C6 Bandit SDK & Stripe Retry Worker (99¢ Pass)",
-    "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.519Z"
-  },
-  {
     "target": "Stripe-Link-1Click",
     "grade": "A+",
     "score": 96,
@@ -22,8 +9,8 @@
     "cnnReadout": "96.8% Primary Button Eye-Fixation • 3 Input Fields",
     "issue": "Payday-Synced Retries + C1-C6 Bandit Active",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.523Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.607Z"
   },
   {
     "target": "Shopify-Plus-Bandit",
@@ -35,8 +22,8 @@
     "cnnReadout": "93.5% Mobile Thumb-Zone CTA Contrast (11.4:1 WCAG)",
     "issue": "Zero Blanket Coupon Cannibalization",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.527Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.611Z"
   },
   {
     "target": "Linear-Annual-Split",
@@ -48,8 +35,8 @@
     "cnnReadout": "91.2% Clean Two-Column Summary Saliency",
     "issue": "High-Converting C1 Price-Objection Downsell",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.531Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.615Z"
   },
   {
     "target": "B2B-SaaS-Smart-Retry",
@@ -61,8 +48,8 @@
     "cnnReadout": "89.7% Zero-Clutter Invoice Recovery Portal",
     "issue": "Compliant with Visa/MC Retry Rules",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.535Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.620Z"
   },
   {
     "target": "Static-10Pct-Popup-Store",
@@ -74,8 +61,8 @@
     "cnnReadout": "61.4% Modal Banner Blindness • Trains Coupon Abuse",
     "issue": "Losing $34,521/mo vs. C1-C6 Thompson Bandit",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.538Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.624Z"
   },
   {
     "target": "Naive-24h-Cron-Dunning",
@@ -87,8 +74,8 @@
     "cnnReadout": "42.0% Retry Collision Before 1st/15th Payday Deposit",
     "issue": "Losing 43% of Recoverable insufficient_funds MRR",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.542Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.629Z"
   },
   {
     "target": "14-Field-Legacy-Checkout",
@@ -100,7 +87,7 @@
     "cnnReadout": "34.8% Visual Clutter Entropy • Split Attention",
     "issue": "Severe Mobile Form Friction & Zero Exit-Intent Recovery",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
-    "cnnSensorLabel": "Checkout CTA Eye-Fixation Saliency & Form-Friction Tensor",
-    "scannedAt": "2026-10-18T22:03:22.546Z"
+    "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
+    "scannedAt": "2026-10-18T23:20:33.633Z"
   }
 ]
