@@ -90,8 +90,8 @@
   <main>
     <!-- ABOVE THE FOLD: LAYPERSON VALUE PROPOSITION & REVENUE RECOVERY CALCULATOR -->
     <section id="grader" class="hero-section">
-      <div class="container hero-split" style="align-items:stretch;">
-        <div id="home-executive-brief" class="hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+      <div class="container hero-split" style="align-items:start;">
+        <div id="home-executive-brief" class="hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;">
           <div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
               <div class="status-pill" style="margin:0;">CHECKOUT &amp; FAILED PAYMENT RECOVERY ENGINE</div>
@@ -108,7 +108,7 @@
             </div>
 
             <!-- 3-Step Layperson Journey Cards (Diagnosis Free -> Fix Gated) -->
-            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:0;">
               <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
                 <div class="mono-label" style="color:var(--blurple);margin-bottom:3px;">STEP 1 • FREE CHECK</div>
                 <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Enter your monthly checkouts to measure leaked cart &amp; failed-card revenue.</div>
@@ -124,7 +124,7 @@
             </div>
           </div>
 
-          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;margin-top:4px;">
+          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="display:flex;flex-direction:column;justify-content:flex-start;gap:12px;margin-top:0;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div>
               <div class="mono-label" style="margin-bottom:6px;color:#475569;">1-CLICK BENCHMARK STORE &amp; SAAS PRESETS</div>
