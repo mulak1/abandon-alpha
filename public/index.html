@@ -87,28 +87,40 @@
   </header>
 
   <main>
-    <!-- ABOVE THE FOLD: MODULE A: FREE REVENUE LEAKAGE & DUNNING RECOVERY GRADER -->
+    <!-- ABOVE THE FOLD: MERGED EXECUTIVE BRIEF & REVENUE RECOVERY CALCULATOR -->
     <section id="grader" class="hero-section">
       <div class="container hero-split" style="align-items:stretch;">
-        <div class="hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+        <div id="home-executive-brief" class="hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <div>
-            <div class="status-pill">FOR SHOPIFY BRANDS, SAAS APPS &amp; STRIPE MERCHANTS</div>
-            <h1 class="hero-h1">Stop Losing 71% of Checkouts &amp; Failed <span class="serif-italic">Stripe</span> Renewals</h1>
-            <p class="hero-lead">Catch leaving shoppers with smart <strong>1-Click Exit Counter-Offers</strong> and retry failed Stripe cards on payday, for a flat $49/mo with 0% revenue tax.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+              <div class="status-pill" style="margin:0;">2026 EXECUTIVE BRIEF &amp; RECOVERY CALCULATOR</div>
+              <a href="/leaderboard" class="status-pill" style="margin:0;text-decoration:none;background:#ECFDF5;color:#059669;border-color:#A7F3D0;">🏆 Top-3 Podium Leaderboard &rarr;</a>
+            </div>
+            <h1 class="hero-h1">Executive Brief: Why Blanket 10% Popups &amp; 24h Card Retries <span class="serif-italic">Lose Money</span></h1>
+            <p class="hero-lead">Most Shopify and Stripe businesses lose 18% to 31% of recoverable revenue by giving blanket 10% coupons to buyers who would pay full price, and retrying failed credit cards before payday.</p>
 
-            <div class="preset-bar" role="group" aria-label="Industry Store Presets">
-              <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
-              <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B Micro-SaaS ($25k MRR)</button>
-              <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">Creator Checkout ($40k/mo)</button>
-              <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
+            <!-- 3-Point Executive Brief Summary inside Top Hero -->
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;">
+              <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                <div class="mono-label" style="color:var(--blurple);margin-bottom:3px;">01. SMART EXIT OFFERS</div>
+                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Match the offer (14-day pause, 2-pay split, or gift) to why the buyer hesitated.</div>
+              </div>
+              <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                <div class="mono-label" style="color:#059669;margin-bottom:3px;">02. PAYDAY RETRIES</div>
+                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Retry <code>insufficient_funds</code> on Friday 09:00 &amp; the 1st/15th payday (+62.4% lift).</div>
+              </div>
+              <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                <div class="mono-label" style="color:#0A2540;margin-bottom:3px;">03. 48H COOLDOWN</div>
+                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Give <code>do_not_honor</code> cards a 48h cooldown + 1-click Apple Pay SMS link.</div>
+              </div>
             </div>
           </div>
 
-          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;margin-top:12px;">
+          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;margin-top:4px;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="form-row-2">
               <div>
-                <label class="field-label" for="input-store">Store / SaaS Name</label>
+                <label class="field-label" for="input-store">Store or SaaS Name</label>
                 <input id="input-store" type="text" class="field-input" value="AuraBotanics DTC" required />
               </div>
               <div>
@@ -116,32 +128,42 @@
                 <input id="input-sessions" type="number" class="field-input" value="3200" min="50" max="1000000" required />
               </div>
             </div>
-            <div class="form-row-2">
-              <div>
-                <label class="field-label" for="input-aov">Average Order / Plan Value ($)</label>
-                <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" required />
-              </div>
-              <div>
-                <label class="field-label" for="input-abandon">Cart / Checkout Abandonment (%)</label>
-                <input id="input-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" required />
-              </div>
+
+            <div style="margin-top:10px;">
+              <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block">
+                <span>Calculate My Recoverable Revenue</span>
+                <span class="btn-icon-circle" aria-hidden="true">↗</span>
+              </button>
             </div>
-            <div class="form-row-2">
-              <div>
-                <label class="field-label" for="input-fail">Failed Stripe Card / Involuntary Churn (%)</label>
-                <input id="input-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="35" required />
+
+            <details style="margin-top:10px;padding:10px 12px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+              <summary style="cursor:pointer;font-size:0.84rem;font-weight:700;color:#475569;">⚙️ Optional: Customize Order Value, Abandonment %, Failed Card Rate &amp; Presets ▾</summary>
+              <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-top:10px;">
+                <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
+                <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B Micro-SaaS ($25k MRR)</button>
+                <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">Creator Checkout ($40k/mo)</button>
+                <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
               </div>
-              <div style="display:flex; align-items:flex-end;">
-                <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block">
-                  <span>Calculate Recoverable MRR</span>
-                  <span class="btn-icon-circle" aria-hidden="true">↗</span>
-                </button>
+              <div class="form-row-2" style="margin-top:10px;">
+                <div>
+                  <label class="field-label" for="input-aov">Average Order / Plan Value ($)</label>
+                  <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" required />
+                </div>
+                <div>
+                  <label class="field-label" for="input-abandon">Cart / Checkout Abandonment (%)</label>
+                  <input id="input-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" required />
+                </div>
               </div>
-            </div>
-            <div class="cta-row" style="margin-top:8px;">
-              <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" onclick="openExitIntentModal()">Trigger Live Exit-Intent Modal</button>
-              <a href="/leaderboard" class="btn btn-ghost btn-sm">Explore Checkout Leaderboard &rarr;</a>
-            </div>
+              <div class="form-row-2" style="margin-top:8px;">
+                <div>
+                  <label class="field-label" for="input-fail">Failed Stripe Card Rate (%)</label>
+                  <input id="input-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="35" required />
+                </div>
+                <div style="display:flex; align-items:flex-end;">
+                  <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" style="width:100%;" onclick="openExitIntentModal()">Preview Exit Offer Popup</button>
+                </div>
+              </div>
+            </details>
             <div id="audit-form-status" class="mono-status" aria-live="polite"></div>
           </form>
         </div>
@@ -149,7 +171,7 @@
         <!-- LIVE TELEMETRY & RECOVERY READOUT CARD -->
         <div class="telemetry-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <div class="card-header-bar">
-            <span class="mono-label">REAL-TIME LEAKAGE &amp; RECOVERY DIAGNOSTIC</span>
+            <span class="mono-label">PLAIN-ENGLISH REVENUE RECOVERY BREAKDOWN</span>
             <span id="out-grade-badge" class="badge-live">GRADE: C (65/100)</span>
           </div>
 
@@ -160,32 +182,32 @@
               <span id="out-leaked-sub" class="tile-sub">$210,496 Cart + $4,027 Failed Cards</span>
             </div>
             <div class="metric-tile tile-emerald" id="recoverable-mrr-tile">
-              <span class="tile-label">Autonomous Monthly Recovery</span>
+              <span class="tile-label">Recoverable Monthly Revenue</span>
               <strong id="out-total-recovered" class="tile-value text-emerald">+$36,722/mo</strong>
-              <span id="out-annual-recovered" class="tile-sub">+$440,669/yr Net Impact (749.4x ROI)</span>
+              <span id="out-annual-recovered" class="tile-sub">+$440,669/yr Net Gain ($49 Flat Plan)</span>
             </div>
           </div>
 
           <div class="spec-row">
-            <span class="spec-k">Exit-Intent Bandit Recovery (16.4% Lift)</span>
+            <span class="spec-k">Smart Exit Offer Recovery (16.4% Lift)</span>
             <strong id="out-exit-recovered" class="spec-v text-emerald">+$34,521/mo (375 orders)</strong>
           </div>
           <div class="spec-row">
-            <span class="spec-k">Stripe Smart Dunning Recovery (56.2% Lift)</span>
+            <span class="spec-k">Payday-Timed Card Retry Recovery (56.2% Lift)</span>
             <strong id="out-dunning-recovered" class="spec-v text-emerald">+$2,201/mo</strong>
           </div>
 
           <div id="out-dunning-breakdown" style="margin-top:10px;">
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (62.4% recovery)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (Payday Retry: 62.4% saved)</span>
               <span class="spec-v text-emerald">+$854/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (47.8% recovery)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (48h Cooldown: 47.8% saved)</span>
               <span class="spec-v text-emerald">+$558/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-dunning-flow"><code>expired_card</code></a> (54.2% recovery)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-dunning-flow"><code>expired_card</code></a> (SMS Wallet Link: 54.2% saved)</span>
               <span class="spec-v text-emerald">+$480/mo</span>
             </div>
           </div>
@@ -200,80 +222,10 @@
 
           <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="mono-label">1-CLICK EMBEDDABLE SDK SNIPPET</span>
+              <span class="mono-label">1-CLICK EMBEDDABLE SCRIPT TAG</span>
               <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="copySdkSnippet()">Copy Script Tag</button>
             </div>
             <code id="out-sdk-snippet">&lt;script src="https://www.abandonalpha.com/sdk/abandon-alpha-sdk.js" data-merchant="aurabotanics-dtc" data-aov="92" data-bandit="thompson-c1-c6" async&gt;&lt;/script&gt;</code>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXECUTIVE BRIEF & PLAIN-ENGLISH RECOVERY FIELD GUIDE (Merged onto Homepage) -->
-    <section id="home-executive-brief" class="lab-section" style="border-bottom:1px solid var(--border-hairline);background:#F1F5F9;">
-      <div class="container">
-        <div class="hero-split" style="align-items:stretch;">
-          <div class="telemetry-card" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-            <div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-                <span class="status-pill" style="margin:0;">2026 FINOPS &amp; CHECKOUT EXECUTIVE BRIEF</span>
-              </div>
-              <h2 class="section-h2" style="font-size:2rem;line-height:1.15;margin-bottom:12px;">
-                Executive Brief: Why Blanket 10% Popups &amp; 24-Hour Card Retries <span class="serif-italic">Lose Money</span>
-              </h2>
-              <p class="section-sub" style="margin-bottom:18px;font-size:1rem;">
-                Most Shopify and Stripe merchants leak 18% to 31% of recoverable revenue in two ways: giving blanket 10% discount codes to buyers who would have paid full price, and retrying failed credit cards on a blind 24-hour timer before the customer gets paid.
-              </p>
-              <div style="display:grid;gap:12px;margin-bottom:20px;">
-                <div style="padding:14px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                  <strong style="color:#0A2540;font-size:0.95rem;">1. Match the Offer to the Buyer's Reason for Leaving (C1–C6):</strong>
-                  <span style="color:#475569;font-size:0.9rem;"> Instead of a generic 10% coupon, offer a 14-day pause, a 2-pay split, or a CFO invoice link based on why the buyer hesitated.</span>
-                </div>
-                <div style="padding:14px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                  <strong style="color:#0A2540;font-size:0.95rem;">2. Payday-Timed Retries for <code>insufficient_funds</code> (+62.4% Lift):</strong>
-                  <span style="color:#475569;font-size:0.9rem;"> Retrying an empty debit card 24 hours later fails 81% of the time. Waiting until Friday 09:00 local time or the 1st/15th payday recovers 62.4%.</span>
-                </div>
-                <div style="padding:14px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                  <strong style="color:#0A2540;font-size:0.95rem;">3. 48-Hour Bank Cooldown for <code>do_not_honor</code>:</strong>
-                  <span style="color:#475569;font-size:0.9rem;"> Hammering a fraud-throttled card triggers a permanent Visa/Mastercard block. A 48-hour cooldown + 1-click SMS Apple Pay link saves 47.8%.</span>
-                </div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:auto;">
-              <a href="#grader" class="btn btn-indigo">
-                <span>Calculate My Store's Recoverable Revenue</span>
-                <span class="btn-icon-circle" aria-hidden="true">&uarr;</span>
-              </a>
-              <a href="/leaderboard" class="btn btn-ghost">Explore Checkout &amp; Dunning Leaderboard &rarr;</a>
-            </div>
-          </div>
-
-          <div class="telemetry-card" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
-            <div>
-              <div class="mono-label" style="color:var(--blurple);margin-bottom:6px;">PLAIN-ENGLISH RECOVERY GLOSSARY</div>
-              <h3 class="section-h2" style="font-size:1.55rem;margin-bottom:14px;">Key Revenue Recovery Concepts Explained Simply</h3>
-              <div style="display:grid;gap:12px;">
-                <div style="padding:14px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
-                  <div style="font-weight:700;font-size:0.95rem;color:#0A2540;margin-bottom:4px;">Smart Exit Offer Testing (Thompson Bandit)</div>
-                  <p style="font-size:0.88rem;color:#475569;margin:0;">Automatically tests 6 non-discount and low-discount rescue offers and sends more traffic to whichever offer recovers the most net profit.</p>
-                </div>
-                <div style="padding:14px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
-                  <div style="font-weight:700;font-size:0.95rem;color:#0A2540;margin-bottom:4px;">Decline-Code-Aware Dunning</div>
-                  <p style="font-size:0.88rem;color:#475569;margin:0;">Reading the exact Stripe bank error code (like <code>insufficient_funds</code> vs. <code>expired_card</code>) so each failed payment gets the right retry schedule.</p>
-                </div>
-                <div style="padding:14px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
-                  <div style="font-weight:700;font-size:0.95rem;color:#0A2540;margin-bottom:4px;">Zero Revenue Tax ($49 Flat vs. % Cut)</div>
-                  <p style="font-size:0.88rem;color:#475569;margin:0;">Unlike recovery tools that take 10% to 25% of your recovered revenue, AbandonAlpha charges a flat $49/mo so you keep 100% of every saved order.</p>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px;padding:14px 16px;border-radius:10px;background:#ECFDF5;border:1px solid #A7F3D0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-              <div>
-                <div class="mono-label" style="color:#059669;">MERCHANT ROI BENCHMARK</div>
-                <div style="font-size:0.92rem;color:#0A2540;font-weight:700;">Avg. +$4,820/mo recovered per $50k MRR within 14 days</div>
-              </div>
-              <a href="/buy/complete_dossier" class="btn btn-indigo btn-sm">Unlock $49 Recovery Pack &rarr;</a>
-            </div>
           </div>
         </div>
       </div>
