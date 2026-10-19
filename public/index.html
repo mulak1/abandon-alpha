@@ -223,7 +223,7 @@
           <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span class="mono-label">1-CLICK EMBEDDABLE SCRIPT TAG</span>
-              <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="copySdkSnippet()">Copy Script Tag</button>
+              <button type="button" id="copy-sdk-btn" class="btn btn-indigo btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass')}else{copySdkSnippet()}">Unlock 3-File Pack ($1.99) ↗</button>
             </div>
             <code id="out-sdk-snippet">&lt;script src="https://www.abandonalpha.com/sdk/abandon-alpha-sdk.js" data-merchant="aurabotanics-dtc" data-aov="92" data-bandit="thompson-c1-c6" async&gt;&lt;/script&gt;</code>
           </div>
@@ -401,56 +401,40 @@
       </div>
     </section>
 
-    <!-- PHASE 2: FLAT-RATE SELF-SERVE PRICING & STRIPE CHECKOUT -->
+    <!-- PHASE 3 PUREST PATH: SINGLE SELF-SERVE STRIPE EXPRESS CHECKOUT -->
     <section id="pricing" class="lab-section">
       <div class="container">
-        <div class="section-header-stack">
-          <h2 class="section-h2">Zero Revenue-Share Tax. <span class="serif-italic">Flat-Rate</span> Autonomous Recovery.</h2>
-          <p class="section-sub">Unlike legacy dunning tools that tax 5%–15% of your recovered revenue, AbandonAlpha charges a flat monthly rate backed by a <strong>30-Day 5x ROI Guarantee</strong>.</p>
-        </div>
-
-        <div class="pricing-grid">
-          <div class="pricing-card">
-            <div>
-              <div class="mono-label">STARTER AUTONOMOUS RECOVERY</div>
-              <div class="price-tag">$49<span>/month flat</span></div>
-              <p class="section-sub">For Shopify DTC stores, indie SaaS apps, and Stripe merchants up to $50k/mo volume.</p>
-              <ul class="feature-check-list">
-                <li><strong>Behavioral Exit-Intent Bandit:</strong> Unlimited C1–C6 objection counter-offers</li>
-                <li><strong>Smart Stripe Dunning:</strong> Payday-aligned retries for <code>insufficient_funds</code> &amp; <code>do_not_honor</code></li>
-                <li><strong>Passwordless Billing Portal Links:</strong> 1-tap Apple Pay / Google Pay card updater</li>
-                <li><strong>30-Day 5x ROI Guarantee:</strong> Recover $250+ in 30 days or 1-click full refund</li>
-              </ul>
+        <div class="pricing-card featured" style="max-width:860px; margin:0 auto;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+              <span class="mono-label text-indigo">PHASE 3 PUREST PATH • INSTANT STRIPE EXPRESS</span>
+              <span class="badge-live">ONE-TIME PASS • 0% REVENUE TAX</span>
             </div>
-            <div>
-              <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">
-                <span>Start Starter Plan ($49/mo)</span>
-                <span class="btn-icon-circle" aria-hidden="true">↗</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="pricing-card featured">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="mono-label text-indigo">GROWTH AUTONOMOUS RECOVERY (RECOMMENDED)</span>
-                <span class="badge-live">0% REVENUE TAX</span>
+            <h2 class="section-h2" style="margin-bottom:8px;">Unlock Your Complete 3-File Stripe Decline Retry &amp; Bandit Pack <span class="serif-italic">($1.99 Stripe Express)</span></h2>
+            <p class="section-sub" style="margin-bottom:18px;">Unblur all bank-code recovery schedules and download your production-ready <code>stripe-retry-rules.json</code>, <code>exit-bandit-c1-c6.js</code>, and 3-step recovery copy bundle in 1 click.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:18px 20px; border-radius:12px; background:#F8FAFC; border:1px solid #E2E8F0;">
+              <div>
+                <div class="price-tag" style="margin:0;">$1.99<span> USD one-time pass</span></div>
+                <div style="font-size:0.85rem; color:var(--text-slate); margin-top:4px;">✓ Complete 3-File Stripe Recovery &amp; Bandit Bundle • Instant Browser Unlock</div>
               </div>
-              <div class="price-tag">$149<span>/month flat</span></div>
-              <p class="section-sub">For scaling SaaS &amp; multi-store commerce operators needing multi-channel SMS/WhatsApp + Meta CAPI attribution.</p>
-              <ul class="feature-check-list">
-                <li><strong>Everything in Starter ($49/mo)</strong> + Unlimited monthly checkout volume</li>
-                <li><strong>Gemini 3.8 Flash Personalized Copy:</strong> Dynamic per-buyer Email &amp; SMS objection scripts</li>
-                <li><strong>Meta Pixel + CAPI Attribution Loop:</strong> Deduplicated <code>Purchase</code> events fed back to Meta Ads</li>
-                <li><strong>Custom CFO Quote PDF Generator:</strong> Instant B2B procurement invoice lock (Arm C3)</li>
-              </ul>
-            </div>
-            <div>
-              <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
-                <span>Start Growth Plan ($149/mo)</span>
+              <a href="/buy/flash_pass" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn btn-indigo" style="padding:14px 24px; font-size:0.96rem; text-decoration:none;">
+                <span>Unlock Complete 3-File Pack ($1.99 Stripe Express)</span>
                 <span class="btn-icon-circle" aria-hidden="true">↗</span>
-              </button>
+              </a>
             </div>
+            <details style="margin-top:16px; font-size:0.85rem; color:var(--text-slate);">
+              <summary style="cursor:pointer; font-weight:700;">Need Managed Multi-Store Autonomous Recovery ($49–$149/mo)?</summary>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin-top:12px;">
+                <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">
+                  <span>Start Starter Plan ($49/mo)</span>
+                  <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                </button>
+                <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
+                  <span>Start Growth Plan ($149/mo)</span>
+                  <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </details>
           </div>
         </div>
 
