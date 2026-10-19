@@ -107,7 +107,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
 .brand-wordmark-accent { color: var(--blurple); }
 .brand-tag {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--blurple);
   background: var(--blurple-soft);
@@ -144,7 +144,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   justify-content: center;
 }
 .mobile-nav-strip a {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--text-slate);
   padding: 5px 10px;
@@ -181,7 +181,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   height: 21px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.22);
-  font-size: 0.74rem;
+  font-size: 0.8125rem;
   line-height: 1;
 }
 .btn-emerald {
@@ -212,7 +212,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 0.73rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -224,22 +224,22 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   margin-bottom: 16px;
 }
 .badge-emerald {
-  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
   color: var(--emerald); background: var(--emerald-soft); border: 1px solid var(--emerald-border);
   padding: 4px 10px; border-radius: 9999px;
 }
 .badge-rose {
-  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
   color: var(--rose); background: var(--rose-soft); border: 1px solid var(--rose-border);
   padding: 4px 10px; border-radius: 9999px;
 }
 .badge-amber {
-  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
   color: var(--amber); background: var(--amber-soft); border: 1px solid var(--amber-border);
   padding: 4px 10px; border-radius: 9999px;
 }
 .badge-indigo {
-  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
   color: var(--blurple); background: var(--blurple-soft); border: 1px solid var(--blurple-border);
   padding: 4px 10px; border-radius: 9999px;
 }
@@ -279,7 +279,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   padding: 7px 14px;
   border-radius: 9999px;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size:0.84rem;
   font-weight: 700;
   background: #FFFFFF;
   color: var(--text-slate);
@@ -312,13 +312,13 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   border-bottom: 1px solid var(--border-hairline);
 }
 .badge-live {
-  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
   color: var(--emerald); background: var(--emerald-soft); border: 1px solid var(--emerald-border);
   padding: 4px 10px; border-radius: 9999px;
 }
 .mono-label {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -366,9 +366,9 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
 }
 .metric-box.leaked, .metric-tile.tile-rose { background: var(--rose-soft); border-color: var(--rose-border); }
 .metric-box.recovered, .metric-tile.tile-emerald { background: var(--emerald-soft); border-color: var(--emerald-border); }
-.metric-title, .tile-label { font-size: 0.76rem; font-weight: 700; color: var(--text-slate); margin-bottom: 4px; }
+.metric-title, .tile-label { font-size: 0.8125rem; font-weight: 700; color: var(--text-slate); margin-bottom: 4px; }
 .metric-val, .tile-value { font-family: var(--font-mono); font-size: 1.65rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
-.metric-sub, .tile-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+.metric-sub, .tile-sub { font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px; }
 .spec-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 9px 0; border-bottom: 1px solid var(--border-hairline); font-size: 0.85rem;
@@ -416,14 +416,14 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   border-color: var(--blurple); background: var(--blurple-soft); box-shadow: 0 4px 12px rgba(83, 58, 253, 0.1);
 }
 .objection-btn:active { transform: scale(0.97); }
-.obj-code { display: block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--blurple); margin-bottom: 3px; }
+.obj-code { display: block; font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: var(--blurple); margin-bottom: 3px; }
 .obj-lbl { display: block; font-size: 0.84rem; font-weight: 700; color: var(--text-navy); }
 
 /* Posterior Table */
 .posterior-table-wrap { overflow-x: auto; }
 .posterior-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
 .posterior-table th {
-  text-align: left; padding: 10px 8px; font-family: var(--font-mono); font-size: 0.72rem;
+  text-align: left; padding: 10px 8px; font-family: var(--font-mono); font-size: 0.8125rem;
   text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border-hairline);
 }
 .posterior-table td {
@@ -466,7 +466,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
 /* pSEO, Directory & Meta Landing Page */
 .pseo-main { padding: 36px 0 64px; }
 .breadcrumb {
-  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+  font-family: var(--font-mono); font-size:0.84rem; color: var(--text-muted);
   margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap;
 }
 .breadcrumb a { color: var(--blurple); font-weight: 600; }
@@ -487,7 +487,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
 .lp-topbar { border-bottom: 1px solid var(--border-hairline); padding: 14px 0; background: #FFFFFF; }
 .lp-topbar-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .lp-guarantee-pill {
-  font-family: var(--font-mono); font-size: 0.76rem; font-weight: 700; color: var(--emerald);
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: var(--emerald);
   background: var(--emerald-soft); border: 1px solid var(--emerald-border); padding: 6px 13px; border-radius: 9999px;
 }
 .lp-main { padding: 40px 0 64px; }
@@ -497,9 +497,9 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
 .lp-trust-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
 .trust-stat { background: #FFFFFF; border: 1px solid var(--border-hairline); border-radius: 12px; padding: 14px; box-shadow: var(--shadow-stripe); }
 .trust-stat strong { display: block; font-family: var(--font-mono); font-size: 1.2rem; }
-.trust-stat span { font-size: 0.76rem; color: var(--text-slate); }
+.trust-stat span { font-size: 0.8125rem; color: var(--text-slate); }
 .lp-result-panel { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border-hairline); }
-.mono-status { margin-top: 10px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted); }
+.mono-status { margin-top: 10px; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted); }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* Non-Overlapping Docked Cookie & Telemetry Consent Bar + Footer */
@@ -518,7 +518,7 @@ code, pre, .mono-num { font-family: var(--font-mono); font-variant-numeric: tabu
   .main-nav a:not(.btn), .brand-tag { display: none; }
   .mobile-nav-strip { display: flex; }
   .header-inner { min-height: 60px; }
-  .header-inner .btn-sm { padding: 7px 11px; font-size: 0.72rem; }
+  .header-inner .btn-sm { padding: 7px 11px; font-size: 0.8125rem; }
   .header-inner .btn-icon-circle { display: none; }
   .form-row-2, .metric-duo, .objection-buttons-grid, .lp-trust-row { grid-template-columns: 1fr; }
 }

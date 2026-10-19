@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AbandonAlpha — Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine</title>
+  <title>AbandonAlpha: Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine</title>
   <meta name="description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe payments with Behavioral Mouse-Velocity Exit-Intent Bandits (C1–C6) and Smart Decline-Code Dunning." />
   <link rel="canonical" href="https://www.abandonalpha.com/" />
-  <meta property="og:title" content="AbandonAlpha — Checkout Abandonment Bandit &amp; Stripe Dunning Engine" />
+  <meta property="og:title" content="AbandonAlpha: Checkout Abandonment Bandit &amp; Stripe Dunning Engine" />
   <meta property="og:description" content="Calculate your store's monthly checkout &amp; failed-payment leakage in 10 seconds and test our live Beta-Bernoulli Thompson Sampling Bandit." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.abandonalpha.com/" />
@@ -15,7 +15,7 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AbandonAlpha — Autonomous Checkout &amp; Stripe Dunning Engine" />
+  <meta name="twitter:title" content="AbandonAlpha: Autonomous Checkout &amp; Stripe Dunning Engine" />
   <meta name="twitter:description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe renewals automatically." />
   <meta name="twitter:image" content="https://www.abandonalpha.com/api/og?slug=home" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -67,8 +67,8 @@
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
         <a href="/#grader">Revenue Calculator</a>
-        <a href="/#bandit-lab">Exit-Offer Simulator</a>
-        <a href="/#webhook-lab">Stripe Retry Lab</a>
+        <a href="/#home-executive-brief">Executive Brief</a>
+        <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
         <a href="/directory">Playbook Directory (60)</a>
         <a href="/#pricing">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
@@ -79,22 +79,22 @@
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
-      <a href="/#bandit-lab">Exit Simulator</a>
-      <a href="/#webhook-lab">Stripe Lab</a>
+      <a href="/#home-executive-brief">Executive Brief</a>
+      <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
       <a href="/#pricing">Pricing ($49)</a>
     </nav>
   </header>
 
   <main>
-    <!-- ABOVE THE FOLD: MODULE A — FREE REVENUE LEAKAGE & DUNNING RECOVERY GRADER -->
+    <!-- ABOVE THE FOLD: MODULE A: FREE REVENUE LEAKAGE & DUNNING RECOVERY GRADER -->
     <section id="grader" class="hero-section">
       <div class="container hero-split" style="align-items:stretch;">
         <div class="hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <div>
             <div class="status-pill">FOR SHOPIFY BRANDS, SAAS APPS &amp; STRIPE MERCHANTS</div>
             <h1 class="hero-h1">Stop Losing 71% of Checkouts &amp; Failed <span class="serif-italic">Stripe</span> Renewals</h1>
-            <p class="hero-lead">Catch leaving shoppers with smart <strong>1-Click Exit Counter-Offers</strong> and retry failed Stripe cards on payday—for a flat $49/mo with 0% revenue tax.</p>
+            <p class="hero-lead">Catch leaving shoppers with smart <strong>1-Click Exit Counter-Offers</strong> and retry failed Stripe cards on payday, for a flat $49/mo with 0% revenue tax.</p>
 
             <div class="preset-bar" role="group" aria-label="Industry Store Presets">
               <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
@@ -140,7 +140,7 @@
             </div>
             <div class="cta-row" style="margin-top:8px;">
               <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" onclick="openExitIntentModal()">Trigger Live Exit-Intent Modal</button>
-              <a href="#bandit-lab" class="btn btn-ghost btn-sm">Inspect C1–C6 Bandit Posteriors</a>
+              <a href="/leaderboard" class="btn btn-ghost btn-sm">Explore Checkout Leaderboard &rarr;</a>
             </div>
             <div id="audit-form-status" class="mono-status" aria-live="polite"></div>
           </form>
@@ -189,7 +189,7 @@
               <span class="spec-v text-emerald">+$480/mo</span>
             </div>
           </div>
-          <div style="margin-top:8px; font-size:0.78rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+          <div style="margin-top:8px; font-size:0.85rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
             <span class="mono-label">Top Decline Playbooks:</span>
             <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="color:var(--blurple); font-weight:700;"><code>insufficient_funds</code></a>
             <span>•</span>
@@ -201,9 +201,79 @@
           <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span class="mono-label">1-CLICK EMBEDDABLE SDK SNIPPET</span>
-              <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:0.74rem;" onclick="copySdkSnippet()">Copy Script Tag</button>
+              <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="copySdkSnippet()">Copy Script Tag</button>
             </div>
             <code id="out-sdk-snippet">&lt;script src="https://www.abandonalpha.com/sdk/abandon-alpha-sdk.js" data-merchant="aurabotanics-dtc" data-aov="92" data-bandit="thompson-c1-c6" async&gt;&lt;/script&gt;</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXECUTIVE BRIEF & PLAIN-ENGLISH RECOVERY FIELD GUIDE (Merged onto Homepage) -->
+    <section id="home-executive-brief" class="lab-section" style="border-bottom:1px solid var(--border-hairline);background:#F1F5F9;">
+      <div class="container">
+        <div class="hero-split" style="align-items:stretch;">
+          <div class="telemetry-card" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+            <div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+                <span class="status-pill" style="margin:0;">2026 FINOPS &amp; CHECKOUT EXECUTIVE BRIEF</span>
+              </div>
+              <h2 class="section-h2" style="font-size:2rem;line-height:1.15;margin-bottom:12px;">
+                Executive Brief: Why Blanket 10% Popups &amp; 24-Hour Card Retries <span class="serif-italic">Lose Money</span>
+              </h2>
+              <p class="section-sub" style="margin-bottom:18px;font-size:1rem;">
+                Most Shopify and Stripe merchants leak 18% to 31% of recoverable revenue in two ways: giving blanket 10% discount codes to buyers who would have paid full price, and retrying failed credit cards on a blind 24-hour timer before the customer gets paid.
+              </p>
+              <div style="display:grid;gap:12px;margin-bottom:20px;">
+                <div style="padding:14px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                  <strong style="color:#0A2540;font-size:0.95rem;">1. Match the Offer to the Buyer's Reason for Leaving (C1–C6):</strong>
+                  <span style="color:#475569;font-size:0.9rem;"> Instead of a generic 10% coupon, offer a 14-day pause, a 2-pay split, or a CFO invoice link based on why the buyer hesitated.</span>
+                </div>
+                <div style="padding:14px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                  <strong style="color:#0A2540;font-size:0.95rem;">2. Payday-Timed Retries for <code>insufficient_funds</code> (+62.4% Lift):</strong>
+                  <span style="color:#475569;font-size:0.9rem;"> Retrying an empty debit card 24 hours later fails 81% of the time. Waiting until Friday 09:00 local time or the 1st/15th payday recovers 62.4%.</span>
+                </div>
+                <div style="padding:14px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                  <strong style="color:#0A2540;font-size:0.95rem;">3. 48-Hour Bank Cooldown for <code>do_not_honor</code>:</strong>
+                  <span style="color:#475569;font-size:0.9rem;"> Hammering a fraud-throttled card triggers a permanent Visa/Mastercard block. A 48-hour cooldown + 1-click SMS Apple Pay link saves 47.8%.</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:auto;">
+              <a href="#grader" class="btn btn-indigo">
+                <span>Calculate My Store's Recoverable Revenue</span>
+                <span class="btn-icon-circle" aria-hidden="true">&uarr;</span>
+              </a>
+              <a href="/leaderboard" class="btn btn-ghost">Explore Checkout &amp; Dunning Leaderboard &rarr;</a>
+            </div>
+          </div>
+
+          <div class="telemetry-card" style="padding:28px;display:flex;flex-direction:column;justify-content:space-between;height:100%;">
+            <div>
+              <div class="mono-label" style="color:var(--blurple);margin-bottom:6px;">PLAIN-ENGLISH RECOVERY GLOSSARY</div>
+              <h3 class="section-h2" style="font-size:1.55rem;margin-bottom:14px;">Key Revenue Recovery Concepts Explained Simply</h3>
+              <div style="display:grid;gap:12px;">
+                <div style="padding:14px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+                  <div style="font-weight:700;font-size:0.95rem;color:#0A2540;margin-bottom:4px;">Smart Exit Offer Testing (Thompson Bandit)</div>
+                  <p style="font-size:0.88rem;color:#475569;margin:0;">Automatically tests 6 non-discount and low-discount rescue offers and sends more traffic to whichever offer recovers the most net profit.</p>
+                </div>
+                <div style="padding:14px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+                  <div style="font-weight:700;font-size:0.95rem;color:#0A2540;margin-bottom:4px;">Decline-Code-Aware Dunning</div>
+                  <p style="font-size:0.88rem;color:#475569;margin:0;">Reading the exact Stripe bank error code (like <code>insufficient_funds</code> vs. <code>expired_card</code>) so each failed payment gets the right retry schedule.</p>
+                </div>
+                <div style="padding:14px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+                  <div style="font-weight:700;font-size:0.95rem;color:#0A2540;margin-bottom:4px;">Zero Revenue Tax ($49 Flat vs. % Cut)</div>
+                  <p style="font-size:0.88rem;color:#475569;margin:0;">Unlike recovery tools that take 10% to 25% of your recovered revenue, AbandonAlpha charges a flat $49/mo so you keep 100% of every saved order.</p>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:16px;padding:14px 16px;border-radius:10px;background:#ECFDF5;border:1px solid #A7F3D0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+              <div>
+                <div class="mono-label" style="color:#059669;">MERCHANT ROI BENCHMARK</div>
+                <div style="font-size:0.92rem;color:#0A2540;font-weight:700;">Avg. +$4,820/mo recovered per $50k MRR within 14 days</div>
+              </div>
+              <a href="/buy/complete_dossier" class="btn btn-indigo btn-sm">Unlock $49 Recovery Pack &rarr;</a>
+            </div>
           </div>
         </div>
       </div>
@@ -213,15 +283,16 @@
     <section id="bandit-lab" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <h2 class="section-h2">Live C1–C6 Objection &amp; <span class="serif-italic">Thompson Sampling</span> Bandit</h2>
-          <p class="section-sub">Click any checkout objection below to trigger a real-time Thompson Sampling draw (<code>Beta(α, β)</code>) in SQLite and watch the winning counter-offer and posterior probabilities update live.</p>
+          <h2 class="section-h2">Interactive Counter-Offer Simulator: <span class="serif-italic">Test Which Offer Saves the Sale</span></h2>
+          <p class="section-sub">Click any shopper objection below to simulate a live checkout recovery test and see which tailored counter-offer protects the most net revenue.</p>
+          <details style="margin-top:6px;font-size:0.8125rem;color:var(--text-muted);"><summary style="cursor:pointer;color:var(--blurple);font-weight:600;">⚙️ View Layer-3 Bayesian Bandit Spec (Thompson Sampling Beta(α, β))</summary><div style="margin-top:4px;">Samples <code>θ̃_k ~ Beta(α_k, β_k)</code> in SQLite and triggers exit-intent modal when vertical cursor velocity <code>v_y &lt;= -0.80 px/ms</code>.</div></details>
         </div>
 
         <div class="bandit-grid">
           <div class="telemetry-card">
             <div class="card-header-bar">
-              <span class="mono-label">SIMULATE BUYER EXIT OBJECTION (C1–C6)</span>
-              <span id="bandit-velocity-pill" class="badge-live">v_y: -0.95 px/ms • Score: 88/100</span>
+              <span class="mono-label">SIMULATE SHOPPER EXIT REASON</span>
+              <span id="bandit-velocity-pill" class="badge-live">Exit Signal Active • Score: 88/100</span>
             </div>
 
             <div class="objection-buttons-grid" id="objection-btn-group">
@@ -252,21 +323,21 @@
             </div>
 
             <div class="code-snippet-box" id="bandit-selected-offer-box">
-              <div class="mono-label">WINNING COUNTER-OFFER SERVED BY BANDIT</div>
+              <div class="mono-label">WINNING COUNTER-OFFER SERVED</div>
               <h3 id="bandit-offer-headline" style="font-size:1.05rem; margin:6px 0 4px;">Unlock 15% Instant Founders Rebate on This Order</h3>
-              <p id="bandit-offer-subtext" style="font-size:0.84rem;">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes.</p>
+              <p id="bandit-offer-subtext" style="font-size:0.875rem;">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes.</p>
               <div class="spec-row" style="margin-top:8px; border-bottom:none;">
                 <span>Promo Code: <code id="bandit-offer-code">ALPHA15</code></span>
-                <span>Sampled θ̃: <strong id="bandit-sampled-theta">0.2314</strong></span>
-                <span>Net ERPV: <strong id="bandit-erpv" style="color:#34D399;">$24.42</strong></span>
+                <span>Win Rate Draw: <strong id="bandit-sampled-theta">0.2314</strong></span>
+                <span>Expected Revenue Per Visitor: <strong id="bandit-erpv" style="color:#34D399;">$24.42</strong></span>
               </div>
             </div>
           </div>
 
           <div class="telemetry-card">
             <div class="card-header-bar">
-              <span class="mono-label">LIVE SQLITE BETA(ALPHA, BETA) POSTERIOR TABLE</span>
-              <span id="bandit-total-recovered" class="badge-emerald">Total Bandit Recovered: $37,489</span>
+              <span class="mono-label">LIVE COUNTER-OFFER WIN-RATE LEADERBOARD</span>
+              <span id="bandit-total-recovered" class="badge-emerald">Total Recovered: $37,489</span>
             </div>
 
             <div class="posterior-table-wrap">
@@ -318,11 +389,11 @@
             <div style="margin-bottom:12px;">
               <label class="field-label" for="wh-decline-code">Bank Decline Code (<code>last_payment_error.decline_code</code>)</label>
               <select id="wh-decline-code" class="field-select">
-                <option value="insufficient_funds">insufficient_funds (Soft Decline — Payday Window)</option>
-                <option value="do_not_honor">do_not_honor (ISO 05 Bank Risk — +24h Cooled Retry)</option>
-                <option value="expired_card">expired_card (Hard Decline — Zero-Retry Portal Link)</option>
+                <option value="insufficient_funds">insufficient_funds (Soft Decline: Payday Window)</option>
+                <option value="do_not_honor">do_not_honor (ISO 05 Bank Risk: +24h Cooled Retry)</option>
+                <option value="expired_card">expired_card (Hard Decline: Zero-Retry Portal Link)</option>
                 <option value="authentication_required">authentication_required (3DS / SCA Biometric Link)</option>
-                <option value="processing_error">processing_error (Gateway Timeout — Silent Backoff)</option>
+                <option value="processing_error">processing_error (Gateway Timeout: Silent Backoff)</option>
               </select>
             </div>
 
@@ -355,23 +426,23 @@
 
             <div id="wh-timeline-container">
               <div class="timeline-step">
-                <strong>Step 1 • T + 72 Hours (06:00 Local) — Silent Stripe Smart Retry + Payday Check</strong>
+                <strong>Step 1 • T + 72 Hours (06:00 Local): Silent Stripe Smart Retry + Payday Check</strong>
                 <p>Auto-charge when payroll direct deposit clears</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 2 • 1st or 15th of Month (06:00 Local) — Payday Window Auto-Retry + SMS Link</strong>
+                <strong>Step 2 • 1st or 15th of Month (06:00 Local): Payday Window Auto-Retry + SMS Link</strong>
                 <p>Aligned with bi-weekly salary liquidity window</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 3 • T + 7 Days — Email + 1-Click Pause / Lite Plan Offer</strong>
+                <strong>Step 3 • T + 7 Days: Email + 1-Click Pause / Lite Plan Offer</strong>
                 <p>Offer 14-day billing pause or Apple Pay / ACH swap</p>
               </div>
             </div>
 
             <div class="code-snippet-box">
               <div class="mono-label">GENERATED MULTI-CHANNEL RECOVERY COPY (<span id="wh-out-model">deterministic-finops-v4</span>)</div>
-              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:#34D399; margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149) — Soft Decline</p>
-              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.78rem; margin-top:6px;">Stripe notified us that your $149 invoice failed with bank code insufficient_funds. We have scheduled your optimal payday retry window or you can update via 1-Click Apple Pay.</pre>
+              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:#34D399; margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149): Soft Decline</p>
+              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.84rem; margin-top:6px;">Stripe notified us that your $149 invoice failed with bank code insufficient_funds. We have scheduled your optimal payday retry window or you can update via 1-Click Apple Pay.</pre>
             </div>
           </div>
         </div>
@@ -446,11 +517,11 @@
   <div id="exit-intent-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
     <div class="exit-modal-card">
       <div class="card-header-bar">
-        <span class="mono-label text-indigo">BEHAVIORAL EXIT-INTENT INTERCEPTED (v_y = -0.94 px/ms)</span>
+        <span class="mono-label text-indigo">HIGH EXIT INTENT DETECTED • LIVE COUNTER-OFFER PREVIEW</span>
         <button type="button" class="btn btn-ghost btn-sm" onclick="closeExitIntentModal()">Close [ESC]</button>
       </div>
-      <h2 id="exit-modal-title" style="font-size:1.35rem; margin-bottom:8px; color:var(--text-navy);">Wait — Before You Leave Your Checkout, What Stopped You Today?</h2>
-      <p style="font-size:0.88rem; color:var(--text-slate); margin-bottom:14px;">Tap your primary reason below and our Thompson Sampling Bandit will unlock a tailored checkout solution immediately:</p>
+      <h2 id="exit-modal-title" style="font-size:1.35rem; margin-bottom:8px; color:var(--text-navy);">Wait: Before You Leave Your Checkout, What Stopped You Today?</h2>
+      <p style="font-size:0.9rem; color:var(--text-slate); margin-bottom:14px;">Tap your primary reason below and we will unlock a tailored checkout solution immediately:</p>
 
       <div class="objection-buttons-grid">
         <button type="button" class="objection-btn" onclick="modalSelectObjection('C1_PRICE')">
@@ -496,7 +567,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <strong>AbandonAlpha (#9)</strong> — Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
+        <strong>AbandonAlpha (#9)</strong>: Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
       </div>
       <div class="footer-links">
         <a href="/#grader">Leakage Grader</a>

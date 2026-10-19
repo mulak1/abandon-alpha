@@ -1,5 +1,5 @@
 {
-  "name": "AbandonAlpha — Autonomous Checkout & Stripe Dunning Engine",
+  "name": "AbandonAlpha : Autonomous Checkout & Stripe Dunning Engine",
   "short_name": "AbandonAlpha",
   "description": "Autonomous Checkout, Cart & Session Abandonment Recovery, Behavioral Exit-Intent Bandit & Stripe Failed-Payment Dunning Engine.",
   "start_url": "/",

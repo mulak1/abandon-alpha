@@ -161,8 +161,8 @@ app.post('/api/checkout', async (req, res) => {
     const planTier = req.body?.planTier === 'growth' ? 'growth' : 'starter';
     const priceMonthlyUsd = planTier === 'growth' ? 149 : 49;
     const planLabel = planTier === 'growth'
-      ? 'Growth Autonomous Recovery ($149/mo — Unlimited Sessions + Custom Gemini 4 Copy)'
-      : 'Starter Autonomous Recovery ($49/mo — Up to $50k/mo Volume + C1–C6 Bandit + Smart Dunning)';
+      ? 'Growth Autonomous Recovery ($149/mo: Unlimited Sessions + Custom Gemini 4 Copy)'
+      : 'Starter Autonomous Recovery ($49/mo: Up to $50k/mo Volume + C1–C6 Bandit + Smart Dunning)';
     const customerEmail = String(req.body?.customerEmail || 'founder@merchant.io').trim();
     const storeDomain = String(req.body?.storeDomain || 'store.merchant.io').trim();
 
@@ -184,7 +184,7 @@ app.post('/api/checkout', async (req, res) => {
                 unit_amount: priceMonthlyUsd * 100,
                 recurring: { interval: 'month' },
                 product_data: {
-                  name: `AbandonAlpha — ${planLabel}`
+                  name: `AbandonAlpha: ${planLabel}`
                 }
               },
               quantity: 1
@@ -221,7 +221,7 @@ app.post('/api/checkout', async (req, res) => {
       stripeSessionId,
       checkoutUrl,
       mode,
-      guarantee: '30-Day 5x ROI Guarantee — Recover 5x your subscription or 1-click full refund'
+      guarantee: '30-Day 5x ROI Guarantee: Recover 5x your subscription or 1-click full refund'
     });
   } catch (err) {
     res.status(400).json({ ok: false, error: err.message });
@@ -298,7 +298,7 @@ app.get('/llms.txt', (req, res) => {
     'Bandit & Exit-Intent Science'
   ];
   const lines = [
-    '# AbandonAlpha — Autonomous Checkout Abandonment Bandit & Stripe Failed-Payment Dunning Engine',
+    '# AbandonAlpha: Autonomous Checkout Abandonment Bandit & Stripe Failed-Payment Dunning Engine',
     '',
     '> Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe renewals automatically with Mouse-Velocity Exit-Intent Thompson Sampling Bandits (C1–C6) and Smart Decline-Code Dunning ($49/mo Starter, $149/mo Growth, 0% revenue tax, 30-Day 5x ROI Guarantee).',
     '',
@@ -325,7 +325,7 @@ app.get('/llms.txt', (req, res) => {
 app.get('/llms-full.txt', (req, res) => {
   const pages = getAllPseoPages();
   const lines = [
-    '# AbandonAlpha — Complete 60-Playbook Technical Reference & Benchmark Corpus (/llms-full.txt)',
+    '# AbandonAlpha: Complete 60-Playbook Technical Reference & Benchmark Corpus (/llms-full.txt)',
     '',
     `Canonical Base URL: ${BASE_URL}`,
     'Architecture: Beta-Bernoulli Thompson Sampling Multi-Armed Bandit (Arms C1–C6) + Visa/Mastercard-Compliant Stripe Webhook Dunning Engine (`checkout.session.expired` & `invoice.payment_failed`).',

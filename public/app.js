@@ -220,7 +220,7 @@ async function runWebhookSimulation(e) {
   if (Array.isArray(res.retrySchedule)) {
     document.getElementById('wh-timeline-container').innerHTML = res.retrySchedule.map((s) => `
       <div class="timeline-step">
-        <strong>Step ${s.step} • ${s.timing} — ${s.channel}</strong>
+        <strong>Step ${s.step} • ${s.timing}: ${s.channel}</strong>
         <p>${s.action}</p>
       </div>
     `).join('');
@@ -262,7 +262,7 @@ async function modalSelectObjection(objectionCode) {
   const res = await triggerBanditObjection(objectionCode, null);
   if (res && res.selectedArm) {
     document.getElementById('modal-offer-headline').textContent = `${res.selectedArm.offer_headline} (Code: ${res.selectedArm.offer_code})`;
-    document.getElementById('modal-offer-subtext').textContent = `${res.selectedArm.offer_subtext} — SQLite Posterior α updated to ${res.selectedArm.updated_alpha}!`;
+    document.getElementById('modal-offer-subtext').textContent = `${res.selectedArm.offer_subtext}: SQLite Posterior α updated to ${res.selectedArm.updated_alpha}!`;
   }
 }
 

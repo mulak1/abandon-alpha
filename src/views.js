@@ -43,6 +43,7 @@ function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
         <a href="/#grader">Revenue Calculator</a>
         <a href="/#bandit-lab">Exit-Offer Simulator</a>
         <a href="/#webhook-lab">Stripe Retry Lab</a>
+        <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
         <a href="/directory">Playbook Directory (60)</a>
         <a href="/#pricing">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
@@ -53,8 +54,8 @@ function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
-      <a href="/#bandit-lab">Exit Simulator</a>
-      <a href="/#webhook-lab">Stripe Lab</a>
+      <a href="/#home-executive-brief">Executive Brief</a>
+      <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
       <a href="/#pricing">Pricing ($49)</a>
     </nav>
@@ -77,7 +78,7 @@ function renderCookieAndFooterHtml() {
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <strong>AbandonAlpha (#9)</strong> — Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
+        <strong>AbandonAlpha (#9)</strong>: Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
       </div>
       <div class="footer-links">
         <a href="/">Interactive Sandbox</a>
@@ -111,7 +112,7 @@ function renderOgSvg(slug) {
   const page = getPseoPageBySlug(slug);
   const title = page
     ? page.title.replace(/`/g, '')
-    : 'AbandonAlpha — Autonomous Checkout & Stripe Dunning Engine';
+    : 'AbandonAlpha: Autonomous Checkout & Stripe Dunning Engine';
   const badge = page ? `${page.category} • +${page.recoverableLiftPct}% Recovery Lift` : 'Institutional FinTech Exit-Intent Bandit + Smart Stripe Webhooks';
   const metricLeft = page ? `${page.baselineAbandonmentOrFailPct}%` : '71.4%';
   const metricLeftLbl = page ? 'Baseline Loss / Decline' : 'Avg Checkout Abandonment';
@@ -180,7 +181,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
-      name: `AbandonAlpha — ${cleanTitle}`,
+      name: `AbandonAlpha: ${cleanTitle}`,
       url: canonicalUrl,
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'Web, Stripe, Shopify, Next.js',
@@ -542,7 +543,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
         <span class="brand-tag">META PARTNER VERIFIED • 5-MIN SETUP</span>
       </a>
-      <div class="lp-guarantee-pill">30-Day 5x ROI Guarantee — Recover 5x Your Plan or Pay $0</div>
+      <div class="lp-guarantee-pill">30-Day 5x ROI Guarantee: Recover 5x Your Plan or Pay $0</div>
     </div>
   </header>
 
@@ -550,7 +551,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
     <section class="hero-split lp-hero">
       <div class="lp-hero-copy">
         <div class="status-pill">FOR SHOPIFY BRANDS, SAAS FOUNDERS &amp; STRIPE MERCHANTS</div>
-        <h1 class="lp-h1">71% of Your Checkout Visitors Leave Without Paying — Recover <span class="serif-italic">18%–31%</span> Automatically</h1>
+        <h1 class="lp-h1">71% of Your Checkout Visitors Leave Without Paying: Recover <span class="serif-italic">18%–31%</span> Automatically</h1>
         <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Launch <strong>Smart Exit Counter-Offers</strong> + <strong>Payday-Timed Stripe Retries</strong> in 60 seconds.</p>
 
         <ul class="lp-proof-list">
@@ -625,7 +626,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
             </div>
           </div>
           <div class="lp-action-bar">
-            <button type="button" class="btn btn-emerald btn-block" onclick="startLpCheckout('starter')">Lock Starter Autonomous Recovery ($49/mo — 30-Day ROI Guarantee)</button>
+            <button type="button" class="btn btn-emerald btn-block" onclick="startLpCheckout('starter')">Lock Starter Autonomous Recovery ($49/mo: 30-Day ROI Guarantee)</button>
           </div>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
         </div>
@@ -761,7 +762,7 @@ function renderNotFoundHtml() {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 — Route Not Found | AbandonAlpha</title>
+  <title>404: Route Not Found | AbandonAlpha</title>
   <meta name="description" content="Page not found on AbandonAlpha." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="manifest" href="/manifest.webmanifest" />
