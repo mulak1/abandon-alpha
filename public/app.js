@@ -389,5 +389,27 @@ window.addEventListener('DOMContentLoaded', async () => {
   } else {
     await runAuditRequest('shopify_dtc', true, false);
   }
+
+  let liveAuditTimer = null;
+  ['input-sessions', 'input-aov', 'input-abandon', 'input-fail', 'input-store'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        if (liveAuditTimer) clearTimeout(liveAuditTimer);
+        liveAuditTimer = setTimeout(() => runAuditRequest('custom', false, true), 480);
+      });
+    }
+  });
+  let liveWhTimer = null;
+  ['wh-event-type', 'wh-decline-code', 'wh-amount'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('change', () => {
+        if (liveWhTimer) clearTimeout(liveWhTimer);
+        liveWhTimer = setTimeout(() => runWebhookSimulation(), 320);
+      });
+    }
+  });
 });
+
 
