@@ -354,10 +354,16 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <p class="section-sub">Adjust your monthly checkout sessions and average order value below to model your exact recoverable cashflow.</p>
       <div class="inline-calc-grid">
         <div class="calc-inputs">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+            <span class="mono-label" style="font-size:11px;color:#94a3b8;">1-CLICK TIER:</span>
+            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);color:#6ee7b7;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;">$25k MRR</button>
+            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.35);color:#a5b4fc;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;">$120k DTC</button>
+            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);color:#fcd34d;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;">$500k Scale</button>
+          </div>
           <label class="field-label" for="pseo-sessions">Monthly Checkout / Renewal Attempts</label>
-          <input id="pseo-sessions" type="number" class="field-input" value="${page.sampleMonthlySessions}" min="50" max="500000" />
+          <input id="pseo-sessions" type="number" class="field-input" value="${page.sampleMonthlySessions}" min="50" max="500000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
           <label class="field-label" for="pseo-aov">Average Order / Invoice Value ($ USD)</label>
-          <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" />
+          <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
           <button type="button" id="pseo-calc-btn" class="btn btn-indigo" onclick="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})">
             <span>Recalculate Recoverable MRR</span>
             <span class="btn-icon-circle" aria-hidden="true">↗</span>
@@ -421,7 +427,13 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   ${renderCookieAndFooterHtml()}
 
   <script>
-    function recalcPseo(lossPct, liftPct) {
+    var __pseoCalcTimer = null;
+    function setPseoTier(sessions, aov, lossPct, liftPct) {
+      document.getElementById('pseo-sessions').value = sessions;
+      document.getElementById('pseo-aov').value = aov;
+      recalcPseo(lossPct, liftPct, true);
+    }
+    function recalcPseo(lossPct, liftPct, immediate) {
       var s = Math.max(10, Number(document.getElementById('pseo-sessions').value || 1000));
       var aov = Math.max(5, Number(document.getElementById('pseo-aov').value || 80));
       var leaked = Math.round(s * (lossPct / 100) * aov);
@@ -429,11 +441,14 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('pseo-leaked-val').textContent = '$' + leaked.toLocaleString() + '/mo';
       document.getElementById('pseo-rec-val').textContent = '+$' + rec.toLocaleString() + '/mo';
       document.getElementById('pseo-ann-val').textContent = '+$' + (rec * 12).toLocaleString() + '/yr';
-      fetch('/api/telemetry/event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event_type: 'calculate', page_url: window.location.pathname, meta: { source: 'pseo_inline_calculator', sessions: s, aov: aov, recovered_usd: rec } })
-      }).catch(function() {});
+      if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
+      __pseoCalcTimer = setTimeout(function() {
+        fetch('/api/telemetry/event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event_type: 'calculate', page_url: window.location.pathname, meta: { source: 'pseo_inline_calculator', sessions: s, aov: aov, recovered_usd: rec } })
+        }).catch(function() {});
+      }, immediate ? 0 : 350);
     }
   </script>
 </body>
