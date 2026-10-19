@@ -10,7 +10,7 @@
     "issue": "Payday-Synced Retries + C1-C6 Bandit Active",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.804Z"
+    "scannedAt": "2026-10-19T00:46:31.912Z"
   },
   {
     "target": "Shopify-Plus-Bandit",
@@ -23,7 +23,7 @@
     "issue": "Zero Blanket Coupon Cannibalization",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.808Z"
+    "scannedAt": "2026-10-19T00:46:31.916Z"
   },
   {
     "target": "Linear-Annual-Split",
@@ -36,7 +36,7 @@
     "issue": "High-Converting C1 Price-Objection Downsell",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.812Z"
+    "scannedAt": "2026-10-19T00:46:31.922Z"
   },
   {
     "target": "B2B-SaaS-Smart-Retry",
@@ -49,7 +49,7 @@
     "issue": "Compliant with Visa/MC Retry Rules",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.816Z"
+    "scannedAt": "2026-10-19T00:46:31.925Z"
   },
   {
     "target": "Static-10Pct-Popup-Store",
@@ -62,7 +62,7 @@
     "issue": "Losing $34,521/mo vs. C1-C6 Thompson Bandit",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.820Z"
+    "scannedAt": "2026-10-19T00:46:31.929Z"
   },
   {
     "target": "Naive-24h-Cron-Dunning",
@@ -75,7 +75,7 @@
     "issue": "Losing 43% of Recoverable insufficient_funds MRR",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.826Z"
+    "scannedAt": "2026-10-19T00:46:31.934Z"
   },
   {
     "target": "14-Field-Legacy-Checkout",
@@ -88,6 +88,6 @@
     "issue": "Severe Mobile Form Friction & Zero Exit-Intent Recovery",
     "cnnModel": "Spectral Residual Visual Saliency + Checkout Friction Heatmap CNN (16ms)",
     "cnnSensorLabel": "Checkout Clarity & Payment Recovery Check",
-    "scannedAt": "2026-10-19T00:36:07.830Z"
+    "scannedAt": "2026-10-19T00:46:31.938Z"
   }
 ]
