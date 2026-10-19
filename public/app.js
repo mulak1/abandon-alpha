@@ -78,7 +78,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   document.getElementById('out-annual-recovered').textContent = `+${formatUsd(res.annualizedRecoverableUsd)}/yr Net Impact (${res.roiMultipleStarter}x ROI)`;
   document.getElementById('out-exit-recovered').textContent = `+${formatUsd(res.recoverableExitUsd)}/mo (${res.recoveredOrdersCount} orders)`;
   document.getElementById('out-dunning-recovered').textContent = `+${formatUsd(res.recoverableDunningUsd)}/mo`;
-  document.getElementById('out-sdk-snippet').textContent = res.sdkSnippet;
+  document.getElementById('out-sdk-snippet').textContent = window.__ebIsUnlocked ? res.sdkSnippet : '/* [LOCKED PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag & Stripe retry worker */';
 
   const statusEl = document.getElementById('audit-form-status');
   if (statusEl) {
@@ -101,7 +101,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   if (Array.isArray(res.dunningBreakdown)) {
     const breakdownHtml = res.dunningBreakdown.slice(0, 3).map((d) => `
       <div class="spec-row">
-        <span class="spec-k"><code>${d.declineCode}</code> (${d.recoveryRatePct}% recovery)</span>
+        <span class="spec-k"><code>${d.declineCode}</code> (${d.recoveryRatePct}% recoverable • Schedule Locked 🔒)</span>
         <span class="spec-v text-emerald">+${formatUsd(d.recoveredUsd)}/mo</span>
       </div>
     `).join('');
@@ -215,13 +215,20 @@ async function runWebhookSimulation(e) {
   document.getElementById('wh-out-network-rule').textContent = `Card Network Mandate: ${res.cardNetworkRule}`;
   document.getElementById('wh-out-model').textContent = res.geminiModel;
   document.getElementById('wh-out-subject').textContent = `Subject: ${res.recoveryCopy.emailSubject}`;
-  document.getElementById('wh-out-body').textContent = `${res.recoveryCopy.emailBody}\n\n[SMS Dispatch]: ${res.recoveryCopy.smsBody}`;
+  document.getElementById('wh-out-body').textContent = window.__ebIsUnlocked
+    ? `${res.recoveryCopy.emailBody}\n\n[SMS Dispatch]: ${res.recoveryCopy.smsBody}`
+    : `[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal the exact ${payload.declineCode} retry schedule, 1-click Apple Pay link generator, and customer Email/SMS recovery copy.`;
 
   if (Array.isArray(res.retrySchedule)) {
-    document.getElementById('wh-timeline-container').innerHTML = res.retrySchedule.map((s) => `
+    document.getElementById('wh-timeline-container').innerHTML = res.retrySchedule.map((s, idx) => idx === 0 || window.__ebIsUnlocked ? `
       <div class="timeline-step">
-        <strong>Step ${s.step} • ${s.timing}: ${s.channel}</strong>
-        <p>${s.action}</p>
+        <strong>Step ${s.step} • Bank Classification Verified (${res.expectedRecoveryRatePct}% Recoverable)</strong>
+        <p>Diagnostic complete for <code>${payload.declineCode}</code>.</p>
+      </div>
+    ` : `
+      <div class="timeline-step">
+        <strong>Step ${s.step} • 🔒 Optimal Retry Window &amp; Fallback [REDACTED IN PREVIEW]</strong>
+        <p>Unlock the $1.99 Single-Audit Pass to reveal exact retry timestamps and webhook code.</p>
       </div>
     `).join('');
   }
@@ -274,9 +281,7 @@ function setCookieConsent(choice) {
   if (banner) banner.style.display = 'none';
 }
 
-window.AbandonAlphaTriggerModal = function () {
-  openExitIntentModal();
-};
+window.AbandonAlphaTriggerModal = function () {};
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeExitIntentModal();

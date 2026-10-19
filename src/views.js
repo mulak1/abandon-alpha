@@ -54,7 +54,7 @@ function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
-      <a href="/#home-executive-brief">Executive Brief</a>
+      <a href="/#bandit-lab">Exit Simulator</a>
       <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
       <a href="/#pricing">Pricing ($49)</a>

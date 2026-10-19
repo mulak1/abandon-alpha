@@ -67,7 +67,8 @@
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
         <a href="/#grader">Revenue Calculator</a>
-        <a href="/#home-executive-brief">Executive Brief</a>
+        <a href="/#bandit-lab">Exit-Offer Simulator</a>
+        <a href="/#webhook-lab">Stripe Retry Lab</a>
         <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
         <a href="/directory">Playbook Directory (60)</a>
         <a href="/#pricing">Pricing</a>
@@ -79,7 +80,7 @@
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
-      <a href="/#home-executive-brief">Executive Brief</a>
+      <a href="/#bandit-lab">Exit Simulator</a>
       <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
       <a href="/#pricing">Pricing ($49)</a>
@@ -87,31 +88,38 @@
   </header>
 
   <main>
-    <!-- ABOVE THE FOLD: MERGED EXECUTIVE BRIEF & REVENUE RECOVERY CALCULATOR -->
+    <!-- ABOVE THE FOLD: LAYPERSON VALUE PROPOSITION & REVENUE RECOVERY CALCULATOR -->
     <section id="grader" class="hero-section">
       <div class="container hero-split" style="align-items:stretch;">
         <div id="home-executive-brief" class="hero-left" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
-              <div class="status-pill" style="margin:0;">2026 EXECUTIVE BRIEF &amp; RECOVERY CALCULATOR</div>
-              <a href="/leaderboard" class="status-pill" style="margin:0;text-decoration:none;background:#ECFDF5;color:#059669;border-color:#A7F3D0;">🏆 Top-3 Podium Leaderboard &rarr;</a>
+              <div class="status-pill" style="margin:0;">CHECKOUT &amp; FAILED PAYMENT RECOVERY ENGINE</div>
+              <a href="/leaderboard" class="status-pill" style="margin:0;text-decoration:none;background:#ECFDF5;color:#059669;border-color:#A7F3D0;">🏆 Live Industry Benchmarks &rarr;</a>
             </div>
-            <h1 class="hero-h1">Executive Brief: Why Blanket 10% Popups &amp; 24h Card Retries <span class="serif-italic">Lose Money</span></h1>
-            <p class="hero-lead">Most Shopify and Stripe businesses lose 18% to 31% of recoverable revenue by giving blanket 10% coupons to buyers who would pay full price, and retrying failed credit cards before payday.</p>
+            <h1 class="hero-h1">Stop Losing Checkout Sales &amp; Failed Stripe Payments <span class="serif-italic">Automatically</span></h1>
+            <p class="hero-lead">Blanket 10% popups train full-price buyers to wait for coupons, and 24-hour card retries fail before payday. See how much revenue your store or SaaS is leaking in 10 seconds.</p>
 
-            <!-- 3-Point Executive Brief Summary inside Top Hero -->
+            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px;font-size:0.8rem;font-weight:700;color:#475569;">
+              <span style="color:#0A2540;">Built for:</span>
+              <span style="padding:3px 9px;border-radius:999px;background:#EEF2FF;color:var(--blurple);border:1px solid #C7D2FE;">🛍️ Shopify &amp; DTC Stores</span>
+              <span style="padding:3px 9px;border-radius:999px;background:#ECFDF5;color:#047857;border:1px solid #A7F3D0;">💳 Stripe SaaS Founders</span>
+              <span style="padding:3px 9px;border-radius:999px;background:#F8FAFC;color:#334155;border:1px solid #CBD5E1;">📦 Subscription Apps</span>
+            </div>
+
+            <!-- 3-Step Layperson Journey Cards (Diagnosis Free -> Fix Gated) -->
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;">
               <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                <div class="mono-label" style="color:var(--blurple);margin-bottom:3px;">01. SMART EXIT OFFERS</div>
-                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Match the offer (14-day pause, 2-pay split, or gift) to why the buyer hesitated.</div>
+                <div class="mono-label" style="color:var(--blurple);margin-bottom:3px;">STEP 1 • FREE CHECK</div>
+                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Enter your monthly checkouts to measure leaked cart &amp; failed-card revenue.</div>
               </div>
               <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                <div class="mono-label" style="color:#059669;margin-bottom:3px;">02. PAYDAY RETRIES</div>
-                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Retry <code>insufficient_funds</code> on Friday 09:00 &amp; the 1st/15th payday (+62.4% lift).</div>
+                <div class="mono-label" style="color:#059669;margin-bottom:3px;">STEP 2 • TEST SAVES</div>
+                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Compare non-discount save offers and see which Stripe decline codes cost you most.</div>
               </div>
               <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                <div class="mono-label" style="color:#0A2540;margin-bottom:3px;">03. 48H COOLDOWN</div>
-                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Give <code>do_not_honor</code> cards a 48h cooldown + 1-click Apple Pay SMS link.</div>
+                <div class="mono-label" style="color:#0A2540;margin-bottom:3px;">STEP 3 • UNLOCK FIX</div>
+                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Unlock the ready-to-use Stripe retry worker, exit script &amp; SMS templates ($1.99).</div>
               </div>
             </div>
           </div>
@@ -193,26 +201,26 @@
             <strong id="out-exit-recovered" class="spec-v text-emerald">+$34,521/mo (375 orders)</strong>
           </div>
           <div class="spec-row">
-            <span class="spec-k">Payday-Timed Card Retry Recovery (56.2% Lift)</span>
+            <span class="spec-k">Failed-Card Dunning Recovery (56.2% Lift)</span>
             <strong id="out-dunning-recovered" class="spec-v text-emerald">+$2,201/mo</strong>
           </div>
 
           <div id="out-dunning-breakdown" style="margin-top:10px;">
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (Payday Retry: 62.4% saved)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (62.4% Recoverable • Schedule Locked 🔒)</span>
               <span class="spec-v text-emerald">+$854/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (48h Cooldown: 47.8% saved)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (47.8% Recoverable • Cooldown Locked 🔒)</span>
               <span class="spec-v text-emerald">+$558/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-dunning-flow"><code>expired_card</code></a> (SMS Wallet Link: 54.2% saved)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-dunning-flow"><code>expired_card</code></a> (54.2% Recoverable • Flow Locked 🔒)</span>
               <span class="spec-v text-emerald">+$480/mo</span>
             </div>
           </div>
           <div style="margin-top:8px; font-size:0.85rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
-            <span class="mono-label">Top Decline Playbooks:</span>
+            <span class="mono-label">Top Decline Guides:</span>
             <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="color:var(--blurple); font-weight:700;"><code>insufficient_funds</code></a>
             <span>•</span>
             <a href="/seo/stripe-decline-code-do-not-honor-retry-schedule" style="color:var(--blurple); font-weight:700;"><code>do_not_honor</code></a>
@@ -222,10 +230,10 @@
 
           <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="mono-label">1-CLICK EMBEDDABLE SCRIPT TAG</span>
-              <button type="button" id="copy-sdk-btn" class="btn btn-indigo btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass')}else{copySdkSnippet()}">Unlock 3-File Pack ($1.99) ↗</button>
+              <span class="mono-label">LOCKED PRODUCTION SCRIPT &amp; RETRY WORKER</span>
+              <button type="button" id="copy-sdk-btn" class="btn btn-indigo btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass')}else{copySdkSnippet()}">Unlock 3-File Pack ($1.99) ↗</button>
             </div>
-            <code id="out-sdk-snippet">&lt;script src="https://www.abandonalpha.com/sdk/abandon-alpha-sdk.js" data-merchant="aurabotanics-dtc" data-aov="92" data-bandit="thompson-c1-c6" async&gt;&lt;/script&gt;</code>
+            <code id="out-sdk-snippet">/* [LOCKED PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag &amp; Stripe retry worker */</code>
           </div>
         </div>
       </div>
@@ -378,23 +386,23 @@
 
             <div id="wh-timeline-container">
               <div class="timeline-step">
-                <strong>Step 1 • T + 72 Hours (06:00 Local): Silent Stripe Smart Retry + Payday Check</strong>
-                <p>Auto-charge when payroll direct deposit clears</p>
+                <strong>Step 1 • Bank Decline Classification Verified (Soft Decline: 62.4% Recoverable)</strong>
+                <p>Diagnostic complete: standard 24h cron retries fail during temporary bank balance dips.</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 2 • 1st or 15th of Month (06:00 Local): Payday Window Auto-Retry + SMS Link</strong>
-                <p>Aligned with bi-weekly salary liquidity window</p>
+                <strong>Step 2 • 🔒 Optimal Bank-Liquidity Retry Schedule [REDACTED IN PREVIEW]</strong>
+                <p>Unlock the $1.99 Single-Audit Pass to reveal exact timezone-synced retry timestamps &amp; cron rules.</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 3 • T + 7 Days: Email + 1-Click Pause / Lite Plan Offer</strong>
-                <p>Offer 14-day billing pause or Apple Pay / ACH swap</p>
+                <strong>Step 3 • 🔒 Multi-Channel SMS &amp; 1-Click Wallet Fallback [REDACTED IN PREVIEW]</strong>
+                <p>Unlock the $1.99 Pass to download the Stripe Webhook Worker &amp; recovery templates.</p>
               </div>
             </div>
 
             <div class="code-snippet-box">
-              <div class="mono-label">GENERATED MULTI-CHANNEL RECOVERY COPY (<span id="wh-out-model">deterministic-finops-v4</span>)</div>
-              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:#34D399; margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149): Soft Decline</p>
-              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.84rem; margin-top:6px;">Stripe notified us that your $149 invoice failed with bank code insufficient_funds. We have scheduled your optimal payday retry window or you can update via 1-Click Apple Pay.</pre>
+              <div class="mono-label">LOCKED MULTI-CHANNEL RECOVERY TEMPLATE (<span id="wh-out-model">deterministic-finops-v4</span>)</div>
+              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:#34D399; margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149): Soft Decline Detected</p>
+              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.84rem; margin-top:6px;">[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal the exact Stripe webhook retry timestamps, 1-click Apple Pay link generator, and customer Email/SMS recovery copy.</pre>
             </div>
           </div>
         </div>
