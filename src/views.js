@@ -254,8 +254,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <span>${escapeHtml(page.category)}</span>
     </nav>
 
-    <div class="hero-split pseo-hero" style="align-items:start;">
-      <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;">
+    <div class="hero-split pseo-hero" style="align-items:stretch;">
+      <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
         <div>
           <div class="status-pill">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
           <h1 class="pseo-h1">${escapeHtml(cleanTitle)}</h1>
