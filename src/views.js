@@ -261,11 +261,11 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <h1 class="pseo-h1">${escapeHtml(cleanTitle)}</h1>
           <p class="pseo-lead">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
           <div class="cta-row">
-            <a href="/#grader" class="btn btn-indigo">
+            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}&amp;store=${encodeURIComponent(cleanTitle.slice(0, 32))}#grader" class="btn btn-indigo">
               <span>Audit Your Store Leakage Free</span>
               <span class="btn-icon-circle" aria-hidden="true">↗</span>
             </a>
-            <a href="/#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)} Live</a>
+            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)} Live</a>
           </div>
         </div>
       </div>
@@ -294,11 +294,11 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           </div>
           <div class="spec-row">
             <span class="spec-k">Optimal Timing</span>
-            <span class="spec-v">${escapeHtml(page.recommendedTiming)}</span>
+            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" style="color:var(--blurple);font-weight:700;text-decoration:underline;">🔒 Locked in Free Preview ($1.99 Pass)</a></span>
           </div>
           <div class="spec-row">
             <span class="spec-k">Winning Bandit Arm</span>
-            <span class="spec-v text-indigo">${escapeHtml(page.winningBanditArm)}</span>
+            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" style="color:var(--blurple);font-weight:700;text-decoration:underline;">🔒 C1–C6 Offer Locked ($1.99 Pass)</a></span>
           </div>
           <div class="spec-row">
             <span class="spec-k">Est. Recovered Cashflow</span>
@@ -340,8 +340,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <tr style="background: rgba(16, 185, 129, 0.08);">
               <td><strong class="text-indigo">AbandonAlpha Smart Window + C1-C6 Bandit</strong></td>
               <td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td>
-              <td><strong>&lt; 4.2 Hours (${escapeHtml(page.recommendedTiming)})</strong></td>
-              <td class="text-emerald"><strong>Low (Visa/MC Compliant + ${escapeHtml(page.winningBanditArm)})</strong></td>
+              <td><strong>&lt; 4.2 Hours (Smart Window Locked 🔒)</strong></td>
+              <td class="text-emerald"><strong>Low (Visa/MC Compliant + C1-C6 Bandit Locked 🔒)</strong></td>
               <td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td>
             </tr>
           </tbody>
@@ -377,8 +377,11 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong>
           </div>
           <div class="code-snippet-box">
-            <div class="mono-label">DROP-IN SDK + WEBHOOK TAG</div>
-            <code>&lt;script src="${baseUrl}/sdk/abandon-alpha-sdk.js" data-playbook="${escapeHtml(page.slug)}" async&gt;&lt;/script&gt;</code>
+            <div class="mono-label">DROP-IN SDK + STRIPE RETRY WORKER ($1.99 SINGLE-STORE PASS)</div>
+            <code>/* 🔒 [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass to download your ${escapeHtml(page.declineOrSignal)} retry worker &amp; C1-C6 Bandit SDK tag */</code>
+            <div style="margin-top:8px;">
+              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" class="btn btn-emerald btn-sm" style="display:inline-flex;">Unlock ${escapeHtml(page.declineOrSignal)} Retry Worker &amp; SDK ($1.99) ↗</a>
+            </div>
           </div>
         </div>
       </div>
@@ -426,6 +429,11 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('pseo-leaked-val').textContent = '$' + leaked.toLocaleString() + '/mo';
       document.getElementById('pseo-rec-val').textContent = '+$' + rec.toLocaleString() + '/mo';
       document.getElementById('pseo-ann-val').textContent = '+$' + (rec * 12).toLocaleString() + '/yr';
+      fetch('/api/telemetry/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event_type: 'calculate', page_url: window.location.pathname, meta: { source: 'pseo_inline_calculator', sessions: s, aov: aov, recovered_usd: rec } })
+      }).catch(function() {});
     }
   </script>
 </body>
@@ -488,7 +496,7 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
                 <span class="badge-emerald">+${item.recoverableLiftPct}% Recovery</span>
               </div>
               <strong>${escapeHtml(item.title.replace(/`/g, ''))}</strong>
-              <p class="dir-card-sub">${escapeHtml(item.recommendedTiming)}</p>
+              <p class="dir-card-sub">Webhook: <code>${escapeHtml(item.webhookEvent)}</code> • Est. +$${item.monthlyRecoveredUsd.toLocaleString()}/mo</p>
             </a>
           `).join('')}
         </div>
@@ -625,8 +633,9 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
               <strong id="lp-rec-out" class="tile-value text-emerald">+$36,722/mo</strong>
             </div>
           </div>
-          <div class="lp-action-bar">
-            <button type="button" class="btn btn-emerald btn-block" onclick="startLpCheckout('starter')">Lock Starter Autonomous Recovery ($49/mo: 30-Day ROI Guarantee)</button>
+          <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;">
+            <a href="/buy/flash_pass?utm_source=meta_lp" class="btn btn-emerald btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Unlock Single-Store Stripe Recovery Pass ($1.99 One-Time) ↗</a>
+            <button type="button" class="btn btn-ghost btn-block" onclick="startLpCheckout('starter')">Or Start Managed Autonomous Recovery ($49/mo: 30-Day ROI Guarantee)</button>
           </div>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
         </div>
@@ -694,7 +703,8 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
 
     async function startLpCheckout(tier) {
       var email = document.getElementById('lp-email').value || 'founder@dtcstore.io';
-      await fireCapi('StartTrial', 49);
+      var val = tier === 'flash_199' ? 1.99 : 49;
+      await fireCapi('StartTrial', val);
       var res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

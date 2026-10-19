@@ -16,7 +16,12 @@ function applyPreset(presetKey, btnEl) {
   if (!p) return;
   currentPreset = presetKey;
   document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
-  if (btnEl) btnEl.classList.add('active');
+  if (btnEl) {
+    btnEl.classList.add('active');
+  } else {
+    const matchBtn = document.querySelector(`.preset-btn[data-preset="${presetKey}"]`);
+    if (matchBtn) matchBtn.classList.add('active');
+  }
 
   document.getElementById('input-store').value = p.storeName;
   document.getElementById('input-sessions').value = p.monthlySessions;
@@ -24,7 +29,22 @@ function applyPreset(presetKey, btnEl) {
   document.getElementById('input-abandon').value = p.abandonRatePct;
   document.getElementById('input-fail').value = p.failedCardRatePct;
 
-  runAuditRequest(presetKey);
+  try {
+    const u = new URL(window.location.href);
+    u.searchParams.set('preset', presetKey);
+    window.history.replaceState({}, '', u.pathname + u.search + u.hash);
+  } catch (_) {}
+
+  runAuditRequest(presetKey, false, true);
+}
+
+function onDeclineFocusChange(declineCode) {
+  const whSelect = document.getElementById('wh-decline-code');
+  if (whSelect && declineCode && declineCode !== 'auto_weighted') {
+    const hasOpt = Array.from(whSelect.options || []).some((o) => o.value === declineCode);
+    if (hasOpt) whSelect.value = declineCode;
+  }
+  runAuditRequest(currentPreset, false, true);
 }
 
 async function submitLeakageAudit(e) {
@@ -43,21 +63,44 @@ function triggerHeaderMrrCalc(e) {
   return false;
 }
 
+const DECLINE_SEO_LINKS = {
+  insufficient_funds: '/seo/stripe-decline-code-insufficient-funds-recovery',
+  do_not_honor: '/seo/stripe-decline-code-do-not-honor-retry-schedule',
+  expired_card: '/seo/stripe-decline-code-expired-card-dunning-flow',
+  authentication_required: '/seo/stripe-decline-code-authentication-required-3ds-flow',
+  processing_error: '/seo/stripe-decline-code-processing-error-exponential-backoff'
+};
+
 async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   const btn = document.getElementById('run-audit-btn');
   const navBtn = document.getElementById('nav-calc-mrr-btn');
   if (isManualTrigger && btn) btn.innerHTML = '<span>Calculating MRR...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
   if (isManualTrigger && navBtn) navBtn.innerHTML = '<span>Calculating...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
 
+  const primaryDeclineCode = document.getElementById('input-decline-focus')?.value || 'auto_weighted';
   const payload = {
     presetType: presetType || 'custom',
+    primaryDeclineCode,
     storeName: document.getElementById('input-store').value,
     monthlySessions: Number(document.getElementById('input-sessions').value),
     aovUsd: Number(document.getElementById('input-aov').value),
     abandonRatePct: Number(document.getElementById('input-abandon').value),
     failedCardRatePct: Number(document.getElementById('input-fail').value),
+    unlocked: Boolean(window.__ebIsUnlocked),
     website_url: document.getElementById('input-honeypot')?.value || ''
   };
+
+  if (isManualTrigger) {
+    try {
+      const u = new URL(window.location.href);
+      u.searchParams.set('preset', payload.presetType);
+      if (primaryDeclineCode !== 'auto_weighted') u.searchParams.set('decline', primaryDeclineCode);
+      else u.searchParams.delete('decline');
+      u.searchParams.set('sessions', String(payload.monthlySessions));
+      u.searchParams.set('aov', String(payload.aovUsd));
+      window.history.replaceState({}, '', u.pathname + u.search + u.hash);
+    } catch (_) {}
+  }
 
   const headers = { 'Content-Type': 'application/json' };
   if (isAutoInit) headers['x-auto-init'] = '1';
@@ -67,7 +110,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
     body: JSON.stringify(payload)
   }).then((r) => r.json()).catch(() => null);
 
-  if (btn) btn.innerHTML = '<span>Calculate Recoverable MRR</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
+  if (btn) btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
   if (navBtn) navBtn.innerHTML = '<span>Calculate Recoverable MRR</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
   if (!res || !res.ok) return;
 
@@ -82,7 +125,8 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
 
   const statusEl = document.getElementById('audit-form-status');
   if (statusEl) {
-    statusEl.textContent = `✓ Recoverable MRR Calculated for ${res.storeName}: +${formatUsd(res.totalRecoverableUsd)}/mo (+${formatUsd(res.annualizedRecoverableUsd)}/yr across ${res.monthlySessions.toLocaleString()} sessions)`;
+    const focusNote = primaryDeclineCode !== 'auto_weighted' ? ` • Primary Focus: ${primaryDeclineCode}` : '';
+    statusEl.textContent = `✓ Recoverable MRR Calculated for ${res.storeName}: +${formatUsd(res.totalRecoverableUsd)}/mo (+${formatUsd(res.annualizedRecoverableUsd)}/yr across ${res.monthlySessions.toLocaleString()} sessions${focusNote})`;
     statusEl.style.color = '#059669';
     statusEl.style.fontWeight = '700';
   }
@@ -99,12 +143,14 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   }
 
   if (Array.isArray(res.dunningBreakdown)) {
-    const breakdownHtml = res.dunningBreakdown.slice(0, 3).map((d) => `
+    const breakdownHtml = res.dunningBreakdown.slice(0, 3).map((d) => {
+      const seoHref = DECLINE_SEO_LINKS[d.declineCode] || '/directory';
+      return `
       <div class="spec-row">
-        <span class="spec-k"><code>${d.declineCode}</code> (${d.recoveryRatePct}% recoverable • Schedule Locked 🔒)</span>
+        <span class="spec-k"><a href="${seoHref}"><code>${d.declineCode}</code></a> (${d.recoveryRatePct}% recoverable${d.sharePct ? ` • ${d.sharePct}% share` : ''} • Schedule Locked 🔒)</span>
         <span class="spec-v text-emerald">+${formatUsd(d.recoveredUsd)}/mo</span>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
     document.getElementById('out-dunning-breakdown').innerHTML = breakdownHtml;
   }
 }
@@ -298,5 +344,50 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (armsRes && armsRes.arms) {
     renderPosteriorTable(armsRes.arms, 'arm_c1_price_15off');
   }
-  await runAuditRequest('shopify_dtc', true);
+
+  const params = new URLSearchParams(window.location.search);
+  const qPreset = params.get('preset');
+  const qDecline = params.get('decline') || params.get('q') || params.get('target');
+  const qStore = params.get('store');
+  const qSessions = params.get('sessions');
+  const qAov = params.get('aov');
+  const hasDeepLink = Boolean(qPreset || qDecline || qStore || qSessions || qAov);
+
+  if (qPreset && PRESET_DATA[qPreset]) {
+    currentPreset = qPreset;
+    const p = PRESET_DATA[qPreset];
+    document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
+    const matchBtn = document.querySelector(`.preset-btn[data-preset="${qPreset}"]`);
+    if (matchBtn) matchBtn.classList.add('active');
+    document.getElementById('input-store').value = p.storeName;
+    document.getElementById('input-sessions').value = p.monthlySessions;
+    document.getElementById('input-aov').value = p.aovUsd;
+    document.getElementById('input-abandon').value = p.abandonRatePct;
+    document.getElementById('input-fail').value = p.failedCardRatePct;
+  }
+
+  if (qStore) document.getElementById('input-store').value = qStore;
+  if (qSessions && Number(qSessions) >= 50) document.getElementById('input-sessions').value = Number(qSessions);
+  if (qAov && Number(qAov) >= 5) document.getElementById('input-aov').value = Number(qAov);
+
+  if (qDecline) {
+    const focusSel = document.getElementById('input-decline-focus');
+    if (focusSel && Array.from(focusSel.options).some((o) => o.value === qDecline)) {
+      focusSel.value = qDecline;
+    }
+    const whSel = document.getElementById('wh-decline-code');
+    if (whSel && Array.from(whSel.options).some((o) => o.value === qDecline)) {
+      whSel.value = qDecline;
+    }
+  }
+
+  if (hasDeepLink) {
+    await runAuditRequest(currentPreset, false, true);
+    if (window.location.hash === '#webhook-lab' || qDecline) {
+      await runWebhookSimulation();
+    }
+  } else {
+    await runAuditRequest('shopify_dtc', true, false);
+  }
 });
+

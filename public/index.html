@@ -126,6 +126,16 @@
 
           <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;margin-top:4px;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div>
+              <div class="mono-label" style="margin-bottom:6px;color:#475569;">1-CLICK BENCHMARK STORE &amp; SAAS PRESETS</div>
+              <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:10px;">
+                <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">🛍️ Shopify DTC ($85k/mo)</button>
+                <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">💳 B2B SaaS ($25k MRR)</button>
+                <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">📦 Subscription App ($120k MRR)</button>
+                <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">🎓 Creator Checkout ($40k/mo)</button>
+              </div>
+            </div>
+
             <div class="form-row-2">
               <div>
                 <label class="field-label" for="input-store">Store or SaaS Name</label>
@@ -137,6 +147,24 @@
               </div>
             </div>
 
+            <div class="form-row-2" style="margin-top:8px;">
+              <div>
+                <label class="field-label" for="input-aov">Average Order / Plan Value ($)</label>
+                <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" required />
+              </div>
+              <div>
+                <label class="field-label" for="input-decline-focus">Primary Stripe Decline Bottleneck</label>
+                <select id="input-decline-focus" class="field-input" onchange="onDeclineFocusChange(this.value)">
+                  <option value="auto_weighted" selected>Auto-Weight All Decline Codes</option>
+                  <option value="insufficient_funds">insufficient_funds (Payday Window Retry)</option>
+                  <option value="do_not_honor">do_not_honor (ISO 05 Bank Cooldown)</option>
+                  <option value="expired_card">expired_card (Zero-Retry Updater Link)</option>
+                  <option value="authentication_required">authentication_required (1-Tap 3DS2)</option>
+                  <option value="processing_error">processing_error (Silent Backoff)</option>
+                </select>
+              </div>
+            </div>
+
             <div style="margin-top:10px;">
               <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block">
                 <span>Calculate My Recoverable Revenue</span>
@@ -145,31 +173,19 @@
             </div>
 
             <details style="margin-top:10px;padding:10px 12px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
-              <summary style="cursor:pointer;font-size:0.84rem;font-weight:700;color:#475569;">⚙️ Optional: Customize Order Value, Abandonment %, Failed Card Rate &amp; Presets ▾</summary>
-              <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-top:10px;">
-                <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
-                <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B Micro-SaaS ($25k MRR)</button>
-                <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">Creator Checkout ($40k/mo)</button>
-                <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
-              </div>
+              <summary style="cursor:pointer;font-size:0.84rem;font-weight:700;color:#475569;">⚙️ Optional: Fine-Tune Abandonment %, Failed Card Rate &amp; Exit Popup ▾</summary>
               <div class="form-row-2" style="margin-top:10px;">
-                <div>
-                  <label class="field-label" for="input-aov">Average Order / Plan Value ($)</label>
-                  <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" required />
-                </div>
                 <div>
                   <label class="field-label" for="input-abandon">Cart / Checkout Abandonment (%)</label>
                   <input id="input-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" required />
                 </div>
-              </div>
-              <div class="form-row-2" style="margin-top:8px;">
                 <div>
                   <label class="field-label" for="input-fail">Failed Stripe Card Rate (%)</label>
                   <input id="input-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="35" required />
                 </div>
-                <div style="display:flex; align-items:flex-end;">
-                  <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" style="width:100%;" onclick="openExitIntentModal()">Preview Exit Offer Popup</button>
-                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" style="width:100%;" onclick="openExitIntentModal()">Preview Exit Offer Popup</button>
               </div>
             </details>
             <div id="audit-form-status" class="mono-status" aria-live="polite"></div>

@@ -156,6 +156,9 @@ function computeLeakageAudit(input = {}) {
   const abandonRatePct = Math.min(98, Math.max(10, Number(input.abandonRatePct ?? preset.abandonRatePct)));
   const failedCardRatePct = Math.min(35, Math.max(0.5, Number(input.failedCardRatePct ?? preset.failedCardRatePct)));
 
+  const primaryDeclineCode = String(input.primaryDeclineCode || input.declineCode || 'auto_weighted').trim();
+  const presetKey = String(input.presetType || 'shopify_dtc').trim();
+
   const abandonRate = abandonRatePct / 100;
   const failedCardRate = failedCardRatePct / 100;
 
@@ -167,46 +170,84 @@ function computeLeakageAudit(input = {}) {
   const leakedDunningUsd = Number((activeGrossVolumeUsd * failedCardRate).toFixed(2));
   const totalMonthlyLeakedUsd = Number((leakedCheckoutUsd + leakedDunningUsd).toFixed(2));
 
-  // Exit-Intent Bandit + checkout.session.expired webhook recovery (16.4% of abandoned sessions recovered)
-  const exitIntentRecoveryRate = 0.164;
+  // Vertical-calibrated Exit-Intent Bandit + checkout.session.expired webhook recovery rate
+  const exitRateMap = { shopify_dtc: 0.164, b2b_saas: 0.182, creator_info: 0.175, subscription_app: 0.158 };
+  const exitIntentRecoveryRate = exitRateMap[presetKey] || 0.164;
   const recoverableExitUsd = Number((leakedCheckoutUsd * exitIntentRecoveryRate).toFixed(2));
   const recoveredOrdersCount = Math.max(1, Math.round(abandonedSessions * exitIntentRecoveryRate));
 
-  // Smart Dunning recovery by decline code weighted average (56.2% recovered)
-  const dunningBreakdown = [
+  // Vertical & Primary-Decline-Code calibrated weights across Stripe decline codes
+  const baseWeightsByVertical = {
+    shopify_dtc: { insufficient_funds: 0.34, do_not_honor: 0.29, expired_card: 0.22, authentication_required: 0.10, processing_error: 0.05 },
+    b2b_saas: { insufficient_funds: 0.20, do_not_honor: 0.32, expired_card: 0.28, authentication_required: 0.14, processing_error: 0.06 },
+    creator_info: { insufficient_funds: 0.38, do_not_honor: 0.27, expired_card: 0.18, authentication_required: 0.12, processing_error: 0.05 },
+    subscription_app: { insufficient_funds: 0.42, do_not_honor: 0.25, expired_card: 0.19, authentication_required: 0.09, processing_error: 0.05 }
+  };
+  const weights = { ...(baseWeightsByVertical[presetKey] || baseWeightsByVertical.shopify_dtc) };
+  if (primaryDeclineCode !== 'auto_weighted' && weights[primaryDeclineCode] !== undefined) {
+    const remCodes = Object.keys(weights).filter((k) => k !== primaryDeclineCode);
+    const remSum = remCodes.reduce((acc, k) => acc + weights[k], 0) || 1;
+    weights[primaryDeclineCode] = 0.52;
+    remCodes.forEach((k) => {
+      weights[k] = Number(((weights[k] / remSum) * 0.48).toFixed(4));
+    });
+  }
+
+  const rawRows = [
     {
       declineCode: 'insufficient_funds',
       label: 'Insufficient Funds (Payday Window Retry)',
-      leakedShareUsd: Number((leakedDunningUsd * 0.34).toFixed(2)),
+      weight: weights.insufficient_funds,
       recoveryRatePct: 62.4,
-      recoveredUsd: Number((leakedDunningUsd * 0.34 * 0.624).toFixed(2)),
       strategy: 'Wait +72h or 1st/15th 06:00 Local Payday + 1-Click Pause option'
     },
     {
       declineCode: 'do_not_honor',
       label: 'Do Not Honor / ISO 05 (24h Cooled Retry + SMS)',
-      leakedShareUsd: Number((leakedDunningUsd * 0.29).toFixed(2)),
+      weight: weights.do_not_honor,
       recoveryRatePct: 47.8,
-      recoveredUsd: Number((leakedDunningUsd * 0.29 * 0.478).toFixed(2)),
       strategy: 'Pre-auth SMS alert + 24h cooled retry + Apple/Google Pay link'
     },
     {
       declineCode: 'expired_card',
       label: 'Expired / Invalid Card (Zero-Retry Instant Updater)',
-      leakedShareUsd: Number((leakedDunningUsd * 0.22).toFixed(2)),
+      weight: weights.expired_card,
       recoveryRatePct: 54.2,
-      recoveredUsd: Number((leakedDunningUsd * 0.22 * 0.542).toFixed(2)),
       strategy: 'Halt auto-retries; send passwordless Stripe Billing Portal magic link'
     },
     {
       declineCode: 'authentication_required',
       label: '3DS / SCA Required (1-Tap Biometric Link)',
-      leakedShareUsd: Number((leakedDunningUsd * 0.15).toFixed(2)),
+      weight: weights.authentication_required,
       recoveryRatePct: 51.0,
-      recoveredUsd: Number((leakedDunningUsd * 0.15 * 0.51).toFixed(2)),
       strategy: 'Instant SMS/Email hosted invoice link for FaceID/TouchID 3DS'
+    },
+    {
+      declineCode: 'processing_error',
+      label: 'Processing / Switch Timeout (Silent Backoff)',
+      weight: weights.processing_error,
+      recoveryRatePct: 78.5,
+      strategy: 'Silent exponential backoff at T+15m and T+4h without customer friction'
     }
   ];
+
+  if (primaryDeclineCode !== 'auto_weighted') {
+    rawRows.sort((a, b) => (a.declineCode === primaryDeclineCode ? -1 : b.declineCode === primaryDeclineCode ? 1 : b.weight - a.weight));
+  }
+
+  const dunningBreakdown = rawRows.slice(0, 4).map((r) => {
+    const leakedShareUsd = Number((leakedDunningUsd * r.weight).toFixed(2));
+    const recoveredUsd = Number((leakedShareUsd * (r.recoveryRatePct / 100)).toFixed(2));
+    return {
+      declineCode: r.declineCode,
+      label: r.label,
+      sharePct: Number((r.weight * 100).toFixed(1)),
+      leakedShareUsd,
+      recoveryRatePct: r.recoveryRatePct,
+      recoveredUsd,
+      strategy: r.strategy
+    };
+  });
 
   const recoverableDunningUsd = Number(
     dunningBreakdown.reduce((sum, item) => sum + item.recoveredUsd, 0).toFixed(2)
@@ -250,6 +291,7 @@ function computeLeakageAudit(input = {}) {
   const auditRecord = {
     storeName,
     presetType: input.presetType || 'custom',
+    primaryDeclineCode,
     monthlySessions,
     aovUsd,
     abandonRatePct,
@@ -267,6 +309,7 @@ function computeLeakageAudit(input = {}) {
     recoveredOrdersCount,
     gradeScore,
     letterGrade,
+    roiMultipleFlashPass: Number((totalRecoverableUsd / 1.99).toFixed(0)),
     roiMultipleStarter: Number((totalRecoverableUsd / 49).toFixed(1)),
     roiMultipleGrowth: Number((totalRecoverableUsd / 149).toFixed(1)),
     dunningBreakdown,
@@ -449,11 +492,68 @@ async function simulateStripeWebhook({
   };
 }
 
+function redactLeakageAuditForPreview(audit) {
+  if (!audit) return audit;
+  return {
+    ...audit,
+    previewLocked: true,
+    unlockUrl: '/buy/flash_pass',
+    unlockPriceUsd: 1.99,
+    dunningBreakdown: Array.isArray(audit.dunningBreakdown)
+      ? audit.dunningBreakdown.map((d) => ({
+          ...d,
+          strategy: '🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for exact retry window & webhook worker]'
+        }))
+      : [],
+    webhookSequence: Array.isArray(audit.webhookSequence)
+      ? audit.webhookSequence.map((w, idx) => (idx === 0 ? w : {
+          ...w,
+          action: '🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal webhook payload & retry schedule]'
+        }))
+      : [],
+    sdkSnippet: '/* 🔒 [LOCKED IN FREE PREVIEW — Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to generate your production C1-C6 Bandit SDK tag & Stripe Retry Worker] */'
+  };
+}
+
+function redactWebhookSimulationForPreview(sim) {
+  if (!sim) return sim;
+  return {
+    ...sim,
+    previewLocked: true,
+    unlockUrl: '/buy/flash_pass',
+    unlockPriceUsd: 1.99,
+    retrySchedule: Array.isArray(sim.retrySchedule)
+      ? sim.retrySchedule.map((s, idx) => (idx === 0 ? {
+          step: s.step,
+          timing: 'Diagnostic Verified (Exact Retry Window Locked 🔒)',
+          channel: s.channel,
+          action: 'Bank classification & Visa/Mastercard retry ceiling verified. Unlock $1.99 Pass for exact payday/cooldown schedule.'
+        } : {
+          step: s.step,
+          timing: '🔒 [LOCKED IN FREE PREVIEW]',
+          channel: '🔒 [LOCKED IN FREE PREVIEW]',
+          action: 'Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal exact retry timestamps & idempotency worker.'
+        }))
+      : [],
+    recoveryCopy: sim.recoveryCopy
+      ? {
+          ...sim.recoveryCopy,
+          offerCode: 'LOCKED_199',
+          emailBody: '🔒 [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the full customer recovery email template, pre-filled Stripe Billing Portal magic link, and C1-C6 Bandit offer code.',
+          smsBody: '🔒 [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the 1-tap Apple Pay / Google Pay SMS recovery template.'
+        }
+      : {}
+  };
+}
+
 module.exports = {
   STORE_PRESETS,
   DECLINE_CODE_PLAYBOOKS,
   computeExitTrajectoryScore,
   computeLeakageAudit,
   selectBanditArm,
-  simulateStripeWebhook
+  simulateStripeWebhook,
+  redactLeakageAuditForPreview,
+  redactWebhookSimulationForPreview
 };
+
