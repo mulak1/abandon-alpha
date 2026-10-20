@@ -959,7 +959,8 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
     `<link rel="alternate" type="text/markdown" title="${escHtml(cfg.brandName)} LLM Manifest (llms.txt)" href="${hostUrl}/llms.txt" />`,
     `<link rel="alternate" type="text/markdown" title="Markdown Twin (.md)" href="${hostUrl}${mdTwinPath}" />`,
     `<link rel="alternate" type="application/json+oembed" title="${escHtml(cfg.brandName)} oEmbed" href="${hostUrl}/api/oembed?url=${encodeURIComponent(canonicalUrl)}&amp;format=json" />`,
-    `<script id="eb-schema-dts-graph" type="application/ld+json">${JSON.stringify(schemaGraph)}</script>`
+    `<script id="eb-schema-dts-graph" type="application/ld+json">${JSON.stringify(schemaGraph)}</script>`,
+    `<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18526471751');</script>`
   ].filter(Boolean).join('\n  ');
 
   if (out.includes('</head>')) {

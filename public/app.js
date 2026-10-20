@@ -281,6 +281,12 @@ async function runWebhookSimulation(e) {
 }
 
 async function initiateStripeCheckout(planTier) {
+  if (typeof gtag === 'function') {
+    gtag('event', 'begin_checkout', {
+      'value': planTier === 'starter' ? 49.00 : (planTier === 'growth' ? 149.00 : 29.00),
+      'currency': 'USD'
+    });
+  }
   const email = document.getElementById('wh-email')?.value || 'founder@merchant.io';
   const storeDomain = document.getElementById('input-store')?.value || 'AuraBotanics DTC';
 
@@ -346,6 +352,18 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   const params = new URLSearchParams(window.location.search);
+  if (params.get('checkout') === 'success') {
+    const tier = params.get('tier') || 'playbook_pass';
+    const price = tier === 'playbook_pass' ? 29.00 : (tier === 'micro_pass' ? 0.99 : (tier === 'flash_pass' ? 1.99 : 49.00));
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18526471751',
+        'value': price,
+        'currency': 'USD',
+        'transaction_id': params.get('session_id') || ('order_' + Date.now())
+      });
+    }
+  }
   const qPreset = params.get('preset');
   const qDecline = params.get('decline') || params.get('q') || params.get('target');
   const qStore = params.get('store');

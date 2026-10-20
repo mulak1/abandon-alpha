@@ -243,6 +243,14 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
   <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18526471751');
+  </script>
 </head>
 <body>
   ${renderUnifiedHeaderHtml('FINOPS TELEMETRY v4.2')}

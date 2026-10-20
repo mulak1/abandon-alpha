@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-18526471751');
+  </script>
   <title>AbandonAlpha: Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine</title>
   <meta name="description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe payments with Behavioral Mouse-Velocity Exit-Intent Bandits (C1–C6) and Smart Decline-Code Dunning." />
   <link rel="canonical" href="https://www.abandonalpha.com/" />
@@ -455,7 +464,7 @@
                 <div style="font-size:0.88rem; color:var(--text-navy); font-weight:700; margin-top:4px;">Founder's Stripe Recovery Audit &amp; Full 20-Decline Playbook</div>
                 <div style="font-size:0.82rem; color:var(--text-slate); margin-top:2px;">Complete Liquidity Windows, Cloudflare Webhook Worker (.JS), 4-Stage Dunning Email &amp; SMS Copy</div>
               </div>
-              <a href="/buy/playbook_pass" id="btn-buy-playbook-29" class="btn btn-indigo" style="padding:14px 26px; font-size:0.98rem; text-decoration:none; box-shadow:0 6px 18px rgba(99,102,241,0.25);">
+              <a href="/buy/playbook_pass" id="btn-buy-playbook-29" class="btn btn-indigo" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':29.00,'currency':'USD'});}" style="padding:14px 26px; font-size:0.98rem; text-decoration:none; box-shadow:0 6px 18px rgba(99,102,241,0.25);">
                 <span>Unlock Founder Playbook ($29 Lifetime)</span>
                 <span class="btn-icon-circle" aria-hidden="true">↗</span>
               </a>
