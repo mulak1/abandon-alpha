@@ -357,7 +357,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const price = tier === 'playbook_pass' ? 29.00 : (tier === 'micro_pass' ? 0.99 : (tier === 'flash_pass' ? 1.99 : 49.00));
     if (typeof gtag === 'function') {
       gtag('event', 'conversion', {
-        'send_to': 'AW-18526471751',
+        'send_to': 'AW-18526471751/u8wbCI673aMdEMeMjoJF',
         'value': price,
         'currency': 'USD',
         'transaction_id': params.get('session_id') || ('order_' + Date.now())
