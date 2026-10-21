@@ -94,3 +94,22 @@ curl -s -X POST "https://www.abandonalpha.com/api/mcp/rpc" \
 - **Live Web App**: [https://www.abandonalpha.com](https://www.abandonalpha.com)
 - **Single-File Instant Export (99¢)**: [https://www.abandonalpha.com/buy/micro_pass](https://www.abandonalpha.com/buy/micro_pass)
 - **3-File Production Bundle ($1.99)**: [https://www.abandonalpha.com/buy/flash_pass](https://www.abandonalpha.com/buy/flash_pass)
+
+---
+
+## 🌐 Ecosystem & Decision Infrastructure Network
+
+AbandonAlpha is part of the deterministic planning and empirical developer tool ecosystem:
+
+- **[ExactBaseline Decision Calculators](https://exactbaseline.com)** — Statutory financial modeling and planning engines:
+  - [Mortgage Recast Arbitrage (RateRecast)](https://exactbaseline.com/calculator/mortgage_recast)
+  - [Event Beverage & Bar Stock Estimator (BarStock)](https://exactbaseline.com/calculator/bar_stock)
+  - [Used Vehicle Out-The-Door Floor (CarFloor)](https://exactbaseline.com/calculator/auto_depreciate)
+  - [Marathon Negative-Split Pacing Engine (PaceForge)](https://exactbaseline.com/calculator/pace_forge)
+  - [Hosted Decision Calculators MCP Server](https://exactbaseline.com/mcp)
+- **[PulseForge AI — Empirical DevTool Radar & Leaderboard](https://exactbaseline.com/leaderboard)** — Independent benchmarks across 83 open-source categories:
+  - [AI Coding Agents Benchmark (Cursor vs Windsurf vs OpenHands)](https://exactbaseline.com/benchmarks/ai-coding-agents)
+  - [Vector Database Latency & Scale (Qdrant vs Milvus)](https://exactbaseline.com/benchmarks/vector-databases)
+  - [LLM Inference Engines (vLLM vs SGLang)](https://exactbaseline.com/benchmarks/llm-inference-engines)
+  - [AI Engineering Token FinOps & ROI Calculator](https://exactbaseline.com/token-calculator)
+  - [Repository Launch Readiness Audit Kit](https://exactbaseline.com/launch-kit)
