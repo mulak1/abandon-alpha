@@ -240,7 +240,6 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:description" content="${escapeHtml(metaDesc)}" />
   <meta name="twitter:image" content="${ogImageUrl}" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
   <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
   <!-- Google tag (gtag.js) -->
@@ -489,7 +488,6 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:description" content="${dirDesc}" />
   <meta name="twitter:image" content="${baseUrl}/api/og?slug=directory" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -563,7 +561,6 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:description" content="Calculate your store's monthly checkout leakage in 10 seconds. Backed by our 30-Day 5x ROI Guarantee." />
   <meta name="twitter:image" content="${baseUrl}/api/og?slug=lp" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body class="lp-body">
@@ -757,7 +754,6 @@ function renderLegalPageHtml(type = 'privacy') {
   <title>${title} | AbandonAlpha</title>
   <meta name="description" content="${title} for AbandonAlpha Autonomous Checkout & Stripe Dunning Recovery Engine." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -798,7 +794,6 @@ function renderNotFoundHtml() {
   <title>404: Route Not Found | AbandonAlpha</title>
   <meta name="description" content="Page not found on AbandonAlpha." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
