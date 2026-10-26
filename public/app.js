@@ -110,11 +110,11 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
     body: JSON.stringify(payload)
   }).then((r) => r.json()).catch(() => null);
 
-  if (btn) btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
-  if (navBtn) navBtn.innerHTML = '<span>Calculate Recoverable MRR</span><span class="btn-icon-circle" aria-hidden="true">↗</span>';
+  if (btn) btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+  if (navBtn) navBtn.innerHTML = '<span>Calculate MRR</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
   if (!res || !res.ok) return;
 
-  document.getElementById('out-grade-badge').textContent = `GRADE: ${res.letterGrade} (${res.gradeScore}/100)`;
+  document.getElementById('out-grade-badge').textContent = `Grade: ${res.letterGrade} (${res.gradeScore}/100)`;
   document.getElementById('out-total-leaked').textContent = formatUsd(res.totalMonthlyLeakedUsd);
   document.getElementById('out-leaked-sub').textContent = `${formatUsd(res.leakedCheckoutUsd)} Cart + ${formatUsd(res.leakedDunningUsd)} Failed Cards`;
   document.getElementById('out-total-recovered').textContent = `+${formatUsd(res.totalRecoverableUsd)}/mo`;
@@ -125,19 +125,16 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
 
   const statusEl = document.getElementById('audit-form-status');
   if (statusEl) {
-    const focusNote = primaryDeclineCode !== 'auto_weighted' ? ` • Primary Focus: ${primaryDeclineCode}` : '';
-    statusEl.textContent = `✓ Recoverable MRR Calculated for ${res.storeName}: +${formatUsd(res.totalRecoverableUsd)}/mo (+${formatUsd(res.annualizedRecoverableUsd)}/yr across ${res.monthlySessions.toLocaleString()} sessions${focusNote})`;
-    statusEl.style.color = '#059669';
+    statusEl.textContent = `Recoverable MRR Calculated: +${formatUsd(res.totalRecoverableUsd)}/mo`;
+    statusEl.style.color = '#047857';
     statusEl.style.fontWeight = '700';
   }
 
   const mrrTile = document.getElementById('recoverable-mrr-tile') || document.getElementById('out-total-recovered')?.parentElement;
   if (isManualTrigger && mrrTile) {
-    mrrTile.style.transition = 'box-shadow 250ms ease, transform 250ms ease';
-    mrrTile.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.45)';
+    mrrTile.style.transition = 'transform 250ms ease';
     mrrTile.style.transform = 'scale(1.02)';
     setTimeout(() => {
-      mrrTile.style.boxShadow = '';
       mrrTile.style.transform = '';
     }, 900);
   }
@@ -147,7 +144,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
       const seoHref = DECLINE_SEO_LINKS[d.declineCode] || '/directory';
       return `
       <div class="spec-row">
-        <span class="spec-k"><a href="${seoHref}"><code>${d.declineCode}</code></a> (${d.recoveryRatePct}% recoverable${d.sharePct ? ` • ${d.sharePct}% share` : ''} • Schedule Locked 🔒)</span>
+        <span class="spec-k"><a href="${seoHref}"><code>${d.declineCode}</code></a> (${d.recoveryRatePct}% recoverable${d.sharePct ? ` • ${d.sharePct}% share` : ''} • Schedule Locked)</span>
         <span class="spec-v text-emerald">+${formatUsd(d.recoveredUsd)}/mo</span>
       </div>`;
     }).join('');
@@ -177,10 +174,10 @@ function renderPosteriorTable(arms, selectedId) {
     const isWin = arm.id === selectedId;
     const barWidth = Math.min(100, Math.max(12, Math.round(arm.posterior_mean_pct * 3.2)));
     return `
-      <tr style="${isWin ? 'background: rgba(83, 58, 253, 0.07);' : ''}">
+      <tr style="${isWin ? 'background: #ECFDF5;' : ''}">
         <td>
           <strong style="color:${isWin ? '#047857' : '#0A2540'}">${arm.objection_code}</strong>
-          <div style="font-size:0.72rem; color:#475569; font-family:var(--font-sans);">${arm.objection_label}</div>
+          <div style="font-size:0.9375rem; color:#475569; font-family:var(--font-sans);">${arm.objection_label}</div>
         </td>
         <td><code class="text-indigo">${arm.offer_code}</code> (-${arm.discount_pct}%)</td>
         <td>${arm.alpha}</td>
@@ -273,7 +270,7 @@ async function runWebhookSimulation(e) {
       </div>
     ` : `
       <div class="timeline-step">
-        <strong>Step ${s.step} • 🔒 Optimal Retry Window &amp; Fallback [REDACTED IN PREVIEW]</strong>
+        <strong>Step ${s.step} • Optimal Retry Window &amp; Fallback [REDACTED IN PREVIEW]</strong>
         <p>Unlock the $1.99 Single-Audit Pass to reveal exact retry timestamps and webhook code.</p>
       </div>
     `).join('');

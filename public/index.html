@@ -52,46 +52,33 @@
     <div class="container header-inner">
       <a href="/" class="brand-logo" aria-label="AbandonAlpha Home">
         <svg viewBox="0 0 64 64" width="36" height="36" role="img" aria-label="AbandonAlpha Vault Crest">
-          <defs>
-            <linearGradient id="hdrVaultBg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#0A2540"/>
-              <stop offset="55%" stop-color="#1E1B4B"/>
-              <stop offset="100%" stop-color="#533AFD"/>
-            </linearGradient>
-            <linearGradient id="hdrEmeraldVec" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#059669"/>
-              <stop offset="100%" stop-color="#34D399"/>
-            </linearGradient>
-          </defs>
-          <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#hdrVaultBg)" stroke="#635BFF" stroke-width="2"/>
-          <rect x="6" y="6" width="52" height="52" rx="12" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1"/>
+          <rect x="2" y="2" width="60" height="60" rx="16" fill="#0A2540"/>
           <path d="M36 42 C29 46 20 43 18 35 C16 27 23 20 31 22 C37 23.5 40 30 43 37 L47 44" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
-          <path d="M22 39 C28 39 35 32 45 18" fill="none" stroke="url(#hdrEmeraldVec)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 39 C28 39 35 32 45 18" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M35 17 H46 V28" fill="none" stroke="#34D399" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="27" cy="31" r="3" fill="#A5B4FC"/>
+          <circle cx="27" cy="31" r="3" fill="#FFFFFF"/>
         </svg>
         <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
-        <span class="brand-tag">FINOPS + STRIPE v4.2</span>
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
         <a href="/#grader">Revenue Calculator</a>
-        <a href="/#bandit-lab">Exit-Offer Simulator</a>
+        <a href="/#bandit-lab">Exit Simulator</a>
         <a href="/#webhook-lab">Stripe Retry Lab</a>
-        <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
-        <a href="/directory">Playbook Directory (60)</a>
+        <a href="/leaderboard" style="font-weight:700;color:var(--text-navy);">Leaderboard</a>
+        <a href="/directory">Playbooks (60)</a>
         <a href="/#pricing">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
-          <span>Calculate Recoverable MRR</span>
-          <span class="btn-icon-circle" aria-hidden="true">↗</span>
+          <span>Calculate MRR</span>
+          <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
         </a>
       </nav>
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
       <a href="/#bandit-lab">Exit Simulator</a>
-      <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
+      <a href="/leaderboard" style="font-weight:700;color:var(--text-navy);">Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
-      <a href="/#pricing">Pricing ($49)</a>
+      <a href="/#pricing">Pricing</a>
     </nav>
   </header>
 
@@ -101,33 +88,29 @@
       <div class="container hero-split" style="align-items:stretch;">
         <div id="home-executive-brief" class="hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
           <div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
-              <div class="status-pill" style="margin:0;">CHECKOUT &amp; FAILED PAYMENT RECOVERY ENGINE</div>
-              <a href="/leaderboard" class="status-pill" style="margin:0;text-decoration:none;background:#ECFDF5;color:#059669;border-color:#A7F3D0;">🏆 Live Industry Benchmarks &rarr;</a>
-            </div>
-            <h1 class="hero-h1">Stop Losing Checkout Sales &amp; Failed Stripe Payments <span class="serif-italic">Automatically</span></h1>
+            <h1 class="hero-h1">Recover Lost Sales</h1>
             <p class="hero-lead">Blanket 10% popups train full-price buyers to wait for coupons, and 24-hour card retries fail before payday. See how much revenue your store or SaaS is leaking in 10 seconds.</p>
 
-            <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px;font-size:0.8rem;font-weight:700;color:#475569;">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;font-size:0.9375rem;font-weight:700;color:#475569;">
               <span style="color:#0A2540;">Built for:</span>
-              <span style="padding:3px 9px;border-radius:999px;background:#EEF2FF;color:var(--blurple);border:1px solid #C7D2FE;">🛍️ Shopify &amp; DTC Stores</span>
-              <span style="padding:3px 9px;border-radius:999px;background:#ECFDF5;color:#047857;border:1px solid #A7F3D0;">💳 Stripe SaaS Founders</span>
-              <span style="padding:3px 9px;border-radius:999px;background:#F8FAFC;color:#334155;border:1px solid #CBD5E1;">📦 Subscription Apps</span>
+              <span style="padding:4px 11px;border-radius:999px;background:#F1F5F9;color:#0A2540;">Shopify &amp; DTC Stores</span>
+              <span style="padding:4px 11px;border-radius:999px;background:#ECFDF5;color:#047857;">Stripe SaaS Founders</span>
+              <span style="padding:4px 11px;border-radius:999px;background:#F1F5F9;color:#334155;">Subscription Apps</span>
             </div>
 
             <!-- 3-Step Layperson Journey Cards (Diagnosis Free -> Fix Gated) -->
-            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:0;">
-              <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                <div class="mono-label" style="color:var(--blurple);margin-bottom:3px;">STEP 1 • FREE CHECK</div>
-                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Enter your monthly checkouts to measure leaked cart &amp; failed-card revenue.</div>
+            <div class="steps-3-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:0;">
+              <div style="padding:16px 20px;border-radius:10px;background:#FFFFFF;">
+                <div class="mono-label" style="color:var(--text-navy);margin-bottom:3px;">Step 1 &bull; Free Check</div>
+                <div style="font-size:0.9375rem;color:#0A2540;font-weight:600;line-height:1.4;">Enter monthly checkouts to measure leaked revenue.</div>
               </div>
-              <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                <div class="mono-label" style="color:#059669;margin-bottom:3px;">STEP 2 • TEST SAVES</div>
-                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Compare non-discount save offers and see which Stripe decline codes cost you most.</div>
+              <div style="padding:16px 20px;border-radius:10px;background:#FFFFFF;">
+                <div class="mono-label" style="color:#047857;margin-bottom:3px;">Step 2 &bull; Test Saves</div>
+                <div style="font-size:0.9375rem;color:#0A2540;font-weight:600;line-height:1.4;">Compare save offers and top Stripe decline codes.</div>
               </div>
-              <div style="padding:11px 12px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;">
-                <div class="mono-label" style="color:#0A2540;margin-bottom:3px;">STEP 3 • UNLOCK FIX</div>
-                <div style="font-size:0.84rem;color:#0A2540;font-weight:600;line-height:1.35;">Unlock the ready-to-use Stripe retry worker, exit script &amp; SMS templates ($1.99).</div>
+              <div style="padding:16px 20px;border-radius:10px;background:#FFFFFF;">
+                <div class="mono-label" style="color:#0A2540;margin-bottom:3px;">Step 3 &bull; Unlock Fix</div>
+                <div style="font-size:0.9375rem;color:#0A2540;font-weight:600;line-height:1.4;">Download your Stripe retry worker &amp; exit script ($1.99).</div>
               </div>
             </div>
           </div>
@@ -135,12 +118,12 @@
           <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="display:flex;flex-direction:column;justify-content:flex-start;gap:12px;margin-top:0;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div>
-              <div class="mono-label" style="margin-bottom:6px;color:#475569;">1-CLICK BENCHMARK STORE &amp; SAAS PRESETS</div>
+              <div class="mono-label" style="margin-bottom:8px;color:#475569;">1-Click Benchmark Store &amp; SaaS Presets</div>
               <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:10px;">
-                <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">🛍️ Shopify DTC ($85k/mo)</button>
-                <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">💳 B2B SaaS ($25k MRR)</button>
-                <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">📦 Subscription App ($120k MRR)</button>
-                <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">🎓 Creator Checkout ($40k/mo)</button>
+                <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
+                <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B SaaS ($25k MRR)</button>
+                <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
+                <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)">Creator Checkout ($40k/mo)</button>
               </div>
             </div>
 
@@ -176,12 +159,12 @@
             <div style="margin-top:10px;">
               <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block">
                 <span>Calculate My Recoverable Revenue</span>
-                <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
               </button>
             </div>
 
-            <details style="margin-top:10px;padding:10px 12px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
-              <summary style="cursor:pointer;font-size:0.84rem;font-weight:700;color:#475569;">⚙️ Optional: Fine-Tune Abandonment %, Failed Card Rate &amp; Exit Popup ▾</summary>
+            <details style="margin-top:10px;padding:12px 14px;border-radius:10px;background:#F1F5F9;">
+              <summary style="cursor:pointer;font-size:0.9375rem;font-weight:700;color:#334155;">Optional: Fine-Tune Abandonment %, Failed Card Rate &amp; Exit Popup</summary>
               <div class="form-row-2" style="margin-top:10px;">
                 <div>
                   <label class="field-label" for="input-abandon">Cart / Checkout Abandonment (%)</label>
@@ -203,8 +186,8 @@
         <!-- LIVE TELEMETRY & RECOVERY READOUT CARD -->
         <div class="telemetry-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;height:100%;">
           <div class="card-header-bar">
-            <span class="mono-label">PLAIN-ENGLISH REVENUE RECOVERY BREAKDOWN</span>
-            <span id="out-grade-badge" class="badge-live">GRADE: C (65/100)</span>
+            <span class="mono-label">Plain-English Revenue Recovery Breakdown</span>
+            <span id="out-grade-badge" class="badge-live">Grade: C (65/100)</span>
           </div>
 
           <div class="metric-duo">
@@ -231,31 +214,31 @@
 
           <div id="out-dunning-breakdown" style="margin-top:10px;">
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (62.4% Recoverable • Schedule Locked 🔒)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-insufficient-funds-recovery"><code>insufficient_funds</code></a> (62.4% Recoverable &bull; Schedule Locked)</span>
               <span class="spec-v text-emerald">+$854/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (47.8% Recoverable • Cooldown Locked 🔒)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-do-not-honor-retry-schedule"><code>do_not_honor</code></a> (47.8% Recoverable &bull; Cooldown Locked)</span>
               <span class="spec-v text-emerald">+$558/mo</span>
             </div>
             <div class="spec-row">
-              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-dunning-flow"><code>expired_card</code></a> (54.2% Recoverable • Flow Locked 🔒)</span>
+              <span class="spec-k"><a href="/seo/stripe-decline-code-expired-card-dunning-flow"><code>expired_card</code></a> (54.2% Recoverable &bull; Flow Locked)</span>
               <span class="spec-v text-emerald">+$480/mo</span>
             </div>
           </div>
-          <div style="margin-top:8px; font-size:0.85rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+          <div style="margin-top:8px; font-size:0.9375rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
             <span class="mono-label">Top Decline Guides:</span>
-            <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="color:var(--blurple); font-weight:700;"><code>insufficient_funds</code></a>
-            <span>•</span>
-            <a href="/seo/stripe-decline-code-do-not-honor-retry-schedule" style="color:var(--blurple); font-weight:700;"><code>do_not_honor</code></a>
-            <span>•</span>
-            <a href="/seo/stripe-decline-code-expired-card-dunning-flow" style="color:var(--blurple); font-weight:700;"><code>expired_card</code></a>
+            <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="color:var(--text-navy); font-weight:700;"><code>insufficient_funds</code></a>
+            <span>&bull;</span>
+            <a href="/seo/stripe-decline-code-do-not-honor-retry-schedule" style="color:var(--text-navy); font-weight:700;"><code>do_not_honor</code></a>
+            <span>&bull;</span>
+            <a href="/seo/stripe-decline-code-expired-card-dunning-flow" style="color:var(--text-navy); font-weight:700;"><code>expired_card</code></a>
           </div>
 
           <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="mono-label">LOCKED PRODUCTION SCRIPT &amp; RETRY WORKER</span>
-              <button type="button" id="copy-sdk-btn" class="btn btn-indigo btn-sm" style="padding:4px 10px; font-size:0.8125rem;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass')}else{copySdkSnippet()}">Unlock 3-File Pack ($1.99) ↗</button>
+              <span class="mono-label">Locked Production Script &amp; Retry Worker</span>
+              <button type="button" id="copy-sdk-btn" class="btn btn-indigo btn-sm" style="padding:6px 12px; font-size:0.9375rem;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass')}else{copySdkSnippet()}">Unlock 3-File Pack ($1.99) &rarr;</button>
             </div>
             <code id="out-sdk-snippet">/* [LOCKED PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag &amp; Stripe retry worker */</code>
           </div>
@@ -267,16 +250,16 @@
     <section id="bandit-lab" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <h2 class="section-h2">Interactive Counter-Offer Simulator: <span class="serif-italic">Test Which Offer Saves the Sale</span></h2>
+          <h2 class="section-h2">Interactive Counter-Offer Simulator</h2>
           <p class="section-sub">Click any shopper objection below to simulate a live checkout recovery test and see which tailored counter-offer protects the most net revenue.</p>
-          <details style="margin-top:6px;font-size:0.8125rem;color:var(--text-muted);"><summary style="cursor:pointer;color:var(--blurple);font-weight:600;">⚙️ View Layer-3 Bayesian Bandit Spec (Thompson Sampling Beta(α, β))</summary><div style="margin-top:4px;">Samples <code>θ̃_k ~ Beta(α_k, β_k)</code> in SQLite and triggers exit-intent modal when vertical cursor velocity <code>v_y &lt;= -0.80 px/ms</code>.</div></details>
+          <details style="margin-top:6px;font-size:0.9375rem;color:var(--text-muted);"><summary style="cursor:pointer;color:var(--text-navy);font-weight:600;">View Bayesian Bandit Spec (Thompson Sampling Beta(&alpha;, &beta;))</summary><div style="margin-top:4px;">Samples <code>&theta; ~ Beta(&alpha;, &beta;)</code> in SQLite and triggers exit-intent modal when vertical cursor velocity <code>v_y &lt;= -0.80 px/ms</code>.</div></details>
         </div>
 
         <div class="bandit-grid">
           <div class="telemetry-card">
             <div class="card-header-bar">
-              <span class="mono-label">SIMULATE SHOPPER EXIT REASON</span>
-              <span id="bandit-velocity-pill" class="badge-live">Exit Signal Active • Score: 88/100</span>
+              <span class="mono-label">Simulate Shopper Exit Reason</span>
+              <span id="bandit-velocity-pill" class="badge-live">Exit Signal Active &bull; Score: 88/100</span>
             </div>
 
             <div class="objection-buttons-grid" id="objection-btn-group">
@@ -307,20 +290,20 @@
             </div>
 
             <div class="code-snippet-box" id="bandit-selected-offer-box">
-              <div class="mono-label">WINNING COUNTER-OFFER SERVED</div>
-              <h3 id="bandit-offer-headline" style="font-size:1.05rem; margin:6px 0 4px;">Unlock 15% Instant Founders Rebate on This Order</h3>
-              <p id="bandit-offer-subtext" style="font-size:0.875rem;">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes.</p>
-              <div class="spec-row" style="margin-top:8px; border-bottom:none;">
+              <div class="mono-label">Winning Counter-Offer Served</div>
+              <h3 id="bandit-offer-headline" style="font-size:1.0625rem; margin:6px 0 4px;">Unlock 15% Instant Founders Rebate on This Order</h3>
+              <p id="bandit-offer-subtext" style="font-size:0.9375rem;">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes.</p>
+              <div class="spec-row" style="margin-top:8px;">
                 <span>Promo Code: <code id="bandit-offer-code">ALPHA15</code></span>
                 <span>Win Rate Draw: <strong id="bandit-sampled-theta">0.2314</strong></span>
-                <span>Expected Revenue Per Visitor: <strong id="bandit-erpv" style="color:#34D399;">$24.42</strong></span>
+                <span>Expected Revenue Per Visitor: <strong id="bandit-erpv" style="color:var(--emerald);">$24.42</strong></span>
               </div>
             </div>
           </div>
 
           <div class="telemetry-card">
             <div class="card-header-bar">
-              <span class="mono-label">LIVE COUNTER-OFFER WIN-RATE LEADERBOARD</span>
+              <span class="mono-label">Live Counter-Offer Win-Rate Leaderboard</span>
               <span id="bandit-total-recovered" class="badge-emerald">Total Recovered: $37,489</span>
             </div>
 
@@ -330,9 +313,9 @@
                   <tr>
                     <th>Arm / Objection</th>
                     <th>Offer Code</th>
-                    <th>Alpha (α)</th>
-                    <th>Beta (β)</th>
-                    <th>Posterior Mean (μ)</th>
+                    <th>Alpha (&alpha;)</th>
+                    <th>Beta (&beta;)</th>
+                    <th>Posterior Mean (&mu;)</th>
                     <th>Recovered ($)</th>
                   </tr>
                 </thead>
@@ -350,16 +333,16 @@
     <section id="webhook-lab" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <h2 class="section-h2">Stripe Webhook (<code>checkout.session.expired</code> &amp; <code>invoice.payment_failed</code>) <span class="serif-italic">Simulator</span></h2>
-          <p class="section-sub">Simulate a live Stripe webhook payload and inspect the exact Visa/Mastercard-compliant retry schedule plus multi-channel Email/SMS recovery copy.</p>
+          <h2 class="section-h2">Stripe Decline &amp; Retry Simulator</h2>
+          <p class="section-sub">Simulate a live Stripe webhook payload (<code>checkout.session.expired</code> or <code>invoice.payment_failed</code>) and inspect the Visa/Mastercard-compliant retry schedule plus Email/SMS recovery copy.</p>
         </div>
 
         <div class="webhook-grid">
           <form id="webhook-form" class="telemetry-card" onsubmit="runWebhookSimulation(event)">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="card-header-bar">
-              <span class="mono-label">WEBHOOK EVENT CONFIGURATOR</span>
-              <span class="badge-live">STRIPE API 2026</span>
+              <span class="mono-label">Webhook Event Configurator</span>
+              <span class="badge-live">Stripe API 2026</span>
             </div>
 
             <div style="margin-bottom:12px;">
@@ -393,8 +376,8 @@
             </div>
 
             <button type="submit" id="wh-submit-btn" class="btn btn-indigo btn-block" style="margin-top:8px;">
-              <span>Simulate Webhook &amp; Build Recovery Sequence</span>
-              <span class="btn-icon-circle" aria-hidden="true">↗</span>
+              <span>Simulate Webhook Retry</span>
+              <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
             </button>
           </form>
 
@@ -404,92 +387,76 @@
               <span id="wh-out-recovery-rate" class="badge-emerald">Expected Recovery: 62.4%</span>
             </div>
 
-            <div id="wh-out-network-rule" style="font-size:0.82rem; color:var(--amber); background:var(--amber-soft); border:1px solid var(--amber-border); padding:8px 12px; border-radius:8px; margin-bottom:12px; font-family:var(--font-mono); font-weight:700;">
+            <div id="wh-out-network-rule" style="font-size:0.9375rem; color:var(--amber); background:var(--amber-soft); padding:10px 14px; border-radius:8px; margin-bottom:12px; font-weight:700;">
               Card Network Mandate: Max 4 retries in 30 days. Never retry within 1 hour.
             </div>
 
             <div id="wh-timeline-container">
               <div class="timeline-step">
-                <strong>Step 1 • Bank Decline Classification Verified (Soft Decline: 62.4% Recoverable)</strong>
+                <strong>Step 1 &bull; Bank Decline Classification Verified (Soft Decline: 62.4% Recoverable)</strong>
                 <p>Diagnostic complete: standard 24h cron retries fail during temporary bank balance dips.</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 2 • 🔒 Optimal Bank-Liquidity Retry Schedule [REDACTED IN PREVIEW]</strong>
+                <strong>Step 2 &bull; Optimal Bank-Liquidity Retry Schedule [REDACTED IN PREVIEW]</strong>
                 <p>Unlock the $1.99 Single-Audit Pass to reveal exact timezone-synced retry timestamps &amp; cron rules.</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 3 • 🔒 Multi-Channel SMS &amp; 1-Click Wallet Fallback [REDACTED IN PREVIEW]</strong>
+                <strong>Step 3 &bull; Multi-Channel SMS &amp; 1-Click Wallet Fallback [REDACTED IN PREVIEW]</strong>
                 <p>Unlock the $1.99 Pass to download the Stripe Webhook Worker &amp; recovery templates.</p>
               </div>
             </div>
 
             <div class="code-snippet-box">
-              <div class="mono-label">LOCKED MULTI-CHANNEL RECOVERY TEMPLATE (<span id="wh-out-model">deterministic-finops-v4</span>)</div>
-              <p id="wh-out-subject" style="font-size:0.84rem; font-weight:700; color:#34D399; margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149): Soft Decline Detected</p>
-              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.84rem; margin-top:6px;">[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal the exact Stripe webhook retry timestamps, 1-click Apple Pay link generator, and customer Email/SMS recovery copy.</pre>
+              <div class="mono-label">Locked Multi-Channel Recovery Template (<span id="wh-out-model">deterministic-finops-v4</span>)</div>
+              <p id="wh-out-subject" style="font-size:0.9375rem; font-weight:700; color:var(--emerald); margin-top:6px;">Subject: [Action Required] AuraBotanics DTC payment ($149): Soft Decline Detected</p>
+              <pre id="wh-out-body" style="white-space:pre-wrap; font-size:0.9375rem; margin-top:6px;">[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal the exact Stripe webhook retry timestamps, 1-click Apple Pay link generator, and customer Email/SMS recovery copy.</pre>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PHASE 3 PUREST PATH: SINGLE SELF-SERVE STRIPE EXPRESS CHECKOUT -->
+    <!-- SINGLE SELF-SERVE STRIPE EXPRESS CHECKOUT -->
     <section id="pricing" class="lab-section">
       <div class="container">
         <div class="pricing-card featured" style="max-width:860px; margin:0 auto;">
           <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
-              <span class="mono-label text-indigo">PHASE 3 PUREST PATH • INSTANT STRIPE EXPRESS</span>
-              <span class="badge-live">ONE-TIME PASS • 0% REVENUE TAX</span>
-            </div>
-            <h2 class="section-h2" style="margin-bottom:8px;">Unlock Your Complete 3-File Stripe Decline Retry &amp; Bandit Pack <span class="serif-italic">($1.99 Stripe Express)</span></h2>
+            <h2 class="section-h2" style="margin-bottom:8px;">Unlock Your 3-File Recovery Pack</h2>
             <p class="section-sub" style="margin-bottom:18px;">Unblur all bank-code recovery schedules and download your production-ready <code>stripe-retry-rules.json</code>, <code>exit-bandit-c1-c6.js</code>, and 3-step recovery copy bundle in 1 click.</p>
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:18px 20px; border-radius:12px; background:#F8FAFC; border:1px solid #E2E8F0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:20px 22px; border-radius:14px; background:#F1F5F9;">
               <div>
                 <div class="price-tag" style="margin:0;">$1.99<span> USD single audit</span></div>
-                <div style="font-size:0.85rem; color:var(--text-slate); margin-top:4px;">✓ Single-Store 3-File Stripe Recovery Bundle • Instant Browser Unlock</div>
+                <div style="font-size:0.9375rem; color:var(--text-slate); margin-top:4px;">Single-Store 3-File Stripe Recovery Bundle &bull; Instant Browser Unlock</div>
               </div>
-              <a href="/buy/flash_pass" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn btn-ghost" style="padding:12px 20px; font-size:0.92rem; text-decoration:none; border:1px solid #CBD5E1;">
+              <a href="/buy/flash_pass" rel="nofollow" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn btn-indigo" style="padding:13px 22px; font-size:1rem; text-decoration:none;">
                 <span>Unlock Single Audit ($1.99)</span>
-                <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
               </a>
             </div>
 
-            <!-- RECOMMENDED: $29 LIFETIME FOUNDER PLAYBOOK -->
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:20px 22px; border-radius:14px; background:linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(16,185,129,0.06) 100%); border:2px solid var(--indigo); margin-top:14px; position:relative;">
-              <span style="position:absolute; top:-11px; left:20px; background:var(--indigo); color:#FFFFFF; font-size:0.75rem; font-weight:800; padding:2px 10px; border-radius:999px; letter-spacing:0.04em;">★ RECOMMENDED FOR FOUNDERS</span>
-              <div>
-                <div class="price-tag" style="margin:0; color:var(--indigo); font-size:1.8rem;">$29<span> USD one-time lifetime</span></div>
-                <div style="font-size:0.88rem; color:var(--text-navy); font-weight:700; margin-top:4px;">Founder's Stripe Recovery Audit &amp; Full 20-Decline Playbook</div>
-                <div style="font-size:0.82rem; color:var(--text-slate); margin-top:2px;">Complete Liquidity Windows, Cloudflare Webhook Worker (.JS), 4-Stage Dunning Email &amp; SMS Copy</div>
-              </div>
-              <a href="/buy/playbook_pass" id="btn-buy-playbook-29" class="btn btn-indigo" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':29.00,'currency':'USD'});}" style="padding:14px 26px; font-size:0.98rem; text-decoration:none; box-shadow:0 6px 18px rgba(99,102,241,0.25);">
-                <span>Unlock Founder Playbook ($29 Lifetime)</span>
-                <span class="btn-icon-circle" aria-hidden="true">↗</span>
-              </a>
-            </div>
-            <details style="margin-top:16px; font-size:0.85rem; color:var(--text-slate);">
-              <summary style="cursor:pointer; font-weight:700;">Need Managed Multi-Store Autonomous Recovery ($49–$149/mo)?</summary>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin-top:12px;">
+            <details style="margin-top:16px; font-size:0.9375rem; color:var(--text-slate); padding:14px 16px; border-radius:12px; background:#F1F5F9;">
+              <summary style="cursor:pointer; font-weight:700; color:var(--text-navy);">Need the Full 20-Decline Founder Playbook ($29) or Managed Multi-Store Recovery ($49–$149/mo)?</summary>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:14px;">
+                <a href="/buy/playbook_pass" rel="nofollow" id="btn-buy-playbook-29" class="btn btn-ghost btn-block" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':29.00,'currency':'USD'});}" style="text-decoration:none; background:#FFFFFF;">
+                  <span>Founder Playbook ($29 Lifetime)</span>
+                </a>
                 <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">
-                  <span>Start Starter Plan ($49/mo)</span>
-                  <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                  <span>Starter Plan ($49/mo)</span>
                 </button>
                 <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
-                  <span>Start Growth Plan ($149/mo)</span>
-                  <span class="btn-icon-circle" aria-hidden="true">↗</span>
+                  <span>Growth Plan ($149/mo)</span>
                 </button>
               </div>
             </details>
           </div>
         </div>
 
-        <div id="checkout-status-banner" class="telemetry-card" style="display:none; margin-top:20px; border-color:var(--emerald);">
+        <div id="checkout-status-banner" class="telemetry-card" style="display:none; margin-top:20px;">
           <div class="card-header-bar">
-            <span class="mono-label text-emerald">SELF-SERVE STRIPE CHECKOUT FULFILLMENT</span>
-            <span id="checkout-session-badge" class="badge-live">ACTIVE</span>
+            <span class="mono-label text-emerald">Self-Serve Stripe Checkout Fulfillment</span>
+            <span id="checkout-session-badge" class="badge-live">Active</span>
           </div>
-          <p id="checkout-status-text" style="font-size:0.92rem; color:var(--text-navy);"></p>
+          <p id="checkout-status-text" style="font-size:1rem; color:var(--text-navy);"></p>
         </div>
       </div>
     </section>
@@ -499,11 +466,11 @@
   <div id="exit-intent-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
     <div class="exit-modal-card">
       <div class="card-header-bar">
-        <span class="mono-label text-indigo">HIGH EXIT INTENT DETECTED • LIVE COUNTER-OFFER PREVIEW</span>
+        <span class="mono-label text-indigo">High Exit Intent Detected &bull; Live Counter-Offer Preview</span>
         <button type="button" class="btn btn-ghost btn-sm" onclick="closeExitIntentModal()">Close [ESC]</button>
       </div>
       <h2 id="exit-modal-title" style="font-size:1.35rem; margin-bottom:8px; color:var(--text-navy);">Wait: Before You Leave Your Checkout, What Stopped You Today?</h2>
-      <p style="font-size:0.9rem; color:var(--text-slate); margin-bottom:14px;">Tap your primary reason below and we will unlock a tailored checkout solution immediately:</p>
+      <p style="font-size:1rem; color:var(--text-slate); margin-bottom:14px;">Tap your primary reason below and we will unlock a tailored checkout solution immediately:</p>
 
       <div class="objection-buttons-grid">
         <button type="button" class="objection-btn" onclick="modalSelectObjection('C1_PRICE')">
@@ -525,9 +492,9 @@
       </div>
 
       <div id="modal-bandit-result" class="code-snippet-box" style="margin-top:12px;">
-        <div class="mono-label">INSTANT COUNTER-OFFER UNLOCKED</div>
-        <strong id="modal-offer-headline" style="display:block; margin-top:4px; font-size:0.98rem;">Unlock 15% Instant Founders Rebate (Code: ALPHA15)</strong>
-        <p id="modal-offer-subtext" style="font-size:0.82rem; margin-top:4px;">Click below to apply this offer and update the live SQLite Beta(α, β) posterior table.</p>
+        <div class="mono-label">Instant Counter-Offer Unlocked</div>
+        <strong id="modal-offer-headline" style="display:block; margin-top:4px; font-size:1rem;">Unlock 15% Instant Founders Rebate (Code: ALPHA15)</strong>
+        <p id="modal-offer-subtext" style="font-size:0.9375rem; margin-top:4px;">Click below to apply this offer and update the live SQLite Beta(&alpha;, &beta;) posterior table.</p>
       </div>
     </div>
   </div>
@@ -537,7 +504,7 @@
     <div class="container cookie-consent-inner">
       <div>
         <strong style="color:var(--text-navy);">GDPR &amp; Ephemeral Telemetry Notice:</strong>
-        We use zero-PII ephemeral cursor velocity vectors and optional Meta CAPI attribution cookies. Read our <a href="/privacy" style="color:var(--blurple); font-weight:700;">Privacy Policy</a>.
+        We use zero-PII ephemeral cursor velocity vectors and optional Meta CAPI attribution cookies. Read our <a href="/privacy" style="color:var(--text-navy); font-weight:700;">Privacy Policy</a>.
       </div>
       <div class="cookie-consent-actions">
         <button type="button" id="cookie-reject-btn" class="btn btn-ghost btn-sm" onclick="setCookieConsent('essential_only')">Essential Only</button>
@@ -549,7 +516,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <strong>AbandonAlpha (#9)</strong>: Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
+        <strong>AbandonAlpha</strong>: Autonomous Checkout Abandonment Bandit &amp; Stripe Failed-Payment Dunning Engine.
       </div>
       <div class="footer-links">
         <a href="/#grader">Leakage Grader</a>

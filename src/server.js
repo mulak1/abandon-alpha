@@ -75,11 +75,11 @@ function renderHomepagePseoHubHtml() {
     const items = allPages.filter((p) => p.category === cat).slice(0, 6);
     return `
       <div style="margin-top:20px;">
-        <h3 style="font-size:1.05rem; margin-bottom:10px; color:var(--text-navy);">${cat} (Featured 6 Playbooks)</h3>
+        <h3 style="font-size:1.125rem; margin-bottom:10px; color:var(--text-navy);">${cat} (6 Playbooks)</h3>
         <div class="related-links-grid">
           ${items.map((p) => `
             <a href="/seo/${p.slug}" class="related-card">
-              <span class="mono-label">${p.declineOrSignal} • +${p.recoverableLiftPct}% Lift</span>
+              <span class="mono-label">${p.declineOrSignal} &bull; +${p.recoverableLiftPct}% Lift</span>
               <strong>${p.title.replace(/`/g, '')}</strong>
             </a>
           `).join('')}
@@ -91,9 +91,8 @@ function renderHomepagePseoHubHtml() {
     <section id="pseo-recovery-hub" class="lab-section">
       <div class="container">
         <div class="section-header-stack">
-          <div class="status-pill">24-PLAYBOOK STRIPE DECLINE CODE, WEBHOOK &amp; CHECKOUT RECOVERY HUB</div>
-          <h2 class="section-h2">Stripe Decline Code, Webhook &amp; Checkout <span class="serif-italic">Recovery Hub</span></h2>
-          <p class="section-sub">Explore 24 featured technical playbooks across all 4 FinOps clusters—or browse the <a href="/directory" style="color:var(--blurple); font-weight:700;">Complete 60-Playbook Directory</a> and <a href="/llms.txt" style="color:var(--blurple); font-weight:700;">/llms.txt Index</a>.</p>
+          <h2 class="section-h2">Stripe Decline &amp; Checkout Playbooks</h2>
+          <p class="section-sub">Explore 24 featured technical playbooks across all 4 FinOps clusters—or browse the <a href="/directory" style="color:var(--text-navy); font-weight:700;">Complete 60-Playbook Directory</a> and <a href="/llms.txt" style="color:var(--text-navy); font-weight:700;">/llms.txt Index</a>.</p>
         </div>
         ${clusterBlocks}
       </div>

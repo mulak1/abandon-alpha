@@ -11,53 +11,40 @@ function escapeHtml(str) {
 
 function renderBrandLogoSvg(idPrefix = 'aa') {
   return `<svg viewBox="0 0 64 64" width="36" height="36" role="img" aria-label="AbandonAlpha Vault Crest">
-    <defs>
-      <linearGradient id="${idPrefix}VaultBg" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#0A2540"/>
-        <stop offset="55%" stop-color="#1E1B4B"/>
-        <stop offset="100%" stop-color="#533AFD"/>
-      </linearGradient>
-      <linearGradient id="${idPrefix}EmeraldVec" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#059669"/>
-        <stop offset="100%" stop-color="#34D399"/>
-      </linearGradient>
-    </defs>
-    <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#${idPrefix}VaultBg)" stroke="#635BFF" stroke-width="2"/>
-    <rect x="6" y="6" width="52" height="52" rx="12" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1"/>
+    <rect x="2" y="2" width="60" height="60" rx="16" fill="#0A2540"/>
     <path d="M36 42 C29 46 20 43 18 35 C16 27 23 20 31 22 C37 23.5 40 30 43 37 L47 44" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M22 39 C28 39 35 32 45 18" fill="none" stroke="url(#${idPrefix}EmeraldVec)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22 39 C28 39 35 32 45 18" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M35 17 H46 V28" fill="none" stroke="#34D399" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="27" cy="31" r="3" fill="#A5B4FC"/>
+    <circle cx="27" cy="31" r="3" fill="#FFFFFF"/>
   </svg>`;
 }
 
-function renderUnifiedHeaderHtml(tagText = 'FINOPS + STRIPE v4.2') {
+function renderUnifiedHeaderHtml(tagText = '') {
   return `<header class="site-header">
     <div class="container header-inner">
       <a href="/" class="brand-logo" aria-label="AbandonAlpha Home">
         ${renderBrandLogoSvg('hdr')}
         <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
-        <span class="brand-tag">${escapeHtml(tagText)}</span>
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
         <a href="/#grader">Revenue Calculator</a>
-        <a href="/#bandit-lab">Exit-Offer Simulator</a>
+        <a href="/#bandit-lab">Exit Simulator</a>
         <a href="/#webhook-lab">Stripe Retry Lab</a>
-        <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
-        <a href="/directory">Playbook Directory (60)</a>
+        <a href="/leaderboard" style="font-weight:700;color:var(--text-navy);">Leaderboard</a>
+        <a href="/directory">Playbooks (60)</a>
         <a href="/#pricing">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
           <span>Calculate Recoverable MRR</span>
-          <span class="btn-icon-circle" aria-hidden="true">↗</span>
+          <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
         </a>
       </nav>
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
       <a href="/#bandit-lab">Exit Simulator</a>
-      <a href="/leaderboard" style="font-weight:700;color:var(--blurple);">🏆 Leaderboard</a>
+      <a href="/leaderboard" style="font-weight:700;color:var(--text-navy);">Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
-      <a href="/#pricing">Pricing ($49)</a>
+      <a href="/#pricing">Pricing</a>
     </nav>
   </header>`;
 }
@@ -301,11 +288,11 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           </div>
           <div class="spec-row">
             <span class="spec-k">Optimal Timing</span>
-            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" style="color:var(--blurple);font-weight:700;text-decoration:underline;">🔒 Locked in Free Preview ($1.99 Pass)</a></span>
+            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">Locked in Free Preview ($1.99 Pass)</a></span>
           </div>
           <div class="spec-row">
             <span class="spec-k">Winning Bandit Arm</span>
-            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" style="color:var(--blurple);font-weight:700;text-decoration:underline;">🔒 C1–C6 Offer Locked ($1.99 Pass)</a></span>
+            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">C1–C6 Offer Locked ($1.99 Pass)</a></span>
           </div>
           <div class="spec-row">
             <span class="spec-k">Est. Recovered Cashflow</span>
@@ -347,8 +334,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <tr style="background: rgba(16, 185, 129, 0.08);">
               <td><strong class="text-indigo">AbandonAlpha Smart Window + C1-C6 Bandit</strong></td>
               <td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td>
-              <td><strong>&lt; 4.2 Hours (Smart Window Locked 🔒)</strong></td>
-              <td class="text-emerald"><strong>Low (Visa/MC Compliant + C1-C6 Bandit Locked 🔒)</strong></td>
+              <td><strong>&lt; 4.2 Hours (Smart Window Locked)</strong></td>
+              <td class="text-emerald"><strong>Low (Visa/MC Compliant + C1-C6 Bandit Locked)</strong></td>
               <td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td>
             </tr>
           </tbody>
@@ -390,10 +377,10 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong>
           </div>
           <div class="code-snippet-box">
-            <div class="mono-label">DROP-IN SDK + STRIPE RETRY WORKER ($1.99 SINGLE-STORE PASS)</div>
-            <code>/* 🔒 [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass to download your ${escapeHtml(page.declineOrSignal)} retry worker &amp; C1-C6 Bandit SDK tag */</code>
+            <div class="mono-label">Drop-In SDK + Stripe Retry Worker ($1.99 Single-Store Pass)</div>
+            <code>/* [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass to download your ${escapeHtml(page.declineOrSignal)} retry worker &amp; C1-C6 Bandit SDK tag */</code>
             <div style="margin-top:8px;">
-              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" class="btn btn-emerald btn-sm" style="display:inline-flex;">Unlock ${escapeHtml(page.declineOrSignal)} Retry Worker &amp; SDK ($1.99) ↗</a>
+              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-emerald btn-sm" style="display:inline-flex;">Unlock ${escapeHtml(page.declineOrSignal)} Retry Worker &amp; SDK ($1.99) &rarr;</a>
             </div>
           </div>
         </div>
@@ -654,7 +641,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
             </div>
           </div>
           <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;">
-            <a href="/buy/flash_pass?utm_source=meta_lp" class="btn btn-emerald btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Unlock Single-Store Stripe Recovery Pass ($1.99 One-Time) ↗</a>
+            <a href="/buy/flash_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-emerald btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Unlock Single-Store Stripe Recovery Pass ($1.99 One-Time) &rarr;</a>
             <button type="button" class="btn btn-ghost btn-block" onclick="startLpCheckout('starter')">Or Start Managed Autonomous Recovery ($49/mo: 30-Day ROI Guarantee)</button>
           </div>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
