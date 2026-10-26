@@ -385,6 +385,19 @@ app.get('/seo/:slug', (req, res) => {
   const rawSlug = String(req.params.slug || '');
   const page = getPseoPageBySlug(SLUG_ALIASES[rawSlug] || rawSlug);
   if (!page) {
+    const cleanCand = rawSlug.toLowerCase().replace(/[^a-z0-9-_]/g, '');
+    const allPages = getAllPseoPages();
+    const candTokens = cleanCand.split('-').filter((t) => t.length >= 2), firstToken = candTokens[0] || '';
+    let bestSlug = null, bestScore = 0;
+    for (const p of allPages) {
+      const pSlug = String(p.slug || '').toLowerCase();
+      if (pSlug.startsWith(cleanCand) || cleanCand.startsWith(pSlug)) { bestSlug = p.slug; break; }
+      const pTokens = pSlug.split('-');
+      let score = (firstToken && pTokens[0] === firstToken) ? 5 : 0;
+      for (const t of candTokens) { if (pTokens.includes(t) || pSlug.includes(t)) score += 2; }
+      if (score > bestScore && score >= 4) { bestScore = score; bestSlug = p.slug; }
+    }
+    if (bestSlug) return res.redirect(301, `/seo/${bestSlug}`);
     return res.status(404).send(renderNotFoundHtml());
   }
   res.send(renderPseoPageHtml(page, BASE_URL));
