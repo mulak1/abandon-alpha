@@ -2,6 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
+let AA_VIEWS = null;
+try { AA_VIEWS = require('./views'); } catch (_) {}
 
 /**
  * Phase A: Zero-HITL Public Scan Permalink, URL-Prefix / curl Terminal Magic,
@@ -194,21 +196,11 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   <meta property="og:url" content="${esc(canonicalUrl)}" />
   <meta property="og:image" content="https://${esc(cfg.domain)}/api/og/scorecard?target=${esc(encodeURIComponent(scan.target))}" />
   <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
-  <header style="border-bottom:1px solid ${esc(t.border)};background:#FFFFFF;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <a href="/" style="font-weight:800;font-size:18px;color:${esc(t.textPrimary)};text-decoration:none;">${esc(cfg.brandName)}</a>
-      <span style="font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};">Verified Report • Grade ${esc(scan.grade)}</span>
-    </div>
-    <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
-      <a href="/" style="color:${esc(t.textSecondary)};text-decoration:none;">Home Calculator</a>
-      <a href="/leaderboard" style="color:${esc(t.textSecondary)};text-decoration:none;">Leaderboard</a>
-      <a href="/directory" style="color:${esc(t.textSecondary)};text-decoration:none;">All Guides</a>
-      <a href="/buy/flash_pass" rel="nofollow" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
-    </nav>
-  </header>
-  <main style="max-width:1240px;margin:0 auto;padding:24px;">
+  ${AA_VIEWS ? AA_VIEWS.renderUnifiedHeaderHtml(`VERIFIED REPORT • GRADE ${scan.grade}`) : ''}
+  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
     <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:10px;">
       <a href="/" style="color:${esc(badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/leaderboard" style="color:${esc(badgeColor)};text-decoration:none;font-weight:600;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
     </nav>
@@ -324,21 +316,11 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   <title>${esc(cfg.brandName)} Public Leaderboard : Top Rated (A+) &amp; Needs Improvement (2026)</title>
   <meta name="description" content="Live public benchmark leaderboard for ${esc(cfg.brandName)}. Compare Grade A+ leaders, spot common mistakes, or check any target for an instant public report." />
   <link rel="canonical" href="https://${esc(cfg.domain)}/leaderboard" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
-  <header style="border-bottom:1px solid ${esc(t.border)};background:#FFFFFF;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <a href="/" style="font-weight:800;font-size:18px;color:${esc(t.textPrimary)};text-decoration:none;">${esc(cfg.brandName)}</a>
-      <span style="font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:${esc(t.brandSoftBg)};color:${esc(badgeColor)};">Public Benchmark Leaderboard</span>
-    </div>
-    <nav aria-label="Primary" style="display:flex;gap:16px;align-items:center;font-size:14px;font-weight:600;">
-      <a href="/" style="color:${esc(t.textSecondary)};text-decoration:none;">Home Calculator</a>
-      <a href="/leaderboard" style="color:${esc(badgeColor)};text-decoration:none;font-weight:800;">Leaderboard</a>
-      <a href="/directory" style="color:${esc(t.textSecondary)};text-decoration:none;">All Guides</a>
-      <a href="/buy/flash_pass" rel="nofollow" style="padding:8px 16px;border-radius:999px;background:${esc(badgeColor)};color:#FFFFFF;text-decoration:none;font-weight:700;">Unlock 3-File Pack ($1.99) ↗</a>
-    </nav>
-  </header>
-  <main style="max-width:1240px;margin:0 auto;padding:24px;">
+  ${AA_VIEWS ? AA_VIEWS.renderUnifiedHeaderHtml('PUBLIC BENCHMARK LEADERBOARD') : ''}
+  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
     <h1 style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
     <p class="pseo-lead" style="margin:0 0 18px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>

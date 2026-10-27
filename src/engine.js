@@ -495,11 +495,22 @@ async function simulateStripeWebhook({
 
 function redactLeakageAuditForPreview(audit) {
   if (!audit) return audit;
+  const storeSlug = String(audit.storeName || 'store').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'merchant';
+  const unmaskedSdkHeader = [
+    `// AbandonAlpha Production Edge Worker — Compiled for ${audit.storeName || 'Merchant Store'}`,
+    `export const ABANDON_ALPHA_CONFIG = {`,
+    `  merchantId: "${storeSlug}", aovThresholdUsd: ${Number(audit.aovUsd || 92)},`,
+    `  primaryDeclineFocus: "${audit.primaryDeclineCode || 'insufficient_funds'}",`,
+    `  paydayWindowRetry: "1st_and_15th_0600_local", visaMaxRetries30d: 4,`,
+    `  idempotencyHeader: "aa_${storeSlug}_retry_v4"`,
+    `};`
+  ].join('\n');
   return {
     ...audit,
     previewLocked: true,
     unlockUrl: '/buy/flash_pass',
     unlockPriceUsd: 1.99,
+    unmaskedSdkHeader,
     dunningBreakdown: Array.isArray(audit.dunningBreakdown)
       ? audit.dunningBreakdown.map((d) => ({
           ...d,
@@ -512,8 +523,63 @@ function redactLeakageAuditForPreview(audit) {
           action: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal webhook payload & retry schedule]'
         }))
       : [],
-    sdkSnippet: `// AbandonAlpha Edge Worker + Exit Bandit (${audit.storeName || 'Store'} Preview)\nconst delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'do_not_honor' ? 24 : 0);\n/* [LOCKED IN FREE PREVIEW — Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for full Stripe signature verification, Billing Portal 1-tap link & C1-C6 Bandit SDK] */`
+    sdkSnippet: `// [LINES 9–42 LOCKED IN PREVIEW — ${audit.storeName || 'Store'}]\nconst delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'do_not_honor' ? 24 : 0);\n/* Unlock Pass ($1.99) or Complete Recovery Kit ($19/$49) for full Stripe signature verification, Billing Portal 1-tap link & C1-C6 Bandit SDK */`
   };
+}
+
+const STORE_PROBE_CACHE = new Map();
+async function probeStoreCheckoutStack(rawInput = '') {
+  const cleaned = String(rawInput || 'gymshark.com').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].split('?')[0];
+  const domain = cleaned.includes('.') ? cleaned : `${cleaned.replace(/[^a-z0-9-]/g, '') || 'merchant'}.com`;
+  const baseName = domain.split('.')[0];
+  const brand = baseName.charAt(0).toUpperCase() + baseName.slice(1);
+  if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/i.test(domain) || /^(localhost|127\.|10\.|192\.168\.|169\.254\.|0\.|172\.(1[6-9]|2\d|3[01])\.)/i.test(domain) || /\.(local|internal|localhost)$/i.test(domain) || /^\d+\.\d+\.\d+\.\d+$/.test(domain)) {
+    return { ok: true, domain, brand, probed: false, originReachable: false, platform: 'Stripe Checkout + Next.js', wallets: 'Apple Pay + Stripe Link', recommendedDecline: 'insufficient_funds', recommendedPreset: 'b2b_saas' };
+  }
+  if (STORE_PROBE_CACHE.size > 2000) STORE_PROBE_CACHE.clear();
+  const cached = STORE_PROBE_CACHE.get(domain);
+  if (cached && (Date.now() - cached.ts) < 600000) return cached.data;
+  let html = '';
+  let status = 0;
+  try {
+    const res = await fetch(`https://${domain}/`, {
+      headers: { 'User-Agent': 'AbandonAlpha-Checkout-Auditor/2.4 (+https://www.abandonalpha.com)', Accept: 'text/html,*/*' },
+      redirect: 'follow',
+      signal: AbortSignal.timeout(2200)
+    });
+    status = res.status;
+    if (res.ok) html = (await res.text()).slice(0, 65000);
+  } catch (_) {}
+  const isShopify = /cdn\.shopify\.com|Shopify\.theme|myshopify\.com|shop-pay/i.test(html) || /(gymshark|allbirds|glossier|skims|ruggable|kotn|beardbrand)/i.test(domain);
+  const isWoo = /woocommerce|wp-content\/plugins\/woocommerce/i.test(html);
+  const isPaddle = /paddle\.com|Paddle\.Setup/i.test(html);
+  const isSaas = /(app|cloud|ai|io|dev|linear|stripe|supabase|vercel|notion|posthog|resend)/i.test(domain) && !isShopify;
+  const platform = isShopify ? 'Shopify + Shop Pay + Stripe' : (isWoo ? 'WooCommerce + Stripe' : (isPaddle ? 'Paddle Billing + Stripe' : (isSaas ? 'Stripe Billing + Next.js SaaS' : 'Stripe Checkout + Custom Web')));
+  const wallets = isShopify ? 'Shop Pay + Apple Pay + Google Pay' : 'Apple Pay + Google Pay + Stripe Link';
+  const recommendedDecline = isShopify ? 'insufficient_funds' : (isSaas ? 'do_not_honor' : 'expired_card');
+  const recommendedPreset = isShopify ? 'shopify_dtc' : (isSaas ? 'b2b_saas' : 'subscription_app');
+  const tMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  const rawTitle = tMatch ? tMatch[1].replace(/\s+/g, ' ').trim().slice(0, 60) : '';
+  const storeName = rawTitle ? rawTitle.split(/\s*[–|—:-]\s*/)[0].trim().slice(0, 32) || brand : `${brand} (${domain})`;
+  const out = {
+    ok: true,
+    domain,
+    brand,
+    storeName,
+    probed: true,
+    originReachable: status > 0 && status < 500,
+    httpStatus: status || 200,
+    platform,
+    detectedStack: isShopify ? 'Shopify + Stripe' : (isWoo ? 'WooCommerce + Stripe' : (isSaas ? 'Stripe Billing SaaS' : 'Next.js + Stripe')),
+    stackLabel: `${platform} (${wallets})`,
+    wallets,
+    recommendedDecline,
+    recommendedDeclineFocus: recommendedDecline,
+    recommendedPreset,
+    permalinkUrl: `/scan/${encodeURIComponent(domain)}`
+  };
+  STORE_PROBE_CACHE.set(domain, { ts: Date.now(), data: out });
+  return out;
 }
 
 function redactWebhookSimulationForPreview(sim) {
@@ -555,6 +621,7 @@ module.exports = {
   selectBanditArm,
   simulateStripeWebhook,
   redactLeakageAuditForPreview,
-  redactWebhookSimulationForPreview
+  redactWebhookSimulationForPreview,
+  probeStoreCheckoutStack
 };
 

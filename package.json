@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "test": "node test/verify.test.js",
     "test:e2e": "node scripts/verify-playwright.js"
   },
   "dependencies": {

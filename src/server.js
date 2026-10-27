@@ -13,7 +13,8 @@ const {
   selectBanditArm,
   simulateStripeWebhook,
   redactLeakageAuditForPreview,
-  redactWebhookSimulationForPreview
+  redactWebhookSimulationForPreview,
+  probeStoreCheckoutStack
 } = require('./engine');
 const { getAllPseoPages, getPseoPageBySlug } = require('./pseo-data');
 const {
@@ -138,6 +139,17 @@ app.post('/api/audit-leakage', (req, res) => {
     const isUnlocked = req.query?.unlocked === '1' || req.body?.unlocked === true;
     const result = isUnlocked ? rawResult : redactLeakageAuditForPreview(rawResult);
     res.json({ ok: true, ...result });
+  } catch (err) {
+    res.status(400).json({ ok: false, error: err.message });
+  }
+});
+
+// Module A2: Live Store URL Tech-Stack & Checkout Rail Scanner
+app.all('/api/probe-store', async (req, res) => {
+  try {
+    const rawDomain = req.body?.domain || req.query?.domain || req.body?.storeUrl || req.query?.storeUrl || 'gymshark.com';
+    const probe = await probeStoreCheckoutStack(rawDomain);
+    res.json(probe);
   } catch (err) {
     res.status(400).json({ ok: false, error: err.message });
   }

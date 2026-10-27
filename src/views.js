@@ -670,8 +670,8 @@ function renderLegalPageHtml(type = 'privacy') {
         <h3>3. GDPR &amp; CCPA Data Subject Rights</h3>
         <p>Merchants and end-buyers may request immediate access, export, or deletion of telemetry logs by emailing privacy@abandonalpha.io.</p>
       ` : `
-        <h3>1. Flat-Rate Autonomous Recovery Service</h3>
-        <p>AbandonAlpha is licensed on a transparent monthly subscription ($49/mo Starter or $149/mo Growth) with 0% revenue-share tax on recovered checkouts.</p>
+        <h3>1. Transparent One-Time Packs &amp; Flat-Rate Recovery</h3>
+        <p>AbandonAlpha is licensed via self-serve One-Time Production Engineering Packs ($1.99 Single-Store Audit Pass, $19 Starter Code Pack, $49 Complete Store Recovery Kit) or Multi-Store Agency &amp; SMS Pro ($149) with 0% revenue-share commission on recovered checkouts.</p>
         <h3>2. Card Network Retry Compliance</h3>
         <p>All automated dunning schedules strictly enforce Visa and Mastercard retry limits (maximum 4 retries within 30 days on soft declines; zero automated retries on hard declines).</p>
         <h3>3. 30-Day 5x ROI Guarantee</h3>

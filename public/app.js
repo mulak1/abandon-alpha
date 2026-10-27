@@ -1,14 +1,158 @@
 const PRESET_DATA = {
-  shopify_dtc: { storeName: 'AuraBotanics DTC', monthlySessions: 3200, aovUsd: 92, abandonRatePct: 71.5, failedCardRatePct: 4.8 },
-  b2b_saas: { storeName: 'CloudPulse DevTools', monthlySessions: 950, aovUsd: 89, abandonRatePct: 68.0, failedCardRatePct: 7.4 },
-  creator_info: { storeName: 'DesignSystems Academy', monthlySessions: 1400, aovUsd: 115, abandonRatePct: 74.2, failedCardRatePct: 5.5 },
-  subscription_app: { storeName: 'KinectAI Pro', monthlySessions: 5400, aovUsd: 72, abandonRatePct: 69.4, failedCardRatePct: 8.6 }
+  shopify_dtc: { storeName: 'AuraBotanics DTC', storeUrl: 'aurabotanics.com', stack: 'Shopify + Stripe', monthlySessions: 3200, aovUsd: 92, abandonRatePct: 71.5, failedCardRatePct: 4.8 },
+  b2b_saas: { storeName: 'CloudPulse DevTools', storeUrl: 'cloudpulse.dev', stack: 'Stripe Billing SaaS', monthlySessions: 950, aovUsd: 89, abandonRatePct: 68.0, failedCardRatePct: 7.4 },
+  creator_info: { storeName: 'DesignSystems Academy', storeUrl: 'designsystems.io', stack: 'Next.js + Stripe', monthlySessions: 1400, aovUsd: 115, abandonRatePct: 74.2, failedCardRatePct: 5.5 },
+  subscription_app: { storeName: 'KinectAI Pro', storeUrl: 'kinectai.app', stack: 'Stripe Billing SaaS', monthlySessions: 5400, aovUsd: 72, abandonRatePct: 69.4, failedCardRatePct: 8.6 }
 };
 
 let currentPreset = 'shopify_dtc';
+const AA_STATE_KEY = 'aa_workspace_state_v1';
 
 function formatUsd(num) {
   return '$' + Math.round(Number(num || 0)).toLocaleString();
+}
+
+function cleanMerchantDomain(raw) {
+  const s = String(raw || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split(/[/?#]/)[0];
+  if (s && s.includes('.')) return s.replace(/[^a-z0-9.-]/g, '');
+  const slug = String(raw || 'aurabotanics').toLowerCase().replace(/[^a-z0-9]/g, '');
+  return (slug || 'aurabotanics') + '.com';
+}
+
+function saveAaWorkspaceState() {
+  try {
+    const state = {
+      preset: currentPreset,
+      storeName: document.getElementById('input-store')?.value || '',
+      storeUrl: document.getElementById('input-store-url')?.value || '',
+      monthlySessions: Number(document.getElementById('input-sessions')?.value || 3200),
+      aovUsd: Number(document.getElementById('input-aov')?.value || 92),
+      declineFocus: document.getElementById('input-decline-focus')?.value || 'auto_weighted',
+      abandonRatePct: Number(document.getElementById('input-abandon')?.value || 71.5),
+      failedCardRatePct: Number(document.getElementById('input-fail')?.value || 4.8),
+      customStack: document.getElementById('custom-stack')?.value || 'Shopify + Stripe',
+      customMaxRebate: document.getElementById('custom-max-rebate')?.value || '15% Founders Cap',
+      customPaydaySync: document.getElementById('custom-payday-sync')?.value || '1st & 15th 06:00 Local',
+      whEventType: document.getElementById('wh-event-type')?.value || 'invoice.payment_failed',
+      whDeclineCode: document.getElementById('wh-decline-code')?.value || 'insufficient_funds',
+      whEmail: document.getElementById('wh-email')?.value || 'founder@merchant.io',
+      whAmount: Number(document.getElementById('wh-amount')?.value || 149),
+      savedAt: Date.now()
+    };
+    localStorage.setItem(AA_STATE_KEY, JSON.stringify(state));
+  } catch (_) {}
+}
+
+function restoreAaWorkspaceState() {
+  try {
+    const raw = localStorage.getItem(AA_STATE_KEY);
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    if (!s || typeof s !== 'object') return false;
+    const setVal = (id, v) => {
+      const el = document.getElementById(id);
+      if (!el || v === undefined || v === null || v === '') return;
+      if (el.tagName === 'SELECT' && !Array.from(el.options).some((o) => o.value === String(v))) return;
+      el.value = v;
+    };
+    if (s.preset) currentPreset = s.preset;
+    setVal('input-store', s.storeName);
+    setVal('input-store-url', s.storeUrl);
+    setVal('input-sessions', s.monthlySessions);
+    setVal('input-aov', s.aovUsd);
+    setVal('input-decline-focus', s.declineFocus);
+    setVal('input-abandon', s.abandonRatePct);
+    setVal('input-fail', s.failedCardRatePct);
+    setVal('custom-stack', s.customStack);
+    setVal('custom-max-rebate', s.customMaxRebate);
+    setVal('custom-payday-sync', s.customPaydaySync);
+    setVal('wh-event-type', s.whEventType);
+    setVal('wh-decline-code', s.whDeclineCode);
+    setVal('wh-email', s.whEmail);
+    setVal('wh-amount', s.whAmount);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+function updateUnmaskedSdkPreview(auditRes) {
+  const storeName = document.getElementById('input-store')?.value || 'AuraBotanics DTC';
+  const rawUrl = document.getElementById('input-store-url')?.value || storeName;
+  const domain = cleanMerchantDomain(rawUrl);
+  const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
+  const stack = document.getElementById('custom-stack')?.value || 'Shopify + Stripe';
+  const maxRebate = document.getElementById('custom-max-rebate')?.value || '15% Founders Cap';
+  const paydaySync = document.getElementById('custom-payday-sync')?.value || '1st & 15th 06:00 Local';
+  const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
+  const estMrr = auditRes?.totalRecoverableUsd ? formatUsd(auditRes.totalRecoverableUsd) : '+$8,420';
+
+  const permalinkEl = document.getElementById('aa-live-scan-permalink');
+  if (permalinkEl) {
+    permalinkEl.href = '/scan/' + encodeURIComponent(domain);
+    permalinkEl.textContent = 'Public Scan (/scan/' + domain + ') ↗';
+  }
+
+  const previewEl = document.getElementById('out-sdk-unmasked-preview');
+  if (previewEl) {
+    previewEl.textContent = [
+      `// [LIVE PREVIEW — UNMASKED HEADER FOR ${storeName.toUpperCase()} (${domain})]`,
+      `window.AbandonAlphaConfig = {`,
+      `  merchantStore: ${JSON.stringify(storeName)}, checkoutStack: ${JSON.stringify(stack)},`,
+      `  aovUsd: ${aovUsd}, maxDiscountRebate: ${JSON.stringify(maxRebate)},`,
+      `  primaryDeclineRule: ${JSON.stringify(declineCode === 'auto_weighted' ? 'insufficient_funds' : declineCode)}, retryCadence: ${JSON.stringify(paydaySync)},`,
+      `  projectedRecoverableMrr: ${JSON.stringify(estMrr + '/mo')} // Full C1-C6 weights & Stripe worker locked below ↓`
+    ].join('\n');
+  }
+}
+
+function onCustomizerChange() {
+  updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
+  saveAaWorkspaceState();
+}
+
+async function probeLiveMerchantStore(domainOverride) {
+  const inputUrlEl = document.getElementById('input-store-url');
+  const btnEl = document.getElementById('btn-probe-store');
+  const badgeEl = document.getElementById('probed-stack-badge');
+  const rawDomain = domainOverride || inputUrlEl?.value?.trim() || document.getElementById('input-store')?.value?.trim() || 'gymshark.com';
+  if (inputUrlEl && !inputUrlEl.value.trim()) inputUrlEl.value = rawDomain;
+
+  if (btnEl) {
+    btnEl.disabled = true;
+    btnEl.textContent = 'Probing...';
+  }
+  const res = await fetch('/api/probe-store', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ domain: rawDomain })
+  }).then((r) => r.json()).catch(() => null);
+
+  if (btnEl) {
+    btnEl.disabled = false;
+    btnEl.textContent = 'Probe Store ↗';
+  }
+  if (!res || !res.ok) return;
+
+  if (res.storeName) document.getElementById('input-store').value = res.storeName;
+  if (res.estimatedSessions) document.getElementById('input-sessions').value = res.estimatedSessions;
+  if (res.estimatedAovUsd) document.getElementById('input-aov').value = res.estimatedAovUsd;
+  if (res.estimatedAbandonRatePct) document.getElementById('input-abandon').value = res.estimatedAbandonRatePct;
+  if (res.estimatedFailedCardRatePct) document.getElementById('input-fail').value = res.estimatedFailedCardRatePct;
+  if (res.recommendedDeclineFocus) {
+    const df = document.getElementById('input-decline-focus');
+    if (df) df.value = res.recommendedDeclineFocus;
+  }
+  const customStackEl = document.getElementById('custom-stack');
+  if (customStackEl && res.detectedStack && Array.from(customStackEl.options).some((o) => o.value === res.detectedStack)) {
+    customStackEl.value = res.detectedStack;
+  }
+  if (badgeEl) {
+    badgeEl.style.display = 'inline-block';
+    badgeEl.textContent = `● LIVE PROBE: ${res.stackLabel} (${res.probeMode === 'live_origin_fetch' ? 'HTTP ' + res.httpStatus : 'Verified Preset'})`;
+  }
+  saveAaWorkspaceState();
+  await runAuditRequest('custom', false, true);
 }
 
 function applyPreset(presetKey, btnEl) {
@@ -24,6 +168,8 @@ function applyPreset(presetKey, btnEl) {
   }
 
   document.getElementById('input-store').value = p.storeName;
+  if (document.getElementById('input-store-url')) document.getElementById('input-store-url').value = p.storeUrl || '';
+  if (document.getElementById('custom-stack') && p.stack) document.getElementById('custom-stack').value = p.stack;
   document.getElementById('input-sessions').value = p.monthlySessions;
   document.getElementById('input-aov').value = p.aovUsd;
   document.getElementById('input-abandon').value = p.abandonRatePct;
@@ -35,6 +181,7 @@ function applyPreset(presetKey, btnEl) {
     window.history.replaceState({}, '', u.pathname + u.search + u.hash);
   } catch (_) {}
 
+  saveAaWorkspaceState();
   runAuditRequest(presetKey, false, true);
 }
 
@@ -114,6 +261,9 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   if (navBtn) navBtn.innerHTML = '<span>Calculate MRR</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
   if (!res || !res.ok) return;
 
+  window.__LAST_AUDIT_RES__ = res;
+  if (isManualTrigger) saveAaWorkspaceState();
+
   document.getElementById('out-grade-badge').textContent = `Grade: ${res.letterGrade} (${res.gradeScore}/100)`;
   document.getElementById('out-total-leaked').textContent = formatUsd(res.totalMonthlyLeakedUsd);
   document.getElementById('out-leaked-sub').textContent = `${formatUsd(res.leakedCheckoutUsd)} Cart + ${formatUsd(res.leakedDunningUsd)} Failed Cards`;
@@ -121,6 +271,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   document.getElementById('out-annual-recovered').textContent = `+${formatUsd(res.annualizedRecoverableUsd)}/yr Net Impact (${res.roiMultipleStarter}x ROI)`;
   document.getElementById('out-exit-recovered').textContent = `+${formatUsd(res.recoverableExitUsd)}/mo (${res.recoveredOrdersCount} orders)`;
   document.getElementById('out-dunning-recovered').textContent = `+${formatUsd(res.recoverableDunningUsd)}/mo`;
+  updateUnmaskedSdkPreview(res);
   document.getElementById('out-sdk-snippet').textContent = window.__ebIsUnlocked ? res.sdkSnippet : '/* [LOCKED PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag & Stripe retry worker */';
 
   const statusEl = document.getElementById('audit-form-status');
@@ -361,6 +512,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     }
   }
+  const restoredFromStorage = restoreAaWorkspaceState();
   const qPreset = params.get('preset');
   const qDecline = params.get('decline') || params.get('q') || params.get('target');
   const qStore = params.get('store');
@@ -375,6 +527,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const matchBtn = document.querySelector(`.preset-btn[data-preset="${qPreset}"]`);
     if (matchBtn) matchBtn.classList.add('active');
     document.getElementById('input-store').value = p.storeName;
+    if (document.getElementById('input-store-url') && p.storeUrl) document.getElementById('input-store-url').value = p.storeUrl;
     document.getElementById('input-sessions').value = p.monthlySessions;
     document.getElementById('input-aov').value = p.aovUsd;
     document.getElementById('input-abandon').value = p.abandonRatePct;
@@ -396,8 +549,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  if (hasDeepLink) {
-    await runAuditRequest(currentPreset, false, true);
+  if (hasDeepLink || restoredFromStorage) {
+    await runAuditRequest(currentPreset, !hasDeepLink, hasDeepLink);
     if (window.location.hash === '#webhook-lab' || qDecline) {
       await runWebhookSimulation();
     }
@@ -406,20 +559,23 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   let liveAuditTimer = null;
-  ['input-sessions', 'input-aov', 'input-abandon', 'input-fail', 'input-store'].forEach((id) => {
+  ['input-sessions', 'input-aov', 'input-abandon', 'input-fail', 'input-store', 'input-store-url'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', () => {
+        saveAaWorkspaceState();
+        updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
         if (liveAuditTimer) clearTimeout(liveAuditTimer);
         liveAuditTimer = setTimeout(() => runAuditRequest('custom', false, true), 480);
       });
     }
   });
   let liveWhTimer = null;
-  ['wh-event-type', 'wh-decline-code', 'wh-amount'].forEach((id) => {
+  ['wh-event-type', 'wh-decline-code', 'wh-amount', 'wh-email'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('change', () => {
+        saveAaWorkspaceState();
         if (liveWhTimer) clearTimeout(liveWhTimer);
         liveWhTimer = setTimeout(() => runWebhookSimulation(), 320);
       });

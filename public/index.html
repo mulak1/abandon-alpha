@@ -118,8 +118,15 @@
           <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="display:flex;flex-direction:column;justify-content:flex-start;gap:12px;margin-top:0;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div>
-              <div class="mono-label" style="margin-bottom:8px;color:#475569;">1-Click Benchmark Store &amp; SaaS Presets</div>
-              <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:10px;">
+              <div class="mono-label" style="margin-bottom:6px;color:#475569;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+                <span>Live Store URL Scanner or 1-Click Presets</span>
+                <span id="probed-stack-badge" style="font-size:0.78rem;color:#047857;font-weight:700;">● Ready to Scan</span>
+              </div>
+              <div style="display:flex;gap:6px;margin-bottom:8px;">
+                <input id="input-store-url" type="text" class="field-input" placeholder="Scan live store domain (e.g. gymshark.com, linear.app)..." style="flex:1;padding:7px 11px;font-size:0.88rem;" onkeydown="if(event.key==='Enter'){event.preventDefault();probeLiveMerchantStore();}" />
+                <button type="button" id="btn-probe-store" class="btn btn-ghost btn-sm" style="padding:7px 12px;font-weight:700;white-space:nowrap;" onclick="probeLiveMerchantStore()">Scan Store &nearr;</button>
+              </div>
+              <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:8px;">
                 <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)">Shopify DTC ($85k/mo)</button>
                 <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)">B2B SaaS ($25k MRR)</button>
                 <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)">Subscription App ($120k MRR)</button>
@@ -226,23 +233,46 @@
               <span class="spec-v text-emerald">+$480/mo</span>
             </div>
           </div>
-          <div style="margin-top:8px; font-size:0.9375rem; color:var(--text-slate); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
-            <span class="mono-label">Top Decline Guides:</span>
-            <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="color:var(--text-navy); font-weight:700;"><code>insufficient_funds</code></a>
-            <span>&bull;</span>
-            <a href="/seo/stripe-decline-code-do-not-honor-retry-schedule" style="color:var(--text-navy); font-weight:700;"><code>do_not_honor</code></a>
-            <span>&bull;</span>
-            <a href="/seo/stripe-decline-code-expired-card-dunning-flow" style="color:var(--text-navy); font-weight:700;"><code>expired_card</code></a>
+          <div id="aa-endowment-customizer" style="margin-top:8px;padding:10px 12px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
+              <span class="mono-label" style="color:#0A2540;font-weight:700;">Customize Your Recovery Script &amp; Retry Rules</span>
+              <a id="aa-live-scan-permalink" href="/scan/gymshark.com" style="font-size:0.78rem;color:#047857;font-weight:700;text-decoration:underline;">Public Scan Report (/scan/gymshark.com) &nearr;</a>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;">
+              <select id="custom-stack" aria-label="Target Checkout Stack" class="field-input" style="padding:5px 7px;font-size:0.8rem;" onchange="onCustomizerChange()">
+                <option value="Shopify + Stripe">1. Stack: Shopify + Stripe</option>
+                <option value="Next.js + Stripe">1. Stack: Next.js + Stripe</option>
+                <option value="Stripe Billing SaaS">1. Stack: Stripe Billing SaaS</option>
+                <option value="WooCommerce + Stripe">1. Stack: Woo + Stripe</option>
+              </select>
+              <select id="custom-max-rebate" aria-label="Max Exit Rebate Cap" class="field-input" style="padding:5px 7px;font-size:0.8rem;" onchange="onCustomizerChange()">
+                <option value="15% Founders Cap">2. Cap: 15% Max Rebate</option>
+                <option value="10% Margin Guard">2. Cap: 10% Margin Guard</option>
+                <option value="0% Free Shipping Only">2. Cap: 0% (Free Ship Only)</option>
+                <option value="14-Day Pause Option">2. Cap: 14-Day Billing Pause</option>
+              </select>
+              <select id="custom-payday-sync" aria-label="Retry Cadence Window" class="field-input" style="padding:5px 7px;font-size:0.8rem;" onchange="onCustomizerChange()">
+                <option value="1st & 15th 06:00 Local">3. Retry: 1st &amp; 15th Payday</option>
+                <option value="+72h Liquidity + SMS">3. Retry: +72h Window + SMS</option>
+                <option value="Zero-Retry 1-Tap ApplePay">3. Retry: 1-Tap Apple Pay</option>
+              </select>
+            </div>
           </div>
 
           <div class="code-snippet-box" style="margin-top:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="mono-label">Locked Production Script &amp; Retry Worker</span>
+              <span class="mono-label">Compiled Production Header (Lines 1–6 Live &bull; Body Locked)</span>
               <button type="button" id="copy-sdk-btn" class="btn btn-indigo btn-sm" style="padding:6px 12px; font-size:0.9375rem;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass')}else{copySdkSnippet()}">Unlock 3-File Pack ($1.99) &rarr;</button>
             </div>
-            <code id="out-sdk-snippet">// AbandonAlpha Edge Worker + Exit Bandit (Preview)
+            <pre id="out-sdk-unmasked-preview" style="margin:6px 0 4px;padding:8px 10px;border-radius:6px;background:#0F172A;color:#A7F3D0;font-family:var(--font-mono,monospace);font-size:0.78rem;line-height:1.45;overflow-x:auto;white-space:pre;">// AbandonAlpha Edge Worker — Compiled for AuraBotanics DTC (Shopify + Stripe)
+export const ABANDON_ALPHA_CONFIG = {
+  merchant: "aurabotanics-dtc", stack: "Shopify + Stripe", aovUsd: 92,
+  maxExitOffer: "15% Founders Cap", retryCadence: "1st &amp; 15th 06:00 Local",
+  idempotencyHeader: "aa_aurabotanics_dtc_v4", visa30dMaxRetries: 4
+};</pre>
+            <code id="out-sdk-snippet">// [LINES 7–42 LOCKED IN FREE PREVIEW]: Webhook signature verification &amp; C1-C6 Bandit
 const delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'do_not_honor' ? 24 : 0);
-/* [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag &amp; Stripe retry worker */</code>
+/* Unlock Single-Store Pass ($1.99) or Complete Recovery Kit ($49) to download all 3 production files */</code>
           </div>
         </div>
       </div>
@@ -479,16 +509,16 @@ const delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'd
             </div>
 
             <details style="margin-top:16px; font-size:0.9375rem; color:var(--text-slate); padding:14px 16px; border-radius:12px; background:#F1F5F9;">
-              <summary style="cursor:pointer; font-weight:700; color:var(--text-navy);">Need the Full 20-Decline Founder Playbook ($29) or Managed Multi-Store Recovery ($49–$149/mo)?</summary>
+              <summary style="cursor:pointer; font-weight:700; color:var(--text-navy);">Need the Starter Engineering Pack ($19), Complete 20-Decline Kit ($49 One-Time), or Multi-Store Agency Pack ($149)?</summary>
               <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:14px;">
-                <a href="/buy/playbook_pass" rel="nofollow" id="btn-buy-playbook-29" class="btn btn-ghost btn-block" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':29.00,'currency':'USD'});}" style="text-decoration:none; background:#FFFFFF;">
-                  <span>Founder Playbook ($29 Lifetime)</span>
+                <a href="/buy/playbook_pass" rel="nofollow" id="btn-buy-playbook-29" class="btn btn-ghost btn-block" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':19.00,'currency':'USD'});}" style="text-decoration:none; background:#FFFFFF;">
+                  <span>Starter Code Pack ($19 One-Time)</span>
                 </a>
                 <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">
-                  <span>Starter Plan ($49/mo)</span>
+                  <span>Complete Recovery Kit ($49 One-Time)</span>
                 </button>
                 <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
-                  <span>Growth Plan ($149/mo)</span>
+                  <span>Multi-Store Agency Pack ($149)</span>
                 </button>
               </div>
             </details>
