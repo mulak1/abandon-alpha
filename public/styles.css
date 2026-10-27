@@ -438,7 +438,7 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 }
 
 /* pSEO, Directory & Meta Landing Page */
-.pseo-main { padding: 36px 0 64px; }
+.pseo-main { padding-top: 36px; padding-bottom: 64px; }
 .breadcrumb {
   font-family: var(--font-sans); font-size: 0.9375rem; color: var(--text-muted);
   margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap;
@@ -453,7 +453,7 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 .faq-grid, .related-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
 .faq-card h3 { font-size: 1.0625rem; margin-bottom: 8px; color: var(--text-navy); }
 .faq-card p { font-size: 1rem; color: var(--text-slate); }
-.related-card { display: flex; flex-direction: column; gap: 6px; transition: transform 160ms ease-out, background-color 160ms ease-out; }
+.related-card { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 12px; background: var(--bg-surface); transition: transform 160ms ease-out, background-color 160ms ease-out; }
 .related-card:hover { transform: translateY(-2px); background: #F1F5F9; }
 .dir-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .dir-card-sub { font-size: 0.9375rem; color: var(--text-slate); }
@@ -464,7 +464,7 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
   font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 700; color: var(--emerald);
   background: var(--emerald-soft); padding: 6px 13px; border-radius: 9999px;
 }
-.lp-main { padding: 40px 0 64px; }
+.lp-main { padding-top: 40px; padding-bottom: 64px; }
 .lp-proof-list { list-style: none; margin: 18px 0; }
 .lp-proof-list li { padding: 9px 0; font-size: 1rem; color: var(--text-slate); }
 .lp-proof-list li strong { color: var(--text-navy); }

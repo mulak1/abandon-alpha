@@ -151,10 +151,10 @@ function computeExitTrajectoryScore({ clientY = 18, velocityY = -0.95, timeToEdg
 function computeLeakageAudit(input = {}) {
   const preset = STORE_PRESETS[input.presetType] || STORE_PRESETS.shopify_dtc;
   const storeName = (input.storeName || preset.storeName).trim();
-  const monthlySessions = Math.max(50, Number(input.monthlySessions ?? preset.monthlySessions));
-  const aovUsd = Math.max(5, Number(input.aovUsd ?? preset.aovUsd));
-  const abandonRatePct = Math.min(98, Math.max(10, Number(input.abandonRatePct ?? preset.abandonRatePct)));
-  const failedCardRatePct = Math.min(35, Math.max(0.5, Number(input.failedCardRatePct ?? preset.failedCardRatePct)));
+  const monthlySessions = Math.min(500000, Math.max(50, Number(input.monthlySessions ?? preset.monthlySessions) || 3200));
+  const aovUsd = Math.min(50000, Math.max(5, Number(input.aovUsd ?? preset.aovUsd) || 92));
+  const abandonRatePct = Math.min(98, Math.max(10, Number(input.abandonRatePct ?? preset.abandonRatePct) || 71.5));
+  const failedCardRatePct = Math.min(35, Math.max(0.5, Number(input.failedCardRatePct ?? preset.failedCardRatePct) || 4.8));
 
   const primaryDeclineCode = String(input.primaryDeclineCode || input.declineCode || 'auto_weighted').trim();
   const presetKey = String(input.presetType || 'shopify_dtc').trim();
@@ -331,6 +331,7 @@ function selectBanditArm({
   sessionId = 'sess_live_demo',
   velocityTelemetry = {}
 }) {
+  const safeAovUsd = Math.min(50000, Math.max(5, Number(aovUsd) || 92));
   const arms = getAllBanditArms();
   const trajectory = computeExitTrajectoryScore(velocityTelemetry);
 
@@ -339,12 +340,12 @@ function selectBanditArm({
     const sampledTheta = sampleBeta(arm.alpha, arm.beta);
     const netMultiplier = 1 - arm.discount_pct / 100;
     const contextualBoost = arm.objection_code === objectionCode ? 1.35 : 1.0;
-    const erpvUsd = sampledTheta * aovUsd * netMultiplier * contextualBoost;
+    const erpvUsd = sampledTheta * safeAovUsd * netMultiplier * contextualBoost;
     return {
       ...arm,
       sampled_theta: Number(sampledTheta.toFixed(4)),
       erpv_usd: Number(erpvUsd.toFixed(2)),
-      net_order_value_usd: Number((aovUsd * netMultiplier).toFixed(2))
+      net_order_value_usd: Number((safeAovUsd * netMultiplier).toFixed(2))
     };
   });
 
@@ -502,16 +503,16 @@ function redactLeakageAuditForPreview(audit) {
     dunningBreakdown: Array.isArray(audit.dunningBreakdown)
       ? audit.dunningBreakdown.map((d) => ({
           ...d,
-          strategy: '🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for exact retry window & webhook worker]'
+          strategy: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for exact retry window & webhook worker]'
         }))
       : [],
     webhookSequence: Array.isArray(audit.webhookSequence)
       ? audit.webhookSequence.map((w, idx) => (idx === 0 ? w : {
           ...w,
-          action: '🔒 [LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal webhook payload & retry schedule]'
+          action: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal webhook payload & retry schedule]'
         }))
       : [],
-    sdkSnippet: '/* 🔒 [LOCKED IN FREE PREVIEW — Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to generate your production C1-C6 Bandit SDK tag & Stripe Retry Worker] */'
+    sdkSnippet: `// AbandonAlpha Edge Worker + Exit Bandit (${audit.storeName || 'Store'} Preview)\nconst delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'do_not_honor' ? 24 : 0);\n/* [LOCKED IN FREE PREVIEW — Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for full Stripe signature verification, Billing Portal 1-tap link & C1-C6 Bandit SDK] */`
   };
 }
 
@@ -525,13 +526,13 @@ function redactWebhookSimulationForPreview(sim) {
     retrySchedule: Array.isArray(sim.retrySchedule)
       ? sim.retrySchedule.map((s, idx) => (idx === 0 ? {
           step: s.step,
-          timing: 'Diagnostic Verified (Exact Retry Window Locked 🔒)',
+          timing: 'Diagnostic Verified (Exact Retry Window Locked)',
           channel: s.channel,
           action: 'Bank classification & Visa/Mastercard retry ceiling verified. Unlock $1.99 Pass for exact payday/cooldown schedule.'
         } : {
           step: s.step,
-          timing: '🔒 [LOCKED IN FREE PREVIEW]',
-          channel: '🔒 [LOCKED IN FREE PREVIEW]',
+          timing: '[LOCKED IN FREE PREVIEW]',
+          channel: '[LOCKED IN FREE PREVIEW]',
           action: 'Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal exact retry timestamps & idempotency worker.'
         }))
       : [],
@@ -539,8 +540,8 @@ function redactWebhookSimulationForPreview(sim) {
       ? {
           ...sim.recoveryCopy,
           offerCode: 'LOCKED_199',
-          emailBody: '🔒 [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the full customer recovery email template, pre-filled Stripe Billing Portal magic link, and C1-C6 Bandit offer code.',
-          smsBody: '🔒 [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the 1-tap Apple Pay / Google Pay SMS recovery template.'
+          emailBody: '[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the full customer recovery email template, pre-filled Stripe Billing Portal magic link, and C1-C6 Bandit offer code.',
+          smsBody: '[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the 1-tap Apple Pay / Google Pay SMS recovery template.'
         }
       : {}
   };

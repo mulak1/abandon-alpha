@@ -30,9 +30,9 @@ function renderUnifiedHeaderHtml(tagText = '') {
         <a href="/#grader">Revenue Calculator</a>
         <a href="/#bandit-lab">Exit Simulator</a>
         <a href="/#webhook-lab">Stripe Retry Lab</a>
-        <a href="/leaderboard" style="font-weight:700;color:var(--text-navy);">Leaderboard</a>
+        <a href="/leaderboard">Leaderboard</a>
         <a href="/directory">Playbooks (60)</a>
-        <a href="/#pricing">Pricing</a>
+        <a href="/#in-card-unlock-bar">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
           <span>Calculate Recoverable MRR</span>
           <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
@@ -42,9 +42,9 @@ function renderUnifiedHeaderHtml(tagText = '') {
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
       <a href="/#bandit-lab">Exit Simulator</a>
-      <a href="/leaderboard" style="font-weight:700;color:var(--text-navy);">Leaderboard</a>
+      <a href="/leaderboard">Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
-      <a href="/#pricing">Pricing</a>
+      <a href="/#in-card-unlock-bar">Pricing</a>
     </nav>
   </header>`;
 }
@@ -165,44 +165,14 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   const standardRecRate = Math.max(14.2, Number((page.recoverableLiftPct * 0.58).toFixed(1)));
 
   const jsonLd = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'SoftwareApplication',
-      name: `AbandonAlpha: ${cleanTitle}`,
-      url: canonicalUrl,
-      applicationCategory: 'BusinessApplication',
-      operatingSystem: 'Web, Stripe, Shopify, Next.js',
-      offers: {
-        '@type': 'Offer',
-        price: '49.00',
-        priceCurrency: 'USD'
-      },
-      description: metaDesc
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: page.faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: f.a
-        }
-      }))
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Dataset',
-      name: `${page.targetKeyword} Telemetry Benchmark (2026)`,
-      url: canonicalUrl,
-      description: metaDesc,
-      variableMeasured: [
-        'Checkout Abandonment Rate',
-        'Stripe Decline Recovery Lift',
-        'Thompson Sampling Posterior Mean'
-      ]
-    }
+    { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: `AbandonAlpha: ${cleanTitle}`, url: canonicalUrl, applicationCategory: 'BusinessApplication', operatingSystem: 'Web, Stripe, Shopify, Next.js', offers: { '@type': 'Offer', price: '49.00', priceCurrency: 'USD' }, description: metaDesc },
+    { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: page.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+    { '@context': 'https://schema.org', '@type': 'Dataset', name: `${page.targetKeyword} Telemetry Benchmark (2026)`, url: canonicalUrl, description: metaDesc, variableMeasured: ['Checkout Abandonment Rate', 'Stripe Decline Recovery Lift', 'Thompson Sampling Posterior Mean'] },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'AbandonAlpha Home', item: `${baseUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Playbook Directory', item: `${baseUrl}/directory` },
+      { '@type': 'ListItem', position: 3, name: cleanTitle, item: canonicalUrl }
+    ] }
   ];
 
   return `<!DOCTYPE html>
@@ -228,7 +198,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:image" content="${ogImageUrl}" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/styles.css" />
-  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+  <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script>
   <script>
@@ -248,12 +218,13 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <span>${escapeHtml(page.category)}</span>
     </nav>
 
+    <style>@media(max-width:640px){.inline-calc-grid{grid-template-columns:1fr!important;}.inline-calc-grid>*,.calc-inputs,.calc-output-box,.pseo-section,.code-snippet-box{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important;padding-inline:14px!important;}.btn,#pseo-calc-btn{max-width:100%!important;white-space:normal!important;}}</style>
     <div class="hero-split pseo-hero" style="align-items:stretch;">
       <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
         <div>
-          <div class="status-pill">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
-          <h1 class="pseo-h1">${escapeHtml(cleanTitle)}</h1>
-          <p class="pseo-lead">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
+          <h1 class="pseo-h1" style="font-size:clamp(1.5rem, 2.2vw, 2.15rem);line-height:1.14;max-width:28ch;">${escapeHtml(cleanTitle.replace(/\s*\(.*?\)/g, '').split(/[:—–|]/)[0].trim().split(/\s+/).slice(0, 5).join(' '))}</h1>
+          <div class="status-pill" style="margin-top:8px;display:inline-flex;align-items:center;gap:8px;"><img src="${/Decline/i.test(page.category) ? '/public/editorial-segment-2.jpg' : (/Bandit/i.test(page.category) ? '/public/editorial-segment-1.jpg' : '/public/editorial-segment-3.jpg')}" alt="" width="24" height="24" loading="lazy" style="width:24px;height:24px;border-radius:999px;object-fit:cover;" />${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
+          <p class="pseo-lead"><strong>${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(page.summary.replace(/`/g, ''))}</p>
           <div class="cta-row">
             <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}&amp;store=${encodeURIComponent(cleanTitle.slice(0, 32))}#grader" class="btn btn-indigo">
               <span>Audit Your Store Leakage Free</span>
@@ -282,77 +253,39 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           </div>
         </div>
         <div class="playbook-spec-list">
-          <div class="spec-row">
-            <span class="spec-k">Target Webhook</span>
-            <code class="spec-v">${escapeHtml(page.webhookEvent)}</code>
-          </div>
-          <div class="spec-row">
-            <span class="spec-k">Optimal Timing</span>
-            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">Locked in Free Preview ($1.99 Pass)</a></span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-k">Winning Bandit Arm</span>
-            <span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">C1–C6 Offer Locked ($1.99 Pass)</a></span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-k">Est. Recovered Cashflow</span>
-            <strong class="spec-v text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo ($${page.annualRecoveredUsd.toLocaleString()}/yr)</strong>
-          </div>
+          <div class="spec-row"><span class="spec-k">Target Webhook</span><code class="spec-v">${escapeHtml(page.webhookEvent)}</code></div>
+          <div class="spec-row"><span class="spec-k">Optimal Timing</span><span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">Locked in Free Preview ($1.99 Pass)</a></span></div>
+          <div class="spec-row"><span class="spec-k">Winning Bandit Arm</span><span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">C1–C6 Offer Locked ($1.99 Pass)</a></span></div>
+          <div class="spec-row"><span class="spec-k">Est. Recovered Cashflow</span><strong class="spec-v text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo ($${page.annualRecoveredUsd.toLocaleString()}/yr)</strong></div>
         </div>
       </div>
     </div>
 
     <section class="pseo-section">
-      <h2>Stripe Decline &amp; Checkout Recovery Benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
+      <h2>Recovery Benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
       <p class="section-sub">Empirical 2026 recovery performance comparing naive cron intervals, standard platform retries, and AbandonAlpha's Smart Window + C1–C6 Thompson Sampling Bandit.</p>
       <div class="posterior-table-wrap">
         <table class="posterior-table">
-          <thead>
-            <tr>
-              <th>Recovery Architecture</th>
-              <th>Recovery Rate (%)</th>
-              <th>Avg Time-to-Recover</th>
-              <th>Customer Churn Risk</th>
-              <th>Net MRR Lift</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Recovery Architecture</th><th>Recovery Rate (%)</th><th>Avg Time-to-Recover</th><th>Customer Churn Risk</th><th>Net MRR Lift</th></tr></thead>
           <tbody>
-            <tr>
-              <td><strong>Naive 24h Cron Retry</strong></td>
-              <td class="text-rose">${naiveRecRate}%</td>
-              <td>14.2 Days (High Issuer Lockout)</td>
-              <td class="text-rose">High (${page.baselineAbandonmentOrFailPct}% Unrecovered Loss)</td>
-              <td>Baseline (+0.0%)</td>
-            </tr>
-            <tr>
-              <td><strong>Standard Platform Retry</strong></td>
-              <td>${standardRecRate}%</td>
-              <td>5.8 Days (Generic Dunning Email)</td>
-              <td>Moderate (No C1–C6 Objection Match)</td>
-              <td>+${standardRecRate}%</td>
-            </tr>
-            <tr style="background: rgba(16, 185, 129, 0.08);">
-              <td><strong class="text-indigo">AbandonAlpha Smart Window + C1-C6 Bandit</strong></td>
-              <td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td>
-              <td><strong>&lt; 4.2 Hours (Smart Window Locked)</strong></td>
-              <td class="text-emerald"><strong>Low (Visa/MC Compliant + C1-C6 Bandit Locked)</strong></td>
-              <td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td>
-            </tr>
+            <tr><td><strong>Naive 24h Cron Retry</strong></td><td class="text-rose">${naiveRecRate}%</td><td>14.2 Days (High Issuer Lockout)</td><td class="text-rose">High (${page.baselineAbandonmentOrFailPct}% Unrecovered Loss)</td><td>Baseline (+0.0%)</td></tr>
+            <tr><td><strong>Standard Platform Retry</strong></td><td>${standardRecRate}%</td><td>5.8 Days (Generic Dunning Email)</td><td>Moderate (No C1–C6 Objection Match)</td><td>+${standardRecRate}%</td></tr>
+            <tr style="background: rgba(16, 185, 129, 0.08);"><td><strong class="text-indigo">AbandonAlpha Smart Window + C1-C6 Bandit</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><strong>&lt; 4.2 Hours (Smart Window Locked)</strong></td><td class="text-emerald"><strong>Low (Visa/MC Compliant + C1-C6 Bandit Locked)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <section class="pseo-section">
-      <h2>Interactive <code>${escapeHtml(page.declineOrSignal)}</code> Recovery Calculator</h2>
+      <h2><code>${escapeHtml(page.declineOrSignal)}</code> Recovery Calculator</h2>
       <p class="section-sub">Adjust your monthly checkout sessions and average order value below to model your exact recoverable cashflow.</p>
       <div class="inline-calc-grid">
         <div class="calc-inputs">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-            <span class="mono-label" style="font-size:11px;color:#94a3b8;">1-CLICK TIER:</span>
-            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);color:#6ee7b7;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;">$25k MRR</button>
-            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.35);color:#a5b4fc;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;">$120k DTC</button>
-            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.35);color:#fcd34d;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;">$500k Scale</button>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+            <span class="mono-label" style="font-size:13px;color:#0F172A;font-weight:700;">1-Click Tier:</span>
+            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#ECFDF5;border:none;color:#047857;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$25k MRR</button>
+            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#EEF2FF;border:none;color:#3730A3;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$120k DTC</button>
+            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#FEF3C7;border:none;color:#92400E;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$500k Scale</button>
           </div>
           <label class="field-label" for="pseo-sessions">Monthly Checkout / Renewal Attempts</label>
           <input id="pseo-sessions" type="number" class="field-input" value="${page.sampleMonthlySessions}" min="50" max="500000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
@@ -364,18 +297,9 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           </button>
         </div>
         <div class="calc-output-box">
-          <div class="spec-row">
-            <span>Monthly Revenue Exposed to <code>${escapeHtml(page.declineOrSignal)}</code>:</span>
-            <strong id="pseo-leaked-val" class="text-rose">$${page.monthlyLeakedUsd.toLocaleString()}/mo</strong>
-          </div>
-          <div class="spec-row">
-            <span>Autonomous Monthly Cashflow Recovered:</span>
-            <strong id="pseo-rec-val" class="text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong>
-          </div>
-          <div class="spec-row">
-            <span>12-Month Net Bottom-Line Impact:</span>
-            <strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong>
-          </div>
+          <div class="spec-row"><span>Monthly Revenue Exposed to <code>${escapeHtml(page.declineOrSignal)}</code>:</span><strong id="pseo-leaked-val" class="text-rose">$${page.monthlyLeakedUsd.toLocaleString()}/mo</strong></div>
+          <div class="spec-row"><span>Autonomous Monthly Cashflow Recovered:</span><strong id="pseo-rec-val" class="text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong></div>
+          <div class="spec-row"><span>12-Month Net Bottom-Line Impact:</span><strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong></div>
           <div class="code-snippet-box">
             <div class="mono-label">Drop-In SDK + Stripe Retry Worker ($1.99 Single-Store Pass)</div>
             <code>/* [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass to download your ${escapeHtml(page.declineOrSignal)} retry worker &amp; C1-C6 Bandit SDK tag */</code>
@@ -388,32 +312,17 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     </section>
 
     <section class="pseo-section">
-      <h2>Frequently Asked Questions: ${escapeHtml(page.targetKeyword)}</h2>
+      <h2>Key Questions: ${escapeHtml(page.declineOrSignal)}</h2>
       <div class="faq-grid">
-        ${page.faqs.map((f) => `
-          <div class="faq-card">
-            <h3>${escapeHtml(f.q)}</h3>
-            <p>${escapeHtml(f.a)}</p>
-          </div>
-        `).join('')}
+        ${page.faqs.map((f) => `<div class="faq-card"><h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`).join('')}
       </div>
     </section>
 
     <section class="pseo-section">
-      <h2>Related ${escapeHtml(page.category)} &amp; Cross-Cluster Playbooks</h2>
+      <h2>Related ${escapeHtml(page.category)} Playbooks</h2>
       <div class="related-links-grid">
-        ${related.map((r) => `
-          <a href="/seo/${escapeHtml(r.slug)}" class="related-card">
-            <span class="mono-label">${escapeHtml(r.declineOrSignal)} • +${r.recoverableLiftPct}% Lift</span>
-            <strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong>
-          </a>
-        `).join('')}
-        ${crossCluster.map((r) => `
-          <a href="/seo/${escapeHtml(r.slug)}" class="related-card">
-            <span class="mono-label">${escapeHtml(r.category)} • +${r.recoverableLiftPct}% Lift</span>
-            <strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong>
-          </a>
-        `).join('')}
+        ${related.map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.declineOrSignal)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
+        ${crossCluster.map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.category)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
       </div>
     </section>
   </main>
@@ -482,20 +391,23 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
 
   <main class="container pseo-main">
     <div class="directory-header">
-      <div class="status-pill">INDEXED STRIPE DUNNING &amp; CHECKOUT BENCHMARK REPOSITORY</div>
-      <h1 class="pseo-h1">Stripe Decline Code &amp; Checkout Recovery <span class="serif-italic">Directory</span> (${PSEO_PAGES.length} Playbooks)</h1>
-      <p class="pseo-lead">Every playbook includes verified recovery lift benchmarks, Visa/Mastercard retry compliance windows, and C1–C6 Thompson Sampling counter-offers.</p>
-      <div class="filter-bar">
-        <label for="dir-search" class="field-label">Filter 60 Playbooks by Decline Code, Webhook, or Platform</label>
+      <h1 class="pseo-h1" style="font-size:clamp(2.1rem, 3.8vw, 3.5rem);line-height:1.08;max-width:20ch;margin:0 0 12px;">Stripe Recovery Playbooks</h1>
+      <p class="pseo-lead">Browse ${PSEO_PAGES.length} verified checkout recovery guides covering Stripe card decline codes, payday retry timing, and smart exit offers for Shopify and SaaS.</p>
+      <div class="filter-bar" style="margin-top:16px;">
+        <label for="dir-search" class="field-label">Filter ${PSEO_PAGES.length} Playbooks by Decline Code, Webhook, or Platform</label>
         <input id="dir-search" type="search" class="field-input" placeholder="e.g. insufficient_funds, do_not_honor, shopify, checkout.session.expired..." oninput="filterDirectory(this.value)" />
       </div>
     </div>
 
-    ${categories.map((cat) => {
+    ${categories.map((cat, idx) => {
       const items = PSEO_PAGES.filter((p) => p.category === cat);
+      const segImgs = ['/public/editorial-segment-2.jpg', '/public/editorial-segment-3.jpg', '/public/editorial-segment-1.jpg', '/public/editorial-founder.jpg'];
       return `
       <section class="pseo-section dir-cluster">
-        <h2>${escapeHtml(cat)} (${items.length} Playbooks)</h2>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <img src="${segImgs[idx % segImgs.length]}" alt="" width="34" height="34" loading="lazy" style="width:34px;height:34px;border-radius:8px;object-fit:cover;" />
+          <h2 style="margin:0;">${escapeHtml(cat)} (${items.length} Playbooks)</h2>
+        </div>
         <div class="related-links-grid">
           ${items.map((item) => `
             <a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword).toLowerCase())}">

@@ -36,6 +36,10 @@ app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 attachExactBaselinePack(app, { verticalId: 'abandon_alpha' });
 
+function escapeHtml(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 // Security headers & Rate-Limiting + Honeypot Spam Protection (pre-launch-checklist #4 & #18)
 const rateBuckets = new Map();
 app.use((req, res, next) => {
@@ -44,9 +48,11 @@ app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; connect-src 'self' https:;");
 
   const ip = req.ip || '127.0.0.1';
   const now = Date.now();
+  if (rateBuckets.size > 5000) rateBuckets.clear();
   const bucket = rateBuckets.get(ip) || { count: 0, resetAt: now + 60000 };
   if (now > bucket.resetAt) {
     bucket.count = 0;
@@ -56,6 +62,9 @@ app.use((req, res, next) => {
   rateBuckets.set(ip, bucket);
   res.setHeader('X-RateLimit-Limit', '240');
   res.setHeader('X-RateLimit-Remaining', String(Math.max(0, 240 - bucket.count)));
+  if (bucket.count > 240) {
+    return res.status(429).json({ ok: false, error: 'Too many requests' });
+  }
 
   if (req.method === 'POST' && req.body && req.body.website_url && String(req.body.website_url).trim() !== '') {
     return res.status(400).json({ ok: false, error: 'Bot honeypot triggered' });
@@ -75,12 +84,12 @@ function renderHomepagePseoHubHtml() {
     const items = allPages.filter((p) => p.category === cat).slice(0, 6);
     return `
       <div style="margin-top:20px;">
-        <h3 style="font-size:1.125rem; margin-bottom:10px; color:var(--text-navy);">${cat} (6 Playbooks)</h3>
+        <h3 style="font-size:1.125rem; margin-bottom:10px; color:var(--text-navy);">${escapeHtml(cat)} (6 Playbooks)</h3>
         <div class="related-links-grid">
           ${items.map((p) => `
-            <a href="/seo/${p.slug}" class="related-card">
-              <span class="mono-label">${p.declineOrSignal} &bull; +${p.recoverableLiftPct}% Lift</span>
-              <strong>${p.title.replace(/`/g, '')}</strong>
+            <a href="/seo/${encodeURIComponent(p.slug)}" class="related-card">
+              <span class="mono-label">${escapeHtml(p.declineOrSignal)} &bull; +${p.recoverableLiftPct}% Lift</span>
+              <strong>${escapeHtml(p.title.replace(/`/g, ''))}</strong>
             </a>
           `).join('')}
         </div>
