@@ -1,8 +1,8 @@
 const PRESET_DATA = {
-  shopify_dtc: { storeName: 'AuraBotanics DTC', storeUrl: 'aurabotanics.com', stack: 'Shopify + Stripe', monthlySessions: 3200, aovUsd: 92, abandonRatePct: 71.5, failedCardRatePct: 4.8 },
-  b2b_saas: { storeName: 'CloudPulse DevTools', storeUrl: 'cloudpulse.dev', stack: 'Stripe Billing SaaS', monthlySessions: 950, aovUsd: 89, abandonRatePct: 68.0, failedCardRatePct: 7.4 },
-  creator_info: { storeName: 'DesignSystems Academy', storeUrl: 'designsystems.io', stack: 'Next.js + Stripe', monthlySessions: 1400, aovUsd: 115, abandonRatePct: 74.2, failedCardRatePct: 5.5 },
-  subscription_app: { storeName: 'KinectAI Pro', storeUrl: 'kinectai.app', stack: 'Stripe Billing SaaS', monthlySessions: 5400, aovUsd: 72, abandonRatePct: 69.4, failedCardRatePct: 8.6 }
+  shopify_dtc: { storeName: 'Gymshark', storeUrl: 'gymshark.com', stack: 'Shopify + Stripe', monthlySessions: 3200, aovUsd: 92, abandonRatePct: 71.5, failedCardRatePct: 4.8 },
+  b2b_saas: { storeName: 'Linear', storeUrl: 'linear.app', stack: 'Stripe Billing SaaS', monthlySessions: 950, aovUsd: 89, abandonRatePct: 68.0, failedCardRatePct: 7.4 },
+  creator_info: { storeName: 'MasterClass', storeUrl: 'masterclass.com', stack: 'Next.js + Stripe', monthlySessions: 1400, aovUsd: 115, abandonRatePct: 74.2, failedCardRatePct: 5.5 },
+  subscription_app: { storeName: 'Whoop', storeUrl: 'whoop.com', stack: 'Stripe Billing SaaS', monthlySessions: 5400, aovUsd: 72, abandonRatePct: 69.4, failedCardRatePct: 8.6 }
 };
 
 let currentPreset = 'shopify_dtc';
@@ -15,8 +15,8 @@ function formatUsd(num) {
 function cleanMerchantDomain(raw) {
   const s = String(raw || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split(/[/?#]/)[0];
   if (s && s.includes('.')) return s.replace(/[^a-z0-9.-]/g, '');
-  const slug = String(raw || 'aurabotanics').toLowerCase().replace(/[^a-z0-9]/g, '');
-  return (slug || 'aurabotanics') + '.com';
+  const slug = String(raw || 'gymshark').toLowerCase().replace(/[^a-z0-9]/g, '');
+  return (slug || 'gymshark') + '.com';
 }
 
 function saveAaWorkspaceState() {
@@ -76,16 +76,18 @@ function restoreAaWorkspaceState() {
   }
 }
 
+function escapeUiHtml(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function updateUnmaskedSdkPreview(auditRes) {
-  const storeName = document.getElementById('input-store')?.value || 'AuraBotanics DTC';
+  const storeName = document.getElementById('input-store')?.value || 'Gymshark';
   const rawUrl = document.getElementById('input-store-url')?.value || storeName;
   const domain = cleanMerchantDomain(rawUrl);
-  const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
-  const stack = document.getElementById('custom-stack')?.value || 'Shopify + Stripe';
-  const maxRebate = document.getElementById('custom-max-rebate')?.value || '15% Founders Cap';
-  const paydaySync = document.getElementById('custom-payday-sync')?.value || '1st & 15th 06:00 Local';
   const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
-  const estMrr = auditRes?.totalRecoverableUsd ? formatUsd(auditRes.totalRecoverableUsd) : '+$8,420';
+  const activeRule = declineCode === 'auto_weighted' ? 'insufficient_funds' : declineCode;
+  const exitUsd = auditRes?.recoverableExitUsd ? '+' + formatUsd(auditRes.recoverableExitUsd) + '/mo' : '+$34,521/mo';
+  const dunningUsd = auditRes?.recoverableDunningUsd ? '+' + formatUsd(auditRes.recoverableDunningUsd) + '/mo' : '+$2,201/mo';
 
   const permalinkEl = document.getElementById('aa-live-scan-permalink');
   if (permalinkEl) {
@@ -95,14 +97,20 @@ function updateUnmaskedSdkPreview(auditRes) {
 
   const previewEl = document.getElementById('out-sdk-unmasked-preview');
   if (previewEl) {
-    previewEl.textContent = [
-      `// [LIVE PREVIEW — UNMASKED HEADER FOR ${storeName.toUpperCase()} (${domain})]`,
-      `window.AbandonAlphaConfig = {`,
-      `  merchantStore: ${JSON.stringify(storeName)}, checkoutStack: ${JSON.stringify(stack)},`,
-      `  aovUsd: ${aovUsd}, maxDiscountRebate: ${JSON.stringify(maxRebate)},`,
-      `  primaryDeclineRule: ${JSON.stringify(declineCode === 'auto_weighted' ? 'insufficient_funds' : declineCode)}, retryCadence: ${JSON.stringify(paydaySync)},`,
-      `  projectedRecoverableMrr: ${JSON.stringify(estMrr + '/mo')} // Full C1-C6 weights & Stripe worker locked below ↓`
-    ].join('\n');
+    previewEl.innerHTML = [
+      `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">1. stripe-retry-rules.json <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(activeRule)} Cron)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(dunningUsd)} &bull; Locked</span>`,
+      `</div>`,
+      `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">2. exit-bandit-c1-c6.js <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(storeName)} Exit Script)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(exitUsd)} &bull; Locked</span>`,
+      `</div>`,
+      `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">3. dunning-sms-email.md <span style="color:#64748B;font-weight:500;">(1-Tap Apple Pay)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">Included in $1.99 Kit</span>`,
+      `</div>`
+    ].join('');
   }
 }
 
@@ -130,7 +138,16 @@ async function probeLiveMerchantStore(domainOverride) {
 
   if (btnEl) {
     btnEl.disabled = false;
-    btnEl.textContent = 'Probe Store ↗';
+    btnEl.textContent = res && res.ok ? `✓ Scanned ${res.storeName}` : 'Scan Store ↗';
+    if (res && res.ok) {
+      btnEl.style.background = '#ECFDF5';
+      btnEl.style.color = '#047857';
+      setTimeout(() => {
+        btnEl.textContent = 'Scan Store ↗';
+        btnEl.style.background = '';
+        btnEl.style.color = '';
+      }, 2800);
+    }
   }
   if (!res || !res.ok) return;
 
@@ -149,7 +166,7 @@ async function probeLiveMerchantStore(domainOverride) {
   }
   if (badgeEl) {
     badgeEl.style.display = 'inline-block';
-    badgeEl.textContent = `● LIVE PROBE: ${res.stackLabel} (${res.probeMode === 'live_origin_fetch' ? 'HTTP ' + res.httpStatus : 'Verified Preset'})`;
+    badgeEl.textContent = `● ${res.detectedStack || 'Stripe + Shopify'} Verified`;
   }
   saveAaWorkspaceState();
   await runAuditRequest('custom', false, true);
@@ -182,7 +199,7 @@ function applyPreset(presetKey, btnEl) {
   } catch (_) {}
 
   saveAaWorkspaceState();
-  runAuditRequest(presetKey, false, true);
+  runAuditRequest(presetKey, false, true, true);
 }
 
 function onDeclineFocusChange(declineCode) {
@@ -191,12 +208,12 @@ function onDeclineFocusChange(declineCode) {
     const hasOpt = Array.from(whSelect.options || []).some((o) => o.value === declineCode);
     if (hasOpt) whSelect.value = declineCode;
   }
-  runAuditRequest(currentPreset, false, true);
+  runAuditRequest(currentPreset, false, true, true);
 }
 
 async function submitLeakageAudit(e) {
   if (e && e.preventDefault) e.preventDefault();
-  await runAuditRequest(currentPreset, false, true);
+  await runAuditRequest(currentPreset, false, true, true);
   return false;
 }
 
@@ -206,7 +223,7 @@ function triggerHeaderMrrCalc(e) {
   if (graderEl && graderEl.scrollIntoView) {
     graderEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  runAuditRequest(currentPreset, false, true);
+  runAuditRequest(currentPreset, false, true, true);
   return false;
 }
 
@@ -218,11 +235,15 @@ const DECLINE_SEO_LINKS = {
   processing_error: '/seo/stripe-decline-code-processing-error-exponential-backoff'
 };
 
-async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
+let auditBtnResetTimer = null;
+async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplicitClick) {
   const btn = document.getElementById('run-audit-btn');
   const navBtn = document.getElementById('nav-calc-mrr-btn');
-  if (isManualTrigger && btn) btn.innerHTML = '<span>Calculating MRR...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
-  if (isManualTrigger && navBtn) navBtn.innerHTML = '<span>Calculating...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
+  if (isExplicitClick && btn) {
+    btn.style.background = '#3730A3';
+    btn.innerHTML = '<span>Calculating Recoverable MRR...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
+  }
+  if (isExplicitClick && navBtn) navBtn.innerHTML = '<span>Calculating...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
 
   const primaryDeclineCode = document.getElementById('input-decline-focus')?.value || 'auto_weighted';
   const payload = {
@@ -251,15 +272,37 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
 
   const headers = { 'Content-Type': 'application/json' };
   if (isAutoInit) headers['x-auto-init'] = '1';
-  const res = await fetch('/api/audit-leakage', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(payload)
-  }).then((r) => r.json()).catch(() => null);
+  const [res] = await Promise.all([
+    fetch('/api/audit-leakage', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload)
+    }).then((r) => r.json()).catch(() => null),
+    isExplicitClick ? new Promise((r) => setTimeout(r, 180)) : Promise.resolve()
+  ]);
 
-  if (btn) btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+  if (!res || !res.ok) {
+    if (btn) {
+      btn.style.background = '';
+      btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    }
+    if (navBtn) navBtn.innerHTML = '<span>Calculate MRR</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    return;
+  }
+
+  if (isExplicitClick && btn) {
+    if (auditBtnResetTimer) clearTimeout(auditBtnResetTimer);
+    btn.style.background = '#047857';
+    btn.innerHTML = `<span>✓ Calculated: +${formatUsd(res.totalRecoverableUsd)}/mo Recoverable</span><span class="btn-icon-circle" aria-hidden="true">✓</span>`;
+    auditBtnResetTimer = setTimeout(() => {
+      btn.style.background = '';
+      btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    }, 3200);
+  } else if (btn) {
+    btn.style.background = '';
+    btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+  }
   if (navBtn) navBtn.innerHTML = '<span>Calculate MRR</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
-  if (!res || !res.ok) return;
 
   window.__LAST_AUDIT_RES__ = res;
   if (isManualTrigger) saveAaWorkspaceState();
@@ -275,29 +318,54 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger) {
   document.getElementById('out-sdk-snippet').textContent = window.__ebIsUnlocked ? res.sdkSnippet : '/* [LOCKED PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag & Stripe retry worker */';
 
   const statusEl = document.getElementById('audit-form-status');
-  if (statusEl) {
-    statusEl.textContent = `Recoverable MRR Calculated: +${formatUsd(res.totalRecoverableUsd)}/mo`;
+  if (statusEl && (isManualTrigger || isExplicitClick)) {
+    statusEl.innerHTML = `<span style="display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;" onclick="var c=document.getElementById('aa-step2-card');if(c&&c.scrollIntoView)c.scrollIntoView({behavior:'smooth',block:'nearest'});"><span>✓ Step 1 Done for <strong>${escapeUiHtml(res.storeName)}</strong> &rarr; <strong>Now Focus on Step 2 (Right): +${formatUsd(res.totalRecoverableUsd)}/mo Recoverable</strong></span><span style="text-decoration:underline;white-space:nowrap;">Focus Step 2 &rarr;</span></span>`;
     statusEl.style.color = '#047857';
     statusEl.style.fontWeight = '700';
+    statusEl.style.background = '#ECFDF5';
+    statusEl.style.border = '1px solid #A7F3D0';
+    statusEl.style.padding = '8px 12px';
+    statusEl.style.borderRadius = '8px';
   }
 
   const mrrTile = document.getElementById('recoverable-mrr-tile') || document.getElementById('out-total-recovered')?.parentElement;
-  if (isManualTrigger && mrrTile) {
-    mrrTile.style.transition = 'transform 250ms ease';
+  const rightCard = document.getElementById('aa-step2-card') || (mrrTile ? mrrTile.closest('.telemetry-card') : null);
+  const gradeBadge = document.getElementById('out-grade-badge');
+  if ((isManualTrigger || isExplicitClick) && mrrTile) {
+    if (gradeBadge) {
+      gradeBadge.textContent = `👉 FOCUS HERE NEXT • ${res.storeName} (${res.letterGrade})`;
+      gradeBadge.style.background = '#047857';
+      gradeBadge.style.color = '#FFFFFF';
+    }
+    mrrTile.style.transition = 'transform 250ms ease, box-shadow 250ms ease';
     mrrTile.style.transform = 'scale(1.02)';
+    mrrTile.style.boxShadow = '0 0 0 2px #10B981';
+    if (rightCard) {
+      rightCard.style.boxShadow = '0 0 0 3px #10B981, 0 14px 32px rgba(4, 120, 87, 0.16)';
+      if (window.innerWidth < 960 && rightCard.scrollIntoView) {
+        rightCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
     setTimeout(() => {
       mrrTile.style.transform = '';
-    }, 900);
+      mrrTile.style.boxShadow = '';
+    }, 1800);
   }
 
   if (Array.isArray(res.dunningBreakdown)) {
     const breakdownHtml = res.dunningBreakdown.slice(0, 3).map((d) => {
       const seoHref = DECLINE_SEO_LINKS[d.declineCode] || '/directory';
       return `
-      <div class="spec-row">
-        <span class="spec-k"><a href="${seoHref}"><code>${d.declineCode}</code></a> (${d.recoveryRatePct}% recoverable${d.sharePct ? ` • ${d.sharePct}% share` : ''} • Schedule Locked)</span>
-        <span class="spec-v text-emerald">+${formatUsd(d.recoveredUsd)}/mo</span>
-      </div>`;
+      <li>
+        <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;padding:3px 6px;border-radius:6px;background:#F8FAFC;">
+          <span style="font-size:0.8125rem;color:#334155;display:flex;align-items:center;gap:6px;">
+            <span style="color:#64748B;font-weight:800;" aria-hidden="true">&bull;</span>
+            <code style="font-weight:700;color:#0A2540;">${d.declineCode}</code>
+            <span style="color:#64748B;font-size:0.75rem;">(${d.recoveryRatePct}% recoverable &bull; ${d.sharePct}% share)</span>
+          </span>
+          <strong class="text-emerald" style="font-size:0.8125rem;white-space:nowrap;">+${formatUsd(d.recoveredUsd)}/mo</strong>
+        </a>
+      </li>`;
     }).join('');
     document.getElementById('out-dunning-breakdown').innerHTML = breakdownHtml;
   }
@@ -315,6 +383,16 @@ function copySdkSnippet() {
   }, 1800);
 }
 
+const HUMAN_OBJECTION_TITLES = {
+  C1_PRICE: 'Price Sensitivity',
+  C2_TIMING: 'Just Browsing',
+  C2_BROWSING: 'Just Browsing',
+  C3_APPROVAL: 'Team Sign-Off',
+  C4_COMPETITOR: 'Comparing Options',
+  C5_SUBSCRIPTION: 'Subscription Fatigue',
+  C6_FEATURE_FIT: 'Integration Fit'
+};
+
 function renderPosteriorTable(arms, selectedId) {
   const tbody = document.getElementById('posterior-table-body');
   if (!tbody || !Array.isArray(arms)) return;
@@ -324,15 +402,17 @@ function renderPosteriorTable(arms, selectedId) {
     totalRec += Number(arm.recovered_revenue_usd || 0);
     const isWin = arm.id === selectedId;
     const barWidth = Math.min(100, Math.max(12, Math.round(arm.posterior_mean_pct * 3.2)));
+    const humanTitle = HUMAN_OBJECTION_TITLES[arm.objection_code] || arm.objection_label;
     return `
-      <tr style="${isWin ? 'background: #ECFDF5;' : ''}">
+      <tr data-objection="${arm.objection_code}" style="cursor:pointer;${isWin ? 'background: #ECFDF5;' : ''}" onclick="triggerBanditObjection('${arm.objection_code}')">
         <td>
-          <strong style="color:${isWin ? '#047857' : '#0A2540'}">${arm.objection_code}</strong>
+          <strong style="color:${isWin ? '#047857' : '#0A2540'}">${humanTitle}</strong>
           <div style="font-size:0.9375rem; color:#475569; font-family:var(--font-sans);">${arm.objection_label}</div>
+          <div><button type="button" class="eb-row-sim-pill" onclick="event.stopPropagation();triggerBanditObjection('${arm.objection_code}')">${isWin ? '✓ Active Offer' : 'Simulate Offer ↗'}</button></div>
         </td>
         <td><code class="text-indigo">${arm.offer_code}</code> (-${arm.discount_pct}%)</td>
         <td>${arm.alpha}</td>
-        <td>${arm.beta}</td>
+        <td>${Number(arm.alpha || 0) + Number(arm.beta || 0)}</td>
         <td>
           <strong style="color:#0A2540;">${arm.posterior_mean_pct}%</strong>
           <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${barWidth}%"></div></div>
@@ -344,15 +424,19 @@ function renderPosteriorTable(arms, selectedId) {
 
   const totalBadge = document.getElementById('bandit-total-recovered');
   if (totalBadge) {
-    totalBadge.textContent = `Total Bandit Recovered: $${Math.round(totalRec).toLocaleString()}`;
+    totalBadge.textContent = `Total Recovered: $${Math.round(totalRec).toLocaleString()}`;
+  }
+  if (typeof window.__ebMountDeliverableCurtain === 'function') {
+    window.__ebMountDeliverableCurtain();
   }
 }
 
 async function triggerBanditObjection(objectionCode, btnEl) {
-  if (btnEl) {
-    document.querySelectorAll('#objection-btn-group .objection-btn').forEach((b) => b.classList.remove('selected'));
-    btnEl.classList.add('selected');
-  }
+  const normCode = objectionCode === 'C2_TIMING' ? 'C2_BROWSING' : objectionCode;
+  document.querySelectorAll('#objection-btn-group .objection-btn').forEach((b) => {
+    const match = btnEl ? (b === btnEl) : (b.getAttribute('data-obj') === normCode || b.getAttribute('data-obj') === objectionCode);
+    b.classList.toggle('selected', match);
+  });
 
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
   const res = await fetch('/api/bandit-select', {
@@ -377,32 +461,75 @@ async function triggerBanditObjection(objectionCode, btnEl) {
   document.getElementById('bandit-offer-headline').textContent = win.offer_headline;
   document.getElementById('bandit-offer-subtext').textContent = win.offer_subtext;
   document.getElementById('bandit-offer-code').textContent = win.offer_code;
-  document.getElementById('bandit-sampled-theta').textContent = win.sampled_theta;
+  document.getElementById('bandit-sampled-theta').textContent = win.posterior_mean_pct ? `${win.posterior_mean_pct}%` : win.sampled_theta;
   document.getElementById('bandit-erpv').textContent = `$${win.erpv_usd}`;
-  document.getElementById('bandit-velocity-pill').textContent = `v_y: ${res.trajectory.telemetry.velocityY} px/ms • Score: ${res.trajectory.score}/100`;
+  document.getElementById('bandit-velocity-pill').textContent = `Exit Signal Active • Score: ${res.trajectory.score}/100`;
 
   renderPosteriorTable(res.posteriors, win.id);
   return res;
 }
 
+let whBtnResetTimer = null;
 async function runWebhookSimulation(e) {
-  if (e) e.preventDefault();
+  const isExplicitWhClick = Boolean(e && e.preventDefault);
+  if (e && e.preventDefault) e.preventDefault();
+  const whBtn = document.getElementById('wh-submit-btn');
+  if (isExplicitWhClick && whBtn) {
+    whBtn.style.background = '#3730A3';
+    whBtn.innerHTML = '<span>Simulating Webhook Retry...</span><span class="btn-icon-circle" aria-hidden="true">↻</span>';
+  }
   const payload = {
     eventType: document.getElementById('wh-event-type').value,
     declineCode: document.getElementById('wh-decline-code').value,
     customerEmail: document.getElementById('wh-email').value,
     amountUsd: Number(document.getElementById('wh-amount').value || 149),
-    storeName: document.getElementById('input-store').value || 'AuraBotanics DTC',
+    storeName: document.getElementById('input-store').value || 'Gymshark',
     website_url: document.getElementById('wh-honeypot')?.value || ''
   };
 
-  const res = await fetch('/api/webhook-simulate', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).then((r) => r.json()).catch(() => null);
+  const [res] = await Promise.all([
+    fetch('/api/webhook-simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then((r) => r.json()).catch(() => null),
+    isExplicitWhClick ? new Promise((r) => setTimeout(r, 160)) : Promise.resolve()
+  ]);
 
-  if (!res || !res.ok) return;
+  if (!res || !res.ok) {
+    if (whBtn) {
+      whBtn.style.background = '';
+      whBtn.innerHTML = '<span>Simulate Webhook Retry</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    }
+    return;
+  }
+
+  if (isExplicitWhClick && whBtn) {
+    if (whBtnResetTimer) clearTimeout(whBtnResetTimer);
+    whBtn.style.background = '#047857';
+    whBtn.innerHTML = `<span>✓ Simulated: ${res.expectedRecoveryRatePct}% Recovery (${payload.declineCode})</span><span class="btn-icon-circle" aria-hidden="true">✓</span>`;
+    whBtnResetTimer = setTimeout(() => {
+      whBtn.style.background = '';
+      whBtn.innerHTML = '<span>Simulate Webhook Retry</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    }, 3200);
+  }
+  const whStatusEl = document.getElementById('wh-form-status');
+  if (whStatusEl) {
+    whStatusEl.textContent = `✓ Simulated ${payload.eventType} (${payload.declineCode} • $${payload.amountUsd}): ${res.expectedRecoveryRatePct}% Expected Recovery`;
+    whStatusEl.style.color = '#047857';
+    whStatusEl.style.fontWeight = '700';
+    if (isExplicitWhClick) {
+      whStatusEl.style.background = '#ECFDF5';
+      whStatusEl.style.padding = '8px 12px';
+      whStatusEl.style.borderRadius = '8px';
+    }
+  }
+  const whOutCard = document.getElementById('wh-out-classification')?.closest('.telemetry-card');
+  if (isExplicitWhClick && whOutCard) {
+    whOutCard.style.transition = 'box-shadow 300ms ease';
+    whOutCard.style.boxShadow = '0 0 0 3px #10B981, 0 14px 32px rgba(4, 120, 87, 0.16)';
+    setTimeout(() => { whOutCard.style.boxShadow = ''; }, 1400);
+  }
 
   document.getElementById('wh-out-classification').textContent = res.classification;
   document.getElementById('wh-out-recovery-rate').textContent = `Expected Recovery: ${res.expectedRecoveryRatePct}%`;

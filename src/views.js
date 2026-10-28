@@ -34,7 +34,7 @@ function renderUnifiedHeaderHtml(tagText = '') {
         <a href="/directory">Playbooks (60)</a>
         <a href="/#in-card-unlock-bar">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
-          <span>Calculate Recoverable MRR</span>
+          <span>Calculate MRR</span>
           <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
         </a>
       </nav>
@@ -223,7 +223,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
         <div>
           <h1 class="pseo-h1" style="font-size:clamp(1.5rem, 2.2vw, 2.15rem);line-height:1.14;max-width:28ch;">${escapeHtml(cleanTitle.replace(/\s*\(.*?\)/g, '').split(/[:—–|]/)[0].trim().split(/\s+/).slice(0, 5).join(' '))}</h1>
-          <div class="status-pill" style="margin-top:8px;display:inline-flex;align-items:center;gap:8px;"><img src="${/Decline/i.test(page.category) ? '/public/editorial-segment-2.jpg' : (/Bandit/i.test(page.category) ? '/public/editorial-segment-1.jpg' : '/public/editorial-segment-3.jpg')}" alt="" width="24" height="24" loading="lazy" style="width:24px;height:24px;border-radius:999px;object-fit:cover;" />${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
+          <div class="status-pill" style="margin-top:8px;display:inline-flex;align-items:center;gap:8px;">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
           <p class="pseo-lead"><strong>${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(page.summary.replace(/`/g, ''))}</p>
           <div class="cta-row">
             <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}&amp;store=${encodeURIComponent(cleanTitle.slice(0, 32))}#grader" class="btn btn-indigo">
@@ -301,10 +301,10 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div class="spec-row"><span>Autonomous Monthly Cashflow Recovered:</span><strong id="pseo-rec-val" class="text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong></div>
           <div class="spec-row"><span>12-Month Net Bottom-Line Impact:</span><strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong></div>
           <div class="code-snippet-box">
-            <div class="mono-label">Drop-In SDK + Stripe Retry Worker ($1.99 Single-Store Pass)</div>
-            <code>/* [LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass to download your ${escapeHtml(page.declineOrSignal)} retry worker &amp; C1-C6 Bandit SDK tag */</code>
+            <div class="mono-label">Tailored Store Recovery Pack ($1.99 Single-Store Pass)</div>
+            <p style="font-size:0.9375rem;line-height:1.55;margin-top:6px;">Includes your ready-to-use <code>${escapeHtml(page.declineOrSignal)}</code> Stripe retry schedule, 1-click Apple Pay recovery link template, and high-intent exit counter-offer rules.</p>
             <div style="margin-top:8px;">
-              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-emerald btn-sm" style="display:inline-flex;">Unlock ${escapeHtml(page.declineOrSignal)} Retry Worker &amp; SDK ($1.99) &rarr;</a>
+              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-emerald btn-sm" style="display:inline-flex;">Unlock ${escapeHtml(page.declineOrSignal)} Recovery Pack ($1.99) &rarr;</a>
             </div>
           </div>
         </div>
@@ -394,23 +394,36 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       <h1 class="pseo-h1" style="font-size:clamp(2.1rem, 3.8vw, 3.5rem);line-height:1.08;max-width:20ch;margin:0 0 12px;">Stripe Recovery Playbooks</h1>
       <p class="pseo-lead">Browse ${PSEO_PAGES.length} verified checkout recovery guides covering Stripe card decline codes, payday retry timing, and smart exit offers for Shopify and SaaS.</p>
       <div class="filter-bar" style="margin-top:16px;">
-        <label for="dir-search" class="field-label">Filter ${PSEO_PAGES.length} Playbooks by Decline Code, Webhook, or Platform</label>
-        <input id="dir-search" type="search" class="field-input" placeholder="e.g. insufficient_funds, do_not_honor, shopify, checkout.session.expired..." oninput="filterDirectory(this.value)" />
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+          <label for="dir-search" class="field-label" style="margin:0;">Filter ${PSEO_PAGES.length} Playbooks by Decline Code, Webhook, or Platform</label>
+          <span id="dir-match-status" style="font-size:13px;font-weight:700;color:#047857;">Showing all ${PSEO_PAGES.length} Playbooks</span>
+        </div>
+        <input id="dir-search" type="search" class="field-input" placeholder="e.g. do_not_honor, insufficient_funds, shopify, checkout.session.expired..." oninput="filterDirectory(this.value)" />
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;">
+          <span style="font-size:12.5px;font-weight:700;color:#475569;">Quick Filter:</span>
+          ${['All', 'do_not_honor', 'insufficient_funds', 'expired_card', 'generic_decline', 'Shopify', 'invoice.payment_failed'].map((tag) => `<button type="button" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='${tag === 'All' ? '' : tag}';filterDirectory(inp.value);}" style="padding:4px 10px;border-radius:999px;border:1px solid #CBD5E1;background:#FFFFFF;color:#0F172A;font-size:12.5px;font-weight:600;cursor:pointer;">${tag}</button>`).join('')}
+        </div>
       </div>
     </div>
 
-    ${categories.map((cat, idx) => {
+    <div id="dir-empty-state" style="display:none;padding:24px;border-radius:14px;background:#FFFFFF;border:1px solid #E2E8F0;margin-top:20px;text-align:center;">
+      <p style="margin:0 0 10px;font-size:15px;font-weight:600;color:#0F172A;">No exact playbook matched that filter. Try a Decline Code or run a custom store check:</p>
+      <div style="display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+        <button type="button" class="btn btn-ghost" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='';filterDirectory('');}">Reset Filter (Show All ${PSEO_PAGES.length})</button>
+        <a href="/#grader" class="btn btn-indigo"><span>Open Live Revenue &amp; Retry Calculator</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+
+    ${categories.map((cat) => {
       const items = PSEO_PAGES.filter((p) => p.category === cat);
-      const segImgs = ['/public/editorial-segment-2.jpg', '/public/editorial-segment-3.jpg', '/public/editorial-segment-1.jpg', '/public/editorial-founder.jpg'];
       return `
-      <section class="pseo-section dir-cluster">
+      <section class="pseo-section dir-cluster" data-total="${items.length}">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <img src="${segImgs[idx % segImgs.length]}" alt="" width="34" height="34" loading="lazy" style="width:34px;height:34px;border-radius:8px;object-fit:cover;" />
-          <h2 style="margin:0;">${escapeHtml(cat)} (${items.length} Playbooks)</h2>
+          <h2 style="margin:0;">${escapeHtml(cat)} (<span class="dir-cluster-count">${items.length}</span> Playbooks)</h2>
         </div>
         <div class="related-links-grid">
           ${items.map((item) => `
-            <a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword).toLowerCase())}">
+            <a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword + ' ' + item.webhookEvent + ' ' + item.category + ' ' + item.slug).toLowerCase())}">
               <div class="dir-card-top">
                 <code class="text-indigo">${escapeHtml(item.declineOrSignal)}</code>
                 <span class="badge-emerald">+${item.recoverableLiftPct}% Recovery</span>
@@ -428,12 +441,38 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
 
   <script>
     function filterDirectory(q) {
-      var needle = (q || '').toLowerCase().trim();
-      var cards = document.querySelectorAll('.dir-item');
+      var raw = (q || '').toLowerCase().replace(/[_.-]+/g, ' ').trim();
+      var tokens = raw ? raw.split(/\\s+/).filter(Boolean) : [];
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.dir-item'));
+      var matchedCount = 0;
       cards.forEach(function(el) {
-        var hay = el.getAttribute('data-search') || '';
-        el.style.display = (!needle || hay.indexOf(needle) !== -1) ? '' : 'none';
+        var hay = ((el.getAttribute('data-search') || '') + ' ' + (el.textContent || '')).toLowerCase().replace(/[_.-]+/g, ' ');
+        var ok = !tokens.length || tokens.every(function(t) { return hay.indexOf(t) !== -1; });
+        el.style.display = ok ? '' : 'none';
+        if (ok) matchedCount++;
       });
+      if (tokens.length > 1 && matchedCount === 0) {
+        var sigTokens = tokens.filter(function(t) { return t.length >= 2; });
+        cards.forEach(function(el) {
+          var hay = ((el.getAttribute('data-search') || '') + ' ' + (el.textContent || '')).toLowerCase().replace(/[_.-]+/g, ' ');
+          var ok = sigTokens.some(function(t) { return hay.indexOf(t) !== -1; });
+          el.style.display = ok ? '' : 'none';
+          if (ok) matchedCount++;
+        });
+      }
+      var clusters = document.querySelectorAll('.dir-cluster');
+      clusters.forEach(function(sec) {
+        var secCards = sec.querySelectorAll('.dir-item');
+        var secVis = 0;
+        secCards.forEach(function(c) { if (c.style.display !== 'none') secVis++; });
+        sec.style.display = secVis > 0 ? '' : 'none';
+        var cntEl = sec.querySelector('.dir-cluster-count');
+        if (cntEl) cntEl.textContent = String(secVis);
+      });
+      var st = document.getElementById('dir-match-status');
+      if (st) st.textContent = !tokens.length ? ('Showing all ' + cards.length + ' Playbooks') : ('Showing ' + matchedCount + ' of ' + cards.length + ' Playbooks');
+      var emp = document.getElementById('dir-empty-state');
+      if (emp) emp.style.display = matchedCount === 0 ? 'block' : 'none';
     }
   </script>
 </body>

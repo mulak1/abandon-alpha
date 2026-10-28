@@ -107,11 +107,14 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1rem;
+  gap: 8px;
+  font-size: 0.92rem;
   font-weight: 600;
   color: var(--text-slate);
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
+p { max-width: 65ch; }
 .main-nav a:not(.btn) {
   padding: 6px 8px;
   border-radius: 8px;
@@ -126,8 +129,9 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
   background: #F1F5F9;
   padding: 8px 12px;
   gap: 6px;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: flex-start;
 }
 .mobile-nav-strip a {
   font-size: 0.9375rem;
@@ -240,7 +244,7 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 }
 .hero-h1, .pseo-h1, .lp-h1 {
   font-family: var(--font-serif);
-  font-size: clamp(32px, 5vw, 72px);
+  font-size: clamp(32px, 4.5vw, 66px);
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -0.025em;
@@ -363,7 +367,7 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 .code-snippet-box h3, .code-snippet-box strong { color: var(--text-navy); }
 .code-snippet-box p, .code-snippet-box pre, .code-snippet-box span { color: var(--text-slate); }
 .code-snippet-box code {
-  display: inline-block; margin-top: 6px; font-size: 0.9375rem; color: var(--text-navy); background: #FFFFFF; padding: 8px 12px; border-radius: 8px; word-break: break-all;
+  display: inline-block; margin-top: 6px; font-size: 0.9375rem; color: var(--text-navy); background: #FFFFFF; padding: 6px 10px; border-radius: 8px; word-break: break-word;
 }
 .code-snippet-box .btn-ghost {
   background: #FFFFFF; color: var(--text-navy);
@@ -487,6 +491,11 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 .footer-links a:hover { color: var(--text-navy); }
 
 /* Mobile Responsive (< 920px) */
+@media (max-width: 1140px) and (min-width: 921px) {
+  .main-nav { gap: 4px; font-size: 0.84rem; }
+  .main-nav a:not(.btn) { padding: 5px 5px; }
+  .header-inner .btn-sm { padding: 7px 11px; font-size: 0.82rem; }
+}
 @media (max-width: 920px) {
   .container { padding: 0 24px; max-width: 100%; overflow-x: hidden; }
   .hero-h1, .pseo-h1, .lp-h1 { font-size: 32px; line-height: 1.1; }

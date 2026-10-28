@@ -10,7 +10,7 @@ const STORE_PRESETS = {
   shopify_dtc: {
     id: 'shopify_dtc',
     label: 'Shopify DTC Brand ($85k/mo)',
-    storeName: 'AuraBotanics DTC',
+    storeName: 'Gymshark',
     monthlySessions: 3200,
     aovUsd: 92,
     abandonRatePct: 71.5,
@@ -19,7 +19,7 @@ const STORE_PRESETS = {
   b2b_saas: {
     id: 'b2b_saas',
     label: 'B2B Micro-SaaS ($25k MRR)',
-    storeName: 'CloudPulse DevTools',
+    storeName: 'Linear',
     monthlySessions: 950,
     aovUsd: 89,
     abandonRatePct: 68.0,
@@ -28,7 +28,7 @@ const STORE_PRESETS = {
   creator_info: {
     id: 'creator_info',
     label: 'Info / Creator Checkout ($40k/mo)',
-    storeName: 'DesignSystems Academy',
+    storeName: 'MasterClass',
     monthlySessions: 1400,
     aovUsd: 115,
     abandonRatePct: 74.2,
@@ -37,7 +37,7 @@ const STORE_PRESETS = {
   subscription_app: {
     id: 'subscription_app',
     label: 'Subscription App ($120k MRR)',
-    storeName: 'KinectAI Pro',
+    storeName: 'Whoop',
     monthlySessions: 5400,
     aovUsd: 72,
     abandonRatePct: 69.4,
