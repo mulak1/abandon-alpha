@@ -143,7 +143,7 @@ function formatMetaDescription(str, maxLen = 150) {
   const sliced = clean.slice(0, maxLen);
   const lastSpace = sliced.lastIndexOf(' ');
   const wordBound = lastSpace > 80 ? sliced.slice(0, lastSpace) : sliced;
-  return wordBound.replace(/[.,;:—–-]+$/, '') + '...';
+  return wordBound.replace(/[.,;: · –-]+$/, '') + '...';
 }
 
 function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
@@ -222,7 +222,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     <div class="hero-split pseo-hero" style="align-items:stretch;">
       <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
         <div>
-          <h1 class="pseo-h1" style="font-size:clamp(1.5rem, 2.2vw, 2.15rem);line-height:1.14;max-width:28ch;">${escapeHtml(cleanTitle.replace(/\s*\(.*?\)/g, '').split(/[:—–|]/)[0].trim().split(/\s+/).slice(0, 5).join(' '))}</h1>
+          <h1 class="pseo-h1" style="font-size:clamp(1.5rem, 2.2vw, 2.15rem);line-height:1.14;max-width:28ch;">${escapeHtml(cleanTitle.replace(/\s*\(.*?\)/g, '').split(/[: · –|]/)[0].trim().split(/\s+/).slice(0, 5).join(' '))}</h1>
           <div class="status-pill" style="margin-top:8px;display:inline-flex;align-items:center;gap:8px;">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
           <p class="pseo-lead"><strong>${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(page.summary.replace(/`/g, ''))}</p>
           <div class="cta-row">

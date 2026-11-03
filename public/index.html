@@ -159,7 +159,7 @@
               </div>
             </div>
 
-            <details style="padding:12px 14px;border-radius:10px;background:#F1F5F9;">
+            <details open style="padding:12px 14px;border-radius:10px;background:#F1F5F9;">
               <summary style="cursor:pointer;font-size:0.875rem;font-weight:700;color:#334155;">Optional: Scan Any Domain URL or Fine-Tune Rates</summary>
               <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:10px;">
                 <input id="input-store-url" type="text" class="field-input" placeholder="e.g. gymshark.com, linear.app..." style="flex:1;padding:8px 12px;font-size:0.875rem;background:#FFFFFF;" onkeydown="if(event.key==='Enter'){event.preventDefault();probeLiveMerchantStore();}" />
@@ -277,15 +277,26 @@
               </ul>
             </div>
 
-            <!-- CLEAN HANDOFF BAR TO STEP 3 BELOW (NO DUPLICATE 3-FILE BOX) -->
-            <div class="code-snippet-box" style="margin-top:0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;background:#ECFDF5;padding:12px 16px;border-radius:12px;border:1px solid #A7F3D0;">
-              <div>
-                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#047857;">Next &bull; Step 3 of 3 Directly Below</div>
-                <strong style="font-size:0.875rem;color:#0A2540;">Preview &amp; download the 3 recovery files in your Recovery Plan below</strong>
+            <!-- INLINE $0 EMAIL SAVE & SAMPLE UNLOCK BAR + STEP 3 HANDOFF -->
+            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:8px;background:#ECFDF5;padding:12px 16px;border-radius:12px;border:1px solid #A7F3D0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <div>
+                  <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#047857;">Try-Before-You-Buy ($0 Sample) &bull; Step 3 of 3 Directly Below</div>
+                  <strong style="font-size:0.85rem;color:#0A2540;">Enter work email ($0) to unmask Fix #1 Production Liquid/JS Code Snippet &amp; save Audit</strong>
+                </div>
+                <button type="button" id="copy-sdk-btn" class="btn btn-emerald btn-sm" style="padding:7px 14px;font-size:0.8125rem;flex-shrink:0;" onclick="copySdkSnippet()">Copy Fix #1 Snippet</button>
               </div>
-              <button type="button" id="copy-sdk-btn" class="btn btn-emerald btn-sm" style="padding:7px 14px;font-size:0.8125rem;flex-shrink:0;" onclick="var c=document.getElementById('eb-deliverable-curtain');if(c&&c.scrollIntoView){c.scrollIntoView({behavior:'smooth',block:'center'});}else if(window.__ebCheckout){window.__ebCheckout('flash_pass');}">View Step 3 Files &darr;</button>
+              <form id="aa-inline-sample-unlock-form" onsubmit="return window.__aaUnlockSampleSnippet(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
+                <input type="email" id="aa-inline-sample-email" required placeholder="Enter work email ($0) to unmask Fix #1 Production Liquid/JS Code Snippet &amp; save Audit" aria-label="Enter work email ($0) to unmask Fix #1 Production Liquid/JS Code Snippet &amp; save Audit" style="flex:1;min-width:210px;padding:7px 12px;border-radius:8px;border:1px solid #A7F3D0;background:#FFFFFF;color:#0A2540;font-size:0.8125rem;" />
+                <button type="submit" id="aa-inline-sample-btn" class="btn btn-indigo btn-sm" style="padding:7px 14px;font-size:0.8125rem;white-space:nowrap;">Unmask Fix #1 Snippet ($0) &rarr;</button>
+              </form>
+              <div id="aa-inline-sample-status" style="display:none;font-size:0.78rem;color:#047857;font-weight:700;"></div>
               <div id="out-sdk-unmasked-preview" style="display:none;"></div>
-              <code id="out-sdk-snippet" style="display:none;">export const AbandonAlphaConfig = { merchant: "gymshark" };</code>
+              <code id="out-sdk-snippet" style="display:none;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:0.78rem;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">export const AbandonAlphaConfig = { merchant: "gymshark" };</code>
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:0.76rem;color:#334155;">
+                <span>Managing multiple client stores?</span>
+                <button type="button" onclick="initiateStripeCheckout('starter')" style="background:transparent;border:none;color:#047857;font-weight:700;text-decoration:underline;cursor:pointer;font-size:0.76rem;padding:0;">For CRO &amp; Shopify Agencies: White-Label Client Audit &amp; Multi-Store Patch Kit ($49) &rarr;</button>
+              </div>
             </div>
           </div>
         </div>
@@ -526,28 +537,35 @@
       <div class="container">
         <div class="pricing-card featured" style="max-width:860px; margin:0 auto;">
           <div>
-            <h2 class="section-h2" style="margin-bottom:8px;">Unlock Your 3-File Recovery Pack</h2>
-            <p class="section-sub" style="margin-bottom:18px;">Unblur all bank-code recovery schedules and download your production-ready <code>stripe-retry-rules.json</code>, <code>exit-bandit-c1-c6.js</code>, and 3-step recovery copy bundle in 1 click.</p>
+            <h2 class="section-h2" style="margin-bottom:8px;">Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast</h2>
+            <p class="section-sub" style="margin-bottom:18px;">Unblur all bank-code recovery schedules and download your production-ready <strong>Complete Drop-In Checkout Recovery Code Patch</strong> (<code>stripe-retry-rules.json</code> + <code>exit-bandit-c1-c6.js</code>), <strong>3-Part Klaviyo/Shopify Abandoned Cart Flow Templates</strong>, and <strong>CFO Revenue Recovery Forecast</strong> in 1 click.</p>
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:20px 22px; border-radius:14px; background:#F1F5F9;">
               <div>
                 <div class="price-tag" style="margin:0;">$1.99<span> USD single audit</span></div>
-                <div style="font-size:0.9375rem; color:var(--text-slate); margin-top:4px;">Single-Store 3-File Stripe Recovery Bundle &bull; Instant Browser Unlock</div>
+                <div style="font-size:0.9375rem; color:var(--text-slate); margin-top:4px;">Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Flow Templates + CFO Forecast &bull; Instant Browser Unlock</div>
               </div>
               <a href="/buy/flash_pass" rel="nofollow" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn btn-indigo" style="padding:13px 22px; font-size:1rem; text-decoration:none;">
-                <span>Unlock Single Audit ($1.99)</span>
+                <span>Unlock Recovery Code Patch + 3-Part Flows ($1.99)</span>
                 <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
               </a>
             </div>
 
-            <details style="margin-top:16px; font-size:0.9375rem; color:var(--text-slate); padding:14px 16px; border-radius:12px; background:#F1F5F9;">
-              <summary style="cursor:pointer; font-weight:700; color:var(--text-navy);">Need the Starter Engineering Pack ($19), Complete 20-Decline Kit ($49 One-Time), or Multi-Store Agency Pack ($149)?</summary>
+            <div style="margin-top:14px; padding:14px 18px; border-radius:12px; background:#ECFDF5; border:1px solid #A7F3D0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <strong style="color:#0A2540; font-size:0.95rem; display:block;">For CRO &amp; Shopify Agencies: White-Label Client Audit &amp; Multi-Store Patch Kit ($49)</strong>
+                <span style="font-size:0.85rem; color:#334155;">Includes white-label client CFO audit exports, multi-store Liquid/JS recovery patches, and all 20 Stripe bank decline schedules.</span>
+              </div>
+              <button type="button" id="checkout-starter-btn" class="btn btn-emerald" onclick="initiateStripeCheckout('starter')" style="white-space:nowrap;">
+                <span>Get White-Label Agency Patch Kit ($49) &rarr;</span>
+              </button>
+            </div>
+
+            <details open style="margin-top:16px; font-size:0.9375rem; color:var(--text-slate); padding:14px 16px; border-radius:12px; background:#F1F5F9;">
+              <summary style="cursor:pointer; font-weight:700; color:var(--text-navy);">Need the Starter Engineering Pack ($19) or Enterprise Multi-Store Fleet License ($149)?</summary>
               <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:14px;">
                 <a href="/buy/playbook_pass" rel="nofollow" id="btn-buy-playbook-29" class="btn btn-ghost btn-block" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':19.00,'currency':'USD'});}" style="text-decoration:none; background:#FFFFFF;">
                   <span>Starter Code Pack ($19 One-Time)</span>
                 </a>
-                <button type="button" id="checkout-starter-btn" class="btn btn-emerald btn-block" onclick="initiateStripeCheckout('starter')">
-                  <span>Complete Recovery Kit ($49 One-Time)</span>
-                </button>
                 <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
                   <span>Multi-Store Agency Pack ($149)</span>
                 </button>

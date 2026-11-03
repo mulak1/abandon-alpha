@@ -99,15 +99,15 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (previewEl) {
     previewEl.innerHTML = [
       `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
-      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">1. stripe-retry-rules.json <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(activeRule)} Cron)</span></span>`,
-      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(dunningUsd)} &bull; Locked</span>`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">1. Complete Drop-In Checkout Recovery Code Patch <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(activeRule)} + ${escapeUiHtml(storeName)} Liquid/JS)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(exitUsd)} &bull; Fix #1 Sample</span>`,
       `</div>`,
       `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
-      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">2. exit-bandit-c1-c6.js <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(storeName)} Exit Script)</span></span>`,
-      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(exitUsd)} &bull; Locked</span>`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">2. 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates <span style="color:#64748B;font-weight:500;">(1-Tap Apple Pay + SMS)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(dunningUsd)} &bull; Included in $1.99 Kit</span>`,
       `</div>`,
       `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
-      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">3. dunning-sms-email.md <span style="color:#64748B;font-weight:500;">(1-Tap Apple Pay)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">3. CFO Revenue Recovery Forecast <span style="color:#64748B;font-weight:500;">(12-Month Net MRR Model)</span></span>`,
       `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">Included in $1.99 Kit</span>`,
       `</div>`
     ].join('');
@@ -315,7 +315,14 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   document.getElementById('out-exit-recovered').textContent = `+${formatUsd(res.recoverableExitUsd)}/mo (${res.recoveredOrdersCount} orders)`;
   document.getElementById('out-dunning-recovered').textContent = `+${formatUsd(res.recoverableDunningUsd)}/mo`;
   updateUnmaskedSdkPreview(res);
-  document.getElementById('out-sdk-snippet').textContent = window.__ebIsUnlocked ? res.sdkSnippet : '/* [LOCKED PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal your custom C1-C6 Bandit SDK tag & Stripe retry worker */';
+  const isSampleUnlocked = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
+  const snippetEl = document.getElementById('out-sdk-snippet');
+  if (snippetEl) {
+    snippetEl.textContent = isSampleUnlocked
+      ? (res.sdkSnippet || `/* Fix #1 Production Liquid/JS Code Snippet (${res.storeName}) */\n<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(res.storeName)}" data-aov="${res.aovUsd}" data-velocity-threshold="-0.80" async></script>`)
+      : '/* [LOCKED PREVIEW]: Enter your work email ($0) above to unmask Fix #1 Production Liquid/JS Code Snippet, or unlock the $1.99 Complete Recovery Code Patch */';
+    if (isSampleUnlocked) snippetEl.style.display = 'block';
+  }
 
   const statusEl = document.getElementById('audit-form-status');
   if (statusEl && (isManualTrigger || isExplicitClick)) {
@@ -371,15 +378,73 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   }
 }
 
+window.__aaUnlockSampleSnippet = function(ev) {
+  if (ev && ev.preventDefault) ev.preventDefault();
+  const emIn = document.getElementById('aa-inline-sample-email') || document.getElementById('eb-inline-scorecard-email');
+  const email = emIn && emIn.value ? emIn.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    if (emIn) emIn.focus();
+    return false;
+  }
+  window.__aaSampleEmailUnlocked = true;
+  try {
+    localStorage.setItem('aa_captured_email', email);
+    localStorage.setItem('eb_captured_email', email);
+  } catch (_) {}
+  const storeName = document.getElementById('input-store')?.value || 'Gymshark';
+  const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
+  const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
+  const unmaskedCode = (window.__LAST_AUDIT_RES__ && window.__LAST_AUDIT_RES__.sdkSnippet) || [
+    `{% comment %} Fix #1 Production Liquid/JS Checkout Recovery Snippet for ${storeName} {% endcomment %}`,
+    `<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(storeName)}" data-aov="${aovUsd}" data-decline-focus="${declineCode}" data-velocity-threshold="-0.80" async></script>`,
+    `<script>window.AbandonAlphaRules = { retryDecline: "${declineCode}", fridayPaydaySync: "09:05_LOCAL", allowPromoStacking: false };</script>`
+  ].join('\n');
+  const snippetEl = document.getElementById('out-sdk-snippet');
+  if (snippetEl) {
+    snippetEl.textContent = unmaskedCode;
+    snippetEl.style.display = 'block';
+  }
+  const prevEl = document.getElementById('out-sdk-unmasked-preview');
+  if (prevEl) prevEl.style.display = 'block';
+  const btnEl = document.getElementById('aa-inline-sample-btn');
+  if (btnEl) btnEl.textContent = '✓ Fix #1 Unmasked!';
+  const statusEl = document.getElementById('aa-inline-sample-status');
+  if (statusEl) {
+    statusEl.style.display = 'block';
+    statusEl.innerHTML = `✓ Fix #1 Production Liquid/JS Code Snippet Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="/buy/flash_pass?email=${encodeURIComponent(email)}" style="color:#047857;text-decoration:underline;">Unlock Full 3-File Patch + Klaviyo Flows ($1.99) &rarr;</a>`;
+  }
+  fetch('/api/leads', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, pageUrl: window.location.pathname, utmSource: 'aa_inline_fix1_sample' })
+  }).catch(() => {});
+  return false;
+};
+
 function copySdkSnippet() {
+  const hasEm = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
+  const emIn = document.getElementById('aa-inline-sample-email');
+  if (!hasEm) {
+    if (emIn && emIn.value && emIn.value.includes('@')) {
+      window.__aaUnlockSampleSnippet();
+    } else {
+      if (emIn) {
+        emIn.focus();
+        if (emIn.scrollIntoView) emIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      const btn = document.getElementById('copy-sdk-btn');
+      if (btn) btn.textContent = 'Enter Work Email ($0) Below to Unmask & Copy!';
+      return;
+    }
+  }
   const code = document.getElementById('out-sdk-snippet').textContent;
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(code).catch(() => {});
   }
   const btn = document.getElementById('copy-sdk-btn');
-  btn.textContent = 'Copied to Clipboard!';
+  btn.textContent = 'Copied Fix #1 Snippet!';
   setTimeout(() => {
-    btn.textContent = 'Copy Script Tag';
+    btn.textContent = 'Copy Fix #1 Snippet';
   }, 1800);
 }
 
@@ -562,13 +627,14 @@ async function initiateStripeCheckout(planTier) {
       'currency': 'USD'
     });
   }
-  const email = document.getElementById('wh-email')?.value || 'founder@merchant.io';
+  const capturedEmail = (document.getElementById('aa-inline-sample-email')?.value || document.getElementById('eb-inline-scorecard-email')?.value || localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email') || '').trim();
+  const email = (capturedEmail && capturedEmail.includes('@')) ? capturedEmail : (document.getElementById('wh-email')?.value || 'founder@merchant.io');
   const storeDomain = document.getElementById('input-store')?.value || 'AuraBotanics DTC';
 
   const res = await fetch('/api/checkout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ planTier, customerEmail: email, storeDomain })
+    body: JSON.stringify({ planTier, customerEmail: email, customer_email: email, email, allow_promotion_codes: false, storeDomain })
   }).then((r) => r.json()).catch(() => null);
 
   if (!res || !res.ok) return;

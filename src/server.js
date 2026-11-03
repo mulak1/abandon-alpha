@@ -102,7 +102,7 @@ function renderHomepagePseoHubHtml() {
       <div class="container">
         <div class="section-header-stack">
           <h2 class="section-h2">Stripe Decline &amp; Checkout Playbooks</h2>
-          <p class="section-sub">Explore 24 featured technical playbooks across all 4 FinOps clusters—or browse the <a href="/directory" style="color:var(--text-navy); font-weight:700;">Complete 60-Playbook Directory</a> and <a href="/llms.txt" style="color:var(--text-navy); font-weight:700;">/llms.txt Index</a>.</p>
+          <p class="section-sub">Explore 24 featured technical playbooks across all 4 FinOps clusters · or browse the <a href="/directory" style="color:var(--text-navy); font-weight:700;">Complete 60-Playbook Directory</a> and <a href="/llms.txt" style="color:var(--text-navy); font-weight:700;">/llms.txt Index</a>.</p>
         </div>
         ${clusterBlocks}
       </div>
@@ -181,7 +181,7 @@ app.post('/api/webhook-simulate', async (req, res) => {
   }
 });
 
-// Phase 2: Self-Serve Stripe Checkout ($1.99 Single-Store Pass, $49/mo Starter & $149/mo Growth Autonomous Recovery)
+// Phase 2: Self-Serve Stripe Checkout ($1.99 Single-Store Pass, $49 Agency White-Label Pass & $149/mo Growth Autonomous Recovery)
 app.post('/api/checkout', async (req, res) => {
   try {
     const rawTier = String(req.body?.planTier || req.body?.tier || 'flash_199').toLowerCase();
@@ -190,11 +190,11 @@ app.post('/api/checkout', async (req, res) => {
     const planTier = isFlash ? 'flash_199' : (isGrowth ? 'growth' : 'starter');
     const priceMonthlyUsd = isFlash ? 1.99 : (isGrowth ? 149 : 49);
     const planLabel = isFlash
-      ? 'Single-Store Stripe Recovery Pass ($1.99 One-Time: Retry Worker + C1–C6 Bandit SDK + SMS Templates)'
+      ? 'Single-Store Stripe Recovery Pass ($1.99 One-Time: Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast)'
       : isGrowth
         ? 'Growth Autonomous Recovery ($149/mo: Unlimited Sessions + Custom Gemini 4 Copy)'
-        : 'Starter Autonomous Recovery ($49/mo: Up to $50k/mo Volume + C1–C6 Bandit + Smart Dunning)';
-    const customerEmail = String(req.body?.customerEmail || 'founder@merchant.io').trim();
+        : 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)';
+    const customerEmail = String(req.body?.customer_email || req.body?.customerEmail || req.body?.email || 'founder@merchant.io').trim();
     const storeDomain = String(req.body?.storeDomain || 'store.merchant.io').trim();
 
     let stripeSessionId = `cs_live_aa_${planTier}_${Date.now()}`;
@@ -213,6 +213,7 @@ app.post('/api/checkout', async (req, res) => {
         const session = await stripe.checkout.sessions.create({
           mode: isFlash ? 'payment' : 'subscription',
           customer_email: customerEmail,
+          allow_promotion_codes: false,
           line_items: [
             {
               price_data: {

@@ -318,20 +318,20 @@ const VERTICAL_CONFIGS = {
       radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMtIaoGnkXxS8fAEYjqnp',
-    corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'Complete Store Recovery Suite ($49/mo)',
+    corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)',
     proPriceEnv: 'STRIPE_PRICE_GROWTH_149', proPriceUsd: 149, proLabel: 'Multi-Store & SMS Recovery Pro ($149/mo)',
     lockedTitle: 'Stripe Decline-Code Retry Schedule',
-    deliverableName: 'Smart Exit-Offer Script + Stripe Retry Webhook (.JS) + Recovery Email/SMS Templates',
-    freeDeliverableName: 'Smart Exit-Offer Script & Stripe Retry Schedule',
-    unlockBannerTitle: 'Smart Checkout & Stripe Retry Pack',
+    deliverableName: 'Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast',
+    freeDeliverableName: 'Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Flow Templates + CFO Forecast',
+    unlockBannerTitle: 'Complete Drop-In Checkout Recovery Code Patch & Klaviyo/Shopify Flow Pack',
     explainerText: 'Recover leaving shoppers and retry failed Stripe cards on the exact day & hour banks approve them',
     hudLabel: 'Checkout Ops HUD', redditSub: 'SaaS',
     sliderLabel: 'Monthly Sales ($k)', sliderMin: 15, sliderMax: 500, sliderVal: 85,
     searchPlaceholder: 'Search decline code or store type...',
     tier1Tag: 'SINGLE-STORE RECOVERY PASS • SAVE 96% VS $49',
-    tier1Desc: 'Instantly unlocks the 1-click checkout recovery script, Stripe webhook retry worker (.JS), and bank decline retry schedule (.CSV).',
-    tier2Tag: 'STARTER STORE RECOVERY ($49/MO)',
-    tier2Desc: 'Automated checkout exit-offer matching + payday-aligned retry scheduling for failed Stripe renewals with 0% commission.',
+    tier1Desc: 'Instantly unlocks your Complete Drop-In Checkout Recovery Code Patch (.JS), 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates, and CFO Revenue Recovery Forecast (.CSV).',
+    tier2Tag: 'FOR CRO & SHOPIFY AGENCIES ($49)',
+    tier2Desc: 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49) with 0% commission and full agency handoff rights.',
     tier3Tag: 'GROWTH & 1-TAP SMS SUITE ($149/MO)',
     tier3Desc: 'Multi-store recovery, 1-Tap Apple Pay card-update SMS links, and direct Klaviyo & PostHog integration.',
     battlecard: {
@@ -388,13 +388,13 @@ const VERTICAL_CONFIGS = {
       summary: 'Replaces naive 24h card retries and static popups with decline-code aware scheduling and Thompson Sampling.'
     },
     deliverableFiles: [
-      { file: 'abandon-alpha-bandit-sdk.js', label: 'Smart Exit-Offer Script (.JS)', size: '8.9 KB', schema: 'Shows leaving shoppers the right offer (free shipping, payment plan, or small discount) without giving coupons to full-price buyers', status: 'VALID' },
-      { file: 'stripe-recovery-worker.js', label: 'Payday Card Retry Script (.JS)', size: '4.6 KB', schema: 'Retries declined Stripe cards on payday mornings and bank-approval windows instead of blind daily retries', status: 'VALID' },
-      { file: 'payday-retry-schedule.csv', label: 'Bank Retry Schedule (.CSV)', size: '5.2 KB', schema: 'Day-and-hour retry calendar for every Stripe decline code (insufficient funds, do not honor, expired card)', status: 'VALID' }
+      { file: 'abandon-alpha-bandit-sdk.js', label: 'Complete Drop-In Checkout Recovery Code Patch (.JS)', size: '8.9 KB', schema: 'Drop-in production Liquid/JS checkout recovery code patch matching shipping, price, and trust exit objections', status: 'VALID' },
+      { file: 'stripe-recovery-worker.js', label: '3-Part Klaviyo/Shopify Abandoned Cart Flow Templates (.JS)', size: '4.6 KB', schema: '3-Part Klaviyo/Shopify abandoned cart flow templates + payday-aligned Stripe card retry worker', status: 'VALID' },
+      { file: 'payday-retry-schedule.csv', label: 'CFO Revenue Recovery Forecast (.CSV)', size: '5.2 KB', schema: 'CFO revenue recovery forecast and day-and-hour retry calendar for every Stripe decline code', status: 'VALID' }
     ],
     remediationDiff: {
       beforeLine: 'What we found: Your checkout is losing an estimated $214,523/mo from shoppers leaving at checkout and declined Stripe cards retried at the wrong time.',
-      afterLine: 'How the $1.99 pack fixes it: Matches leaving shoppers with the right exit offer and retries failed cards on payday mornings when bank balances clear, recovering an estimated +$36,620/mo.',
+      afterLine: 'How the $1.99 pass fixes it: Unlocks your Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast (+$36,620/mo).',
       roiBadge: 'Est. +$36,620/mo recoverable sales'
     }
   }
@@ -871,7 +871,7 @@ function attachExactBaselinePack(app, options = {}) {
     const emailDispatched = await sendOneClickLeadEmail(email, summaryText, isTest);
     res.json({ ok: true, email, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: 'Summary Sent! Unblur All Remaining Rows + File for 99¢' } });
   }
-  app.post(['/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
+  app.post(['/api/leads', '/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
   let lastBackfillMs = 0;
   app.all('/api/leads/resend-backfill', async (req, res) => {
     const humanLeads = store.getHumanLeads();
@@ -924,7 +924,7 @@ function attachExactBaselinePack(app, options = {}) {
     const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList}. One-time payment, never renews.`;
 
     const buildInlineParams = () => {
-      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'custom_text[submit][message]': `Instant browser redirect: your ${filesList} download automatically the second payment completes.`, 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
+      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'custom_text[submit][message]': `Instant browser redirect: your ${filesList} download automatically the second payment completes.`, 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
       if (!isOneTime) p.set('line_items[0][price_data][recurring][interval]', verticalId === 'derm_logic' ? 'year' : 'month');
       if (userEmail && userEmail.includes('@')) p.set('customer_email', userEmail);
       return p;
@@ -935,7 +935,7 @@ function attachExactBaselinePack(app, options = {}) {
       try {
         let stData = null;
         if (!isOneTime && priceId && priceId.startsWith('price_')) {
-          const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}`, 'mode': 'subscription', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
+          const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}`, 'mode': 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
           if (userEmail && userEmail.includes('@')) params.set('customer_email', userEmail);
           stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params })).json();
         }
