@@ -497,7 +497,7 @@ function redactLeakageAuditForPreview(audit) {
   if (!audit) return audit;
   const storeSlug = String(audit.storeName || 'store').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'merchant';
   const unmaskedSdkHeader = [
-    `// AbandonAlpha Production Edge Worker — Compiled for ${audit.storeName || 'Merchant Store'}`,
+    `// AbandonAlpha Production Edge Worker  ·  Compiled for ${audit.storeName || 'Merchant Store'}`,
     `export const ABANDON_ALPHA_CONFIG = {`,
     `  merchantId: "${storeSlug}", aovThresholdUsd: ${Number(audit.aovUsd || 92)},`,
     `  primaryDeclineFocus: "${audit.primaryDeclineCode || 'insufficient_funds'}",`,
@@ -514,16 +514,16 @@ function redactLeakageAuditForPreview(audit) {
     dunningBreakdown: Array.isArray(audit.dunningBreakdown)
       ? audit.dunningBreakdown.map((d) => ({
           ...d,
-          strategy: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for exact retry window & webhook worker]'
+          strategy: '[LOCKED IN FREE PREVIEW  ·  Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) for exact retry window & webhook worker]'
         }))
       : [],
     webhookSequence: Array.isArray(audit.webhookSequence)
       ? audit.webhookSequence.map((w, idx) => (idx === 0 ? w : {
           ...w,
-          action: '[LOCKED IN FREE PREVIEW — Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal webhook payload & retry schedule]'
+          action: '[LOCKED IN FREE PREVIEW  ·  Unlock $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal webhook payload & retry schedule]'
         }))
       : [],
-    sdkSnippet: `// [LINES 9–42 LOCKED IN PREVIEW — ${audit.storeName || 'Store'}]\nconst delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'do_not_honor' ? 24 : 0);\n/* Unlock Pass ($1.99) or Complete Recovery Kit ($19/$49) for full Stripe signature verification, Billing Portal 1-tap link & C1-C6 Bandit SDK */`
+    sdkSnippet: `// [LINES 9–42 LOCKED IN PREVIEW  ·  ${audit.storeName || 'Store'}]\nconst delayHrs = declineCode === 'insufficient_funds' ? 72 : (declineCode === 'do_not_honor' ? 24 : 0);\n/* Unlock Pass ($1.99) or Complete Recovery Kit ($19/$49) for full Stripe signature verification, Billing Portal 1-tap link & C1-C6 Bandit SDK */`
   };
 }
 
@@ -560,7 +560,7 @@ async function probeStoreCheckoutStack(rawInput = '') {
   const recommendedPreset = isShopify ? 'shopify_dtc' : (isSaas ? 'b2b_saas' : 'subscription_app');
   const tMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   const rawTitle = tMatch ? tMatch[1].replace(/\s+/g, ' ').trim().slice(0, 60) : '';
-  const storeName = rawTitle ? rawTitle.split(/\s*[–|—:-]\s*/)[0].trim().slice(0, 32) || brand : `${brand} (${domain})`;
+  const storeName = rawTitle ? rawTitle.split(/\s*[–| · :-]\s*/)[0].trim().slice(0, 32) || brand : `${brand} (${domain})`;
   const out = {
     ok: true,
     domain,

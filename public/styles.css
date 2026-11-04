@@ -65,10 +65,11 @@ code, pre, .mono-num { font-family: var(--font-sans); font-variant-numeric: tabu
 .serif-italic { font-family: var(--font-serif); font-style: normal; font-weight: 700; color: var(--text-navy); }
 
 .skip-link {
-  position: absolute; left: -9999px; top: 8px; z-index: 200;
+  position: absolute; left: 16px; top: 8px; z-index: 200;
   background: var(--text-navy); color: #FFFFFF; padding: 8px 16px; border-radius: 8px; font-weight: 700;
+  opacity: 0; pointer-events: none;
 }
-.skip-link:focus { left: 16px; }
+.skip-link:focus { opacity: 1; pointer-events: auto; }
 .hp-field { display: none !important; visibility: hidden !important; position: absolute !important; left: -9999px !important; }
 .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
 
@@ -129,18 +130,18 @@ p { max-width: 65ch; }
   background: #F1F5F9;
   padding: 8px 12px;
   gap: 6px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  justify-content: center;
 }
 .mobile-nav-strip a {
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--text-slate);
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 9999px;
   background: #FFFFFF;
-  white-space: nowrap;
+  white-space: normal;
 }
 .mobile-nav-strip a:hover { color: var(--text-navy); background: #E2E8F0; }
 
@@ -288,6 +289,8 @@ p { max-width: 65ch; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  min-width: 0;
   gap: 12px;
   margin-bottom: 16px;
   padding-bottom: 8px;
@@ -348,6 +351,7 @@ p { max-width: 65ch; }
 .metric-sub, .tile-sub { font-size: 0.9375rem; color: var(--text-muted); margin-top: 4px; }
 .spec-row {
   display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 6px; min-width: 0;
   padding: 9px 0; font-size: 1rem;
 }
 .spec-k { color: var(--text-slate); font-weight: 500; }
@@ -497,15 +501,20 @@ p { max-width: 65ch; }
   .header-inner .btn-sm { padding: 7px 11px; font-size: 0.82rem; }
 }
 @media (max-width: 920px) {
-  .container { padding: 0 24px; max-width: 100%; overflow-x: hidden; }
-  .hero-h1, .pseo-h1, .lp-h1 { font-size: 32px; line-height: 1.1; }
-  .section-h2 { font-size: 26px; line-height: 1.15; }
-  .hero-split, .bandit-grid, .webhook-grid, .pricing-grid, .inline-calc-grid, .faq-grid, .related-links-grid, .steps-3-grid { grid-template-columns: 1fr !important; min-width: 0; }
-  .hero-split > *, .bandit-grid > *, .webhook-grid > * { min-width: 0; max-width: 100%; }
+  .container { padding: 0 16px; max-width: 100%; overflow-x: hidden; }
+  .card-panel, .metric-card, .faq-card, .related-card, .grader-form-card, .telemetry-card, .pricing-card { padding: 18px !important; }
+  .hero-h1, .pseo-h1, .lp-h1 { font-size: 30px; line-height: 1.12; }
+  .section-h2 { font-size: 24px; line-height: 1.15; }
+  .hero-split, .bandit-grid, .webhook-grid, .pricing-grid, .inline-calc-grid, .faq-grid, .related-links-grid, .steps-3-grid, #aa-endowment-customizer { grid-template-columns: minmax(0, 1fr) !important; min-width: 0; }
+  .hero-split > *, .bandit-grid > *, .webhook-grid > *, .related-links-grid > *, .faq-grid > * { min-width: 0; max-width: 100%; }
+  .related-card, .dir-item, .dir-card-top, .dir-card-sub, .related-card code, .related-card strong { min-width: 0 !important; max-width: 100% !important; flex-wrap: wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
   .main-nav a:not(.btn), .brand-tag { display: none; }
-  .mobile-nav-strip { display: flex; }
+  .mobile-nav-strip { display: flex; flex-wrap: wrap; overflow-x: hidden; }
   .header-inner { min-height: 60px; gap: 8px; }
   .header-inner .btn-sm { padding: 6px 10px; font-size: 0.875rem; white-space: nowrap; }
   .header-inner .btn-icon-circle { display: none; }
-  .form-row-2, .metric-duo, .objection-buttons-grid, .lp-trust-row { grid-template-columns: 1fr; }
+  .form-row-2, .metric-duo, .objection-buttons-grid, .lp-trust-row { grid-template-columns: minmax(0, 1fr); }
+  .btn, .btn span, a.btn { white-space: normal !important; max-width: 100% !important; min-width: 0 !important; flex-wrap: wrap; text-align: center; height: auto; }
+  .badge-live, .badge-emerald, #bandit-velocity-pill, #bandit-total-recovered, #out-grade-badge { white-space: normal !important; max-width: 100% !important; min-width: 0 !important; }
+  .spec-row, .spec-k, .spec-v, #out-dunning-breakdown a, #out-dunning-breakdown a > span { flex-wrap: wrap !important; white-space: normal !important; min-width: 0 !important; max-width: 100% !important; }
 }

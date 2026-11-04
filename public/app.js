@@ -364,8 +364,8 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
       const seoHref = DECLINE_SEO_LINKS[d.declineCode] || '/directory';
       return `
       <li>
-        <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;padding:3px 6px;border-radius:6px;background:#F8FAFC;">
-          <span style="font-size:0.8125rem;color:#334155;display:flex;align-items:center;gap:6px;">
+        <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;text-decoration:none;padding:3px 6px;border-radius:6px;background:#F8FAFC;">
+          <span style="font-size:0.8125rem;color:#334155;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <span style="color:#64748B;font-weight:800;" aria-hidden="true">&bull;</span>
             <code style="font-weight:700;color:#0A2540;">${d.declineCode}</code>
             <span style="color:#64748B;font-size:0.75rem;">(${d.recoveryRatePct}% recoverable &bull; ${d.sharePct}% share)</span>

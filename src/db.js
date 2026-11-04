@@ -126,7 +126,7 @@ const INITIAL_ARMS = [
     objection_code: 'C2_BROWSING',
     objection_label: 'Just browsing / not ready today',
     offer_headline: 'Save Cart for 48 Hours + Lock $15 Priority Credit',
-    offer_subtext: 'We will email your exact cart state with a $15 credit reserved for 48 hours—zero pressure today.',
+    offer_subtext: 'We will email your exact cart state with a $15 credit reserved for 48 hours · zero pressure today.',
     offer_code: 'HOLD48-15',
     discount_pct: 10,
     impressions: 380,
