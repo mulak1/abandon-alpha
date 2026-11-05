@@ -181,19 +181,23 @@ app.post('/api/webhook-simulate', async (req, res) => {
   }
 });
 
-// Phase 2: Self-Serve Stripe Checkout ($1.99 Single-Store Pass, $49 Agency White-Label Pass & $149/mo Growth Autonomous Recovery)
+// Phase 2: Self-Serve Stripe Checkout ($1.99 Single-Store Pass, $29 Dunning Script Pack, $49 Agency White-Label Pass & $149/mo Growth Autonomous Recovery)
 app.post('/api/checkout', async (req, res) => {
   try {
     const rawTier = String(req.body?.planTier || req.body?.tier || 'flash_199').toLowerCase();
-    const isFlash = rawTier.includes('flash') || rawTier.includes('199') || rawTier.includes('pass');
-    const isGrowth = !isFlash && rawTier === 'growth';
-    const planTier = isFlash ? 'flash_199' : (isGrowth ? 'growth' : 'starter');
-    const priceMonthlyUsd = isFlash ? 1.99 : (isGrowth ? 149 : 49);
+    const isFlash = rawTier.includes('flash') || rawTier.includes('199');
+    const isDunning29 = !isFlash && (rawTier.includes('29') || rawTier.includes('dunning') || rawTier.includes('playbook'));
+    const isGrowth = !isFlash && !isDunning29 && rawTier === 'growth';
+    const planTier = isFlash ? 'flash_199' : (isDunning29 ? 'dunning_29' : (isGrowth ? 'growth' : 'starter'));
+    const priceMonthlyUsd = isFlash ? 1.99 : (isDunning29 ? 29 : (isGrowth ? 149 : 49));
+    const isOneTime = isFlash || isDunning29 || planTier === 'starter';
     const planLabel = isFlash
       ? 'Single-Store Stripe Recovery Pass ($1.99 One-Time: Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast)'
-      : isGrowth
-        ? 'Growth Autonomous Recovery ($149/mo: Unlimited Sessions + Custom Gemini 4 Copy)'
-        : 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)';
+      : isDunning29
+        ? '$29 One-Time Dunning Script Pack (vs. $99/mo Retention SaaS: Complete Stripe Webhook Retry Worker + 3-Part Failed-Card Subject Line & SMS Pack)'
+        : isGrowth
+          ? 'Growth Autonomous Recovery ($149/mo: Unlimited Sessions + Custom Gemini 4 Copy)'
+          : 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)';
     const customerEmail = String(req.body?.customer_email || req.body?.customerEmail || req.body?.email || 'founder@merchant.io').trim();
     const storeDomain = String(req.body?.storeDomain || 'store.merchant.io').trim();
 
@@ -211,7 +215,7 @@ app.post('/api/checkout', async (req, res) => {
         const Stripe = require('stripe');
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
         const session = await stripe.checkout.sessions.create({
-          mode: isFlash ? 'payment' : 'subscription',
+          mode: isOneTime ? 'payment' : 'subscription',
           customer_email: customerEmail,
           allow_promotion_codes: false,
           line_items: [
@@ -219,7 +223,7 @@ app.post('/api/checkout', async (req, res) => {
               price_data: {
                 currency: 'usd',
                 unit_amount: Math.round(priceMonthlyUsd * 100),
-                ...(isFlash ? {} : { recurring: { interval: 'month' } }),
+                ...(isOneTime ? {} : { recurring: { interval: 'month' } }),
                 product_data: {
                   name: `AbandonAlpha: ${planLabel}`
                 }

@@ -505,10 +505,7 @@ body:has(#aa-inline-sample-unlock-form) #eb-save-scorecard-bar { display: none !
   .container { padding: 0 14px; max-width: 100%; overflow-x: hidden; }
   .card-panel, .metric-card, .faq-card, .related-card, .grader-form-card, .telemetry-card, .pricing-card { padding: 14px !important; }
   .hero-section, #grader.hero-section { padding: 8px 0 18px !important; }
-  #home-executive-brief { margin-bottom: 8px !important; }
-  #home-executive-brief > div:first-child { margin-bottom: 6px !important; padding: 3px 10px !important; font-size: 0.72rem !important; }
-  #home-executive-brief > div:last-child { padding: 6px 10px !important; font-size: 11.5px !important; gap: 4px !important; }
-  #home-executive-brief > div:last-child > div:nth-child(n+2) { display: none !important; }
+  #home-executive-brief { margin-bottom: 18px !important; padding: 16px 18px !important; }
   .hero-h1, .pseo-h1, .lp-h1 { font-size: 1.42rem !important; line-height: 1.12 !important; margin-bottom: 6px !important; }
   .section-h2 { font-size: 24px; line-height: 1.15; }
   .hero-split, .bandit-grid, .webhook-grid, .pricing-grid, .inline-calc-grid, .faq-grid, .related-links-grid, .steps-3-grid, #aa-endowment-customizer { grid-template-columns: minmax(0, 1fr) !important; min-width: 0; gap: 14px !important; }

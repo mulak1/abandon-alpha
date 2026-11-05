@@ -314,6 +314,10 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   document.getElementById('out-annual-recovered').textContent = `+${formatUsd(res.annualizedRecoverableUsd)}/yr Net Impact (${res.roiMultipleStarter}x ROI)`;
   document.getElementById('out-exit-recovered').textContent = `+${formatUsd(res.recoverableExitUsd)}/mo (${res.recoveredOrdersCount} orders)`;
   document.getElementById('out-dunning-recovered').textContent = `+${formatUsd(res.recoverableDunningUsd)}/mo`;
+  const sparkBrandEl = document.getElementById('aa-spark-brand-label');
+  if (sparkBrandEl) sparkBrandEl.textContent = res.storeName || 'Gymshark';
+  const sparkSplitEl = document.getElementById('aa-spark-split-nums');
+  if (sparkSplitEl) sparkSplitEl.innerHTML = `${formatUsd(res.leakedCheckoutUsd)} Cart Abandon + ${formatUsd(res.leakedDunningUsd)} Failed Cards &rarr; <strong>+${formatUsd(res.totalRecoverableUsd)}/mo Recoverable</strong> (62.4% Soft-Decline Lift)`;
   updateUnmaskedSdkPreview(res);
   const isSampleUnlocked = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
   const snippetEl = document.getElementById('out-sdk-snippet');

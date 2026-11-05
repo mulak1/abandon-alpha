@@ -1,35 +1,20 @@
-/**
- * ExactBaseline Cumulative UI, Deliverable Value-Gating & Conversion Architecture
- * Shared across CitationForge (#1), SponsorRadar (#2), DermLogic (#4), and AbandonAlpha (#9).
- * Free = Diagnostic & Quantified Problem. Paid ($1.99 Pass) = Ready-to-Use Production Fix & Export Pack.
- */
 const SOVRN_KEY = process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
 const { buildTopLeaderboardPodiumShowcaseHtml, buildMobileSeoCrawlMeshHtml, enhanceHtmlForSearchAndAiBots } = require('./exact-baseline-seo');
-
 function esc(str) { return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
-function getTheme(cfg) {
-  return cfg.theme || { canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(255, 255, 255, 0.95)', border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B', brandPrimary: cfg.accentColor || '#4F46E5', brandSoftBg: '#EEF2FF', brandText: '#3730A3', safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309', fontDisplay: 'Georgia, serif', fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", radiusCard: '14px', radiusPill: '999px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06)' };
-}
-
+function getTheme(cfg) { return cfg.theme || { canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(255, 255, 255, 0.95)', border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B', brandPrimary: cfg.accentColor || '#4F46E5', brandSoftBg: '#EEF2FF', brandText: '#3730A3', safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309', fontDisplay: 'Georgia, serif', fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", radiusCard: '14px', radiusPill: '999px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06)' }; }
 function buildExactBaselineStyles(cfg) {
   const t = getTheme(cfg);
   return `<style id="exact-baseline-cumulative-css">
-  html, body { max-width: 100vw !important; overflow-x: hidden !important; }
-  *, *::before, *::after { box-sizing: border-box; }
-  button, input, select, textarea, svg text { font-family: inherit !important; }
-  main p, article p, section p, p { max-width: 65ch !important; }
-  .table-wrap, .posterior-table-wrap, .tab-bar, .panel, #competitor-battlecard > div, div[style*="overflow-x"] { overflow-x: hidden !important; flex-wrap: wrap !important; }
+  html, body { max-width: 100vw !important; overflow-x: hidden !important; } *, *::before, *::after { box-sizing: border-box; } button, input, select, textarea, svg text { font-family: inherit !important; }
+  main p, article p, section p, p { max-width: 65ch !important; } .table-wrap, .posterior-table-wrap, .tab-bar, .panel, #competitor-battlecard > div, div[style*="overflow-x"] { overflow-x: hidden !important; flex-wrap: wrap !important; }
   header nav a.eb-nav-active, .nav-links a.eb-nav-active, .main-nav a.eb-nav-active, .mobile-nav-strip a.eb-nav-active { color: ${t.brandPrimary} !important; font-weight: 700 !important; }
   button, .preset-chip, .store-preview-pill, .eb-action-btn, .cta-btn, a[role="button"] { transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease; cursor: pointer; }
-  button:active, .preset-chip:active, .store-preview-pill:active, .eb-action-btn:active, .cta-btn:active { transform: scale(0.98) !important; }
-  .metric-box-value, .matrix-price, .eb-kpi-val, .eb-tabular { font-variant-numeric: tabular-nums !important; }
+  button:active, .preset-chip:active, .store-preview-pill:active, .eb-action-btn:active, .cta-btn:active { transform: scale(0.98) !important; } .metric-box-value, .matrix-price, .eb-kpi-val, .eb-tabular { font-variant-numeric: tabular-nums !important; }
   .eb-blurred-deliverable { filter: none !important; opacity: 1 !important; cursor: pointer !important; transition: background-color 200ms ease; }
   #eb-deliverable-curtain { margin-top: 28px; padding: 32px 36px; border-radius: ${t.radiusCard}; background: ${t.cardBg}; border: none; box-shadow: none; color: ${t.textPrimary}; font-family: ${t.fontSans}; position: relative; z-index: 20; text-transform: none !important; letter-spacing: normal !important; font-style: normal !important; font-weight: 400 !important; }
   #eb-prism-proof-preview { background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: 10px; padding: 14px 18px; font-family: ${t.fontSans}; font-size: 14px; line-height: 1.5; margin: 0; overflow-x: auto; white-space: normal; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; text-transform: none !important; letter-spacing: normal !important; }
-  .eb-proof-row { display: grid; grid-template-columns: minmax(125px, 1.05fr) minmax(0, 2.2fr) auto; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 9px; background: ${t.canvasBg}; }
-  @media (max-width: 640px) { .eb-proof-row { grid-template-columns: 1fr; gap: 4px; } }
-  .eb-doppelrand-shell { padding: 6px; border-radius: ${t.radiusCard}; background: ${t.subtleBg}; margin: 10px 0 12px 0; transition: transform 650ms cubic-bezier(0.32, 0.72, 0, 1); }
-  .eb-doppelrand-shell:hover { transform: translateY(-2px); } .eb-doppelrand-inner { position: relative; border-radius: ${t.radiusCard}; overflow: hidden; background: ${t.cardBg}; display: flex; flex-direction: column; }
+  .eb-proof-row { display: grid; grid-template-columns: minmax(125px, 1.05fr) minmax(0, 2.2fr) auto; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 9px; background: ${t.canvasBg}; } @media (max-width: 640px) { .eb-proof-row { grid-template-columns: 1fr; gap: 4px; } }
+  .eb-doppelrand-shell { padding: 6px; border-radius: ${t.radiusCard}; background: ${t.subtleBg}; margin: 10px 0 12px 0; transition: transform 650ms cubic-bezier(0.32, 0.72, 0, 1); } .eb-doppelrand-shell:hover { transform: translateY(-2px); } .eb-doppelrand-inner { position: relative; border-radius: ${t.radiusCard}; overflow: hidden; background: ${t.cardBg}; display: flex; flex-direction: column; }
   .eb-doppelrand-img { width: 100%; height: 100%; min-height: 178px; flex: 1; object-fit: cover; object-position: center 32%; display: block; transition: transform 750ms cubic-bezier(0.32, 0.72, 0, 1); } .eb-doppelrand-shell:hover .eb-doppelrand-img { transform: scale(1.03); }
   #eb-doppelrand-hero-card .eb-doppelrand-img { height: 152px !important; min-height: 152px !important; max-height: 152px !important; flex: 0 0 152px !important; }
   .eb-doppelrand-caption, .eb-doppelrand-caption * { font-family: ${t.fontSans} !important; line-height: 1.3 !important; text-transform: none !important; letter-spacing: normal !important; font-style: normal !important; }
