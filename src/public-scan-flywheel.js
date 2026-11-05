@@ -229,7 +229,7 @@ function getVerticalScanCopy(cfg, scan) {
   }
   return {
     goalText: `See how ${tgt} recovers lost checkout revenue (${kpi1}), and download the bank-timed Stripe retry rules, smart exit-offer script, and customer recovery templates for your own store.`,
-    sourceProvenance: 'Real Stripe & Shopify checkout benchmarks across 140+ DTC & SaaS stores.',
+    sourceProvenance: 'Real Stripe & Shopify checkout benchmarks across 140+ Online & Subscription stores.',
     dataFreshness: 'Updated today (Q4 2026 live checkout & card recovery benchmarks).',
     updateCadence: 'Refreshed every 24 hours • Bank retry windows tuned weekly.',
     card2Title: 'Recoverable Revenue & Checkout Signal',
@@ -247,10 +247,11 @@ function renderScanSummaryCardsHtml(cfg, scan, badgeColor) {
   const softBg = isHigh ? '#ECFDF5' : '#FFF1F2';
   const statusLabel = isHigh ? 'Top Performer' : (scan.score >= 75 ? 'Moderate Opportunity' : 'Action Needed');
   const vCopy = getVerticalScanCopy(cfg, scan);
+  const lockSvg = (AA_VIEWS && AA_VIEWS.AA_LOCK_SVG) || '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
   return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px;">
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-        <span style="font-size:13px;font-weight:700;color:#475569;">1. Overall Benchmark Score</span>
+        <span style="font-size:13px;font-weight:700;color:#475569;">1. Overall Benchmark Score (Free Proof)</span>
         <span style="padding:2px 9px;border-radius:999px;background:${softBg};color:${strokeCol};font-size:11.5px;font-weight:700;white-space:nowrap;">${statusLabel}</span>
       </div>
       <div id="eb-card-grade-big" style="font-size:23px;font-weight:800;color:${strokeCol};font-variant-numeric:tabular-nums;line-height:1.15;">Grade ${esc(scan.grade)} (${scan.score}/100)</div>
@@ -263,8 +264,9 @@ function renderScanSummaryCardsHtml(cfg, scan, badgeColor) {
     </div>
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
       <span style="font-size:13px;font-weight:700;color:#475569;">3. ${esc(scan.cnnSensorLabel || 'Key Diagnostic Finding')}</span>
-      <div id="eb-card-finding-big" style="font-size:14.5px;font-weight:700;color:#0F172A;line-height:1.3;">${esc(scan.cnnReadout)}</div>
-      <div id="eb-card-issue-sub" style="font-size:12.5px;font-weight:600;color:#475569;">Key Takeaway: ${esc(scan.issue)}</div>
+      <div class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;padding:6px 10px;border-radius:8px;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;font-size:12.5px;font-weight:700;">${lockSvg}Enter Email ($0) Above to Unmask Fix Plan</div>
+      <div id="eb-card-finding-big" class="aa-unlocked-spec-proof" style="display:none;font-size:14.5px;font-weight:700;color:#0F172A;line-height:1.3;">${esc(scan.cnnReadout)}</div>
+      <div id="eb-card-issue-sub" class="aa-unlocked-spec-proof" style="display:none;font-size:12.5px;font-weight:600;color:#475569;">Key Takeaway: ${esc(scan.issue)}</div>
     </div>
   </div>`;
 }
@@ -311,6 +313,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, `VERIFIED REPORT • GRADE ${scan.grade}`, '/scan')}
   <main id="main-content" style="max-width:1240px;margin:0 auto;padding:16px 24px 36px;display:flex;flex-direction:column;gap:12px;">
+    ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml(`Free ${scan.target} Recovery Rules ($0) + $29 Complete Recovery Kit`, 'Send Free Recovery Rules ($0) →', scan.target) : ''}
     <div>
       <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:4px;">
         <a href="/" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:700;">Home</a> / <a href="/leaderboard" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:700;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
@@ -462,6 +465,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, 'PUBLIC BENCHMARK LEADERBOARD', '/leaderboard')}
   <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
+    ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml('Free Store Recovery Benchmarks ($0) + $29 Complete Recovery Kit', 'Send Free Recovery Rules ($0) →', '') : ''}
     <h1 style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
     <p class="pseo-lead" style="margin:0 0 12px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;padding:12px 16px;margin-bottom:18px;border-radius:12px;background:#FFFFFF;border:1px solid #E2E8F0;border-left:3px solid #059669;font-size:13px;color:${esc(t.textSecondary)};line-height:1.45;">

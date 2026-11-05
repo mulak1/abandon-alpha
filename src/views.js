@@ -1,5 +1,39 @@
 const { PSEO_PAGES, getPseoPageBySlug } = require('./pseo-data');
 
+const AA_LOCK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+
+function renderTopSubpageEmailBarHtml(titleText = 'Free Store Recovery Kit ($0) + Complete $29 Recovery Pack', ctaLabel = 'Send Free Retry Schedule ($0) →', slug = '') {
+  return `<section id="aa-subpage-top-email-bar" style="background:linear-gradient(135deg,#0A2540 0%,#1E293B 100%);color:#F8FAFC;border-radius:14px;padding:14px 16px;margin:0 0 16px;border:1px solid #334155;box-shadow:0 8px 24px -10px rgba(10,37,64,0.35);">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="padding:2px 8px;border-radius:999px;background:#10B981;color:#052E16;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">ITEM #1 UNMASKED FREE</span>
+        <span style="font-size:13.5px;font-weight:800;color:#FFFFFF;">${escapeHtml(titleText)}</span>
+      </div>
+      <a href="/buy/flash_pass${slug ? `?playbook=${encodeURIComponent(slug)}` : ''}" rel="nofollow" style="padding:5px 11px;border-radius:999px;background:rgba(16,185,129,0.18);border:1px solid #34D399;color:#6EE7B7;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;">Unlock Complete Store Recovery Pack ($29 / $1.99 Single Pass) &rarr;</a>
+    </div>
+    <form onsubmit="return window.__aaUnlockSubpage(event);" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;">
+      <input id="aa-subpage-top-email-input" type="email" required placeholder="Enter work email ($0) to unmask retry windows &amp; exit offers..." aria-label="Enter work email to unmask retry windows and exit offers" style="flex:1 1 210px;min-width:0;padding:9px 12px;border-radius:8px;border:1px solid #475569;background:#0F172A;color:#F8FAFC;font-size:13px;" />
+      <button type="submit" style="padding:9px 14px;border-radius:8px;border:none;background:#10B981;color:#052E16;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;">${escapeHtml(ctaLabel)}</button>
+    </form>
+    <div id="aa-subpage-top-email-status" style="display:none;margin-top:8px;font-size:12.5px;font-weight:700;color:#6EE7B7;">All locked retry schedules and exit counter-offers unmasked below!</div>
+  </section>
+  <script>
+    window.__aaUnlockSubpage = function(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var inp = document.getElementById('aa-subpage-top-email-input');
+      var email = inp ? (inp.value || '').trim() : '';
+      if (!email || email.indexOf('@') === -1) { if (inp) inp.focus(); return false; }
+      try { localStorage.setItem('aa_lead_email', email); } catch (_) {}
+      document.querySelectorAll('.aa-locked-spec-badge').forEach(function(el) { el.style.display = 'none'; });
+      document.querySelectorAll('.aa-unlocked-spec-proof').forEach(function(el) { el.style.display = ''; });
+      var st = document.getElementById('aa-subpage-top-email-status');
+      if (st) st.style.display = 'block';
+      fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'lead_capture', page_url: window.location.pathname, meta: { email: email, source: 'subpage_top_email_bar' } }) }).catch(function(){});
+      return false;
+    };
+  </script>`;
+}
+
 function escapeHtml(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -54,7 +88,7 @@ function renderCookieAndFooterHtml() {
     <div class="container cookie-consent-inner">
       <div>
         <strong style="color:var(--text-navy);">GDPR &amp; Ephemeral Telemetry Notice:</strong>
-        We use zero-PII ephemeral cursor velocity vectors and optional Meta CAPI attribution cookies. Read our <a href="/privacy" style="color:var(--blurple); font-weight:700;">Privacy Policy</a>.
+        We use zero-PII ephemeral cursor velocity vectors and optional Meta Ads attribution cookies. Read our <a href="/privacy" style="color:var(--blurple); font-weight:700;">Privacy Policy</a>.
       </div>
       <div class="cookie-consent-actions">
         <button type="button" class="btn btn-ghost btn-sm" onclick="dismissConsent('essential_only')">Essential Only</button>
@@ -218,6 +252,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <span>${escapeHtml(page.category)}</span>
     </nav>
 
+    ${renderTopSubpageEmailBarHtml(`Free ${page.declineOrSignal} Retry Schedule ($0) + $29 Complete Recovery Kit`, 'Send Free Retry Schedule ($0) →', page.slug)}
+
     <style>@media(max-width:640px){.inline-calc-grid{grid-template-columns:1fr!important;}.inline-calc-grid>*,.calc-inputs,.calc-output-box,.pseo-section,.code-snippet-box{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important;padding-inline:14px!important;}.btn,#pseo-calc-btn{max-width:100%!important;white-space:normal!important;}}</style>
     <div class="hero-split pseo-hero" style="align-items:stretch;">
       <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
@@ -249,13 +285,13 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div class="metric-tile tile-emerald">
             <span class="tile-label">AbandonAlpha Recovery Lift</span>
             <strong class="tile-value text-emerald">+${page.recoverableLiftPct}%</strong>
-            <span class="tile-sub">With Thompson Bandit + Smart Retry</span>
+            <span class="tile-sub">With Smart Exit Offer + Timed Retry</span>
           </div>
         </div>
         <div class="playbook-spec-list">
-          <div class="spec-row"><span class="spec-k">Target Webhook</span><code class="spec-v">${escapeHtml(page.webhookEvent)}</code></div>
-          <div class="spec-row"><span class="spec-k">Optimal Timing</span><span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">Locked in Free Preview ($1.99 Pass)</a></span></div>
-          <div class="spec-row"><span class="spec-k">Winning Bandit Arm</span><span class="spec-v"><a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="color:var(--text-navy);font-weight:700;text-decoration:underline;">C1–C6 Offer Locked ($1.99 Pass)</a></span></div>
+          <div class="spec-row"><span class="spec-k">1. Target Webhook (Free Proof)</span><code class="spec-v">${escapeHtml(page.webhookEvent)}</code></div>
+          <div class="spec-row"><span class="spec-k">2. Optimal Retry Timing</span><span class="spec-v"><span class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;font-size:12px;font-weight:700;">${AA_LOCK_SVG}Enter Email ($0) to Unmask Timing</span><span class="aa-unlocked-spec-proof" style="display:none;color:#047857;font-weight:700;">${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday Window (09:05 Local)')}</span></span></div>
+          <div class="spec-row"><span class="spec-k">3. Winning Exit Counter-Offer</span><span class="spec-v"><span class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;font-size:12px;font-weight:700;">${AA_LOCK_SVG}Enter Email ($0) to Unmask Offer</span><span class="aa-unlocked-spec-proof" style="display:none;color:#047857;font-weight:700;">${escapeHtml(page.winningArm || '1-Click Apple Pay / Pause-Instead-of-Cancel')}</span></span></div>
           <div class="spec-row"><span class="spec-k">Est. Recovered Cashflow</span><strong class="spec-v text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo ($${page.annualRecoveredUsd.toLocaleString()}/yr)</strong></div>
         </div>
       </div>
@@ -263,14 +299,14 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
 
     <section class="pseo-section">
       <h2>Recovery Benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
-      <p class="section-sub">Empirical 2026 recovery performance comparing naive cron intervals, standard platform retries, and AbandonAlpha's Smart Window + C1–C6 Thompson Sampling Bandit.</p>
+      <p class="section-sub">Empirical 2026 recovery performance comparing naive 24-hour retries, standard platform retries, and AbandonAlpha's Payday-Timed Window + Smart Exit Offer Engine.</p>
       <div class="posterior-table-wrap">
         <table class="posterior-table">
-          <thead><tr><th>Recovery Architecture</th><th>Recovery Rate (%)</th><th>Avg Time-to-Recover</th><th>Customer Churn Risk</th><th>Net MRR Lift</th></tr></thead>
+          <thead><tr><th>Recovery Architecture</th><th>Recovery Rate (%)</th><th>Avg Time-to-Recover</th><th>Customer Churn Risk</th><th>Net Revenue Lift</th></tr></thead>
           <tbody>
-            <tr><td><strong>Naive 24h Cron Retry</strong></td><td class="text-rose">${naiveRecRate}%</td><td>14.2 Days (High Issuer Lockout)</td><td class="text-rose">High (${page.baselineAbandonmentOrFailPct}% Unrecovered Loss)</td><td>Baseline (+0.0%)</td></tr>
-            <tr><td><strong>Standard Platform Retry</strong></td><td>${standardRecRate}%</td><td>5.8 Days (Generic Dunning Email)</td><td>Moderate (No C1–C6 Objection Match)</td><td>+${standardRecRate}%</td></tr>
-            <tr style="background: rgba(16, 185, 129, 0.08);"><td><strong class="text-indigo">AbandonAlpha Smart Window + C1-C6 Bandit</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><strong>&lt; 4.2 Hours (Smart Window Locked)</strong></td><td class="text-emerald"><strong>Low (Visa/MC Compliant + C1-C6 Bandit Locked)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
+            <tr><td><strong>1. Naive 24h Cron Retry (Free Proof)</strong></td><td class="text-rose">${naiveRecRate}%</td><td>14.2 Days (High Issuer Lockout)</td><td class="text-rose">High (${page.baselineAbandonmentOrFailPct}% Unrecovered Loss)</td><td>Baseline (+0.0%)</td></tr>
+            <tr><td><strong>2. Standard Platform Retry</strong></td><td>${standardRecRate}%</td><td>5.8 Days (Generic Reminder Email)</td><td>Moderate (No Exit Counter-Offer Match)</td><td>+${standardRecRate}%</td></tr>
+            <tr style="background: rgba(16, 185, 129, 0.08);"><td><strong class="text-indigo">3. AbandonAlpha Smart Window + Exit Offer</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><span class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:#ECFDF5;border:1px solid #6EE7B7;color:#065F46;font-size:12px;font-weight:700;">${AA_LOCK_SVG}Unmask 4.2h Window ($0 Email)</span><strong class="aa-unlocked-spec-proof" style="display:none;">&lt; 4.2 Hours (Payday Deposit Sync)</strong></td><td class="text-emerald"><strong>Low (Visa/MC Safe Limit)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
           </tbody>
         </table>
       </div>
@@ -283,8 +319,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
         <div class="calc-inputs">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
             <span class="mono-label" style="font-size:13px;color:#0F172A;font-weight:700;">1-Click Tier:</span>
-            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#ECFDF5;border:none;color:#047857;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$25k MRR</button>
-            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#EEF2FF;border:none;color:#3730A3;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$120k DTC</button>
+            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#ECFDF5;border:none;color:#047857;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$25k Store</button>
+            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#EEF2FF;border:none;color:#3730A3;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$120k Brand</button>
             <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#FEF3C7;border:none;color:#92400E;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$500k Scale</button>
           </div>
           <label class="field-label" for="pseo-sessions">Monthly Checkout / Renewal Attempts</label>
@@ -292,7 +328,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <label class="field-label" for="pseo-aov">Average Order / Invoice Value ($ USD)</label>
           <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
           <button type="button" id="pseo-calc-btn" class="btn btn-indigo" onclick="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})">
-            <span>Recalculate Recoverable MRR</span>
+            <span>Recalculate Recoverable Revenue</span>
             <span class="btn-icon-circle" aria-hidden="true">↗</span>
           </button>
         </div>
@@ -314,7 +350,10 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     <section class="pseo-section">
       <h2>Key Questions: ${escapeHtml(page.declineOrSignal)}</h2>
       <div class="faq-grid">
-        ${page.faqs.map((f) => `<div class="faq-card"><h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`).join('')}
+        ${page.faqs.map((f, idx) => idx === 0
+          ? `<div class="faq-card"><h3>1. ${escapeHtml(f.q)} <span style="font-size:11px;color:#047857;font-weight:800;">(Free Proof)</span></h3><p>${escapeHtml(f.a)}</p></div>`
+          : `<div class="faq-card"><h3>${idx + 1}. ${escapeHtml(f.q)}</h3><div class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;margin-top:6px;padding:8px 12px;border-radius:8px;background:#F8FAFC;border:1px solid #CBD5E1;color:#1E293B;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>${AA_LOCK_SVG}Answer #${idx + 1} Locked — Enter Email ($0) Above to Unmask</span><span style="color:#533AFD;font-weight:800;">Unmask ($0) &rarr;</span></div><p class="aa-unlocked-spec-proof" style="display:none;">${escapeHtml(f.a)}</p></div>`
+        ).join('')}
       </div>
     </section>
 
@@ -392,7 +431,8 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
   <main class="container pseo-main">
     <div class="directory-header">
       <h1 class="pseo-h1" style="font-size:clamp(2.1rem, 3.8vw, 3.5rem);line-height:1.08;max-width:20ch;margin:0 0 12px;">Stripe Recovery Playbooks</h1>
-      <p class="pseo-lead">Browse ${PSEO_PAGES.length} verified checkout recovery guides covering Stripe card decline codes, payday retry timing, and smart exit offers for Shopify and SaaS.</p>
+      <p class="pseo-lead">Browse ${PSEO_PAGES.length} verified checkout recovery guides covering Stripe card decline codes, payday retry timing, and smart exit offers for Shopify and Subscription Stores.</p>
+      ${renderTopSubpageEmailBarHtml('Free 60-Playbook Stripe Retry Schedule ($0) + $29 Complete Recovery Kit', 'Send Free 60-Playbook Sheet ($0) →', '')}
       <div class="filter-bar" style="margin-top:16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
           <label for="dir-search" class="field-label" style="margin:0;">Filter ${PSEO_PAGES.length} Playbooks by Decline Code, Webhook, or Platform</label>
@@ -516,14 +556,14 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
   <main class="container lp-main">
     <section class="hero-split lp-hero">
       <div class="lp-hero-copy">
-        <div class="status-pill">FOR SHOPIFY BRANDS, SAAS FOUNDERS &amp; STRIPE MERCHANTS</div>
+        <div class="status-pill">FOR SHOPIFY BRANDS, SUBSCRIPTION FOUNDERS &amp; STRIPE MERCHANTS</div>
         <h1 class="lp-h1">71% of Your Checkout Visitors Leave Without Paying: Recover <span class="serif-italic">18%–31%</span> Automatically</h1>
         <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Launch <strong>Smart Exit Counter-Offers</strong> + <strong>Payday-Timed Stripe Retries</strong> in 60 seconds.</p>
 
         <ul class="lp-proof-list">
-          <li><strong>Smart Exit-Intent Counter-Offers:</strong> Detects when a buyer moves to close their checkout tab and offers the right 1-click incentive (discount, trial extension, or CFO quote) before they leave.</li>
+          <li><strong>Smart Exit-Intent Counter-Offers:</strong> Detects when a buyer moves to close their checkout tab and offers the right 1-click incentive (discount, trial extension, or team quote) before they leave.</li>
           <li><strong>Decline-Code Smart Retries:</strong> Aligns <code>insufficient_funds</code> retries with payday deposit windows (62.4% recovery) and halts <code>expired_card</code> retries to avoid Visa/Mastercard fees.</li>
-          <li><strong>Meta Ads ROAS Sync:</strong> Sends every recovered checkout back to Meta Conversions API so your ad campaigns optimize for real buyers.</li>
+          <li><strong>Meta Ads Revenue Sync:</strong> Sends every recovered checkout back to Meta Conversions API so your ad campaigns optimize for real buyers.</li>
         </ul>
 
         <div class="lp-trust-row">
@@ -703,7 +743,7 @@ function renderLegalPageHtml(type = 'privacy') {
     <div class="faq-card" style="margin-top:24px; display:flex; flex-direction:column; gap:14px;">
       ${isPrivacy ? `
         <h3>1. Ephemeral Mouse-Velocity &amp; Tab-Visibility Telemetry</h3>
-        <p>AbandonAlpha computes cursor trajectory vectors (<code>v_y, θ, τ</code>) strictly in browser memory to detect checkout exit intent. Zero keystrokes or raw credit card numbers (PAN/CVC) ever touch AbandonAlpha servers.</p>
+        <p>AbandonAlpha computes cursor trajectory vectors (<code>v_y, θ, τ</code>) strictly in browser memory to detect checkout exit intent. Zero keystrokes or raw credit card numbers (card numbers or security codes) ever touch AbandonAlpha servers.</p>
         <h3>2. Stripe Webhook &amp; Billing Portal Processing</h3>
         <p>We process Stripe webhook events (<code>checkout.session.expired</code> and <code>invoice.payment_failed</code>) using scoped restricted API keys to schedule compliant retries and generate Stripe-hosted Billing Portal links.</p>
         <h3>3. GDPR &amp; CCPA Data Subject Rights</h3>
@@ -754,6 +794,8 @@ function renderNotFoundHtml() {
 }
 
 module.exports = {
+  AA_LOCK_SVG,
+  renderTopSubpageEmailBarHtml,
   renderBrandLogoSvg,
   renderUnifiedHeaderHtml,
   renderOgSvg,
