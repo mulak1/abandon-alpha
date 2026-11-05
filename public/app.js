@@ -410,6 +410,10 @@ window.__aaUnlockSampleSnippet = function(ev) {
   }
   const prevEl = document.getElementById('out-sdk-unmasked-preview');
   if (prevEl) prevEl.style.display = 'block';
+  const leak2Badge = document.getElementById('aa-locked-badge-leak2');
+  if (leak2Badge) leak2Badge.style.display = 'none';
+  const leak2Unmasked = document.getElementById('aa-unmasked-leak-2');
+  if (leak2Unmasked) leak2Unmasked.style.display = 'block';
   const btnEl = document.getElementById('aa-inline-sample-btn');
   if (btnEl) btnEl.textContent = '✓ Fix #1 Unmasked!';
   const statusEl = document.getElementById('aa-inline-sample-status');

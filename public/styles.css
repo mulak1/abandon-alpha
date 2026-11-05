@@ -436,8 +436,8 @@ p { max-width: 65ch; }
 
 /* Exit-Intent Modal Overlay */
 .modal-backdrop {
-  position: fixed; inset: 0; background: rgba(10, 37, 64, 0.58);
-  backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 100;
+  position: fixed; inset: 0; background: rgba(10, 37, 64, 0.72);
+  display: none; align-items: center; justify-content: center; padding: 20px; z-index: 100;
 }
 .modal-backdrop.open { display: flex; }
 .exit-modal-card {
@@ -531,4 +531,27 @@ body:has(#aa-inline-sample-unlock-form) #eb-save-scorecard-bar { display: none !
   .btn, .btn span, a.btn { white-space: normal !important; max-width: 100% !important; min-width: 0 !important; flex-wrap: wrap; text-align: center; height: auto; }
   .badge-live, .badge-emerald, #bandit-velocity-pill, #bandit-total-recovered, #out-grade-badge { white-space: normal !important; max-width: 100% !important; min-width: 0 !important; }
   .spec-row, .spec-k, .spec-v, #out-dunning-breakdown a, #out-dunning-breakdown a > span { flex-wrap: wrap !important; white-space: normal !important; min-width: 0 !important; max-width: 100% !important; }
+}
+@media (max-width: 768px) {
+  #cookie-consent-banner {
+    position: fixed !important; left: 10px !important; right: 10px !important; bottom: 10px !important;
+    width: auto !important; max-width: calc(100vw - 20px) !important; box-sizing: border-box !important;
+    padding: 8px 12px !important; font-size: 11.5px !important; line-height: 1.3 !important;
+    border-radius: 10px !important; z-index: 9999 !important; max-height: 54px !important; overflow: hidden !important;
+    box-shadow: 0 8px 24px rgba(10,37,64,0.16) !important; border: 1px solid #CBD5E1 !important;
+  }
+  #cookie-consent-banner .cookie-consent-inner {
+    padding: 0 !important; display: flex !important; align-items: center !important; justify-content: space-between !important;
+    gap: 8px !important; flex-wrap: nowrap !important; width: 100% !important;
+  }
+  #cookie-consent-banner .cookie-consent-inner > div:first-child {
+    white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    flex: 1 1 auto !important; min-width: 0 !important; font-size: 11.5px !important;
+  }
+  #cookie-consent-banner .cookie-consent-actions {
+    flex-wrap: nowrap !important; gap: 4px !important; flex: 0 0 auto !important;
+  }
+  #cookie-consent-banner .cookie-consent-actions .btn {
+    padding: 4px 8px !important; font-size: 11px !important; white-space: nowrap !important; min-height: 0 !important; line-height: 1.2 !important;
+  }
 }
