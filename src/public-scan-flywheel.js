@@ -111,7 +111,7 @@ function loadPublicScanLedger(cfg) {
     if (!x || !x.target) return false;
     const t = String(x.target).toLowerCase();
     if (cfg.moduleId !== 'citation_forge' && t === 'stripe.com') return false;
-    if (/^(test|playwright|synthetic|bot|localhost|127\.0\.0\.1|99\.112\.|84\.17\.)/i.test(t) || /(onload|alert|xss|script)/i.test(t)) return false;
+    if (/^(test|playwright|synthetic|bot|localhost|127\.0\.0\.1|99\.112\.|84\.17\.)/i.test(t) || /(onload|alert|xss|script|dunning)/i.test(t)) return false;
     return true;
   }).map((x) => {
     const canonicalSeed = seedMap.get(String(x.target).toLowerCase());
@@ -237,7 +237,7 @@ function getVerticalScanCopy(cfg, scan) {
     row3Action: 'Align Stripe card retries with 1st/15th payday deposits and show tailored exit offers',
     row4Title: 'Checkout & Stripe Recovery Kit',
     row4Val: '3 Production Files',
-    row4Action: 'Stripe retry rules JSON, smart exit-offer script (.JS) & dunning email/SMS templates'
+    row4Action: 'Stripe retry rules JSON, smart exit-offer script (.JS) & declined-card email/SMS templates'
   };
 }
 
