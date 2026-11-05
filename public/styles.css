@@ -554,4 +554,5 @@ body:has(#aa-inline-sample-unlock-form) #eb-save-scorecard-bar { display: none !
   #cookie-consent-banner .cookie-consent-actions .btn {
     padding: 4px 8px !important; font-size: 11px !important; white-space: nowrap !important; min-height: 0 !important; line-height: 1.2 !important;
   }
+  #cookie-consent-banner a { display: none !important; }
 }
