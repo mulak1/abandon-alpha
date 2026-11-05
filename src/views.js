@@ -264,7 +264,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div class="cta-row">
             <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}&amp;store=${encodeURIComponent(cleanTitle.slice(0, 32))}#grader" class="btn btn-indigo">
               <span>Audit Your Store Leakage Free</span>
-              <span class="btn-icon-circle" aria-hidden="true">↗</span>
+              <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
             </a>
             <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)} Live</a>
           </div>
@@ -329,7 +329,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
           <button type="button" id="pseo-calc-btn" class="btn btn-indigo" onclick="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})">
             <span>Recalculate Recoverable Revenue</span>
-            <span class="btn-icon-circle" aria-hidden="true">↗</span>
+            <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
           </button>
         </div>
         <div class="calc-output-box">
@@ -616,7 +616,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
           </div>
           <button type="submit" id="lp-submit-btn" class="btn btn-indigo btn-block" style="margin-top:14px;">
             <span>Calculate My Recoverable Revenue &amp; Unlock SDK</span>
-            <span class="btn-icon-circle" aria-hidden="true">↗</span>
+            <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
           </button>
         </form>
 
@@ -783,7 +783,7 @@ function renderNotFoundHtml() {
     <div class="cta-row" style="justify-content:center;">
       <a href="/" class="btn btn-indigo">
         <span>Return to AbandonAlpha Sandbox</span>
-        <span class="btn-icon-circle" aria-hidden="true">↗</span>
+        <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
       </a>
       <a href="/directory" class="btn btn-ghost">Browse 60 Recovery Playbooks</a>
     </div>
