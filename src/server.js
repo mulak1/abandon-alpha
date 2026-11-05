@@ -85,12 +85,12 @@ function renderHomepagePseoHubHtml() {
     const items = allPages.filter((p) => p.category === cat).slice(0, 6);
     return `
       <div style="margin-top:20px;">
-        <h3 style="font-size:1.125rem; margin-bottom:10px; color:var(--text-navy);">${escapeHtml(cat)} (6 Playbooks)</h3>
+        <h3 style="font-size:1.125rem; margin-bottom:10px; color:var(--text-navy);">${escapeHtml(cat.replace(/Dunning/gi, 'Declined-Card Recovery'))} (6 Playbooks)</h3>
         <div class="related-links-grid">
           ${items.map((p) => `
             <a href="/seo/${encodeURIComponent(p.slug)}" class="related-card">
               <span class="mono-label">${escapeHtml(p.declineOrSignal)} &bull; +${p.recoverableLiftPct}% Lift</span>
-              <strong>${escapeHtml(p.title.replace(/`/g, ''))}</strong>
+              <strong>${escapeHtml(p.title.replace(/`/g, '').replace(/Dunning/gi, 'Declined-Card Recovery').replace(/Liquid\/JS/gi, 'Copy-Paste'))}</strong>
             </a>
           `).join('')}
         </div>
@@ -194,7 +194,7 @@ app.post('/api/checkout', async (req, res) => {
     const planLabel = isFlash
       ? 'Single-Store Stripe Recovery Pass ($1.99 One-Time: Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast)'
       : isDunning29
-        ? '$29 One-Time Dunning Script Pack (vs. $99/mo Retention SaaS: Complete Stripe Webhook Retry Worker + 3-Part Failed-Card Subject Line & SMS Pack)'
+        ? '$29 Declined-Card & Cart Recovery Pack (vs. $99/mo Retention SaaS: Complete Stripe Webhook Retry Worker + 3-Part Failed-Card Subject Line & SMS Pack)'
         : isGrowth
           ? 'Growth Autonomous Recovery ($149/mo: Unlimited Sessions + Custom Gemini 4 Copy)'
           : 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)';

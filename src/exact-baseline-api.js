@@ -347,7 +347,7 @@ const VERTICAL_CONFIGS = {
       { id: 'btn-copy-shopping-list', label: 'Copy Recovery Audit', type: 'copy' },
       { id: 'btn-export-csv', label: 'Retry Schedule (.CSV)', href: '/api/github-upgrade/export.csv' },
       { id: 'btn-export-llms', label: 'Stripe Worker (.JS)', href: '/api/github-upgrade/stripe-recovery-worker.js' },
-      { id: 'btn-export-ics', label: 'Dunning Cadence (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
+      { id: 'btn-export-ics', label: 'Retry Cadence (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
       { id: 'btn-print-summary', label: 'Print FinOps Brief', type: 'print' },
       { id: 'btn-showroom-hud', label: 'Checkout Ops HUD', type: 'hud' },
       { id: 'btn-cmdk-trigger', label: '⌘K Actions', type: 'cmdk' },
@@ -356,7 +356,7 @@ const VERTICAL_CONFIGS = {
     kpis: [
       { label: 'Recoverable MRR/Mo', val: '$56,722', sub: '24.6% Net Lift' },
       { label: 'Exit-Intent Capture', val: '$49,076', sub: 'C1–C6 Bandit Arms' },
-      { label: 'Smart Dunning Lift', val: '$7,646', sub: 'Issuer Window Retry' },
+      { label: 'Declined-Card Lift', val: '$7,646', sub: 'Issuer Window Retry' },
       { label: 'Pre-Exit Hesitation', val: '< 12.0s', sub: 'Cursor Velocity Vector' }
     ],
     presetKpis: {
@@ -373,22 +373,22 @@ const VERTICAL_CONFIGS = {
     coMarketingPills: [
       { key: 'stripe', label: 'Stripe Billing', rowText: 'Stripe Decline Alert: Naive 24h cron retries on insufficient_funds burn 4-retry Visa limits before balances clear.' },
       { key: 'shopify', label: 'Shopify Plus', rowText: 'Checkout Exit Alert: Static 10%-off popups sacrifice margin on full-price buyers while missing shipping/trust objections.' },
-      { key: 'recharge', label: 'Recharge SMS', rowText: 'Subscription Alert: Generic dunning emails average < 8% open rates on do_not_honor and expired_card declines.' }
+      { key: 'recharge', label: 'Recharge SMS', rowText: 'Subscription Alert: Generic declined-card emails average < 8% open rates on do_not_honor and expired_card declines.' }
     ],
     affiliates: [
       { title: 'Stripe Billing & Smart Retries Suite', badge: 'Official Payment Rail', cpa: 'Explore Webhook Docs', url: 'https://stripe.com/billing' },
       { title: 'PostHog Session Replay & Funnel Analytics', badge: 'Hesitation Telemetry', cpa: 'Explore Funnel Replay', url: 'https://posthog.com/' },
-      { title: 'Klaviyo Checkout Abandonment Flows', badge: 'SMS + Email Dunning', cpa: 'Explore Dunning Flows', url: 'https://www.klaviyo.com/' }
+      { title: 'Klaviyo Checkout Abandonment Flows', badge: 'SMS + Email Recovery', cpa: 'Explore Recovery Flows', url: 'https://www.klaviyo.com/' }
     ],
     githubRepo: {
       name: 'carlsednaoui/ouibounce + PostHog/posthog + colinhacks/zod',
       stars: '171,369 Combined Stars', url: 'https://github.com/PostHog/posthog',
       badge: 'Beta-Bernoulli C1–C6 Bandit + Stripe Decline-Code Retry Engine',
-      title: 'Autonomous Exit-Intent Bandit & Issuer-Window Dunning Worker',
+      title: 'Autonomous Exit-Intent Bandit & Issuer-Window Card Retry Worker',
       summary: 'Replaces naive 24h card retries and static popups with decline-code aware scheduling and Thompson Sampling.'
     },
     deliverableFiles: [
-      { file: 'abandon-alpha-bandit-sdk.js', label: 'Complete Drop-In Checkout Recovery Code Patch (.JS)', size: '8.9 KB', schema: 'Drop-in production Liquid/JS checkout recovery code patch matching shipping, price, and trust exit objections', status: 'VALID' },
+      { file: 'abandon-alpha-bandit-sdk.js', label: 'Complete Drop-In Checkout Recovery Code Patch (.JS)', size: '8.9 KB', schema: 'Drop-in Copy-Paste checkout recovery code patch matching shipping, price, and trust exit objections', status: 'VALID' },
       { file: 'stripe-recovery-worker.js', label: '3-Part Klaviyo/Shopify Abandoned Cart Flow Templates (.JS)', size: '4.6 KB', schema: '3-Part Klaviyo/Shopify abandoned cart flow templates + payday-aligned Stripe card retry worker', status: 'VALID' },
       { file: 'payday-retry-schedule.csv', label: 'CFO Revenue Recovery Forecast (.CSV)', size: '5.2 KB', schema: 'CFO revenue recovery forecast and day-and-hour retry calendar for every Stripe decline code', status: 'VALID' }
     ],
@@ -863,7 +863,7 @@ function attachExactBaselinePack(app, options = {}) {
     const email = String(req.body?.email || req.body?.customerEmail || '').trim();
     const summaryText = String(req.body?.summaryText || `${cfg.brandName} Diagnostic Summary & Row #4 Reveal`).trim();
     const utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'exit_downsell').trim();
-    if (!email || !email.includes('@')) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
+    if (!email || !email.includes('@') || email.length > 254) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
     const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, email);
     const directBuyLinks = buildBuyLinks(email);
     store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.micro_pass}]`, utmSource, isTest, isOwnerIp, clientIp });

@@ -92,14 +92,14 @@ function updateUnmaskedSdkPreview(auditRes) {
   const permalinkEl = document.getElementById('aa-live-scan-permalink');
   if (permalinkEl) {
     permalinkEl.href = '/scan/' + encodeURIComponent(domain);
-    permalinkEl.textContent = 'Public Scan (/scan/' + domain + ') ↗';
+    permalinkEl.textContent = 'Public Scan (/scan/' + domain + ') →';
   }
 
   const previewEl = document.getElementById('out-sdk-unmasked-preview');
   if (previewEl) {
     previewEl.innerHTML = [
       `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
-      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">1. Complete Drop-In Checkout Recovery Code Patch <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(activeRule)} + ${escapeUiHtml(storeName)} Liquid/JS)</span></span>`,
+      `  <span style="font-size:0.8125rem;color:#0A2540;font-weight:700;">1. Complete Drop-In Checkout Recovery Code Patch <span style="color:#64748B;font-weight:500;">(${escapeUiHtml(activeRule)} + ${escapeUiHtml(storeName)} Copy-Paste Checkout Fix)</span></span>`,
       `  <span style="font-size:0.8125rem;color:#047857;font-weight:700;white-space:nowrap;">${escapeUiHtml(exitUsd)} &bull; Fix #1 Sample</span>`,
       `</div>`,
       `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#FFFFFF;">`,
@@ -138,12 +138,12 @@ async function probeLiveMerchantStore(domainOverride) {
 
   if (btnEl) {
     btnEl.disabled = false;
-    btnEl.textContent = res && res.ok ? `✓ Scanned ${res.storeName}` : 'Scan Store ↗';
+    btnEl.textContent = res && res.ok ? `✓ Scanned ${res.storeName}` : 'Scan Store →';
     if (res && res.ok) {
       btnEl.style.background = '#ECFDF5';
       btnEl.style.color = '#047857';
       setTimeout(() => {
-        btnEl.textContent = 'Scan Store ↗';
+        btnEl.textContent = 'Scan Store →';
         btnEl.style.background = '';
         btnEl.style.color = '';
       }, 2800);
@@ -323,8 +323,8 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   const snippetEl = document.getElementById('out-sdk-snippet');
   if (snippetEl) {
     snippetEl.textContent = isSampleUnlocked
-      ? (res.sdkSnippet || `/* Fix #1 Production Liquid/JS Code Snippet (${res.storeName}) */\n<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(res.storeName)}" data-aov="${res.aovUsd}" data-velocity-threshold="-0.80" async></script>`)
-      : '/* [LOCKED PREVIEW]: Enter your work email ($0) above to unmask Fix #1 Production Liquid/JS Code Snippet, or unlock the $1.99 Complete Recovery Code Patch */';
+      ? (res.sdkSnippet || `/* Fix #1 Copy-Paste Checkout Fix (${res.storeName}) */\n<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(res.storeName)}" data-aov="${res.aovUsd}" data-velocity-threshold="-0.80" async></script>`)
+      : '/* [LOCKED PREVIEW]: Enter your work email ($0) above to unmask Fix #1 Copy-Paste Checkout Fix, or unlock the $1.99 Complete Recovery Code Patch */';
     if (isSampleUnlocked) snippetEl.style.display = 'block';
   }
 
@@ -344,7 +344,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   const gradeBadge = document.getElementById('out-grade-badge');
   if ((isManualTrigger || isExplicitClick) && mrrTile) {
     if (gradeBadge) {
-      gradeBadge.textContent = `👉 FOCUS HERE NEXT • ${res.storeName} (${res.letterGrade})`;
+      gradeBadge.textContent = `→ FOCUS HERE NEXT • ${res.storeName} (${res.letterGrade})`;
       gradeBadge.style.background = '#047857';
       gradeBadge.style.color = '#FFFFFF';
     }
@@ -399,7 +399,7 @@ window.__aaUnlockSampleSnippet = function(ev) {
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
   const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
   const unmaskedCode = (window.__LAST_AUDIT_RES__ && window.__LAST_AUDIT_RES__.sdkSnippet) || [
-    `{% comment %} Fix #1 Production Liquid/JS Checkout Recovery Snippet for ${storeName} {% endcomment %}`,
+    `{% comment %} Fix #1 Copy-Paste Checkout Fix for ${storeName} {% endcomment %}`,
     `<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(storeName)}" data-aov="${aovUsd}" data-decline-focus="${declineCode}" data-velocity-threshold="-0.80" async></script>`,
     `<script>window.AbandonAlphaRules = { retryDecline: "${declineCode}", fridayPaydaySync: "09:05_LOCAL", allowPromoStacking: false };</script>`
   ].join('\n');
@@ -419,7 +419,7 @@ window.__aaUnlockSampleSnippet = function(ev) {
   const statusEl = document.getElementById('aa-inline-sample-status');
   if (statusEl) {
     statusEl.style.display = 'block';
-    statusEl.innerHTML = `✓ Fix #1 Production Liquid/JS Code Snippet Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="/buy/flash_pass?email=${encodeURIComponent(email)}" style="color:#047857;text-decoration:underline;">Unlock Full 3-File Patch + Klaviyo Flows ($1.99) &rarr;</a>`;
+    statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="/buy/flash_pass?email=${encodeURIComponent(email)}" style="color:#047857;text-decoration:underline;">Unlock Full 3-File Patch + Klaviyo Flows ($1.99) &rarr;</a>`;
   }
   fetch('/api/leads', {
     method: 'POST',
@@ -481,7 +481,7 @@ function renderPosteriorTable(arms, selectedId) {
         <td>
           <strong style="color:${isWin ? '#047857' : '#0A2540'}">${humanTitle}</strong>
           <div style="font-size:0.9375rem; color:#475569; font-family:var(--font-sans);">${arm.objection_label}</div>
-          <div><button type="button" class="eb-row-sim-pill" onclick="event.stopPropagation();triggerBanditObjection('${arm.objection_code}')">${isWin ? '✓ Active Offer' : 'Simulate Offer ↗'}</button></div>
+          <div><button type="button" class="eb-row-sim-pill" onclick="event.stopPropagation();triggerBanditObjection('${arm.objection_code}')">${isWin ? '✓ Active Offer' : 'Simulate Offer →'}</button></div>
         </td>
         <td><code class="text-indigo">${arm.offer_code}</code> (-${arm.discount_pct}%)</td>
         <td>${arm.alpha}</td>
@@ -652,7 +652,7 @@ async function initiateStripeCheckout(planTier) {
   const badge = document.getElementById('checkout-session-badge');
   banner.style.display = 'block';
   badge.textContent = res.stripeSessionId;
-  text.innerHTML = `Initialized ${res.planLabel} for ${res.storeDomain} (${res.customerEmail}). Protected by ${res.guarantee}. <a href="${res.checkoutUrl || '/buy/complete_dossier'}" style="color:var(--accent-indigo);text-decoration:underline;font-weight:700;margin-left:6px;">Proceed to Stripe Checkout ↗</a>`;
+  text.innerHTML = `Initialized ${res.planLabel} for ${res.storeDomain} (${res.customerEmail}). Protected by ${res.guarantee}. <a href="${res.checkoutUrl || '/buy/complete_dossier'}" style="color:var(--accent-indigo);text-decoration:underline;font-weight:700;margin-left:6px;">Proceed to Stripe Checkout →</a>`;
   if (!navigator.webdriver && res.checkoutUrl && res.checkoutUrl.startsWith('https://checkout.stripe.com')) window.location.href = res.checkoutUrl;
 }
 

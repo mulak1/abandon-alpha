@@ -90,7 +90,7 @@ const FLYWHEEL_SEED = {
       { target: 'Linear-Annual-Split', grade: 'A', score: 91, status: 'HALL_OF_FAME', kpi1: '+19.2% Trial Conversion', kpi2: '1-Tap Auth Ready', cnnReadout: '91.2% Distraction-Free 2-Column Checkout', issue: 'High-Converting Flexible Billing Option' },
       { target: 'B2B-SaaS-Smart-Retry', grade: 'A', score: 89, status: 'HALL_OF_FAME', kpi1: '+47.8% Card Approval', kpi2: '48h Bank Cooldown', cnnReadout: '89.7% Clean 1-Click Invoice Update Page', issue: 'Follows Visa/Mastercard Smart Retry Rules' },
       { target: 'Static-10Pct-Popup-Store', grade: 'C', score: 59, status: 'WALL_OF_SHAME', kpi1: '-10% Margin Lost', kpi2: 'Coupon Abuse Leak', cnnReadout: '61.4% Shoppers Ignore Generic Discount Popup', issue: 'Losing $34,521/mo vs. Tailored Exit Offers' },
-      { target: 'Naive-24h-Cron-Dunning', grade: 'D', score: 44, status: 'WALL_OF_SHAME', kpi1: '19.4% Recovery Only', kpi2: 'Bank Auto-Block Risk', cnnReadout: '42.0% Retries Fail Before 1st/15th Payday Deposit', issue: 'Losing 43% of Recoverable Failed-Card Revenue' },
+      { target: 'Naive-24h-Cron-Retry', grade: 'D', score: 44, status: 'WALL_OF_SHAME', kpi1: '19.4% Recovery Only', kpi2: 'Bank Auto-Block Risk', cnnReadout: '42.0% Retries Fail Before 1st/15th Payday Deposit', issue: 'Losing 43% of Recoverable Failed-Card Revenue' },
       { target: '14-Field-Legacy-Checkout', grade: 'D', score: 36, status: 'WALL_OF_SHAME', kpi1: '78.4% Drop-Off Rate', kpi2: 'Low Button Visibility', cnnReadout: '34.8% Cluttered Form Layout • Too Many Fields', issue: 'High Mobile Checkout Drop-Off & No Exit Recovery' }
     ]
   }
@@ -423,7 +423,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         <span style="font-size:13px;font-weight:800;color:${idx === 0 ? esc(badgeColor) : '#059669'};">${medals[idx]}</span>
         <span style="padding:3px 10px;border-radius:999px;background:#ECFDF5;color:#059669;font-variant-numeric:tabular-nums;font-size:13px;font-weight:800;">${esc(item.grade)} (${item.score}/100)</span>
       </div>
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:18px;font-weight:800;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} ↗</a>
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:18px;font-weight:800;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} →</a>
       <div style="font-size:13.5px;font-weight:700;color:${esc(badgeColor)};margin-bottom:6px;">${esc(item.kpi1)} • ${esc(item.kpi2)}</div>
       <div style="width:100%;height:8px;border-radius:999px;background:#E2E8F0;overflow:hidden;margin-bottom:8px;"><div style="width:${item.score}%;height:100%;background:#10B981;border-radius:999px;"></div></div>
       <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0;line-height:1.45;">${esc(item.cnnReadout)}</p>
@@ -440,7 +440,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     const rowTier = isTop ? 'fame' : 'fix';
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;">#${idx + 1}</td>
-    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:800;text-decoration:none;">${esc(item.target)} ↗</a></th>
+    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:800;text-decoration:none;">${esc(item.target)} →</a></th>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric:tabular-nums;font-weight:800;font-size:14px;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:7px;background:#E2E8F0;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>

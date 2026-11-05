@@ -59,9 +59,9 @@ function loadVerticalSeoCatalog(cfg, srcDir) {
         for (const p of list) {
           entries.push({
             slug: p.slug,
-            title: String(p.title || p.slug).replace(/`/g, ''),
-            category: p.category || 'Stripe & Checkout Recovery',
-            summary: String(p.summary || cfg.explainerText).replace(/`/g, '').slice(0, 158)
+            title: String(p.title || p.slug).replace(/`/g, '').replace(/Dunning/gi, 'Declined-Card Recovery').replace(/Liquid\/JS/gi, 'Copy-Paste'),
+            category: String(p.category || 'Stripe & Checkout Recovery').replace(/Dunning/gi, 'Declined-Card Recovery'),
+            summary: String(p.summary || cfg.explainerText).replace(/`/g, '').replace(/Dunning/gi, 'Declined-Card Recovery').slice(0, 158)
           });
         }
       }
@@ -808,7 +808,7 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
           <span style="padding:3px 9px;border-radius:${t.radiusPill};background:${m.bg};color:${m.text};font-size:13px;font-weight:800;">${m.icon}</span>
           <span style="padding:3px 10px;border-radius:${t.radiusPill};background:${t.safeSoftBg};color:${t.safeColor};font-family:${t.fontSans};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:800;">Grade ${escHtml(s.grade)} · ${s.score}/100</span>
         </div>
-        <div style="font-size:17px;font-weight:800;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target)}</div>
+        <div style="font-size:17px;font-weight:800;color:${t.textPrimary};margin-bottom:4px;">${escHtml(s.target.replace(/Dunning/gi, 'Retry'))}</div>
         <div style="font-size:14px;color:${t.textSecondary};margin-bottom:10px;">${escHtml(s.kpi1)} · ${escHtml(s.kpi2)}</div>
       </div>
       <div>
@@ -817,7 +817,7 @@ function buildTopLeaderboardPodiumShowcaseHtml(cfg) {
       </div>
     </a>`;
   }).join('');
-  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:#FFF1F2;color:#9F1239;font-size:13.5px;font-weight:700;text-decoration:none;"><span>${escHtml(s.target)}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
+  const fixPills = fix2.map((s) => `<a href="/scan/${escHtml(encodeURIComponent(s.target))}" style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:${t.radiusPill};background:#FFF1F2;color:#9F1239;font-size:13.5px;font-weight:700;text-decoration:none;"><span>${escHtml(s.target.replace(/Dunning/gi, 'Retry'))}</span><span style="font-variant-numeric:tabular-nums;">Grade ${escHtml(s.grade)} (${s.score}/100)</span><span>See Why →</span></a>`).join('');
 
   return `<section id="eb-leaderboard-home-showcase" class="container" aria-label="${escHtml(cfg.brandName)} Live Industry Leaderboard Podium" style="margin:20px auto;font-family:${t.fontSans};">
     <div class="eb-panel-card" style="margin:0;padding:24px;background:${t.cardBg};">
@@ -842,7 +842,7 @@ function buildMobileSeoCrawlMeshHtml(cfg, reqPath) {
   if (entries.length === 0) return '';
   const gCfg = getGrowthConfig(cfg.moduleId);
   const fmtScanLbl = (raw) => ({ 'VitC-AM-Peptides-PM': 'Vitamin C (AM) + Copper Peptides (PM)', 'Ceramide-Tretinoin-Buffer': 'Ceramide Buffer + Tretinoin 0.05%', 'Azelaic15-Niacinamide5': 'Azelaic Acid 15% + Niacinamide 5%', 'BHA2-SnailMucin-Stack': '2% BHA + Snail Mucin Essence', 'VitC+Cu': 'Vitamin C 15% + Copper Peptides 1%', 'Tret+BPO': 'Rx Tretinoin 0.05% + Benzoyl Peroxide', 'TikTok': '7-Active Acid & Retinol Stack' }[raw] || raw);
-  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: isDerm ? fmtScanLbl(s.target) : `${s.target} (${s.grade})`, cat: 'public-scan' }));
+  const scanItems = loadPublicScanLedger(cfg).slice(0, 10).map((s) => ({ href: `/scan/${encodeURIComponent(s.target)}`, title: isDerm ? fmtScanLbl(s.target) : `${s.target.replace(/Dunning/gi, 'Retry')} (${s.grade})`, cat: 'public-scan' }));
   let semanticItems = [];
   if (isDerm) {
     try { const sh = require(path.join(__dirname, 'seo-hubs.js')); if (typeof sh.getAllSemanticHubUrls === 'function') semanticItems = sh.getAllSemanticHubUrls('').map((u) => ({ href: u.loc, title: u.title, cat: 'semantic-hub' })); } catch (_) {}
