@@ -34,7 +34,7 @@ function renderUnifiedHeaderHtml(tagText = '') {
         <a href="/directory">Playbooks (60)</a>
         <a href="/#in-card-unlock-bar">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
-          <span>Calculate MRR</span>
+          <span>Calculate Revenue</span>
           <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
         </a>
       </nav>

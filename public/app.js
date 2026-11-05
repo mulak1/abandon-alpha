@@ -286,7 +286,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
       btn.style.background = '';
       btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
     }
-    if (navBtn) navBtn.innerHTML = '<span>Calculate MRR</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    if (navBtn) navBtn.innerHTML = '<span>Calculate Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
     return;
   }
 
@@ -302,7 +302,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
     btn.style.background = '';
     btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
   }
-  if (navBtn) navBtn.innerHTML = '<span>Calculate MRR</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+  if (navBtn) navBtn.innerHTML = '<span>Calculate Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
 
   window.__LAST_AUDIT_RES__ = res;
   if (isManualTrigger) saveAaWorkspaceState();
