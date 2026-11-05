@@ -159,8 +159,8 @@
               </div>
             </div>
 
-            <details open style="padding:12px 14px;border-radius:10px;background:#F1F5F9;">
-              <summary style="cursor:pointer;font-size:0.875rem;font-weight:700;color:#334155;">Optional: Scan Any Domain URL or Fine-Tune Rates</summary>
+            <details style="padding:10px 12px;border-radius:10px;background:#F1F5F9;">
+              <summary style="cursor:pointer;font-size:0.8125rem;font-weight:700;color:#334155;">Optional: Scan Any Domain URL or Fine-Tune Rates</summary>
               <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:10px;">
                 <input id="input-store-url" type="text" class="field-input" placeholder="e.g. gymshark.com, linear.app..." style="flex:1;padding:8px 12px;font-size:0.875rem;background:#FFFFFF;" onkeydown="if(event.key==='Enter'){event.preventDefault();probeLiveMerchantStore();}" />
                 <button type="button" id="btn-probe-store" class="btn btn-ghost btn-sm" style="padding:8px 14px;font-weight:700;background:#FFFFFF;white-space:nowrap;" onclick="probeLiveMerchantStore()">Scan Domain &nearr;</button>
@@ -194,11 +194,11 @@
                   <option value="Zero-Retry 1-Tap ApplePay">1-Tap Apple Pay</option>
                 </select>
               </div>
-              <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-                <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" style="background:#FFFFFF;" onclick="openExitIntentModal()">Preview Exit Offer Popup</button>
-                <a id="aa-live-scan-permalink" href="/scan/gymshark.com" style="font-size:0.8125rem;color:#047857;font-weight:700;text-decoration:underline;">Public Scan (/scan/gymshark.com) &nearr;</a>
-              </div>
             </details>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+              <button type="button" id="trigger-exit-modal-btn" class="btn btn-ghost btn-sm" style="background:#F1F5F9;padding:6px 12px;font-size:0.78rem;" onclick="openExitIntentModal()">Preview Exit Offer Popup</button>
+              <a id="aa-live-scan-permalink" href="/scan/gymshark.com" style="font-size:0.78rem;color:#047857;font-weight:700;text-decoration:underline;">Public Scan (/scan/gymshark.com) &nearr;</a>
+            </div>
           </form>
 
           <!-- RIGHT CARD: STEP 2 OF 3 (FREE DIAGNOSIS & BREAKDOWN) -->
@@ -374,7 +374,7 @@
                 <strong style="color:#047857;display:block;">Why this beats a site-wide 10% popup:</strong>
                 Only triggers when a shopper moves to close the tab—protecting full-price buyers.
               </div>
-              <button type="button" class="btn btn-emerald btn-sm" style="padding:7px 13px;font-size:0.8125rem;white-space:normal;" onclick="if(window.__ebCheckout){window.__ebCheckout('micro_pass');}">Get Exit Script (99&cent;) &rarr;</button>
+              <button type="button" class="btn btn-emerald btn-sm" style="padding:7px 13px;font-size:0.8125rem;white-space:normal;" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}">Unlock 3-File Recovery Code Patch ($1.99) &rarr;</button>
             </div>
           </div>
 
@@ -450,7 +450,7 @@
             <div class="form-row-2">
               <div>
                 <label class="field-label" for="wh-email">Customer Email</label>
-                <input id="wh-email" type="email" class="field-input" value="alex@scaleops.io" required />
+                <input id="wh-email" type="text" class="field-input" value="alex@scaleops.io" required />
               </div>
               <div>
                 <label class="field-label" for="wh-amount">Invoice / Cart Amount ($)</label>

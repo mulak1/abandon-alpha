@@ -500,20 +500,37 @@ p { max-width: 65ch; }
   .main-nav a:not(.btn) { padding: 5px 5px; }
   .header-inner .btn-sm { padding: 7px 11px; font-size: 0.82rem; }
 }
+body:has(#aa-inline-sample-unlock-form) #eb-save-scorecard-bar { display: none !important; }
 @media (max-width: 920px) {
-  .container { padding: 0 16px; max-width: 100%; overflow-x: hidden; }
-  .card-panel, .metric-card, .faq-card, .related-card, .grader-form-card, .telemetry-card, .pricing-card { padding: 18px !important; }
-  .hero-h1, .pseo-h1, .lp-h1 { font-size: 30px; line-height: 1.12; }
+  .container { padding: 0 14px; max-width: 100%; overflow-x: hidden; }
+  .card-panel, .metric-card, .faq-card, .related-card, .grader-form-card, .telemetry-card, .pricing-card { padding: 14px !important; }
+  .hero-section, #grader.hero-section { padding: 8px 0 18px !important; }
+  #home-executive-brief { margin-bottom: 8px !important; }
+  #home-executive-brief > div:first-child { margin-bottom: 6px !important; padding: 3px 10px !important; font-size: 0.72rem !important; }
+  #home-executive-brief > div:last-child { padding: 6px 10px !important; font-size: 11.5px !important; gap: 4px !important; }
+  #home-executive-brief > div:last-child > div:nth-child(n+2) { display: none !important; }
+  .hero-h1, .pseo-h1, .lp-h1 { font-size: 1.42rem !important; line-height: 1.12 !important; margin-bottom: 6px !important; }
   .section-h2 { font-size: 24px; line-height: 1.15; }
-  .hero-split, .bandit-grid, .webhook-grid, .pricing-grid, .inline-calc-grid, .faq-grid, .related-links-grid, .steps-3-grid, #aa-endowment-customizer { grid-template-columns: minmax(0, 1fr) !important; min-width: 0; }
+  .hero-split, .bandit-grid, .webhook-grid, .pricing-grid, .inline-calc-grid, .faq-grid, .related-links-grid, .steps-3-grid, #aa-endowment-customizer { grid-template-columns: minmax(0, 1fr) !important; min-width: 0; gap: 14px !important; }
   .hero-split > *, .bandit-grid > *, .webhook-grid > *, .related-links-grid > *, .faq-grid > * { min-width: 0; max-width: 100%; }
-  .related-card, .dir-item, .dir-card-top, .dir-card-sub, .related-card code, .related-card strong { min-width: 0 !important; max-width: 100% !important; flex-wrap: wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
+  .related-card, .dir-item, .dir-card-top, .dir-card-sub, .related-card code, .related-card strong, code, pre { min-width: 0 !important; max-width: 100% !important; flex-wrap: wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; white-space: pre-wrap !important; }
   .main-nav a:not(.btn), .brand-tag { display: none; }
-  .mobile-nav-strip { display: flex; flex-wrap: wrap; overflow-x: hidden; }
-  .header-inner { min-height: 60px; gap: 8px; }
-  .header-inner .btn-sm { padding: 6px 10px; font-size: 0.875rem; white-space: nowrap; }
+  .mobile-nav-strip { display: flex; flex-wrap: nowrap !important; overflow-x: auto; padding: 3px 8px; gap: 4px; justify-content: flex-start; }
+  .mobile-nav-strip a { font-size: 0.68rem; padding: 2px 7px; white-space: nowrap !important; flex-shrink: 0; }
+  .header-inner { min-height: 36px; padding: 4px 0; gap: 6px; }
+  .brand-logo { font-size: 0.96rem; gap: 6px; }
+  .brand-logo svg { width: 24px; height: 24px; }
+  .header-inner .btn-sm { padding: 4px 10px; font-size: 0.74rem; white-space: nowrap; }
   .header-inner .btn-icon-circle { display: none; }
-  .form-row-2, .metric-duo, .objection-buttons-grid, .lp-trust-row { grid-template-columns: minmax(0, 1fr); }
+  #audit-form, #audit-form > div:first-of-type { gap: 8px !important; }
+  #audit-form .card-header-bar { padding-bottom: 6px !important; }
+  #audit-form .preset-bar { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 5px !important; }
+  #audit-form .preset-btn { padding: 5px 8px !important; font-size: 0.76rem !important; text-align: center; }
+  #audit-form .form-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+  #audit-form .field-label { font-size: 0.74rem !important; margin-bottom: 2px !important; }
+  #audit-form .field-input, #audit-form .field-select { padding: 7px 9px !important; font-size: 0.84rem !important; }
+  #run-audit-btn { padding: 10px 14px !important; font-size: 0.92rem !important; }
+  .metric-duo, .objection-buttons-grid, .lp-trust-row { grid-template-columns: minmax(0, 1fr); }
   .btn, .btn span, a.btn { white-space: normal !important; max-width: 100% !important; min-width: 0 !important; flex-wrap: wrap; text-align: center; height: auto; }
   .badge-live, .badge-emerald, #bandit-velocity-pill, #bandit-total-recovered, #out-grade-badge { white-space: normal !important; max-width: 100% !important; min-width: 0 !important; }
   .spec-row, .spec-k, .spec-v, #out-dunning-breakdown a, #out-dunning-breakdown a > span { flex-wrap: wrap !important; white-space: normal !important; min-width: 0 !important; max-width: 100% !important; }
