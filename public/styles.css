@@ -512,8 +512,8 @@ body:has(#aa-inline-sample-unlock-form) #eb-save-scorecard-bar { display: none !
   .hero-split > *, .bandit-grid > *, .webhook-grid > *, .related-links-grid > *, .faq-grid > * { min-width: 0; max-width: 100%; }
   .related-card, .dir-item, .dir-card-top, .dir-card-sub, .related-card code, .related-card strong, code, pre { min-width: 0 !important; max-width: 100% !important; flex-wrap: wrap !important; overflow-wrap: anywhere !important; word-break: break-word !important; white-space: pre-wrap !important; }
   .main-nav a:not(.btn), .brand-tag { display: none; }
-  .mobile-nav-strip { display: flex; flex-wrap: nowrap !important; overflow-x: auto; padding: 3px 8px; gap: 4px; justify-content: flex-start; }
-  .mobile-nav-strip a { font-size: 0.68rem; padding: 2px 7px; white-space: nowrap !important; flex-shrink: 0; }
+  .mobile-nav-strip { display: flex; flex-wrap: wrap !important; overflow-x: hidden !important; padding: 3px 8px; gap: 4px; justify-content: flex-start; max-width: 100% !important; }
+  .mobile-nav-strip a { font-size: 0.68rem; padding: 2px 6px; white-space: nowrap !important; flex-shrink: 0; }
   .header-inner { min-height: 36px; padding: 4px 0; gap: 6px; }
   .brand-logo { font-size: 0.96rem; gap: 6px; }
   .brand-logo svg { width: 24px; height: 24px; }
