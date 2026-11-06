@@ -28,7 +28,8 @@ function renderTopSubpageEmailBarHtml(titleText = 'Free Store Recovery Kit ($0) 
       document.querySelectorAll('.aa-unlocked-spec-proof').forEach(function(el) { el.style.display = ''; });
       var st = document.getElementById('aa-subpage-top-email-status');
       if (st) st.style.display = 'block';
-      fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'lead_capture', page_url: window.location.pathname, meta: { email: email, source: 'subpage_top_email_bar' } }) }).catch(function(){});
+      fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'subpage_top_email_bar' }), keepalive: true }).catch(function(){});
+      fetch('/api/telemetry/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'lead_capture', email: email, page_url: window.location.pathname, meta: { email: email, source: 'subpage_top_email_bar' } }), keepalive: true }).catch(function(){});
       return false;
     };
   </script>`;
