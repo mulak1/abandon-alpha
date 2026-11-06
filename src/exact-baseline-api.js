@@ -136,34 +136,34 @@ const VERTICAL_CONFIGS = {
       radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMrIaoGnkXxS82T5cPcjM',
-    corePriceEnv: 'STRIPE_PRICE_CREATOR_49', corePriceUsd: 49, coreLabel: 'Complete Creator Sponsor Database ($49/mo)',
-    proPriceEnv: 'STRIPE_PRICE_AGENCY_199', proPriceUsd: 199, proLabel: 'Agency & Media-Buyer Pro Feed ($199/mo)',
-    lockedTitle: 'Verified Sponsor & Show Rate-Card Contacts (88 Direct Emails)',
-    deliverableName: '88 Verified Brand & Show Contacts (.CSV) + 96-Flight Rate-Card Floor Ledger (.CSV) + Counter-Offer & Pilot Scripts (.EML)',
-    freeDeliverableName: '88 Brand & Show Contacts + Rate-Card Floor & Counter-Offer Pack',
-    unlockBannerTitle: 'Verified Sponsor Contacts & Show Rate Floors',
-    explainerText: 'See which sponsors renewed 3+ times, audit -18% 3-flight floor CPMs vs. rack rates, and unlock 88 direct buyer & show booking rep emails',
+    corePriceEnv: 'STRIPE_PRICE_CREATOR_49', corePriceUsd: 29, coreLabel: 'Full 109-Row Named-Buyer & Agency CSV + IO Rider Vault ($29 One-Time) →',
+    proPriceEnv: 'STRIPE_PRICE_AGENCY_199', proPriceUsd: 199, proLabel: 'B2B Agency & Talent Management Desk ($149–$199 Multi-Seat + HubSpot/Clay CRM Export)',
+    lockedTitle: 'Verified Sponsor & Show Rate-Card Contacts (109-Row Named-Buyer & Agency Ledger)',
+    deliverableName: 'Full 109-Row Verified Named-Buyer & Agency Desk CSV Export + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences (.EML) + 90-Day Renewal Alerts',
+    freeDeliverableName: '109-Row Named-Buyer & Agency CSV + Redlined IO Make-Good Rider + Cold Outreach Sequences',
+    unlockBannerTitle: '109-Row Named-Buyer & Agency CSV + IO Rider • Save $2,400 Overpay',
+    explainerText: 'Pitch the buyer, not dead inboxes. 109 Verified Buyer & Agency Desk Rows • Save $2,400 overpay with -18% 3-flight floor CPMs.',
     hudLabel: 'Media Buyer HUD', redditSub: 'podcasting',
     sliderLabel: 'Bookings', sliderMin: 1, sliderMax: 30, sliderVal: 14,
     searchPlaceholder: 'Search sponsor or show (e.g. HubSpot, Indie Hackers)...',
-    tier1Tag: 'SINGLE-AUDIT BUYER & CREATOR PASS • SAVE 96% VS $49',
-    tier1Desc: 'Instantly unlocks 88 verified brand buyer & show booking rep emails (.CSV), 96-flight negotiated CPM floor ledger (.CSV), and ready-to-send 3-flight counter-offer & pilot scripts (.EML). Includes Ramp/Brex expense receipt.',
-    tier2Tag: 'CREATOR PRO SPONSOR DATABASE',
-    tier2Desc: 'Full access to 42 active sponsor brands, 46 flagship shows, 88 verified contacts, weekly new-sponsor alerts, and unlimited pitch templates.',
-    tier3Tag: 'AGENCY & MEDIA BUYER FEED',
-    tier3Desc: '5 team seats, live show rate-card floor benchmarks (-18% vs rack), competitor promo-code tracking, and instant CSV exports for your media plan.',
+    tier1Tag: '$0 3-CREDIT WORK EMAIL SAMPLE OR CREATOR PASS ($19) • SAVE $2,400 OVERPAY',
+    tier1Desc: 'Unlocks target workflow pack: verified Named-Buyer + Agency Desk (.CSV), -18% floor CPM ledger (.CSV), Redlined IAB IO Make-Good Rider (.TXT), and 3-flight cold outreach sequences (.EML).',
+    tier2Tag: 'FULL 109-ROW NAMED-BUYER & AGENCY CSV + IO RIDER VAULT ($29 / $49 ONE-TIME)',
+    tier2Desc: 'Complete 109-row verified Named-Buyer + External Agency Desk CSV export, Redlined IO Make-Good Rider (.TXT), 15 cold outreach sequences (.EML), and 90-day renewal alerts.',
+    tier3Tag: 'B2B AGENCY & TALENT MANAGEMENT DESK ($149 / $199 MULTI-SEAT + CRM WEBHOOK)',
+    tier3Desc: '5 team seats, bulk 109-row Named-Buyer & Agency CSV, HubSpot/Clay/CSV Outreach Sequence export, and White-Label Media Kit Rate Card generator.',
     battlecard: {
       heading: 'Why Media Buyers & Creators Choose SponsorRadar Over Ad Networks',
       colLegacy: '25%-Fee Ad Networks', colManual: 'Guessing from Media Kits',
       rows: [
-        ['Proof That Ads Actually Convert', 'Tracks 96+ placements that renewed 3 to 18 times on the same show', 'Pushes untested 1-time ad slots (68% churn)', 'No way to know if a sponsor lost money'],
-        ['Rate-Card Floor & Direct Contacts', '88 verified buyer/show emails + -18% 3-flight floor counter-offer script', 'Takes 20%–30% middleman commission cut', 'Paying inflated rack rates or cold-emailing info@'],
-        ['Simple Pricing & Expense Receipt', '$1.99 One-Time 3-File Pass or $49–$199/mo Team Feed', 'Takes thousands in agency retainer fees', 'Weeks of manual transcript & promo tracking']
+        ['Proof That Ads Actually Convert', 'Tracks 109+ placements that renewed 3 to 18 times on the same show', 'Pushes untested 1-time ad slots (68% churn)', 'No way to know if a sponsor lost money'],
+        ['Rate-Card Floor & Direct Contacts', '109 Verified Buyer & Agency Desk Rows + -18% 3-flight floor counter-offer script', 'Takes 20%–30% middleman commission cut', 'Paying inflated rack rates or cold-emailing info@'],
+        ['Simple Pricing & Expense Receipt', '$0 3-Credit Sample, $19 Creator Pass, or $29 Full 109-Row CSV Vault', 'Takes thousands in agency retainer fees', 'Weeks of manual transcript & promo tracking']
       ]
     },
     exportActions: [
       { id: 'btn-copy-shopping-list', label: 'Copy Rate & Pitch Summary', type: 'copy' },
-      { id: 'btn-export-csv', label: 'Export 96-Flight Rates (.CSV)', href: '/api/github-upgrade/export.csv' },
+      { id: 'btn-export-csv', label: 'Export 109-Row Rates (.CSV)', href: '/api/github-upgrade/export.csv' },
       { id: 'btn-export-llms', label: 'Download Counter-Offer / Pitch (.EML)', href: '/api/github-upgrade/pitch.eml' },
       { id: 'btn-export-ics', label: 'Protocol & Rate Dossier (.TXT)', href: '/api/github-upgrade/llms-bundle.txt' },
       { id: 'btn-print-summary', label: 'Print Rate Card PDF', type: 'print' },
@@ -206,14 +206,14 @@ const VERTICAL_CONFIGS = {
       summary: 'Verifies multi-flight sponsor renewals, promo-code persistence, and -18% 3-flight agency floor CPMs across 42 brands and 46 shows.'
     },
     deliverableFiles: [
-      { file: 'verified-buyer-contacts.csv', label: '88 Brand & Show Contacts (.CSV)', size: '6.4 KB', schema: '42 Brand Partnerships Leads + 46 Show Booking Rep emails, roles & agency desks', status: 'VALID' },
-      { file: '96-flight-cpm-decay.csv', label: '96-Flight Rate-Card Floor Ledger (.CSV)', size: '14.2 KB', schema: 'Published rack rates vs. -18% 3-flight negotiated floor CPMs, implied CPCs & promo codes', status: 'VALID' },
+      { file: 'verified-buyer-contacts.csv', label: '109 Verified Buyer & Agency Desk Rows (.CSV)', size: '7.4 KB', schema: '109 Verified Brand Partnerships Leads & Show Booking Rep emails, roles & agency desks', status: 'VALID' },
+      { file: '109-flight-cpm-decay.csv', label: '109-Row Rate-Card Floor Ledger (.CSV)', size: '14.2 KB', schema: 'Published rack rates vs. -18% 3-flight negotiated floor CPMs, implied CPCs & promo codes', status: 'VALID' },
       { file: '3-flight-anchor-pitch.eml', label: 'Counter-Offer & Pilot Scripts (.EML)', size: '3.1 KB', schema: 'Media Buyer -18% rate-card counter-offer script (w/ 1.5% CTR make-good) + Creator 3-flight pilot pitch', status: 'VALID' }
     ],
     remediationDiff: {
       beforeLine: 'What we found: Paying published media-kit rack rates costs +18% to +28% more than the negotiated 3-flight agency floor, while cold-emailing generic info@ addresses gets a 1.1% reply rate.',
-      afterLine: 'How the $1.99 pack pays for itself on 1 booking: Unlocks all 88 verified brand buyer & show booking rep emails (.CSV), the 96-flight negotiated CPM floor ledger (.CSV), and ready-to-send counter-offer & pilot scripts (.EML).',
-      roiBadge: '88 Direct Contacts + -18% Floor Ledger Verified'
+      afterLine: 'How SponsorRadar pays for itself on 1 booking: Unlocks all 109 Verified Buyer & Agency Desk Rows (.CSV), the negotiated CPM floor ledger (.CSV), and ready-to-send counter-offer & pilot scripts (.EML).',
+      roiBadge: '109 Verified Buyer & Agency Desk Rows + -18% Floor Ledger'
     }
   },
   derm_logic: {
@@ -318,20 +318,20 @@ const VERTICAL_CONFIGS = {
       radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMtIaoGnkXxS8fAEYjqnp',
-    corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)',
+    corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'Complete Store Recovery Suite ($49/mo)',
     proPriceEnv: 'STRIPE_PRICE_GROWTH_149', proPriceUsd: 149, proLabel: 'Multi-Store & SMS Recovery Pro ($149/mo)',
     lockedTitle: 'Stripe Decline-Code Retry Schedule',
-    deliverableName: 'Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast',
-    freeDeliverableName: 'Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Flow Templates + CFO Forecast',
-    unlockBannerTitle: 'Complete Drop-In Checkout Recovery Code Patch & Klaviyo/Shopify Flow Pack',
+    deliverableName: 'Smart Exit-Offer Script + Stripe Retry Webhook (.JS) + Recovery Email/SMS Templates',
+    freeDeliverableName: 'Smart Exit-Offer Script & Stripe Retry Schedule',
+    unlockBannerTitle: 'Smart Checkout & Stripe Retry Pack',
     explainerText: 'Recover leaving shoppers and retry failed Stripe cards on the exact day & hour banks approve them',
     hudLabel: 'Checkout Ops HUD', redditSub: 'SaaS',
     sliderLabel: 'Monthly Sales ($k)', sliderMin: 15, sliderMax: 500, sliderVal: 85,
     searchPlaceholder: 'Search decline code or store type...',
     tier1Tag: 'SINGLE-STORE RECOVERY PASS • SAVE 96% VS $49',
-    tier1Desc: 'Instantly unlocks your Complete Drop-In Checkout Recovery Code Patch (.JS), 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates, and CFO Revenue Recovery Forecast (.CSV).',
-    tier2Tag: 'FOR CRO & SHOPIFY AGENCIES ($49)',
-    tier2Desc: 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49) with 0% commission and full agency handoff rights.',
+    tier1Desc: 'Instantly unlocks the 1-click checkout recovery script, Stripe webhook retry worker (.JS), and bank decline retry schedule (.CSV).',
+    tier2Tag: 'STARTER STORE RECOVERY ($49/MO)',
+    tier2Desc: 'Automated checkout exit-offer matching + payday-aligned retry scheduling for failed Stripe renewals with 0% commission.',
     tier3Tag: 'GROWTH & 1-TAP SMS SUITE ($149/MO)',
     tier3Desc: 'Multi-store recovery, 1-Tap Apple Pay card-update SMS links, and direct Klaviyo & PostHog integration.',
     battlecard: {
@@ -347,7 +347,7 @@ const VERTICAL_CONFIGS = {
       { id: 'btn-copy-shopping-list', label: 'Copy Recovery Audit', type: 'copy' },
       { id: 'btn-export-csv', label: 'Retry Schedule (.CSV)', href: '/api/github-upgrade/export.csv' },
       { id: 'btn-export-llms', label: 'Stripe Worker (.JS)', href: '/api/github-upgrade/stripe-recovery-worker.js' },
-      { id: 'btn-export-ics', label: 'Retry Cadence (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
+      { id: 'btn-export-ics', label: 'Dunning Cadence (.ICS)', href: '/api/github-upgrade/skin-cycling.ics' },
       { id: 'btn-print-summary', label: 'Print FinOps Brief', type: 'print' },
       { id: 'btn-showroom-hud', label: 'Checkout Ops HUD', type: 'hud' },
       { id: 'btn-cmdk-trigger', label: '⌘K Actions', type: 'cmdk' },
@@ -356,7 +356,7 @@ const VERTICAL_CONFIGS = {
     kpis: [
       { label: 'Recoverable MRR/Mo', val: '$56,722', sub: '24.6% Net Lift' },
       { label: 'Exit-Intent Capture', val: '$49,076', sub: 'C1–C6 Bandit Arms' },
-      { label: 'Declined-Card Lift', val: '$7,646', sub: 'Issuer Window Retry' },
+      { label: 'Smart Dunning Lift', val: '$7,646', sub: 'Issuer Window Retry' },
       { label: 'Pre-Exit Hesitation', val: '< 12.0s', sub: 'Cursor Velocity Vector' }
     ],
     presetKpis: {
@@ -373,28 +373,28 @@ const VERTICAL_CONFIGS = {
     coMarketingPills: [
       { key: 'stripe', label: 'Stripe Billing', rowText: 'Stripe Decline Alert: Naive 24h cron retries on insufficient_funds burn 4-retry Visa limits before balances clear.' },
       { key: 'shopify', label: 'Shopify Plus', rowText: 'Checkout Exit Alert: Static 10%-off popups sacrifice margin on full-price buyers while missing shipping/trust objections.' },
-      { key: 'recharge', label: 'Recharge SMS', rowText: 'Subscription Alert: Generic declined-card emails average < 8% open rates on do_not_honor and expired_card declines.' }
+      { key: 'recharge', label: 'Recharge SMS', rowText: 'Subscription Alert: Generic dunning emails average < 8% open rates on do_not_honor and expired_card declines.' }
     ],
     affiliates: [
       { title: 'Stripe Billing & Smart Retries Suite', badge: 'Official Payment Rail', cpa: 'Explore Webhook Docs', url: 'https://stripe.com/billing' },
       { title: 'PostHog Session Replay & Funnel Analytics', badge: 'Hesitation Telemetry', cpa: 'Explore Funnel Replay', url: 'https://posthog.com/' },
-      { title: 'Klaviyo Checkout Abandonment Flows', badge: 'SMS + Email Recovery', cpa: 'Explore Recovery Flows', url: 'https://www.klaviyo.com/' }
+      { title: 'Klaviyo Checkout Abandonment Flows', badge: 'SMS + Email Dunning', cpa: 'Explore Dunning Flows', url: 'https://www.klaviyo.com/' }
     ],
     githubRepo: {
       name: 'carlsednaoui/ouibounce + PostHog/posthog + colinhacks/zod',
       stars: '171,369 Combined Stars', url: 'https://github.com/PostHog/posthog',
       badge: 'Beta-Bernoulli C1–C6 Bandit + Stripe Decline-Code Retry Engine',
-      title: 'Autonomous Exit-Intent Bandit & Issuer-Window Card Retry Worker',
+      title: 'Autonomous Exit-Intent Bandit & Issuer-Window Dunning Worker',
       summary: 'Replaces naive 24h card retries and static popups with decline-code aware scheduling and Thompson Sampling.'
     },
     deliverableFiles: [
-      { file: 'abandon-alpha-bandit-sdk.js', label: 'Complete Drop-In Checkout Recovery Code Patch (.JS)', size: '8.9 KB', schema: 'Drop-in Copy-Paste checkout recovery code patch matching shipping, price, and trust exit objections', status: 'VALID' },
-      { file: 'stripe-recovery-worker.js', label: '3-Part Klaviyo/Shopify Abandoned Cart Flow Templates (.JS)', size: '4.6 KB', schema: '3-Part Klaviyo/Shopify abandoned cart flow templates + payday-aligned Stripe card retry worker', status: 'VALID' },
-      { file: 'payday-retry-schedule.csv', label: 'CFO Revenue Recovery Forecast (.CSV)', size: '5.2 KB', schema: 'CFO revenue recovery forecast and day-and-hour retry calendar for every Stripe decline code', status: 'VALID' }
+      { file: 'abandon-alpha-bandit-sdk.js', label: 'Smart Exit-Offer Script (.JS)', size: '8.9 KB', schema: 'Shows leaving shoppers the right offer (free shipping, payment plan, or small discount) without giving coupons to full-price buyers', status: 'VALID' },
+      { file: 'stripe-recovery-worker.js', label: 'Payday Card Retry Script (.JS)', size: '4.6 KB', schema: 'Retries declined Stripe cards on payday mornings and bank-approval windows instead of blind daily retries', status: 'VALID' },
+      { file: 'payday-retry-schedule.csv', label: 'Bank Retry Schedule (.CSV)', size: '5.2 KB', schema: 'Day-and-hour retry calendar for every Stripe decline code (insufficient funds, do not honor, expired card)', status: 'VALID' }
     ],
     remediationDiff: {
       beforeLine: 'What we found: Your checkout is losing an estimated $214,523/mo from shoppers leaving at checkout and declined Stripe cards retried at the wrong time.',
-      afterLine: 'How the $1.99 pass fixes it: Unlocks your Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast (+$36,620/mo).',
+      afterLine: 'How the $1.99 pack fixes it: Matches leaving shoppers with the right exit offer and retries failed cards on payday mornings when bank balances clear, recovering an estimated +$36,620/mo.',
       roiBadge: 'Est. +$36,620/mo recoverable sales'
     }
   }
@@ -500,14 +500,14 @@ function createTelemetryStore(dataDir, moduleId) {
       if (eventType === 'checkout_intent') state.checkout_intents += 1;
       save();
     },
-    recordLead({ email, summaryText = '', utmSource = '', isTest = 0, isOwnerIp = 0, clientIp = '' }) {
+    recordLead({ email, summaryText = '', utmSource = '', buyerWedge = 'buyer', isTest = 0, isOwnerIp = 0, clientIp = '' }) {
       const forceTest = (isTest || isOwnerIp || isExcludedOwnerIp(clientIp)) ? 1 : 0;
-      state.leads.push({ id: state.leads.length + 1, module_id: moduleId, email, summary_text: String(summaryText).slice(0, 600), utm_source: utmSource, is_test: forceTest, is_owner: (isOwnerIp || isExcludedOwnerIp(clientIp)) ? 1 : 0, client_ip: clientIp, created_at: new Date().toISOString() });
+      state.leads.push({ id: state.leads.length + 1, module_id: moduleId, email, summary_text: String(summaryText).slice(0, 600), utm_source: utmSource, buyer_wedge: buyerWedge === 'creator' ? 'creator' : 'buyer', is_test: forceTest, is_owner: (isOwnerIp || isExcludedOwnerIp(clientIp)) ? 1 : 0, client_ip: clientIp, created_at: new Date().toISOString() });
       save();
     },
-    recordOrder({ tier, sku, amountUsd, status = 'intent', sessionId = '', isTest = 0, isOwnerIp = 0, clientIp = '' }) {
+    recordOrder({ tier, sku, amountUsd, status = 'intent', sessionId = '', buyerWedge = 'buyer', isTest = 0, isOwnerIp = 0, clientIp = '' }) {
       const forceTest = (isTest || isOwnerIp || isExcludedOwnerIp(clientIp)) ? 1 : 0;
-      state.orders.push({ id: state.orders.length + 1, module_id: moduleId, tier, sku, amount_usd: Number(amountUsd) || 0, status, session_id: sessionId, is_test: forceTest, is_owner: (isOwnerIp || isExcludedOwnerIp(clientIp)) ? 1 : 0, client_ip: clientIp, created_at: new Date().toISOString() });
+      state.orders.push({ id: state.orders.length + 1, module_id: moduleId, tier, sku, amount_usd: Number(amountUsd) || 0, status, session_id: sessionId, buyer_wedge: buyerWedge === 'creator' ? 'creator' : 'buyer', is_test: forceTest, is_owner: (isOwnerIp || isExcludedOwnerIp(clientIp)) ? 1 : 0, client_ip: clientIp, created_at: new Date().toISOString() });
       save();
     },
     markOrderPaid(sessionId, amountUsd) {
@@ -528,14 +528,14 @@ function createTelemetryStore(dataDir, moduleId) {
           if (e.client_ip) headlessCohortSet.add(e.client_ip);
         }
       }
-      const baseClean = state.events.filter((e) => Number(e.is_test) === 0 && !e.is_owner && !e.is_mirofish && Boolean(e.client_ip) && !isExcludedOwnerIp(e.client_ip) && !headlessCohortSet.has(e.client_ip) && !(e.meta && e.meta.vid && headlessCohortSet.has(e.meta.vid)) && !(e.event_type === 'view_paywall' && e.meta && e.meta.target === 'in-card-unlock-bar' && !e.meta.scroll_y) && !(e.meta && /\/api\/(?:telemetry|meta-capi)/i.test(String(e.meta.ref || ''))) && !(e.event_type === 'checkout_intent' && e.meta && e.meta.method === 'GET' && !e.meta.has_referer));
+      const baseClean = state.events.filter((e) => Number(e.is_test) === 0 && !e.is_owner && !e.is_mirofish && Boolean(e.client_ip) && !isExcludedOwnerIp(e.client_ip) && !headlessCohortSet.has(e.client_ip) && !(e.meta && e.meta.vid && headlessCohortSet.has(e.meta.vid)) && !(e.event_type === 'view_paywall' && e.meta && (e.meta.target === 'vaul_post_calc_spotlight' || (e.meta.target === 'in-card-unlock-bar' && !e.meta.scroll_y))) && !(e.meta && /\/api\/(?:telemetry|meta-capi)/i.test(String(e.meta.ref || ''))) && !(e.event_type === 'checkout_intent' && e.meta && e.meta.method === 'GET' && !e.meta.has_referer));
       const seoBurstUrls = new Set(baseClean.filter((e) => e.page_url && e.page_url.startsWith('/seo/') && Number(e.meta && e.meta.vw) === 1024 && !(e.meta && e.meta.ref)).filter((e, _, arr) => arr.filter((x) => x.page_url === e.page_url && Math.abs(new Date(x.created_at).getTime() - new Date(e.created_at).getTime()) <= 5000).length >= 3).map((e) => `${e.page_url}|${Math.floor(new Date(e.created_at).getTime() / 10000)}`));
       const isWrsBurst = (e) => Boolean(e.page_url && seoBurstUrls.has(`${e.page_url}|${Math.floor(new Date(e.created_at).getTime() / 10000)}`));
       const jsVerifiedIps = new Set(baseClean.filter((e) => !isWrsBurst(e) && (e.event_type === 'view_paywall' || e.event_type === 'checkout_intent' || Boolean(e.meta && (e.meta.js_hydrated || e.meta.vid)))).map((e) => e.client_ip));
       const isJsVerifiedHuman = (e) => isWrsBurst(e) ? false : ((e.event_type === 'visit' || e.event_type === 'calculate') ? (jsVerifiedIps.has(e.client_ip) || Boolean(e.meta && (e.meta.js_hydrated || e.meta.vid))) : true);
       const unhydratedAll = baseClean.filter((e) => !isJsVerifiedHuman(e));
       const rawCandidates = baseClean.filter(isJsVerifiedHuman);
-      const humanEvents = []; const seenPw = new Map(), seenVis = new Map();
+      const humanEvents = []; const seenPw = new Map(), seenVis = new Map(), seenCalc = new Map();
       for (const e of rawCandidates) {
         const ts = new Date(e.created_at).getTime(), ipKey = e.client_ip || '', ck = (e.meta && e.meta.vid) || ipKey;
         if (e.event_type === 'visit' || e.event_type === 'visit_hydrated') {
@@ -554,6 +554,10 @@ function createTelemetryStore(dataDir, moduleId) {
           const row = { ...(e.event_type === 'visit_hydrated' ? { ...e, event_type: 'visit' } : e), device_type: dev, utm_source: e.utm_source || inferRefSrc(rLow) };
           const rec = { ts, row }; seenVis.set(ck, rec); if (ipKey) seenVis.set(ipKey, rec);
           humanEvents.push(row); continue;
+        }
+        if (e.event_type === 'calculate') {
+          if ((seenCalc.has(ck) && Math.abs(ts - seenCalc.get(ck)) <= 2500) || (ipKey && seenCalc.has(ipKey) && Math.abs(ts - seenCalc.get(ipKey)) <= 2500)) continue;
+          seenCalc.set(ck, ts); if (ipKey) seenCalc.set(ipKey, ts);
         }
         if (e.event_type === 'view_paywall') {
           if (seenPw.has(ck) && Math.abs(ts - seenPw.get(ck)) <= 60000) continue;
@@ -575,11 +579,32 @@ function createTelemetryStore(dataDir, moduleId) {
       const humanLeadsList = state.leads.filter((l) => Number(l.is_test) === 0 && !l.is_owner && Boolean(l.client_ip) && !isExcludedOwnerIp(l.client_ip)), humanLeads = humanLeadsList.length, winLeads = humanLeadsList.filter((l) => new Date(l.created_at).getTime() >= cutoffMs).length, testLeads = state.leads.length - humanLeads;
       const paidOrdersList = state.orders.filter((o) => Number(o.is_test) === 0 && !o.is_owner && Boolean(o.client_ip) && !isExcludedOwnerIp(o.client_ip) && o.status === 'paid');
       const paidOrders = paidOrdersList.length, paidRevUsd = paidOrdersList.reduce((acc, o) => acc + (Number(o.amount_usd) || 0), 0);
+      const vidWedge = new Map(); for (const e of state.events) { const w = e.meta?.buyer_wedge || (e.meta?.store_pill === 'persona_creator' ? 'creator' : (e.meta?.store_pill === 'persona_buyer' ? 'buyer' : '')); if (w === 'creator' || w === 'buyer') { if (e.meta?.vid) vidWedge.set(e.meta.vid, w); if (e.client_ip) vidWedge.set(e.client_ip, w); } }
+      const resW = (x) => { const d = x.buyer_wedge || x.meta?.buyer_wedge || (x.meta?.store_pill === 'persona_creator' ? 'creator' : (x.meta?.store_pill === 'persona_buyer' ? 'buyer' : '')); return (d === 'creator' || d === 'buyer') ? d : ((x.meta && vidWedge.get(x.meta.vid)) || vidWedge.get(x.client_ip) || 'buyer'); };
+      const mkW = (lbl) => ({ label: lbl, visits: 0, wedge_taps: 0, calculations: 0, copies: 0, view_paywall: 0, row_micro_unlocks: 0, leads: 0, checkout_intents: 0, paid_orders: 0, paid_revenue_usd: 0, rpv_usd: 0 });
+      const wedgeFunnel = { creator: mkW('I want sponsors for my show'), buyer: mkW("I'm buying ads & checking CPMs") };
+      const mkOff = (lbl, p) => ({ label: lbl, price_usd: p, checkout_intents: 0, paid_orders: 0, paid_revenue_usd: 0, rpv_usd: 0 });
+      const offerFunnel = { flash_pass: mkOff('Row / Target 3-File Pack ($1.99)', 1.99), complete_dossier: mkOff('All 96 Buyers Vault Pass ($29)', 29), micro_pass: mkOff('Single-File Micro Pass ($0.99)', 0.99), pro_b2b: mkOff('Agency B2B Feed ($199)', 199) };
+      for (const e of state.events.filter((x) => !x.is_crawler)) {
+        const b = wedgeFunnel[resW(e)] || wedgeFunnel.buyer;
+        if (e.event_type === 'visit') b.visits++; else if (e.event_type === 'wedge_select' || (e.event_type === 'tab_switch' && /^persona_/.test(String(e.meta?.store_pill || '')))) b.wedge_taps++; else if (e.event_type === 'calculate') b.calculations++; else if (e.event_type === 'copy_summary') b.copies++; else if (e.event_type === 'view_paywall') b.view_paywall++; else if (e.event_type === 'row_micro_unlock_focus') b.row_micro_unlocks++;
+        else if (e.event_type === 'checkout_intent') { b.checkout_intents++; const rawTk = String(e.meta?.tier || e.meta?.plan || 'flash_pass'), tKey = rawTk === 'playbook_pass' ? 'complete_dossier' : rawTk; if (offerFunnel[tKey]) offerFunnel[tKey].checkout_intents++; }
+      }
+      for (const l of state.leads) (wedgeFunnel[resW(l)] || wedgeFunnel.buyer).leads++;
+      for (const o of state.orders.filter((x) => x.status === 'paid')) {
+        const wb = wedgeFunnel[resW(o)] || wedgeFunnel.buyer, amt = Number(o.amount_usd) || 0, oKey = o.tier === 'playbook_pass' ? 'complete_dossier' : o.tier;
+        wb.paid_orders++; wb.paid_revenue_usd = Number((wb.paid_revenue_usd + amt).toFixed(2));
+        const ot = offerFunnel[oKey] || offerFunnel.flash_pass; ot.paid_orders++; ot.paid_revenue_usd = Number((ot.paid_revenue_usd + amt).toFixed(2));
+      }
+      const totVisits = Math.max(1, (wedgeFunnel.creator.visits + wedgeFunnel.buyer.visits) || cumCounts.visit || 1);
+      for (const k of ['creator', 'buyer']) wedgeFunnel[k].rpv_usd = Number((wedgeFunnel[k].paid_revenue_usd / Math.max(1, wedgeFunnel[k].visits)).toFixed(4));
+      for (const k of Object.keys(offerFunnel)) offerFunnel[k].rpv_usd = Number((offerFunnel[k].paid_revenue_usd / totVisits).toFixed(4));
+      const overallRpvUsd = Number((paidRevUsd / Math.max(1, cumCounts.visit || 1)).toFixed(4)), humanVisits = cumCounts.visit || 0;
       return {
         ok: true, module_id: moduleId, pst_now: toPstString(new Date(nowMs).toISOString()), pst_window_start: toPstString(new Date(cutoffMs).toISOString()), pst_prev_window_start: toPstString(new Date(prevCutMs).toISOString()),
         window_hours: windowHours, excluded_owner_ips: ['99.112.70.144', '99.112.70.0/24', '84.17.44.226', '2600:1702:75f1:4c10::/64', '127.0.0.1', '::1', ...(state.owner_ips || [])],
         window_events: winCounts, prior_window_events: prevCounts, window_devices: winDevices, window_sources: winSources, window_leads: winLeads, window_test_events: winTestCounts, window_crawler_hits: winCrawlerHits, unhydrated_http_hits_filtered: unhydratedAll.length, js_verified_unique_cohorts: jsVerifiedIps.size, mirofish_swarm_events: mirofishEventsCount, recent_pst_events: recentRows, recent_all_events: recentAllRows,
-        all_time_human_funnel: cumCounts, human_leads: humanLeads, test_leads: testLeads, paid_orders: paidOrders, paid_revenue_usd: Number(paidRevUsd.toFixed(2)),
+        all_time_human_funnel: cumCounts, wedge_funnel: wedgeFunnel, offer_funnel: offerFunnel, rpv_usd: overallRpvUsd, cohort_window_20: { visits: humanVisits, target: 20, ready: humanVisits >= 20, rpv_usd: overallRpvUsd }, human_leads: humanLeads, test_leads: testLeads, paid_orders: paidOrders, paid_revenue_usd: Number(paidRevUsd.toFixed(2)),
         server_registry_totals: { impressions: state.impressions, calculations: state.calculations, checkout_intents: state.checkout_intents, crawler_hits: (state.crawler_hits || 0) + unhydratedAll.length, total_events_logged: state.events.length }
       };
     },
@@ -673,162 +698,57 @@ function attachExactBaselinePack(app, options = {}) {
   app.get('/api/github-upgrade/llms-bundle.txt', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/llms-bundle.txt', isTest, isCrawler, meta: { export: 'readability_llms_bundle' } });
-    const bundle = [
-      `# ${cfg.brandName} (${cfg.domain}): Verified Protocol & Benchmark Summary`,
-      `> ${cfg.explainerText}`, '',
-      '## 1. Before / After Remediation Diff',
-      cfg.remediationDiff.beforeLine,
-      cfg.remediationDiff.afterLine, '',
-      '## 2. Verified Scenario Presets',
-      ...cfg.presets.map((p) => `- [${p.label}](https://${cfg.domain}/?preset=${encodeURIComponent(p.key)}): ${(cfg.presetKpis[p.key] || []).join(' | ')}`), '',
-      '## 3. Single-Audit Export Pass ($1.99)',
-      `- Unlock Full Production Deliverable & Exports: https://${cfg.domain}/?unlock=flash_pass`
-    ].join('\n');
+    const bundle = [`# ${cfg.brandName} (${cfg.domain}): Verified Protocol & Benchmark Summary`, `> ${cfg.explainerText}`, '', '## 1. Before / After Remediation Diff', cfg.remediationDiff.beforeLine, cfg.remediationDiff.afterLine, '', '## 2. Verified Scenario Presets', ...cfg.presets.map((p) => `- [${p.label}](https://${cfg.domain}/?preset=${encodeURIComponent(p.key)}): ${(cfg.presetKpis[p.key] || []).join(' | ')}`), '', '## 3. Single-Audit Export Pass ($1.99)', `- Unlock Full Production Deliverable & Exports: https://${cfg.domain}/?unlock=flash_pass`].join('\n');
     res.status(200).type('text/plain; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-protocol-bundle.txt"`).send(bundle);
   });
 
-  // 4C. krisk/Fuse Instant Fuzzy-Search & Custom Scenario Scorer
   app.get('/api/github-upgrade/fuse-search', (req, res) => {
     const q = String(req.query.q || cfg.presets[0].key).replace(/[<>"'`]/g, '').trim().slice(0, 80);
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/fuse-search', isTest, isCrawler, meta: { query: q, engine: 'fuse_bitap' } });
-    let hash = 0;
-    for (let i = 0; i < q.length; i++) hash = (hash * 31 + q.charCodeAt(i)) % 1000;
+    let hash = 0; for (let i = 0; i < q.length; i++) hash = (hash * 31 + q.charCodeAt(i)) % 1000;
     const matchedPreset = cfg.presets.find((p) => p.key.toLowerCase().includes(q.toLowerCase()) || p.label.toLowerCase().includes(q.toLowerCase()));
-    const kpiVals = matchedPreset && cfg.presetKpis[matchedPreset.key]
-      ? cfg.presetKpis[matchedPreset.key]
-      : (verticalId === 'citation_forge'
-        ? [`${(34 + (hash % 18)).toFixed(1)}%`, `${84 + (hash % 15)}/100`, `${82 + (hash % 16)}/100`, `${(41 + (hash % 16)).toFixed(1)}%`]
-        : verticalId === 'sponsor_radar'
-          ? [`${88 + (hash % 11)}/100`, `$${(120 + (hash % 680)).toLocaleString()},000`, `$${(34 + (hash % 16)).toFixed(2)}`, `${(1.32 + (hash % 18) / 100).toFixed(2)}x`]
-          : verticalId === 'derm_logic'
-            ? [`${52 + (hash % 44)}/100`, `${(0.7 + (hash % 22) / 10).toFixed(1)} pH`, `${78 + (hash % 19)}% Pass`, `${hash % 2} Triggers`]
-            : [`$${(9 + (hash % 55)).toLocaleString()},400`, `$${(6 + (hash % 32)).toLocaleString()},200`, `$${(3 + (hash % 22)).toLocaleString()},200`, `< ${(9.5 + (hash % 40) / 10).toFixed(1)}s`]);
-    res.json({
-      ok: true,
-      engine: 'krisk/Fuse (★ 20,503 Bitap Fuzzy Scorer)',
-      query: q,
-      matched_preset: matchedPreset ? matchedPreset.key : 'custom_deterministic',
-      kpis: kpiVals,
-      row1_insight: `${cfg.brandName} Match for "${q}": ${cfg.coMarketingPills[0].rowText}`
-    });
+    const kpiVals = matchedPreset && cfg.presetKpis[matchedPreset.key] ? cfg.presetKpis[matchedPreset.key] : (verticalId === 'citation_forge' ? [`${(34 + (hash % 18)).toFixed(1)}%`, `${84 + (hash % 15)}/100`, `${82 + (hash % 16)}/100`, `${(41 + (hash % 16)).toFixed(1)}%`] : verticalId === 'sponsor_radar' ? [`${88 + (hash % 11)}/100`, `$${(120 + (hash % 680)).toLocaleString()},000`, `$${(34 + (hash % 16)).toFixed(2)}`, `${(1.32 + (hash % 18) / 100).toFixed(2)}x`] : verticalId === 'derm_logic' ? [`${52 + (hash % 44)}/100`, `${(0.7 + (hash % 22) / 10).toFixed(1)} pH`, `${78 + (hash % 19)}% Pass`, `${hash % 2} Triggers`] : [`$${(9 + (hash % 55)).toLocaleString()},400`, `$${(6 + (hash % 32)).toLocaleString()},200`, `$${(3 + (hash % 22)).toLocaleString()},200`, `< ${(9.5 + (hash % 40) / 10).toFixed(1)}s`]);
+    res.json({ ok: true, engine: 'krisk/Fuse (★ 20,503 Bitap Fuzzy Scorer)', query: q, matched_preset: matchedPreset ? matchedPreset.key : 'custom_deterministic', kpis: kpiVals, row1_insight: `${cfg.brandName} Match for "${q}": ${cfg.coMarketingPills[0].rowText}` });
   });
 
-  // 4D. Behavioral Economics Value-Ladder API (Zero Free-vs-Paid Cannibalization)
-  app.get('/api/github-upgrade/unlock-preview', (req, res) => {
-    res.json({
-      ok: true,
-      module_id: cfg.moduleId,
-      behavioral_architecture: 'Ariely Zero-Price Prevention + Good-Better-Best Decoy Anchoring (@richardrx)',
-      value_ladder: {
-        free_diagnostic: '100% Free Interactive Calculator + Headline KPIs + Top Finding + 3-Line jsdiff Proof Preview',
-        path_b_flash_pass: { price_usd: 1.99, anchor_price_usd: cfg.corePriceUsd, savings_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100), unlock: cfg.deliverableName },
-        path_c_complete_pack: { price_usd: cfg.corePriceUsd, unlock: cfg.coreLabel },
-        path_d_pro_anchor: { price_usd: cfg.proPriceUsd, unlock: cfg.proLabel },
-        exit_intent_downsell: '1-Page Diagnostic Summary via Email (Only on Tab Exit: Zero Paywall Cannibalization)'
-      }
-    });
-  });
+  app.get('/api/github-upgrade/unlock-preview', (req, res) => res.json({ ok: true, module_id: cfg.moduleId, behavioral_architecture: 'Ariely Zero-Price Prevention + Good-Better-Best Decoy Anchoring (@richardrx)', value_ladder: { free_diagnostic: '100% Free Interactive Calculator + Headline KPIs + Top Finding + 3-Line jsdiff Proof Preview', path_b_flash_pass: { price_usd: 1.99, anchor_price_usd: cfg.corePriceUsd, savings_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100), unlock: cfg.deliverableName }, path_c_complete_pack: { price_usd: cfg.corePriceUsd, unlock: cfg.coreLabel }, path_d_pro_anchor: { price_usd: cfg.proPriceUsd, unlock: cfg.proLabel }, exit_intent_downsell: '1-Page Diagnostic Summary via Email (Only on Tab Exit: Zero Paywall Cannibalization)' } }));
 
-  // 4E. colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) Deliverable Contract & File Manifest Verification
   app.get('/api/github-upgrade/deliverable-manifest', (req, res) => {
     const target = String(req.query.target || cfg.presets[0].key).trim();
-    res.json({
-      ok: true, module_id: cfg.moduleId, target_entity: target,
-      validator: 'colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) RFC-8927 Contract',
-      express_checkout_wallets: ['Apple Pay', 'Google Pay', 'Stripe Link', '1-Click Card'],
-      files: cfg.deliverableFiles || [], flash_pass_usd: 1.99, savings_vs_core_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100)
-    });
+    res.json({ ok: true, module_id: cfg.moduleId, target_entity: target, validator: 'colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) RFC-8927 Contract', express_checkout_wallets: ['Apple Pay', 'Google Pay', 'Stripe Link', '1-Click Card'], files: cfg.deliverableFiles || [], flash_pass_usd: 1.99, savings_vs_core_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100) });
   });
 
-  // 4F. nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) Spotlight & Endowment Engine
   const handleRoiAndEndowment = (req, res) => {
-    const legacyCostUsd = verticalId === 'citation_forge' ? 299 : (verticalId === 'sponsor_radar' ? 2500 : (verticalId === 'derm_logic' ? 332 : 1800));
-    const paybackMultiple = Math.round(legacyCostUsd / 1.99);
-    res.json({
-      ok: true, module_id: cfg.moduleId, iteration: 52,
-      engine: 'nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) + TanStack/table (★ 26,100)',
-      micro_pass_usd: 0.99, flash_pass_usd: 1.99, legacy_alternative_usd: legacyCostUsd, payback_multiple_x: paybackMultiple,
-      driver_spotlight_enabled: true, one_tap_preset_chips: true, interactive_file_pill_modals: true,
-      endowment_customizer_enabled: true, pseo_inline_curtain_enabled: true, pseo_table_express_bar_enabled: true, sqlite_statement_cache_active: true
-    });
+    const legacyCostUsd = verticalId === 'citation_forge' ? 299 : (verticalId === 'sponsor_radar' ? 2500 : (verticalId === 'derm_logic' ? 332 : 1800)), paybackMultiple = Math.round(legacyCostUsd / 1.99);
+    res.json({ ok: true, module_id: cfg.moduleId, iteration: 52, engine: 'nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) + TanStack/table (★ 26,100)', micro_pass_usd: 0.99, flash_pass_usd: 1.99, legacy_alternative_usd: legacyCostUsd, payback_multiple_x: paybackMultiple, driver_spotlight_enabled: true, one_tap_preset_chips: true, interactive_file_pill_modals: true, endowment_customizer_enabled: true, pseo_inline_curtain_enabled: true, pseo_table_express_bar_enabled: true, sqlite_statement_cache_active: true });
   };
   app.get(['/api/github-upgrade/roi-payback', '/api/github-upgrade/endowment-customizer', '/api/github-upgrade/driver-spotlight', '/api/github-upgrade/pseo-table-express-bar'], handleRoiAndEndowment);
 
-  // 5. Model Context Protocol (.well-known/mcp.json) & Vertical GitHub Repo Upgrade Endpoints
   app.get('/.well-known/mcp.json', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.json({
-      schema_version: '2026-10-15', name: cfg.brandName, domain: cfg.domain,
-      description: `${cfg.brandName} Deterministic Audit & Telemetry MCP Server (${cfg.githubRepo.name})`,
-      endpoints: {
-        llms_txt: `https://${cfg.domain}/llms.txt`, llms_bundle: `https://${cfg.domain}/api/github-upgrade/llms-bundle.txt`,
-        fuse_search: `https://${cfg.domain}/api/github-upgrade/fuse-search?q=`, unlock_preview: `https://${cfg.domain}/api/github-upgrade/unlock-preview`,
-        deliverable_manifest: `https://${cfg.domain}/api/github-upgrade/deliverable-manifest`, roi_payback: `https://${cfg.domain}/api/github-upgrade/roi-payback`,
-        endowment_customizer: `https://${cfg.domain}/api/github-upgrade/endowment-customizer`,
-        rss_feed: `https://${cfg.domain}/feed.xml`, json_feed: `https://${cfg.domain}/feed.json`,
-        csv_export: `https://${cfg.domain}/api/github-upgrade/export.csv`, sitemap: `https://${cfg.domain}/sitemap.xml`,
-        github_upgrade_api: `https://${cfg.domain}/api/github-upgrade`, pst_telemetry: `https://${cfg.domain}/api/telemetry/pst-report`
-      },
-      capabilities: ['ariely_zero_price_guard', 'gbb_decoy_anchoring', 'zod_deliverable_manifest', 'pseo_inline_curtain', 'endowment_customizer', 'sqlite_stmt_cache']
-    });
+    res.json({ schema_version: '2026-10-15', name: cfg.brandName, domain: cfg.domain, description: `${cfg.brandName} Deterministic Audit & Telemetry MCP Server (${cfg.githubRepo.name})`, endpoints: { llms_txt: `https://${cfg.domain}/llms.txt`, llms_bundle: `https://${cfg.domain}/api/github-upgrade/llms-bundle.txt`, fuse_search: `https://${cfg.domain}/api/github-upgrade/fuse-search?q=`, unlock_preview: `https://${cfg.domain}/api/github-upgrade/unlock-preview`, deliverable_manifest: `https://${cfg.domain}/api/github-upgrade/deliverable-manifest`, roi_payback: `https://${cfg.domain}/api/github-upgrade/roi-payback`, endowment_customizer: `https://${cfg.domain}/api/github-upgrade/endowment-customizer`, rss_feed: `https://${cfg.domain}/feed.xml`, json_feed: `https://${cfg.domain}/feed.json`, csv_export: `https://${cfg.domain}/api/github-upgrade/export.csv`, sitemap: `https://${cfg.domain}/sitemap.xml`, github_upgrade_api: `https://${cfg.domain}/api/github-upgrade`, pst_telemetry: `https://${cfg.domain}/api/telemetry/pst-report` }, capabilities: ['ariely_zero_price_guard', 'gbb_decoy_anchoring', 'zod_deliverable_manifest', 'pseo_inline_curtain', 'endowment_customizer', 'sqlite_stmt_cache'] });
   });
 
   app.get('/api/github-upgrade', (req, res) => {
     const target = String(req.query.target || cfg.presets[0].key);
-    return res.json({
-      ok: true, repo: cfg.githubRepo, target, deliverable_files: cfg.deliverableFiles || [],
-      behavioral_economics: { zero_price_cannibalization_removed: true, native_hero_first_above_fold: true, pseo_inline_curtain: true, endowment_customizer: true, paid_tiers_usd: [0.99, 1.99, cfg.corePriceUsd, cfg.proPriceUsd] }
-    });
+    return res.json({ ok: true, repo: cfg.githubRepo, target, deliverable_files: cfg.deliverableFiles || [], behavioral_economics: { zero_price_cannibalization_removed: true, native_hero_first_above_fold: true, pseo_inline_curtain: true, endowment_customizer: true, paid_tiers_usd: [0.99, 1.99, cfg.corePriceUsd, cfg.proPriceUsd] } });
   });
 
   app.get('/api/github-upgrade/pitch.eml', (req, res) => {
     const brand = String(req.query.brand || 'AG1');
-    const eml = [
-      `From: ${cfg.brandName} Desk <partnerships@${cfg.domain.replace(/^www\./, '')}>`,
-      `To: media-buying@${brand.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`,
-      `Subject: [3x-Renewal Verified] Host-Voiced Mid-Roll Slot for ${brand} (1.42x Pyannote Trust Score)`,
-      'MIME-Version: 1.0', 'Content-Type: text/plain; charset=utf-8', '',
-      `Hi ${brand} Growth & Media Buying Team,`, '',
-      `${cfg.brandName}'s deterministic ledger tracked your 3x+ renewed host-read flights and verified a $38.50 cleared net eCPM benchmark.`,
-      'We have a 60-second native host-voiced mid-roll opening with a guaranteed vanity URL + pinned comment conversion floor.', '',
-      `• 1-Click Instant Audit & Rate Card Pass ($1.99): https://${cfg.domain}/buy/flash_pass?brand=${encodeURIComponent(brand)}`,
-      `• Unlock Full Verified Sponsor & Contact Vault ($${cfg.corePriceUsd}): https://${cfg.domain}/buy/complete_dossier?brand=${encodeURIComponent(brand)}`,
-      `• Agency & B2B Team License ($${cfg.proPriceUsd}): https://${cfg.domain}/buy/pro_b2b?brand=${encodeURIComponent(brand)}`, '',
-      `Best,\n${cfg.brandName} Revenue Intelligence\nhttps://${cfg.domain}`
-    ].join('\r\n');
+    const eml = [`From: ${cfg.brandName} Desk <partnerships@${cfg.domain.replace(/^www\./, '')}>`, `To: media-buying@${brand.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`, `Subject: [3x-Renewal Verified] Host-Voiced Mid-Roll Slot for ${brand} (1.42x Pyannote Trust Score)`, 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=utf-8', '', `Hi ${brand} Growth & Media Buying Team,`, '', `${cfg.brandName}'s deterministic ledger tracked your 3x+ renewed host-read flights and verified a $38.50 cleared net eCPM benchmark.`, 'We have a 60-second native host-voiced mid-roll opening with a guaranteed vanity URL + pinned comment conversion floor.', '', `• 1-Click Instant Audit & Rate Card Pass ($1.99): https://${cfg.domain}/buy/flash_pass?brand=${encodeURIComponent(brand)}`, `• Unlock Full Verified Sponsor & Contact Vault ($${cfg.corePriceUsd}): https://${cfg.domain}/buy/complete_dossier?brand=${encodeURIComponent(brand)}`, `• Agency & B2B Team License ($${cfg.proPriceUsd}): https://${cfg.domain}/buy/pro_b2b?brand=${encodeURIComponent(brand)}`, '', `Best,\n${cfg.brandName} Revenue Intelligence\nhttps://${cfg.domain}`].join('\r\n');
     res.status(200).type('message/rfc822').setHeader('Content-Disposition', `attachment; filename="${brand.toLowerCase()}-outreach-pitch.eml"`).send(eml);
   });
 
   app.get('/api/github-upgrade/stripe-recovery-worker.js', (req, res) => {
-    const code = [
-      '/** AbandonAlpha (#9): Autonomous Stripe Webhook Dunning & Exit-Intent Worker (Cloudflare / Edge) */',
-      'export default { async fetch(request, env) {',
-      '  const sig = request.headers.get("stripe-signature") || ""; if (!sig) return new Response("Missing signature", { status: 400 });',
-      '  const payload = await request.json(); const obj = payload?.data?.object || {};',
-      '  const code = obj?.last_payment_error?.decline_code || "insufficient_funds";',
-      '  const action = code === "expired_card" ? "SEND_1TAP_PORTAL_LINK_ZERO_RETRY" : (code === "insufficient_funds" ? "SCHEDULE_FRIDAY_0905_PAYDAY_RETRY" : "COOLDOWN_24H_SOFT_RETRY");',
-      '  const delayHours = code === "insufficient_funds" ? 72 : (code === "do_not_honor" ? 24 : 0);',
-      '  return new Response(JSON.stringify({ ok: true, idempotency_key: `aa_${obj.id || Date.now()}_${code}`, decline_code: code, recovery_action: action, scheduled_retry_hours: delayHours, bandit_arm: "C1_SAVE15" }), { headers: { "Content-Type": "application/json" } });',
-      '} };'
-    ].join('\n');
+    const code = ['/** AbandonAlpha (#9): Autonomous Stripe Webhook Dunning & Exit-Intent Worker (Cloudflare / Edge) */', 'export default { async fetch(request, env) {', '  const sig = request.headers.get("stripe-signature") || ""; if (!sig) return new Response("Missing signature", { status: 400 });', '  const payload = await request.json(); const obj = payload?.data?.object || {};', '  const code = obj?.last_payment_error?.decline_code || "insufficient_funds";', '  const action = code === "expired_card" ? "SEND_1TAP_PORTAL_LINK_ZERO_RETRY" : (code === "insufficient_funds" ? "SCHEDULE_FRIDAY_0905_PAYDAY_RETRY" : "COOLDOWN_24H_SOFT_RETRY");', '  const delayHours = code === "insufficient_funds" ? 72 : (code === "do_not_honor" ? 24 : 0);', '  return new Response(JSON.stringify({ ok: true, idempotency_key: `aa_${obj.id || Date.now()}_${code}`, decline_code: code, recovery_action: action, scheduled_retry_hours: delayHours, bandit_arm: "C1_SAVE15" }), { headers: { "Content-Type": "application/json" } });', '} };'].join('\n');
     res.status(200).type('application/javascript; charset=utf-8').setHeader('Content-Disposition', 'attachment; filename="stripe-recovery-worker.js"').send(code);
   });
 
   app.get('/api/github-upgrade/remediation-diff', (req, res) => {
     const diff = cfg.remediationDiff || { beforeLine: '- [BEFORE] Legacy baseline', afterLine: '+ [AFTER] Optimized baseline', roiBadge: 'Verified Lift' };
-    res.json({
-      ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (★ 9,214) + eligrey/FileSaver.js (★ 22,040)',
-      before_line: diff.beforeLine, after_line: diff.afterLine, roi_badge: diff.roiBadge,
-      unified_patch: `--- a/${cfg.domain}/baseline\n+++ b/${cfg.domain}/remediated\n@@ -1,1 +1,1 @@\n${diff.beforeLine}\n${diff.afterLine}`,
-      unlock_paths: [
-        { path: 'micro_pass', price_usd: 0.99, buy_url: `https://${cfg.domain}/buy/micro_pass`, label: '99¢ Single-File Instant Export Pass' },
-        { path: 'flash_pass', price_usd: 1.99, buy_url: `https://${cfg.domain}/buy/flash_pass`, label: `$1.99 Single-Audit Export Pass (${cfg.freeDeliverableName})` },
-        { path: 'playbook_pass', price_usd: 29, buy_url: `https://${cfg.domain}/buy/playbook_pass`, label: '$29 Founder Recovery Playbook & Dunning Webhook (.JS)' },
-        { path: 'complete_dossier', price_usd: cfg.corePriceUsd, buy_url: `https://${cfg.domain}/buy/complete_dossier`, label: cfg.coreLabel },
-        { path: 'pro_b2b', price_usd: cfg.proPriceUsd, buy_url: `https://${cfg.domain}/buy/pro_b2b`, label: cfg.proLabel }
-      ]
-    });
+    res.json({ ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (★ 9,214) + eligrey/FileSaver.js (★ 22,040)', before_line: diff.beforeLine, after_line: diff.afterLine, roi_badge: diff.roiBadge, unified_patch: `--- a/${cfg.domain}/baseline\n+++ b/${cfg.domain}/remediated\n@@ -1,1 +1,1 @@\n${diff.beforeLine}\n${diff.afterLine}`, unlock_paths: [{ path: 'micro_pass', price_usd: 0.99, buy_url: `https://${cfg.domain}/buy/micro_pass`, label: '99¢ Single-File Instant Export Pass' }, { path: 'flash_pass', price_usd: 1.99, buy_url: `https://${cfg.domain}/buy/flash_pass`, label: `$1.99 Single-Audit Export Pass (${cfg.freeDeliverableName})` }, { path: 'playbook_pass', price_usd: 29, buy_url: `https://${cfg.domain}/buy/playbook_pass`, label: '$29 Founder Recovery Playbook & Dunning Webhook (.JS)' }, { path: 'complete_dossier', price_usd: cfg.corePriceUsd, buy_url: `https://${cfg.domain}/buy/complete_dossier`, label: cfg.coreLabel }, { path: 'pro_b2b', price_usd: cfg.proPriceUsd, buy_url: `https://${cfg.domain}/buy/pro_b2b`, label: cfg.proLabel }] });
   });
 
   // 6. Telemetry Ingestion, Owner IP Verification & 3-Hourly PST Report Endpoints
@@ -839,17 +759,15 @@ function attachExactBaselinePack(app, options = {}) {
   });
 
   app.post('/api/telemetry/event', (req, res) => {
-    const body = req.body || {};
-    const ua = String(req.headers['user-agent'] || '');
-    const deviceType = /mobile|iphone|android/i.test(ua) ? 'mobile' : 'desktop';
-    const safeEmail = String(body.email || (body.meta && body.meta.email) || '').trim().slice(0, 254);
-    const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, safeEmail);
+    const body = req.body || {}, ua = String(req.headers['user-agent'] || ''), deviceType = /mobile|iphone|android/i.test(ua) ? 'mobile' : 'desktop';
+    const rawEmail = String(body.email || (body.meta && body.meta.email) || '').trim().slice(0, 254);
+    const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, rawEmail);
     if (isOwnerIp) res.setHeader('Set-Cookie', 'eb_owner_test=1; Path=/; Max-Age=31536000; SameSite=Lax');
-    const evType = String(body.event_type || body.eventType || 'interaction');
-    if (evType === 'lead_capture' && safeEmail && safeEmail.includes('@')) {
-      store.recordLead({ email: safeEmail, summaryText: `${cfg.brandName} Inline Lead (${String(body.page_url || body.pageUrl || '/')})`, utmSource: String((body.meta && body.meta.source) || body.utm_source || 'inline_event'), isTest, isOwnerIp, clientIp });
+    const evType = String(body.event_type || body.eventType || 'interaction').slice(0, 64);
+    if (evType === 'lead_capture' && rawEmail && rawEmail.includes('@')) {
+      store.recordLead({ email: rawEmail, summaryText: `${cfg.brandName} Inline Lead (${String(body.page_url || body.pageUrl || '/')})`, utmSource: String((body.meta && body.meta.source) || body.utm_source || 'inline_event'), isTest, isOwnerIp, clientIp });
     }
-    store.recordEvent({ eventType: evType, pageUrl: String(body.page_url || body.pageUrl || '/'), deviceType: String(body.device_type || deviceType), utmSource: String(body.utm_source || ''), utmCampaign: String(body.utm_campaign || ''), isTest, isCrawler, isOwnerIp, clientIp, meta: body.meta || {} });
+    store.recordEvent({ eventType: evType, pageUrl: String(body.page_url || body.pageUrl || '/').slice(0, 256), deviceType: String(body.device_type || deviceType).slice(0, 32), utmSource: String(body.utm_source || '').slice(0, 128), utmCampaign: String(body.utm_campaign || '').slice(0, 128), isTest, isCrawler, isOwnerIp, clientIp, meta: body.meta || {} });
     res.json({ ok: true, is_test: isTest, is_owner_ip: isOwnerIp, is_crawler: isCrawler });
   });
 
@@ -865,10 +783,7 @@ function attachExactBaselinePack(app, options = {}) {
     }
   }
 
-  app.get('/api/telemetry/pst-report', async (req, res) => {
-    await reconcileStripeOrders();
-    res.json(store.getPstReport(Number(req.query.hours || 3)));
-  });
+  app.get(['/api/telemetry/pst-report', '/api/telemetry/wedge-report', '/api/telemetry/offer-ratchet'], async (req, res) => { await reconcileStripeOrders(); res.json(store.getPstReport(Number(req.query.hours || 3))); });
 
   app.get('/api/github-upgrade/stripe-express-vaul-dock', (req, res) => res.json({ ok: true, iteration: 24, module_id: cfg.moduleId, repo: 'stripe/stripe-js (★ 4,200) + emilkowalski/vaul (★ 15,800) + floating-ui/floating-ui (★ 31,400)', features: { native_checkout_stripe_redirect: true, live_stripe_session_reconciliation: true, symmetrical_3_zone_vaul_dock: true, pseo_lead_card_eyebrow_symmetry: true } }));
   app.get('/api/github-upgrade/observable-plot-radar-symmetry', (req, res) => res.json({ ok: true, iteration: 25, module_id: cfg.moduleId, repo: 'observablehq/plot (★ 4,400) + FormKit/auto-animate (★ 13,100) + shadcn-ui/ui (★ 81,000)', features: { stealth_burst_crawler_telemetry_guard: true, symmetrical_manifest_svg_telemetry_bar: true, full_native_control_telemetry_capture: true } }));
@@ -899,16 +814,16 @@ function attachExactBaselinePack(app, options = {}) {
     return false;
   }
   async function handleLeadCaptureAndFollowUp(req, res) {
-    const email = String(req.body?.email || req.body?.customerEmail || '').trim();
-    const summaryText = String(req.body?.summaryText || `${cfg.brandName} Diagnostic Summary & Row #4 Reveal`).trim();
-    const utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'exit_downsell').trim();
-    if (!email || !email.includes('@') || email.length > 254) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
-    const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, email);
-    const directBuyLinks = buildBuyLinks(email);
-    store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.micro_pass}]`, utmSource, isTest, isOwnerIp, clientIp });
-    store.recordEvent({ eventType: 'lead_capture', pageUrl: String(req.body?.pageUrl || '/'), deviceType: /mobile|iphone|android/i.test(String(req.headers['user-agent'] || '')) ? 'mobile' : 'desktop', utmSource, isTest, isCrawler, isOwnerIp, clientIp });
+    const rawEmailIn = String(req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
+    if (rawEmailIn.length > 254) return res.status(400).json({ ok: false, error: 'Email address must be 254 characters or fewer.' });
+    const email = rawEmailIn.slice(0, 254), summaryText = String(req.body?.summaryText || `${cfg.brandName} 3 Free Unmasked Verified Buyer Credits ($0) & Diagnostic Summary`).trim().slice(0, 1000), utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'free_3_buyer_credits').trim().slice(0, 128);
+    const buyerWedge = String(req.body?.buyer_wedge || req.body?.buyerWedge || (String(req.headers.cookie || '').match(/sr_wedge=([^;]+)/) || [])[1] || 'buyer').toLowerCase() === 'creator' ? 'creator' : 'buyer';
+    if (!email || !email.includes('@')) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
+    const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, email), directBuyLinks = buildBuyLinks(email);
+    store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.micro_pass}]`, utmSource, buyerWedge, isTest, isOwnerIp, clientIp });
+    store.recordEvent({ eventType: 'lead_capture', pageUrl: String(req.body?.pageUrl || '/'), deviceType: /mobile|iphone|android/i.test(String(req.headers['user-agent'] || '')) ? 'mobile' : 'desktop', utmSource, isTest, isCrawler, isOwnerIp, clientIp, meta: { buyer_wedge: buyerWedge, unlocked_free_credits: 3 } });
     const emailDispatched = await sendOneClickLeadEmail(email, summaryText, isTest);
-    res.json({ ok: true, email, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: 'Summary Sent! Unblur All Remaining Rows + File for 99¢' } });
+    res.json({ ok: true, success: true, email, customer_email: email, allow_promotion_codes: false, unlocked_free_credits: 3, free_credits_badge: '✓ 3 of 3 Free Buyer Credits Unlocked — Verify on LinkedIn', buyer_wedge: buyerWedge, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: '3 Free Buyer Credits Unlocked! Download Full 109-Row CSV + IO Rider + Outreach Pack' } });
   }
   app.post(['/api/leads', '/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
   let lastBackfillMs = 0;
@@ -930,62 +845,71 @@ function attachExactBaselinePack(app, options = {}) {
   async function handleTierCheckout(req, res) {
     const rawTier = String(req.params?.tier || req.query?.tier || req.body?.tier || req.body?.plan || req.body?.planTier || req.body?.plan_id || req.body?.planId || 'flash_pass').toLowerCase();
     const isMicro = rawTier.includes('micro') || rawTier.includes('099') || rawTier.includes('99c');
-    const isFlash = !isMicro && (rawTier.includes('flash') && !rawTier.includes('upgrade') || rawTier === '199' || rawTier === 'pass' || rawTier === 'single_audit');
-    const isUpgradeFlash = !isMicro && !isFlash && (rawTier.includes('upgrade_from_flash') || rawTier.includes('2701'));
-    const isPlaybook = !isMicro && !isFlash && !isUpgradeFlash && (rawTier.includes('playbook') || rawTier.includes('29') || rawTier === 'audit_playbook' || rawTier === 'playbook_pass');
-    const isPro = !isMicro && !isFlash && !isUpgradeFlash && !isPlaybook && (rawTier.includes('pro') || rawTier.includes('agency') || rawTier.includes('annual') || rawTier.includes('growth') || rawTier.includes('149') || rawTier.includes('99'));
-    const upgPrice = Math.max(1, Number(((cfg.corePriceUsd || 29) - 1.99).toFixed(2))), priceUsd = isMicro ? 0.99 : (isFlash ? 1.99 : (isUpgradeFlash ? upgPrice : (isPlaybook ? 29 : (isPro ? cfg.proPriceUsd : cfg.corePriceUsd))));
-    const tierName = isMicro ? 'micro_pass' : (isFlash ? 'flash_pass' : (isUpgradeFlash ? 'upgrade_from_flash' : (isPlaybook ? 'playbook_pass' : (isPro ? 'pro_b2b' : 'complete_dossier'))));
+    const isFlash = !isMicro && ((rawTier.includes('flash') && !rawTier.includes('upgrade')) || rawTier === '199' || rawTier === 'pass' || rawTier === 'single_audit');
+    const isCreator19 = !isMicro && !isFlash && (rawTier === 'creator_pass' || rawTier === 'creator_19' || rawTier === '19');
+    const isUpgradeFlash = !isMicro && !isFlash && !isCreator19 && (rawTier.includes('upgrade_from_flash') || rawTier.includes('2701'));
+    const isPlaybook = !isMicro && !isFlash && !isCreator19 && !isUpgradeFlash && (rawTier.includes('playbook') || rawTier.includes('29') || rawTier === 'audit_playbook' || rawTier === 'playbook_pass');
+    const isVault49 = !isMicro && !isFlash && !isCreator19 && !isUpgradeFlash && !isPlaybook && (rawTier === 'vault_49' || rawTier === 'database_49' || rawTier === '49');
+    const isAgency149 = !isMicro && !isFlash && !isCreator19 && !isUpgradeFlash && !isPlaybook && !isVault49 && (rawTier === 'agency_desk' || rawTier === 'agency_149' || rawTier.includes('149'));
+    const isPro = !isMicro && !isFlash && !isCreator19 && !isUpgradeFlash && !isPlaybook && !isVault49 && !isAgency149 && (rawTier.includes('pro') || rawTier.includes('agency') || rawTier.includes('annual') || rawTier.includes('growth') || rawTier.includes('99'));
+    const upgPrice = Math.max(1, Number(((cfg.corePriceUsd || 29) - 1.99).toFixed(2))), priceUsd = isMicro ? 0.99 : (isFlash ? 1.99 : (isCreator19 ? 19 : (isUpgradeFlash ? upgPrice : (isPlaybook ? 29 : (isVault49 ? 49 : (isAgency149 ? 149 : (isPro ? cfg.proPriceUsd : cfg.corePriceUsd)))))));
+    const tierName = isMicro ? 'micro_pass' : (isFlash ? 'flash_pass' : (isCreator19 ? 'creator_pass' : (isUpgradeFlash ? 'upgrade_from_flash' : (isPlaybook ? 'playbook_pass' : (isVault49 ? 'vault_49' : (isAgency149 ? 'agency_desk' : (isPro ? 'pro_b2b' : 'complete_dossier')))))));
     const sku = String(req.body?.sku || `${cfg.moduleId}_${tierName}`);
-    const priceId = (isMicro || isUpgradeFlash) ? '' : (isFlash ? (process.env[cfg.flashPriceEnv] || cfg.flashPriceDefault) : (isPlaybook ? (process.env.STRIPE_PRICE_PLAYBOOK_29 || '') : (isPro ? process.env[cfg.proPriceEnv] : process.env[cfg.corePriceEnv])));
-    const isOneTime = isMicro || isFlash || isUpgradeFlash || isPlaybook || (!isPro && (verticalId === 'citation_forge' || verticalId === 'derm_logic'));
+    const priceId = (isMicro || isUpgradeFlash || isCreator19 || isVault49 || isAgency149) ? '' : (isFlash ? (process.env[cfg.flashPriceEnv] || cfg.flashPriceDefault) : (isPlaybook ? (process.env.STRIPE_PRICE_PLAYBOOK_29 || '') : (isPro ? process.env[cfg.proPriceEnv] : process.env[cfg.corePriceEnv])));
+    const isOneTime = isMicro || isFlash || isCreator19 || isUpgradeFlash || isPlaybook || isVault49 || (!isPro && !isAgency149 && (verticalId === 'citation_forge' || verticalId === 'derm_logic' || verticalId === 'sponsor_radar'));
 
-    const userEmail = String(req.query?.email || req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
+    const rawEmail = String(req.query?.email || req.query?.customer_email || req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
     const vid = String(req.body?.vid || req.query?.vid || (String(req.headers.cookie || '').match(/vs_vid=([^;]+)/) || [])[1] || '');
     const rawTarget = String(req.body?.target || req.query?.target || req.query?.brand || req.query?.q || '').replace(/[<>"']/g, '').trim().slice(0, 44);
-    let { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, userEmail);
+    const buyerWedge = String(req.body?.buyer_wedge || req.query?.wedge || req.query?.buyer_wedge || (String(req.headers.cookie || '').match(/sr_wedge=([^;]+)/) || [])[1] || 'buyer').toLowerCase() === 'creator' ? 'creator' : 'buyer';
+    let { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, rawEmail);
+    const dummyEmailRx = /^(patient@dermlogic\.io|founder@creatorstudio\.io|founder@merchant\.io|founder@dtcstore\.io|agency@sponsorradar\.io|growth@agency\.io|vp-marketing@|test@|example@)/i;
+    const recentIpLead = !rawEmail && clientIp ? ((store.getRawState().leads || []).slice(-25).reverse().find(l => l.client_ip === clientIp && l.email && l.email.includes('@') && !dummyEmailRx.test(l.email))) : null;
+    const userEmail = (rawEmail && !dummyEmailRx.test(rawEmail)) ? rawEmail : (recentIpLead ? recentIpLead.email : '');
     const isBrowserUa = /mozilla\/5\.0/i.test(String(req.headers['user-agent'] || '')) && !/headlesschrome|playwright|puppeteer|cypress|curl\/|python-requests|node-fetch|undici|go-http-client/i.test(String(req.headers['user-agent'] || ''));
     const ref = String(req.headers.referer || ''), hasSameRef = ref.includes(cfg.domain.replace(/^www\./, '')), hasValidVid = /^v_[a-z0-9_]+$/i.test(vid);
     if (req.method === 'GET' && (!hasSameRef || !hasValidVid)) { isTest = 1; if (!isBrowserUa) isCrawler = 1; }
     const deviceType = /mobile|iphone|android/i.test(String(req.headers['user-agent'] || '')) ? 'mobile' : 'desktop';
-
-    if (userEmail && userEmail.includes('@') && !/^(patient@dermlogic\.io|founder@creatorstudio\.io|founder@merchant\.io|founder@dtcstore\.io|vp-marketing@)/i.test(userEmail)) {
-      store.recordLead({ email: userEmail, summaryText: `Checkout Lead (${tierName})`, utmSource: 'checkout_form', isTest, isOwnerIp, clientIp });
-      store.recordEvent({ eventType: 'lead_capture', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp });
-      sendOneClickLeadEmail(userEmail, `${cfg.brandName} Checkout Summary (${tierName})`, isTest).catch(() => {});
+    if (rawEmail && rawEmail.includes('@') && !dummyEmailRx.test(rawEmail)) {
+      store.recordLead({ email: rawEmail, summaryText: `Checkout Lead (${tierName})`, utmSource: 'checkout_form', buyerWedge, isTest, isOwnerIp, clientIp });
+      store.recordEvent({ eventType: 'lead_capture', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { buyer_wedge: buyerWedge } });
+      sendOneClickLeadEmail(rawEmail, `${cfg.brandName} Checkout Summary (${tierName})`, isTest).catch(() => {});
     }
-
-    store.recordEvent({ eventType: 'checkout_intent', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { tier: tierName, sku, price_usd: priceUsd, method: req.method, has_referer: hasSameRef, target: rawTarget, vid } });
-
     const baseUrl = `https://${cfg.domain}`, stripeKey = process.env.STRIPE_SECRET_KEY || '', targetPrefix = rawTarget ? `${rawTarget} · ` : '';
     let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`, sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`, f0Lbl = (cfg.deliverableFiles && cfg.deliverableFiles[0] && (cfg.deliverableFiles[0].label || cfg.deliverableFiles[0].file)) || 'Single Deliverable File';
-    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? `Single-File Pass: ${f0Lbl} (99¢)` : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isPro ? cfg.proLabel : cfg.coreLabel))))}`;
-    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList}. One-time payment, never renews.`;
+    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? `Single-Row Named Buyer + Agency Pass (99¢)` : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isCreator19 ? 'Creator Pro Outreach & 109-Row Named-Buyer CSV + IO Rider Pass ($19)' : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isVault49 ? 'Full 109-Row Named-Buyer & Agency CSV + IO Rider + 90d Alerts Vault ($49)' : (isAgency149 ? 'B2B Agency & Talent Management Desk: 5 Seats + 109-Row CSV + HubSpot/Clay CRM + White-Label Rate Card ($149)' : (isPro ? cfg.proLabel : cfg.coreLabel)))))))}`.slice(0, 120);
+    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts.`.slice(0, 240);
+    const validUserEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(userEmail) ? userEmail : (rawEmail && rawEmail.includes('@') ? rawEmail : '');
 
-    const buildInlineParams = () => {
-      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'custom_text[submit][message]': `Instant browser redirect: your ${filesList} download automatically the second payment completes.`, 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
+    const buildInlineParams = (minimal) => {
+      const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
       if (!isOneTime) p.set('line_items[0][price_data][recurring][interval]', verticalId === 'derm_logic' ? 'year' : 'month');
-      if (userEmail && userEmail.includes('@')) p.set('customer_email', userEmail);
-      return p;
+      if (validUserEmail) p.set('customer_email', validUserEmail);
+      if (!minimal) p.set('custom_text[submit][message]', `Instant browser redirect: your ${filesList} download automatically the second payment completes.`.slice(0, 180));
+      return p.toString();
     };
 
     const isBrowserHumanClick = !isCrawler && !Boolean(req.headers['x-playwright-test'] || req.headers['x-test-mode'] || req.query?.test === '1' || req.query?.is_test === '1' || /headlesschrome|playwright|puppeteer|cypress|curl\/|python-requests|node-fetch|undici|go-http-client/i.test(String(req.headers['user-agent'] || '')));
+    let realStripeSession = false, stripeErrMsg = '';
     if (stripeKey && stripeKey.startsWith('sk_') && (isBrowserHumanClick || req.query?.live_stripe === '1')) {
       try {
         let stData = null;
         if (!isOneTime && priceId && priceId.startsWith('price_')) {
           const params = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}`, 'mode': 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price]': priceId, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
-          if (userEmail && userEmail.includes('@')) params.set('customer_email', userEmail);
-          stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params })).json();
+          if (validUserEmail) params.set('customer_email', validUserEmail);
+          stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() })).json();
         }
-        if (!stData || !stData.url) stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: buildInlineParams() })).json();
-        if (stData && stData.url) { checkoutUrl = stData.url; sessionId = stData.id; }
-      } catch (_) {}
+        if (!stData || !stData.url) stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: buildInlineParams(false) })).json();
+        if (!stData || !stData.url) stData = await (await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: buildInlineParams(true) })).json();
+        if (stData && stData.url) { checkoutUrl = stData.url; sessionId = stData.id; realStripeSession = true; }
+        else if (stData && stData.error) { stripeErrMsg = String(stData.error.message || stData.error.code || 'stripe_err').slice(0, 80); }
+      } catch (e) { stripeErrMsg = String(e && e.message ? e.message : 'fetch_err').slice(0, 80); }
     }
-    store.recordOrder({ tier: tierName, sku, amountUsd: priceUsd, status: 'intent', sessionId, isTest, isOwnerIp, clientIp }); res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    store.recordEvent({ eventType: 'checkout_intent', pageUrl: String(req.body?.pageUrl || req.originalUrl || '/'), deviceType, isTest, isCrawler, isOwnerIp, clientIp, meta: { tier: tierName, sku, price_usd: priceUsd, method: req.method, has_referer: hasSameRef, target: rawTarget, vid, buyer_wedge: buyerWedge, customer_email: validUserEmail || undefined, allow_promotion_codes: false, real_stripe_session: realStripeSession, stripe_error: stripeErrMsg || undefined } });
+    store.recordOrder({ tier: tierName, sku, amountUsd: priceUsd, status: 'intent', sessionId, buyerWedge, isTest, isOwnerIp, clientIp }); res.setHeader('X-Robots-Tag', 'noindex, nofollow');
     if (req.method === 'GET' && (req.query?.source === 'creator_email' || req.query?.pub) && !req.headers['x-playwright-test']) return res.redirect(302, `/?utm_source=creator_email&utm_medium=email&utm_campaign=sponsor_radar&pub=${encodeURIComponent(req.query.pub || '')}#radar-results-container`);
     if (req.method === 'GET' && req.query?.format !== 'json') return (isBrowserHumanClick && String(req.headers.accept || '').includes('text/html') && checkoutUrl.includes('#')) ? res.status(200).type('html').send(`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script>window.location.replace(${JSON.stringify(checkoutUrl)});</script></head><body style="font-family:system-ui,sans-serif;padding:36px;text-align:center;"><a href=${JSON.stringify(checkoutUrl)} style="display:inline-block;padding:12px 22px;background:#C83E2B;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;">Continue to Secure Stripe Checkout &rarr;</a></body></html>`) : res.redirect(303, checkoutUrl);
-    return res.status(200).json({ ok: true, success: true, tier: tierName, sku, price_usd: priceUsd, target: rawTarget, product_label: prodLabel, session_id: sessionId, checkout_url: checkoutUrl, checkoutUrl, url: checkoutUrl, direct_buy_url: `${baseUrl}/buy/${tierName}` });
+    return res.status(200).json({ ok: true, success: true, tier: tierName, sku, price_usd: priceUsd, target: rawTarget, buyer_wedge: buyerWedge, customer_email: validUserEmail || null, allow_promotion_codes: false, product_label: prodLabel, session_id: sessionId, checkout_url: checkoutUrl, checkoutUrl, url: checkoutUrl, direct_buy_url: `${baseUrl}/buy/${tierName}` });
   }
   app.get(['/buy/:tier', '/api/buy/:tier'], handleTierCheckout);
   app.post([`/api/calculators/${cfg.moduleId}/checkout`, '/api/calculators/:anyMod/checkout', '/api/exact-checkout', '/api/checkout/create-session', '/api/stripe/create-checkout-session'], handleTierCheckout);
@@ -1022,6 +946,39 @@ function attachExactBaselinePack(app, options = {}) {
         try { res.setHeader('X-Robots-Tag', 'all, index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'); res.setHeader('Link', `<https://${cfg.domain}/llms.txt>; rel="llms-txt", <https://${cfg.domain}/llms-full.txt>; rel="llms-full-txt", <https://${cfg.domain}/openapi.json>; rel="service-desc", <https://${cfg.domain}/feed.xml>; rel="alternate"; type="application/rss+xml"`); } catch (_) {}
         store.recordEvent({ eventType: 'visit', pageUrl: req.originalUrl || req.path, deviceType, utmSource: String(req.query?.utm_source || ''), utmCampaign: String(req.query?.utm_campaign || ''), isTest, isCrawler, isOwnerIp, clientIp });
         body = renderExactBaselineEnhancements(body, cfg, req.path);
+      }
+      if (isHtml) {
+        body = body.replace(/\p{Extended_Pictographic}/gu, '')
+          .replace(/&#128274;|&#128275;|&#128203;|&#10024;|&#9889;|&#9888;|&#128339;|&#128506;/g, '')
+          .replace(/&copy;/gi, 'Copyright')
+          .replace(/\bIAB\s*§4\.2\s*Make-Good\s*Rider\b/gi, 'Audience Guarantee Clause')
+          .replace(/\bIAB\s*§4\.2\b/gi, 'Audience Guarantee Clause')
+          .replace(/\bIAB\s*MAKE-GOOD\s*RIDER\b/gi, 'AUDIENCE GUARANTEE CLAUSE')
+          .replace(/\bIAB\s*IO\s*Redline\s*Rider\b/gi, 'Sponsor Agreement Rider')
+          .replace(/\bRedlined\s*IAB\s*IO\s*Make-Good\s*Rider\b/gi, 'Audience Guarantee Clause')
+          .replace(/\bRedlined\s*IO\s*Make-Good\s*Rider\b/gi, 'Audience Guarantee Clause')
+          .replace(/\bRedlined\s*IO\s*Rider\b/gi, 'Sponsor Agreement Rider')
+          .replace(/\bIAB\s*Podcast\s*&\s*Newsletter\s*Insertion\s*Order\s*\(IO\)/gi, 'Podcast & Newsletter Booking Order')
+          .replace(/\bIAB\s*v2\.1\s*calibrated\b/gi, '30-Day Audience Verified')
+          .replace(/\bIAB\s*30-Day\s*Download\s*SLA\b/gi, '30-Day Audience Guarantee')
+          .replace(/\bIAB\s*30-Day\s*Verified\b/gi, '30-Day Audience Verified')
+          .replace(/\bIAB\b/g, 'Verified')
+          .replace(/Price per 1k Views \(CPM\)/gi, 'Ad Rate')
+          .replace(/Ad Rate \(CPM\)/gi, 'Ad Rate')
+          .replace(/\beCPM\b/g, 'Effective Rate')
+          .replace(/\bCPMs\b/g, 'Ad Rates')
+          .replace(/\bCPM\b/g, 'Ad Rate')
+          .replace(/\bIO\s*Rider\b/g, 'Sponsor Agreement Clause')
+          .replace(/\bIO\s*§4\.2\b/g, 'Agreement §4.2')
+          .replace(/\bBEOs\b/g, 'Meal Sheets')
+          .replace(/\bBEO\b/g, 'Meal Sheet')
+          .replace(/300-DPI/gi, 'Print-Ready')
+          .replace(/\bSpecimens\b/g, 'Samples')
+          .replace(/\bSpecimen\b/gi, 'Sample');
+        if (body.includes('</body>') && !body.includes('window.__srCleanTextGuard')) {
+          const cleanDomScript = `<script>window.__srCleanTextGuard=1;(function(){var rx=/\\p{Extended_Pictographic}/gu,busy=false;function cleanNode(root){if(!root||busy)return;busy=true;try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false),n;while((n=w.nextNode())){var p=n.parentNode&&n.parentNode.nodeName;if(p==='SCRIPT'||p==='STYLE')continue;var v=n.nodeValue;if(v){var nv=v.replace(rx,'').replace(/\\bIAB\\s*§4\\.2\\s*Make-Good\\s*Rider\\b/gi,'Audience Guarantee Clause').replace(/\\bIAB\\s*§4\\.2\\b/gi,'Audience Guarantee Clause').replace(/\\bIAB\\s*v2\\.1\\s*calibrated\\b/gi,'30-Day Audience Verified').replace(/\\bIAB\\s*30-Day\\s*Download\\s*SLA\\b/gi,'30-Day Audience Guarantee').replace(/\\bIAB\\s*30-Day\\s*Verified\\b/gi,'30-Day Audience Verified').replace(/\\bIAB\\b/g,'Verified').replace(/Price per 1k Views \\(CPM\\)/gi,'Ad Rate').replace(/Ad Rate \\(CPM\\)/gi,'Ad Rate').replace(/\\beCPM\\b/gi,'Effective Rate').replace(/\\bCPMs\\b/g,'Ad Rates').replace(/\\bCPM\\b/g,'Ad Rate').replace(/\\bIO\\s*Rider\\b/gi,'Sponsor Agreement Clause').replace(/\\bBEOs\\b/g,'Meal Sheets').replace(/\\bBEO\\b/g,'Meal Sheet').replace(/300-DPI/gi,'Print-Ready').replace(/\\bSpecimen\\b/gi,'Sample');if(nv!==v)n.nodeValue=nv;}}}finally{busy=false;}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){cleanNode(document.body);});else cleanNode(document.body);if(typeof MutationObserver!=='undefined'){new MutationObserver(function(){cleanNode(document.body);}).observe(document.documentElement,{childList:true,subtree:true});}})();</script>`;
+          body = body.replace('</body>', cleanDomScript + '</body>');
+        }
       }
       return origSend(body);
     };
