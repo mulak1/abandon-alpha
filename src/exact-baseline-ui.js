@@ -1,64 +1,34 @@
-/**
- * ExactBaseline Cumulative UI, Deliverable Value-Gating & Conversion Architecture
- * Shared across CitationForge (#1), SponsorRadar (#2), DermLogic (#4), and AbandonAlpha (#9).
- * Free = Diagnostic & Quantified Problem. Paid ($1.99 Pass) = Ready-to-Use Production Fix & Export Pack.
- */
+/** ExactBaseline Cumulative UI, Deliverable Value-Gating & Conversion Architecture */
 const SOVRN_KEY = process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
 const { buildTopLeaderboardPodiumShowcaseHtml, buildMobileSeoCrawlMeshHtml, enhanceHtmlForSearchAndAiBots } = require('./exact-baseline-seo');
-
 function esc(str) { return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
-function getTheme(cfg) {
-  return cfg.theme || { canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(255, 255, 255, 0.95)', border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B', brandPrimary: cfg.accentColor || '#4F46E5', brandSoftBg: '#EEF2FF', brandText: '#3730A3', safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309', fontDisplay: 'Georgia, serif', fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", radiusCard: '14px', radiusPill: '999px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06)' };
-}
-
+function getTheme(cfg) { return cfg.theme || { canvasBg: '#FAF9F5', cardBg: '#FFFFFF', subtleBg: '#F3F1EC', dockBg: 'rgba(255, 255, 255, 0.95)', border: '#E4E2DD', accentBorder: '#C7D2FE', textPrimary: '#0F172A', textSecondary: '#475569', textMuted: '#64748B', brandPrimary: cfg.accentColor || '#4F46E5', brandSoftBg: '#EEF2FF', brandText: '#3730A3', safeColor: '#059669', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309', fontDisplay: 'Georgia, serif', fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", radiusCard: '14px', radiusPill: '999px', shadow: '0 12px 32px -12px rgba(15, 23, 42, 0.06)' }; }
 function buildExactBaselineStyles(cfg) {
   const t = getTheme(cfg);
   return `<style id="exact-baseline-cumulative-css">
   html, body { max-width: 100vw !important; overflow-x: hidden !important; } *, *::before, *::after { box-sizing: border-box; } button, input, select, textarea, svg text { font-family: inherit !important; } main p, article p, section p, p { max-width: 65ch !important; }
   .table-wrap, .posterior-table-wrap, .tab-bar, .panel, #competitor-battlecard > div, div[style*="overflow-x"] { overflow-x: hidden !important; flex-wrap: wrap !important; } header nav a.eb-nav-active, .nav-links a.eb-nav-active, .main-nav a.eb-nav-active, .mobile-nav-strip a.eb-nav-active { color: ${t.brandPrimary} !important; font-weight: 700 !important; }
   button, .preset-chip, .store-preview-pill, .eb-action-btn, .cta-btn, a[role="button"] { transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease; cursor: pointer; }
-  button:active, .preset-chip:active, .store-preview-pill:active, .eb-action-btn:active, .cta-btn:active { transform: scale(0.98) !important; }
-  .metric-box-value, .matrix-price, .eb-kpi-val, .eb-tabular { font-variant-numeric: tabular-nums !important; }
-  .eb-blurred-deliverable { filter: none !important; opacity: 1 !important; cursor: pointer !important; transition: background-color 200ms ease; }
+  button:active, .preset-chip:active, .store-preview-pill:active, .eb-action-btn:active, .cta-btn:active { transform: scale(0.98) !important; } .metric-box-value, .matrix-price, .eb-kpi-val, .eb-tabular { font-variant-numeric: tabular-nums !important; } .eb-blurred-deliverable { filter: none !important; opacity: 1 !important; cursor: pointer !important; transition: background-color 200ms ease; }
   #eb-deliverable-curtain { margin-top: 28px; padding: 32px 36px; border-radius: ${t.radiusCard}; background: ${t.cardBg}; border: none; box-shadow: none; color: ${t.textPrimary}; font-family: ${t.fontSans}; position: relative; z-index: 20; text-transform: none !important; letter-spacing: normal !important; font-style: normal !important; font-weight: 400 !important; }
   #eb-prism-proof-preview { background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: 10px; padding: 14px 18px; font-family: ${t.fontSans}; font-size: 14px; line-height: 1.5; margin: 0; overflow-x: auto; white-space: normal; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; text-transform: none !important; letter-spacing: normal !important; }
-  .eb-proof-row { display: grid; grid-template-columns: minmax(125px, 1.05fr) minmax(0, 2.2fr) auto; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 9px; background: ${t.canvasBg}; }
-  @media (max-width: 640px) { .eb-proof-row { grid-template-columns: 1fr; gap: 4px; } }
-  .eb-doppelrand-shell { padding: 6px; border-radius: ${t.radiusCard}; background: ${t.subtleBg}; margin: 10px 0 12px 0; transition: transform 650ms cubic-bezier(0.32, 0.72, 0, 1); }
-  .eb-doppelrand-shell:hover { transform: translateY(-2px); } .eb-doppelrand-inner { position: relative; border-radius: ${t.radiusCard}; overflow: hidden; background: ${t.cardBg}; display: flex; flex-direction: column; }
-  .eb-doppelrand-img { width: 100%; height: 100%; min-height: 178px; flex: 1; object-fit: cover; object-position: center 32%; display: block; transition: transform 750ms cubic-bezier(0.32, 0.72, 0, 1); } .eb-doppelrand-shell:hover .eb-doppelrand-img { transform: scale(1.03); }
-  #eb-doppelrand-hero-card .eb-doppelrand-img { height: 152px !important; min-height: 152px !important; max-height: 152px !important; flex: 0 0 152px !important; }
-  .eb-doppelrand-caption, .eb-doppelrand-caption * { font-family: ${t.fontSans} !important; line-height: 1.3 !important; text-transform: none !important; letter-spacing: normal !important; font-style: normal !important; }
-  .eb-doppelrand-caption { position: static !important; width: 100%; padding: 8px 12px; background: ${t.cardBg}; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size:13px !important; color: ${t.textSecondary} !important; max-height: 40px; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
-  #eb-hero-sparkline-pill { position: static !important; z-index: 6; padding: 2px 8px; border-radius: ${t.radiusPill}; background: ${t.subtleBg}; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-family: ${t.fontSans} !important; text-transform: none !important; letter-spacing: normal !important; white-space: nowrap; flex-shrink: 0; }
-  .editorial-photo-shell #eb-hero-sparkline-pill { position: absolute !important; bottom: 8px; right: 8px; background: rgba(255, 255, 255, 0.94); }
+  .eb-proof-row { display: grid; grid-template-columns: minmax(125px, 1.05fr) minmax(0, 2.2fr) auto; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 9px; background: ${t.canvasBg}; } @media (max-width: 640px) { .eb-proof-row { grid-template-columns: 1fr; gap: 4px; } }
+  .eb-doppelrand-shell { padding: 6px; border-radius: ${t.radiusCard}; background: ${t.subtleBg}; margin: 10px 0 12px 0; transition: transform 650ms cubic-bezier(0.32, 0.72, 0, 1); } .eb-doppelrand-shell:hover { transform: translateY(-2px); } .eb-doppelrand-inner { position: relative; border-radius: ${t.radiusCard}; overflow: hidden; background: ${t.cardBg}; display: flex; flex-direction: column; }
+  .eb-doppelrand-img { width: 100%; height: 100%; min-height: 178px; flex: 1; object-fit: cover; object-position: center 32%; display: block; transition: transform 750ms cubic-bezier(0.32, 0.72, 0, 1); } .eb-doppelrand-shell:hover .eb-doppelrand-img { transform: scale(1.03); } #eb-doppelrand-hero-card .eb-doppelrand-img { height: 152px !important; min-height: 152px !important; max-height: 152px !important; flex: 0 0 152px !important; }
+  .eb-doppelrand-caption, .eb-doppelrand-caption * { font-family: ${t.fontSans} !important; line-height: 1.3 !important; text-transform: none !important; letter-spacing: normal !important; font-style: normal !important; } .eb-doppelrand-caption { position: static !important; width: 100%; padding: 8px 12px; background: ${t.cardBg}; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size:13px !important; color: ${t.textSecondary} !important; max-height: 40px; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
+  #eb-hero-sparkline-pill { position: static !important; z-index: 6; padding: 2px 8px; border-radius: ${t.radiusPill}; background: ${t.subtleBg}; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-family: ${t.fontSans} !important; text-transform: none !important; letter-spacing: normal !important; white-space: nowrap; flex-shrink: 0; } .editorial-photo-shell #eb-hero-sparkline-pill { position: absolute !important; bottom: 8px; right: 8px; background: rgba(255, 255, 255, 0.94); }
   #eb-dossier-format-pill { position: absolute; top: 8px; left: 8px; z-index: 6; padding: 3px 9px; border-radius: ${t.radiusPill}; background: rgba(24, 20, 18, 0.82); color: #FFFFFF !important; font-family: ${t.fontSans} !important; font-size:13px !important; font-weight: 600 !important; letter-spacing: 0.01em !important; text-transform: none !important; white-space: nowrap !important; max-width: calc(100% - 16px); overflow: hidden; text-overflow: ellipsis; transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1); }
   tr[data-eb-live-row] { cursor: pointer; transition: background-color 150ms ease; } tr[data-eb-live-row]:hover { background-color: ${t.brandSoftBg} !important; } .eb-row-sim-pill { display: inline-flex !important; align-items: center; gap: 4px; margin-top: 4px; padding: 2px 9px; border-radius: 999px; background: ${t.brandSoftBg}; color: ${t.brandPrimary}; font-size: 12px; font-weight: 700; cursor: pointer; border: none; }
   #eb-pseo-hero-split { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; margin: 12px 0 18px 0; } #eb-doppelrand-hero-card, #eb-curtain-dossier-card { display: none !important; } .eb-pseo-lead-card { flex: 1; width: 100% !important; max-width: none !important; display: block !important; padding: 20px 24px !important; border-radius: ${t.radiusCard} !important; background: ${t.cardBg} !important; border: none !important; border-left: none !important; margin: 0 !important; font-size: 17px; line-height: 1.62; color: ${t.textPrimary}; }
   @media (min-width: 960px) { .hero-grid, .hero-split, .hero-editorial-grid { align-items: stretch !important; } .hero-grid > *, .hero-split > * { display: flex !important; flex-direction: column !important; justify-content: flex-start !important; height: 100% !important; } .hero-grid > .bezel-shell > *, .hero-grid > .double-bezel > * { flex: 1 !important; height: 100% !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; } }
-  #eb-curtain-visual-split { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; margin: 16px 0 18px 0; } #eb-curtain-dossier-card { display: none !important; }
-  #eb-floating-gate-popover { display: none; position: fixed; z-index: 9998; width: 360px; max-width: calc(100vw - 24px); background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: ${t.radiusCard}; padding: 16px; font-family: ${t.fontSans}; text-transform: none !important; }
-  #eb-bottom-conversion-suite { margin: 36px auto 88px auto; font-family: ${t.fontSans}; text-transform: none !important; }
-  .eb-panel-card { background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: ${t.radiusCard}; padding: 24px 26px; margin-bottom: 20px; }
-  .eb-gbb-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; align-items: stretch; }
-  .eb-tier-card { background: ${t.canvasBg}; border-radius: ${t.radiusCard}; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; color: ${t.textPrimary}; }
-  #in-card-unlock-bar .eb-tier-card .eb-doppelrand-img { height: 84px !important; min-height: 84px !important; max-height: 84px !important; }
-  .eb-tier-card.featured { background: ${t.brandSoftBg}; position: relative; }
-  #eb-executive-strip { margin-bottom: 20px; }
-  .eb-strip-top-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid ${t.border}; }
-  .eb-strip-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: ${t.brandPrimary}; background: ${t.brandSoftBg}; border: 1px solid ${t.accentBorder}; padding: 4px 12px; border-radius: 999px; }
-  #preset-chips { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; width: 100%; margin-bottom: 10px; }
-  #preset-chips .preset-chip { padding: 7px 8px; font-size: 13px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: ${t.radiusPill}; background: ${t.canvasBg}; color: ${t.textSecondary}; border: 1px solid ${t.border}; }
-  #preset-chips .preset-chip:hover { background: ${t.brandSoftBg}; color: ${t.brandPrimary}; border-color: ${t.accentBorder}; }
-  #eb-interactive-control-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; align-items: center; margin-bottom: 10px; background: ${t.subtleBg}; padding: 8px 12px; border-radius: 10px; border: 1px solid ${t.border}; }
-  #eb-fuse-search-input { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid ${t.border}; background: #FFFFFF; color: ${t.textPrimary}; font-size: 13.5px; }
-  .eb-slider-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; color: ${t.textSecondary}; font-weight: 700; white-space: nowrap; }
-  #eb-nouislider-range { width: 100%; height: 5px; accent-color: ${t.brandPrimary}; cursor: pointer; }
-  #free-metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
-  .eb-kpi-card { background: ${t.canvasBg}; border: 1px solid ${t.border}; border-radius: 10px; padding: 10px 12px; }
-  .eb-kpi-label { font-size:13px; color: ${t.textMuted}; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-  .eb-kpi-val { font-family: ${t.fontDisplay}; font-size: 20px; font-weight: 700; color: ${t.textPrimary}; line-height: 1.2; margin: 2px 0; }
-  .eb-kpi-sub { font-size:13px; color: ${t.safeColor}; font-weight: 600; }
+  #eb-curtain-visual-split { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; margin: 16px 0 18px 0; } #eb-curtain-dossier-card { display: none !important; } #eb-floating-gate-popover { display: none; position: fixed; z-index: 9998; width: 360px; max-width: calc(100vw - 24px); background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: ${t.radiusCard}; padding: 16px; font-family: ${t.fontSans}; text-transform: none !important; }
+  #eb-bottom-conversion-suite { margin: 36px auto 88px auto; font-family: ${t.fontSans}; text-transform: none !important; } .eb-panel-card { background: ${t.cardBg}; color: ${t.textPrimary}; border-radius: ${t.radiusCard}; padding: 24px 26px; margin-bottom: 20px; } .eb-gbb-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; align-items: stretch; }
+  .eb-tier-card { background: ${t.canvasBg}; border-radius: ${t.radiusCard}; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; color: ${t.textPrimary}; } #in-card-unlock-bar .eb-tier-card .eb-doppelrand-img { height: 84px !important; min-height: 84px !important; max-height: 84px !important; } .eb-tier-card.featured { background: ${t.brandSoftBg}; position: relative; } #eb-executive-strip { margin-bottom: 20px; }
+  .eb-strip-top-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid ${t.border}; } .eb-strip-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: ${t.brandPrimary}; background: ${t.brandSoftBg}; border: 1px solid ${t.accentBorder}; padding: 4px 12px; border-radius: 999px; }
+  #preset-chips { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; width: 100%; margin-bottom: 10px; } #preset-chips .preset-chip { padding: 7px 8px; font-size: 13px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: ${t.radiusPill}; background: ${t.canvasBg}; color: ${t.textSecondary}; border: 1px solid ${t.border}; } #preset-chips .preset-chip:hover { background: ${t.brandSoftBg}; color: ${t.brandPrimary}; border-color: ${t.accentBorder}; }
+  #eb-interactive-control-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; align-items: center; margin-bottom: 10px; background: ${t.subtleBg}; padding: 8px 12px; border-radius: 10px; border: 1px solid ${t.border}; } #eb-fuse-search-input { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid ${t.border}; background: #FFFFFF; color: ${t.textPrimary}; font-size: 13.5px; }
+  .eb-slider-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; color: ${t.textSecondary}; font-weight: 700; white-space: nowrap; } #eb-nouislider-range { width: 100%; height: 5px; accent-color: ${t.brandPrimary}; cursor: pointer; } #free-metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .eb-kpi-card { background: ${t.canvasBg}; border: 1px solid ${t.border}; border-radius: 10px; padding: 10px 12px; } .eb-kpi-label { font-size:13px; color: ${t.textMuted}; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; } .eb-kpi-val { font-family: ${t.fontDisplay}; font-size: 20px; font-weight: 700; color: ${t.textPrimary}; line-height: 1.2; margin: 2px 0; } .eb-kpi-sub { font-size:13px; color: ${t.safeColor}; font-weight: 600; }
   .stat-pill-locked { grid-column: 1 / -1; background: ${t.brandSoftBg}; border: 1px solid ${t.accentBorder}; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
   .eb-locked-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
   .eb-store-pills { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -91,7 +61,6 @@ function buildExactBaselineStyles(cfg) {
   }
 </style>`;
 }
-
 function buildActionButtonsHtml(cfg, idPrefix) {
   const pfx = idPrefix || '';
   const actions = cfg.exportActions || [{ id: 'btn-copy-shopping-list', label: 'Copy Summary', type: 'copy' }, { id: 'btn-export-csv', label: 'Export .CSV', href: '/api/github-upgrade/export.csv' }, { id: 'btn-export-ics', label: '.ICS Schedule', href: '/api/github-upgrade/skin-cycling.ics' }, { id: 'btn-export-llms', label: 'Protocol .TXT', href: '/api/github-upgrade/llms-bundle.txt' }, { id: 'btn-print-summary', label: 'Print PDF', type: 'print' }, { id: 'btn-showroom-hud', label: cfg.hudLabel, type: 'hud' }, { id: 'btn-cmdk-trigger', label: '⌘K Actions', type: 'cmdk' }, { id: 'btn-reddit-share', label: 'Reddit MD', type: 'reddit' }];
@@ -101,7 +70,6 @@ function buildActionButtonsHtml(cfg, idPrefix) {
     return `<button type="button" id="${esc(pfx + a.id)}" class="eb-action-btn" onclick="${fn}">${esc(a.label)}</button>`;
   }).join('');
 }
-
 function buildScenarioAndExportWorkbenchHtml(cfg) {
   const t = getTheme(cfg);
   const presetsHtml = cfg.presets.map((p, idx) => `<button type="button" class="preset-chip" data-preset="${esc(p.key)}" onclick="window.__ebApplyPreset('${esc(p.key)}', ${idx})">${esc(p.label)}</button>`).join('');
@@ -118,14 +86,12 @@ function buildScenarioAndExportWorkbenchHtml(cfg) {
   </div>
 </div>`;
 }
-
 function buildBottomConversionSuiteHtml(cfg, reqPath) {
   const t = getTheme(cfg);
   const shareUrl = `https://${cfg.domain}${reqPath || '/'}`;
   const redditHref = `https://www.reddit.com/r/${cfg.redditSub}/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(cfg.brandName + ' Benchmark & Protocol')}`;
   const xHref = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent('Ran a live audit on ' + cfg.brandName)}`;
   const mailHref = `mailto:?subject=${encodeURIComponent(cfg.brandName + ' Summary')}&body=${encodeURIComponent('Review this scenario: ' + shareUrl)}`;
-
   const pillsHtml = cfg.coMarketingPills.map((p, i) => `<button type="button" class="store-preview-pill${i === 0 ? ' active' : ''}" data-store="${esc(p.key)}" onclick="window.__ebSelectStorePill('${esc(p.key)}')">${esc(p.label)}</button>`).join('');
   const actionsHtml = buildActionButtonsHtml(cfg);
   const affiliatesHtml = cfg.affiliates.map((a) => `<a href="${esc(a.url)}" target="_blank" rel="noopener sponsored" class="eb-tier-card" style="text-decoration:none;color:${t.textPrimary};" onclick="window.__ebLogEvent('affiliate_click', { partner: '${esc(a.title)}' })"><div><span style="font-size:13.5px;font-weight:700;color:${t.safeColor};">${esc(a.badge)}</span><div style="font-size:15px;font-weight:700;margin-top:4px;color:${t.textPrimary};">${esc(a.title)}</div></div><div style="margin-top:10px;font-size:13.5px;color:${t.brandPrimary};font-weight:700;">${esc(a.cpa)} →</div></a>`).join('');
@@ -192,7 +158,6 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
   <div id="eb-ecosystem-handoff-banner" class="eb-panel-card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:14px;color:${t.textSecondary};"><span><strong>Scaling B2B &amp; SaaS growth?</strong> Audit your Stripe &amp; Shopify checkout recovery and failed-card dunning free:</span><a id="eb-ecosystem-handoff-link" href="https://abandonalpha.io/?utm_source=sponsorradar&amp;utm_medium=ecosystem_handoff" target="_blank" rel="noopener" style="color:${t.brandPrimary};font-weight:700;text-decoration:underline;">Open AbandonAlpha Checkout Recovery Grader &rarr;</a></div>
   ${buildMobileSeoCrawlMeshHtml(cfg, reqPath)}
 </section>
-
 <!-- Floating Value-Gate Popover (Paid Choice Architecture: Zero $0 Cannibalization) -->
 <div id="eb-floating-gate-popover" role="dialog" aria-label="Instant Deliverable Export Pass">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -204,10 +169,8 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
   <div style="display:grid;gap:6px;">
     <button type="button" id="btn-popover-flash-pass" onclick="window.__ebCheckout('creator_pass', true)" style="width:100%;padding:10px 14px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">Unlock Creator Pass ($19) →</button>
     <button type="button" id="btn-popover-vault-pass" onclick="window.__ebCheckout('playbook_pass', true)" style="width:100%;padding:9px 14px;border-radius:${t.radiusPill};background:${t.safeColor};color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;">Unlock Full 109-Row Buyer Vault ($${esc(cfg.corePriceUsd)}) →</button>
-    <button type="button" id="btn-popover-micro-pass" onclick="window.__ebCheckout('micro_pass', true)" style="display:none;">Or Single File Only: 99¢</button>
   </div>
 </div>
-
 <!-- Exit-Intent Spotlight Toast (#eb-ouibounce-toast) -->
 <div id="eb-ouibounce-toast" role="dialog" aria-label="Send 1-Page Summary Before Leaving">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -221,11 +184,10 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <button type="submit" id="btn-ouibounce-submit" style="padding:6px 11px;border-radius:${t.radiusPill};background:${t.brandSoftBg};color:${t.brandPrimary};font-size:13px;font-weight:700;border:none;">Unmask 3 Free ($0) →</button>
   </form>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-    <button type="button" id="btn-toast-micro-pass" onclick="window.__ebCheckout('creator_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">${cfg.moduleId === 'derm_logic' ? '9:16 Card (99¢)' : 'Creator Pass ($19)'}</button>
+    <button type="button" id="btn-toast-flash-pass" onclick="window.__ebCheckout('creator_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:#FFFFFF;color:${t.brandPrimary};border:none;font-weight:600;font-size:13px;">Creator Pass ($19)</button>
     <button type="button" onclick="window.__ebCheckout('playbook_pass')" style="padding:7px 8px;border-radius:${t.radiusPill};background:${t.brandPrimary};color:#FFFFFF;border:none;font-weight:700;font-size:13px;">${cfg.moduleId === 'derm_logic' ? 'Complete Kit ($1.99) →' : '109-Row Vault ($29) →'}</button>
   </div>
 </div>
-
 <!-- Cmd+K Executive Command Palette -->
 <div id="eb-cmdk-modal" onclick="if(event.target===this)this.style.display='none'">
   <div style="background:${t.cardBg};border-radius:${t.radiusCard};width:92%;max-width:480px;padding:18px;color:${t.textPrimary};">
@@ -241,7 +203,6 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     </div>
   </div>
 </div>
-
 <!-- Frosted Light Editorial Conversion Dock (#sticky-mobile-bar) -->
 <div id="sticky-mobile-bar" role="region" aria-label="Instant Access Conversion Dock">
   <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -249,7 +210,6 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
     <a href="#in-card-unlock-bar" id="sticky-sub-benefit" style="font-size:13px;color:${t.textSecondary};font-weight:600;text-decoration:none;">109 Verified Buyer &amp; Agency Desk Rows • Save $2,400 Overpay</a>
   </div>
   <div style="display:flex;align-items:center;gap:6px;">
-    <button type="button" id="btn-sticky-micro-unlock" class="eb-action-btn" style="display:none;" onclick="window.__ebCheckout('micro_pass', true)">99¢ File</button>
     <button type="button" id="btn-sticky-flash-unlock" class="eb-action-btn" style="background:${t.brandPrimary};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('creator_pass', true)">Creator Pass ($19) →</button>
     <button type="button" id="btn-sticky-vault-unlock" class="eb-action-btn" style="background:${t.safeColor};color:#FFFFFF;font-weight:700;border:none;padding:7px 14px;border-radius:${t.radiusPill};" onclick="window.__ebCheckout('playbook_pass', true)">Full 109-Row CSV Vault ($${esc(cfg.corePriceUsd)}) →</button>
     <button type="button" id="btn-sticky-dock-close" aria-label="Hide bottom bar" title="Hide bottom bar" onclick="try{sessionStorage.setItem('eb_dock_dismissed','1');}catch(_){}var d=document.getElementById('sticky-mobile-bar');if(d){d.classList.remove('eb-dock-visible');d.style.display='none';}" style="background:transparent;border:none;color:${t.textMuted};font-size:16px;font-weight:700;line-height:1;padding:4px 6px;cursor:pointer;">×</button>
@@ -257,14 +217,12 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
   </div>
 </div>`;
 }
-
 function buildClientRuntimeScript(cfg) {
   const t = getTheme(cfg);
   const pillMap = {};
   for (const p of cfg.coMarketingPills) pillMap[p.key] = p.rowText;
   const firstPartner = cfg.affiliates && cfg.affiliates[0] ? cfg.affiliates[0] : { title: 'Verified Partner', url: '#', cpa: 'Explore' };
   const remDiff = cfg.remediationDiff || { beforeLine: '- [BEFORE] Legacy baseline', afterLine: '+ [AFTER] Optimized baseline', roiBadge: 'Verified Lift' };
-
   return `<script id="exact-baseline-client-runtime">
 (function() {
   var CFG = ${JSON.stringify({ moduleId: cfg.moduleId, brandName: cfg.brandName, domain: cfg.domain, corePriceUsd: cfg.corePriceUsd, proPriceUsd: cfg.proPriceUsd, coreLabel: cfg.coreLabel, freeDeliverableName: cfg.freeDeliverableName || 'Production Deliverable', deliverableName: cfg.deliverableName || 'Complete Pro Deliverable', deliverableFiles: cfg.deliverableFiles || [], presets: (cfg.presets || []).slice(0, 3), searchPlaceholder: cfg.searchPlaceholder || 'Enter domain or brand...', sliderLabel: cfg.sliderLabel || 'Scale', theme: t, firstPartner, remDiff, pillMap, presetKpis: cfg.presetKpis || {} }).replace(/</g, '\\u003c')};
@@ -295,7 +253,6 @@ function buildClientRuntimeScript(cfg) {
       localStorage.setItem(STORAGE_KEY, '1');
     }
   } catch (_) {}
-
   try {
     window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); return false; });
     window.__ebVid = localStorage.getItem('vs_vid') || ('v_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now().toString(36));
@@ -321,7 +278,6 @@ function buildClientRuntimeScript(cfg) {
       window.__ebLogEvent('visit_hydrated', { ua_platform: navigator.platform || '', vw: window.innerWidth || 0 });
     }
   } catch (_) {}
-
   window.__ebSaveBundleFile = function() {
     try {
       var targetEl = document.getElementById('compiler-code-output') || document.getElementById('res-pitch-body') || document.getElementById('out-sdk-snippet') || document.getElementById('appleWalletCardPreview');
@@ -335,7 +291,6 @@ function buildClientRuntimeScript(cfg) {
       document.body.removeChild(a);
     } catch (_) {}
   };
-
   document.addEventListener('click', function(e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href*="/api/affiliate"], a[rel*="sponsored"], a.affiliate-link-pill, a.affiliate-micro-link') : null;
     if (a && !a.hasAttribute('onclick')) {
@@ -344,7 +299,6 @@ function buildClientRuntimeScript(cfg) {
     var presetBtn = e.target && e.target.closest ? e.target.closest('[onclick*="recalcPseo"], [onclick*="pasteSample"], [onclick*="filterPlacements"], [onclick*="filterLedgerRows"], [onclick*="switchToolMode"], [onclick*="setBrandPreset"], [onclick*="setPresetDomain"], [onclick*="switchCompilerTab"], [onclick*="applyRoutinePreset"], .preset-btn, .obj-btn') : null;
     if (presetBtn) window.__ebLogEvent('calculate', { source: 'native_interactive_control' });
   }, { passive: true });
-
   window.__ebTriggerPostCalcSpotlight = function(entityName) {
     if (window.__ebIsUnlocked) return;
     var label = entityName ? (' (' + cleanEnt(entityName, 20) + ')') : '';
@@ -356,7 +310,6 @@ function buildClientRuntimeScript(cfg) {
       if (pcTitle) pcTitle.textContent = label ? ('Results Ready' + label + ':') : PERSONA.ctaTitle;
     }
   };
-
   window.__ebFillEmailDomain = function(inputId, domain, formId) {
     var inp = document.getElementById(inputId || 'eb-inline-scorecard-email');
     if (!inp) return;
@@ -371,7 +324,6 @@ function buildClientRuntimeScript(cfg) {
       try { inp.setSelectionRange(0, 0); } catch (_) {}
     }
   };
-
   window.__ebSetCurtainRoiScale = function(mult) {
     var m = Number(mult) || 1;
     var baseUsd = CFG.moduleId === 'citation_forge' ? 1420 : (CFG.moduleId === 'sponsor_radar' ? 4800 : (CFG.moduleId === 'derm_logic' ? 165 : 5600));
@@ -379,7 +331,6 @@ function buildClientRuntimeScript(cfg) {
     if (badge) badge.textContent = 'Est. Value: $' + (baseUsd * m).toLocaleString() + ' (' + Math.round((baseUsd * m) / 0.99).toLocaleString() + 'x vs 99¢ Pass)';
     window.__ebLogEvent('calculate', { source: 'curtain_roi_scale', multiplier: m });
   };
-
   window.__ebCycleHeroScenario = function(ev) {
     if (ev && ev.stopPropagation) ev.stopPropagation();
     var list = (CFG.presets && CFG.presets.length) ? CFG.presets : [{ key: 'custom-benchmark', label: 'Live Scenario' }];
@@ -394,7 +345,6 @@ function buildClientRuntimeScript(cfg) {
     if (cImg) cImg.src = photos[(window.__ebHeroPresetIdx + 2) % photos.length];
     window.__ebCompileCustomCurtain(p.key);
   };
-
   window.__ebGetDermCtx = function(tabIdx) {
     var checked = Array.prototype.slice.call(document.querySelectorAll('input[name="routineProduct"]:checked')), names = [], totalUsd = 0;
     checked.forEach(function(inp) { var lbl = inp.closest ? inp.closest('.prod-check-item') : null, st = lbl ? lbl.querySelector('strong') : null, mn = lbl ? lbl.querySelectorAll('.mono') : []; if (st && st.textContent) names.push(st.textContent.trim()); for (var i = 0; i < mn.length; i++) { var d = (mn[i].textContent || '').split('$')[1]; if (d && parseInt(d, 10) > 0) totalUsd += parseInt(d, 10); } });
@@ -476,7 +426,6 @@ function buildClientRuntimeScript(cfg) {
       window.__ebTriggerPostCalcSpotlight(cEnt);
     }).catch(function(){});
   };
-
   window.__ebMountDeliverableCurtain = function(entityOverride, customBadge, customDiagLine) {
     if (entityOverride) window.__ebActiveEntity = String(entityOverride);
     var pName = window.location.pathname || '/', isDerm = CFG.moduleId === 'derm_logic';
@@ -501,7 +450,7 @@ function buildClientRuntimeScript(cfg) {
         var gateTr = document.createElement('tr'); gateTr.id = 'eb-table-row4-gate-tr'; gateTr.style.cssText = 'cursor:pointer;background:' + CFG.theme.subtleBg + ';';
         gateTr.onclick = function() { window.__ebCheckout('flash_pass'); };
         var rowGateCopy = CFG.moduleId === 'sponsor_radar' ? 'Export All Brand Placements, CPMs & Verified Contacts' : 'Export Full Production Config & Templates';
-        gateTr.innerHTML = '<td colspan="' + (trs[0] ? trs[0].children.length : 8) + '" style="padding:10px 14px;font-family:' + CFG.theme.fontSans + ';font-size:13.5px;color:' + CFG.theme.textPrimary + ';"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span style="color:' + CFG.theme.textSecondary + ';"><strong style="color:' + CFG.theme.textPrimary + ';">' + escHtml(rowGateCopy) + ':</strong> Instant 3-file download</span><span style="display:inline-flex;gap:6px;align-items:center;"><button type="button" onclick="event.stopPropagation();window.__ebCheckout(\\\'micro_pass\\\')" style="padding:5px 10px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.brandPrimary + ';border:none;font-size:13px;font-weight:700;cursor:pointer;">99¢ Single File</button><span style="padding:5px 12px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;font-size:13px;font-weight:700;white-space:nowrap;">Get Complete Pack ($1.99 →)</span></span></div></td>';
+        gateTr.innerHTML = '<td colspan="' + (trs[0] ? trs[0].children.length : 8) + '" style="padding:10px 14px;font-family:' + CFG.theme.fontSans + ';font-size:13.5px;color:' + CFG.theme.textPrimary + ';"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span style="color:' + CFG.theme.textSecondary + ';"><strong style="color:' + CFG.theme.textPrimary + ';">' + escHtml(rowGateCopy) + ':</strong> Instant 3-file download</span><span style="display:inline-flex;gap:6px;align-items:center;"><span style="padding:5px 12px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;font-size:13px;font-weight:700;white-space:nowrap;">Get Complete Pack ($1.99 →)</span></span></div></td>';
         tbody.appendChild(gateTr);
       }
       var tblEl = tbody.closest('table'), tblWrap = tblEl ? (tblEl.closest('.table-wrap, .posterior-table-wrap') || tblEl) : null;
@@ -509,7 +458,7 @@ function buildClientRuntimeScript(cfg) {
         var tBar = document.createElement('div'); tBar.id = 'eb-tanstack-table-bar';
         tBar.style.cssText = 'display:' + (isPseoOrDir ? 'flex' : 'none') + ';justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:9px 12px;margin-bottom:10px;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';font-family:' + CFG.theme.fontSans + ';';
         tBar.innerHTML = '<div style="display:flex;align-items:center;gap:8px;flex:1;min-width:200px;"><span style="font-size:13px;font-weight:700;color:' + CFG.theme.brandPrimary + ';white-space:nowrap;">Filter Table:</span><input type="search" id="eb-tanstack-filter-input" placeholder="Search rows or test your own..." oninput="window.__ebFilterAndCalcTable(this.value)" style="flex:1;padding:6px 10px;border-radius:' + CFG.theme.radiusCard + ';background:#FFFFFF;color:' + CFG.theme.textPrimary + ';font-size:13.5px;border:none;" /></div>'
-          + '<div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;"><button type="button" id="btn-tanstack-sort" onclick="window.__ebSortTableRows()" style="padding:6px 11px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.textPrimary + ';border:none;font-size:13px;font-weight:600;cursor:pointer;">Sort by Impact</button><button type="button" id="btn-tanstack-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\')" style="display:' + (CFG.moduleId === 'sponsor_radar' ? 'none' : 'inline-block') + ';padding:6px 10px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.brandPrimary + ';border:none;font-size:13px;font-weight:700;cursor:pointer;">99¢ Single File</button><button type="button" id="btn-tanstack-unlock-rows" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="display:' + (CFG.moduleId === 'sponsor_radar' ? 'none' : 'inline-block') + ';padding:6px 12px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';border:none;font-size:13px;font-weight:700;cursor:pointer;">Unlock Full Table ($1.99)</button></div>';
+          + '<div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;"><button type="button" id="btn-tanstack-sort" onclick="window.__ebSortTableRows()" style="padding:6px 11px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.textPrimary + ';border:none;font-size:13px;font-weight:600;cursor:pointer;">Sort by Impact</button><button type="button" id="btn-tanstack-unlock-rows" onclick="window.__ebCheckout(\\\'flash_pass\\\')" style="display:' + (CFG.moduleId === 'sponsor_radar' ? 'none' : 'inline-block') + ';padding:6px 12px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';border:none;font-size:13px;font-weight:700;cursor:pointer;">Unlock Full Table ($1.99)</button></div>';
         tblWrap.parentNode.insertBefore(tBar, tblWrap);
       }
     }
@@ -622,7 +571,7 @@ function buildClientRuntimeScript(cfg) {
       + '<div id="eb-curtain-customizer-bar" style="display:none;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px;"><input type="text" id="eb-curtain-entity-input" onchange="if(this.value)window.__ebCompileCustomCurtain(this.value)" placeholder="' + escHtml(CFG.searchPlaceholder) + '..." onkeydown="if(event.keyCode===13){event.preventDefault();window.__ebCompileCustomCurtain();}" style="flex:1;min-width:170px;padding:6px 10px;border-radius:8px;background:#FFFFFF;color:' + CFG.theme.textPrimary + ';font-size:13px;border:none;" /><span role="button" id="btn-curtain-run-custom" onclick="window.__ebCompileCustomCurtain()" style="padding:6px 12px;border-radius:8px;background:' + CFG.theme.brandSoftBg + ';color:' + CFG.theme.brandPrimary + ';font-weight:700;font-size:13px;cursor:pointer;">Preview Custom Output ↵</span>' + chipsHtml + '</div>'
       + (filesHtml ? '<div id="eb-zod-manifest-pills" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;"><div id="eb-manifest-pills-left" style="display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center;">' + filesHtml + '</div><div id="eb-observable-telemetry-pill" style="display:none;"><svg aria-hidden="true" width="1" height="1"></svg><span>Ready</span></div></div>' : '')
       + dossierSplitHtml
-      + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:10px;width:100%;"><div style="flex:1 1 380px;min-width:280px;width:100%;"><div id="eb-curtain-loss-hook" style="width:100%;font-size:16px;font-weight:600;color:' + CFG.theme.textPrimary + ';line-height:1.35;">' + escHtml(curtainLossHook) + '</div><div style="font-size:13.5px;color:' + CFG.theme.textMuted + ';margin-top:4px;">High-Labor Workflow Deliverable Pack · 109 Verified Buyer &amp; Agency Desk Rows (.CSV) + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;"><span role="button" id="btn-curtain-micro-pass" onclick="window.__ebCheckout(\\\'micro_pass\\\', true)" style="display:none;">' + escHtml(PERSONA.microBtn) + '</span><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'creator_pass\\\', true)" style="display:none;">Target Pack</button><button type="button" id="btn-curtain-creator-pass" onclick="window.__ebCheckout(\\\'creator_pass\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFBEB;color:#92400E;border:1px solid #F59E0B;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Creator Pass ($19) →</button><button type="button" id="btn-curtain-vault-pass" onclick="window.__ebCheckout(\\\'playbook_pass\\\', true)" style="padding:10px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.safeColor + ';color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Full 109-Row CSV + IO Rider Vault ($29) →</button><button type="button" id="btn-curtain-agency-pass" onclick="window.__ebCheckout(\\\'agency_desk\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#0F172A;color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">B2B Agency &amp; Talent Desk ($149) →</button></div></div>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:10px;width:100%;"><div style="flex:1 1 380px;min-width:280px;width:100%;"><div id="eb-curtain-loss-hook" style="width:100%;font-size:16px;font-weight:600;color:' + CFG.theme.textPrimary + ';line-height:1.35;">' + escHtml(curtainLossHook) + '</div><div style="font-size:13.5px;color:' + CFG.theme.textMuted + ';margin-top:4px;">High-Labor Workflow Deliverable Pack · 109 Verified Buyer &amp; Agency Desk Rows (.CSV) + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;"><button type="button" id="btn-curtain-flash-pass" onclick="window.__ebCheckout(\\\'creator_pass\\\', true)" style="display:none;">Target Pack</button><button type="button" id="btn-curtain-creator-pass" onclick="window.__ebCheckout(\\\'creator_pass\\\', true)" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFBEB;color:#92400E;border:1px solid #F59E0B;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Creator Pass ($19) →</button><button type="button" id="btn-curtain-vault-pass" onclick="window.__ebCheckout(\\\'playbook_pass\\\', true)" style="padding:10px 16px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.safeColor + ';color:#FFFFFF;border:none;font-weight:700;font-size:13px;cursor:pointer;white-space:normal;max-width:100%;">Full 109-Row CSV + IO Rider Vault ($29) →</button></div></div>'
       + '<div id="eb-click-trigger-bar" style="display:none;"><span>One-time $1.99 or $29 payment</span></div>'
       + '<div id="eb-buy-preview-confirm" style="display:none;margin-top:14px;padding:16px 20px;border-radius:' + CFG.theme.radiusCard + ';background:' + CFG.theme.subtleBg + ';align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;"><div style="flex:1;min-width:0;"><div id="eb-buy-preview-title" style="font-size:15.5px;font-weight:700;color:' + CFG.theme.textPrimary + ';">Preview Ready · Review Your Included Files Above</div><div id="eb-buy-preview-sub" style="font-size:13.5px;color:' + CFG.theme.textSecondary + ';margin-top:3px;">Instant download after checkout · One-time payment · 30-day money-back guarantee</div></div><div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;"><span role="button" id="btn-cancel-preview" onclick="document.getElementById(\\\'eb-buy-preview-confirm\\\').style.display=\\\'none\\\';" style="padding:10px 14px;border-radius:' + CFG.theme.radiusPill + ';background:#FFFFFF;color:' + CFG.theme.textSecondary + ';font-size:13.5px;font-weight:600;cursor:pointer;">Edit Selection</span><span role="button" id="btn-confirm-purchase-stripe" onclick="window.__ebCheckout(window.__ebPendingTier||\\\'flash_pass\\\', true)" style="padding:11px 22px;border-radius:' + CFG.theme.radiusPill + ';background:' + CFG.theme.safeColor + ';color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer;white-space:normal;">Confirm Purchase ($1.99) →</span></div></div>';
     var lbShowcase = !isPseoOrDir ? document.getElementById('eb-leaderboard-home-showcase') : null;
@@ -669,12 +618,8 @@ function buildClientRuntimeScript(cfg) {
     var fTitle = f.label || f.file, dPill = document.getElementById('eb-dossier-format-pill'), prevBox = document.getElementById('eb-prism-proof-preview');
     if (dPill) dPill.textContent = fTitle;
     if (prevBox) { prevBox.setAttribute('data-demo-open', '0'); prevBox.innerHTML = window.__ebBuildProofHtml('summary', idx); window.__ebLastCurtainPreview = prevBox.innerHTML; }
-    var microBtn = document.getElementById('btn-curtain-micro-pass'), popMicroBtn = document.getElementById('btn-popover-micro-pass');
-    if (microBtn) microBtn.textContent = CFG.moduleId === 'derm_logic' ? 'Single Card (99¢)' : ('Just This File (99¢)');
-    if (popMicroBtn) popMicroBtn.textContent = 'Download ' + fTitle + ': 99¢ →';
     window.__ebLogEvent('tab_switch', { store_pill: 'file_' + f.file });
   };
-
   window.__ebSaveInlineScorecard = function(ev, inputId, formId) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var inp = document.getElementById(inputId || 'eb-inline-scorecard-email');
@@ -687,17 +632,16 @@ function buildClientRuntimeScript(cfg) {
     if (v4 && v4.textContent.indexOf('Locked') !== -1) v4.textContent = 'Verified Patch Ready • Sent to ' + email;
     if (s4) { s4.textContent = 'UNLOCKED'; s4.style.color = CFG.theme.safeColor; }
     var gTr = document.getElementById('eb-table-row4-gate-tr');
-    if (gTr) gTr.innerHTML = '<td colspan="8" style="padding:7px 12px;background:' + CFG.theme.safeSoftBg + ';color:' + CFG.theme.safeColor + ';font-weight:700;font-size:13px;">Row #4 Revealed! <a href="/buy/micro_pass" onclick="window.__ebCheckout(\\\'micro_pass\\\');return false;" style="color:' + CFG.theme.brandPrimary + ';margin-left:8px;">Unblur all remaining rows + CSV for 99¢ →</a></td>';
+    if (gTr) gTr.innerHTML = '<td colspan="8" style="padding:7px 12px;background:' + CFG.theme.safeSoftBg + ';color:' + CFG.theme.safeColor + ';font-weight:700;font-size:13px;">Row #4 Revealed! <a href="/buy/flash_pass" onclick="window.__ebCheckout(\\\'flash_pass\\\');return false;" style="color:' + CFG.theme.brandPrimary + ';margin-left:8px;">Unlock complete 3-file pack ($1.99) →</a></td>';
     var prevBox = document.getElementById('eb-prism-proof-preview');
     if (prevBox) prevBox.textContent += '\\n// [ROW #4 REVEALED FOR ' + email.replace(/[<>]/g, '') + ']: Remaining rows & 3 files ready below';
     fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'zeigarnik_row4_reveal' }) })
       .then(function() {
         var bar = document.getElementById(formId || 'eb-save-scorecard-bar');
-        if (bar) bar.innerHTML = '<span style="font-size:13px;font-weight:700;color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Emailed to ' + safeEmail + '!</span><a href="/buy/micro_pass" onclick="window.__ebCheckout(\\\'micro_pass\\\');return false;" style="padding:5px 12px;border-radius:999px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;text-decoration:none;font-weight:700;font-size:13px;cursor:pointer;">VIP Add-On: Unblur All Remaining Rows + File (99¢) →</a>';
+        if (bar) bar.innerHTML = '<span style="font-size:13px;font-weight:700;color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Emailed to ' + safeEmail + '!</span><a href="/buy/flash_pass" onclick="window.__ebCheckout(\\\'flash_pass\\\');return false;" style="padding:5px 12px;border-radius:999px;background:' + CFG.theme.brandPrimary + ';color:#FFFFFF;text-decoration:none;font-weight:700;font-size:13px;cursor:pointer;">Unlock Complete 3-File Pack ($1.99) →</a>';
       }).catch(function(){});
     return false;
   };
-
   window.__ebApplyUnblurState = function() {
     window.__ebIsUnlocked = true;
     try { localStorage.setItem(STORAGE_KEY, '1'); } catch (_) {}
@@ -737,17 +681,16 @@ function buildClientRuntimeScript(cfg) {
     window.__ebLogEvent('tab_switch', { store_pill: 'objection_' + code, page: window.location.pathname });
     if (btn) { btn.style.background = CFG.theme.brandSoftBg; btn.style.color = CFG.theme.brandPrimary; btn.style.borderColor = CFG.theme.accentBorder; }
     var desc = document.getElementById('eb-ouibounce-desc'), em = document.getElementById('eb-ouibounce-email');
-    if (code === 'need_agency_depth' && desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #1 Sample Unmasked on Page!</strong> Or grab 1 Single File for <strong>99¢</strong> via 1-tap Apple Pay / Link below:';
+    if (code === 'need_agency_depth' && desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #1 Sample Unmasked on Page!</strong> Or grab the Complete 3-File Pack for <strong>$1.99</strong> below:';
     else if (desc) { desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">No card required!</strong> Enter your email below to reveal Row #4 free on-screen right now:'; if (em) em.focus(); }
   };
   window.__ebSendExitSummary = function(ev) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var input = document.getElementById('eb-ouibounce-email'), email = input ? input.value.trim() : ''; if (!email) return false;
     var r4 = document.querySelector('tr.eb-blurred-deliverable'); if (r4) { r4.classList.remove('eb-blurred-deliverable'); r4.style.background = CFG.theme.safeSoftBg; }
-    fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'exit_intent_downsell' }) }).then(function() { var btn = document.getElementById('btn-ouibounce-submit'), desc = document.getElementById('eb-ouibounce-desc'); if (btn) btn.textContent = 'Row #4 Revealed!'; if (desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Sent!</strong> <a href="/buy/micro_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Unblur all remaining rows + file for 99¢ →</a>'; }).catch(function() {});
+    fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'exit_intent_downsell' }) }).then(function() { var btn = document.getElementById('btn-ouibounce-submit'), desc = document.getElementById('eb-ouibounce-desc'); if (btn) btn.textContent = 'Row #4 Revealed!'; if (desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Sent!</strong> <a href="/buy/flash_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Unlock complete 3-file pack ($1.99) →</a>'; }).catch(function() {});
     return false;
   };
-
   var origFetch = window.fetch;
   if (origFetch) {
     window.fetch = function(input, init) {
@@ -803,7 +746,6 @@ function buildClientRuntimeScript(cfg) {
       });
     };
   }
-
   var fuseTimer = null, sliderTimer = null;
   window.__ebRunFuseSearch = function(query) {
     if (!query || query.trim().length < 2) return;
@@ -816,7 +758,6 @@ function buildClientRuntimeScript(cfg) {
       }).catch(function(){});
     }, 300);
   };
-
   window.__ebOnSliderInput = function(val) {
     var num = Number(val) || 10, rd = document.getElementById('eb-slider-readout'), boxes = document.querySelectorAll('#free-metrics-grid .eb-kpi-val');
     if (rd) rd.textContent = CFG.sliderLabel + ': ' + num;
@@ -832,7 +773,6 @@ function buildClientRuntimeScript(cfg) {
       window.__ebShowTripwire();
     }, 450);
   };
-
   try {
     if ('IntersectionObserver' in window) {
       var obs = window.__ebPaywallObserver = new IntersectionObserver(function(entries) {
@@ -843,7 +783,6 @@ function buildClientRuntimeScript(cfg) {
       ['in-card-unlock-bar', 'eb-deliverable-curtain', 'eb-postcalc-inline-cta'].forEach(function(id) { var el = document.getElementById(id); if (el) obs.observe(el); });
     }
   } catch (_) {}
-
   var ouibounceShown = false, pageEnteredAt = Date.now(), nativeCalcTimer = null;
   function showRescueToast(reason) {
     if (ouibounceShown || window.__ebIsUnlocked) return;
@@ -873,7 +812,6 @@ function buildClientRuntimeScript(cfg) {
     if (sb) sb.classList.toggle('eb-dock-visible', y > 650 && !navigator.webdriver);
     if (y > 1100 && (Date.now() - pageEnteredAt) > 25000) showRescueToast('deep_scroll');
   }, { passive: true });
-
   window.__ebToggleCmdk = function() {
     var m = document.getElementById('eb-cmdk-modal');
     if (!m) return;
@@ -886,7 +824,6 @@ function buildClientRuntimeScript(cfg) {
       ['eb-cmdk-modal', 'eb-floating-gate-popover'].forEach(function(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; });
     }
   });
-
   window.__ebSelectStorePill = function(key) {
     var pills = document.querySelectorAll('.store-preview-pill[data-store]');
     for (var i = 0; i < pills.length; i++) pills[i].classList.toggle('active', pills[i].getAttribute('data-store') === key);
@@ -965,11 +902,11 @@ function buildClientRuntimeScript(cfg) {
       window.__ebLogEvent('view_paywall', { target: 'stripe_cancel_return_99c_rescue' });
       var tr2 = document.querySelector('#res-placements-tbody tr:nth-child(2), main table tbody tr:nth-child(2)');
       if (tr2) { tr2.classList.remove('eb-blurred-deliverable'); tr2.style.background = CFG.theme.safeSoftBg; var tdC = tr2.querySelectorAll('td')[2]; if (tdC && CFG.moduleId === 'sponsor_radar') tdC.innerHTML = '<div class="mono" style="font-size:12.5px;color:#047857;font-weight:800;">✓ ROW #2 GOODWILL UNMASKED: partnerships@linear.app</div><div class="mono" style="font-size:12px;color:#0F172A;">Agency: buying@junction37.io (Junction 37 Desk) • 3x Floor Verified</div>'; }
-      var toast = document.getElementById('eb-ouibounce-toast'), tTitle = document.getElementById('eb-ouibounce-title'), tDesc = document.getElementById('eb-ouibounce-desc'), tForm = toast ? toast.querySelector('form') : null, mBtn = document.getElementById('btn-toast-micro-pass');
+      var toast = document.getElementById('eb-ouibounce-toast'), tTitle = document.getElementById('eb-ouibounce-title'), tDesc = document.getElementById('eb-ouibounce-desc'), tForm = toast ? toast.querySelector('form') : null, mBtn = document.getElementById('btn-toast-flash-pass');
       if (tForm) tForm.style.display = 'none';
-      if (tTitle) tTitle.textContent = '✦ Row #2 Unmasked Free! Or Grab 1 Single File for 99¢';
-      if (tDesc) tDesc.innerHTML = 'We unmasked <strong>Row #2 (partnerships@linear.app)</strong> on-screen free. Want just 1 single file without the $1.99 bundle? Unlock the <strong>99¢ Single-Row Rescue Pass</strong>:';
-      if (mBtn) { mBtn.textContent = 'Unlock Single-Row Pass (99¢) →'; mBtn.style.background = CFG.theme.safeColor; mBtn.style.color = '#FFFFFF'; mBtn.style.fontWeight = '700'; }
+      if (tTitle) tTitle.textContent = '✦ Row #2 Unmasked Free! Or Unlock the Complete Pack';
+      if (tDesc) tDesc.innerHTML = 'We unmasked <strong>Row #2 (partnerships@linear.app)</strong> on-screen free. Unlock the <strong>Creator Pass ($19)</strong> or <strong>Full 109-Row Vault ($29)</strong>:';
+      if (mBtn) { mBtn.textContent = 'Unlock Creator Pass ($19) →'; mBtn.style.background = CFG.theme.safeColor; mBtn.style.color = '#FFFFFF'; mBtn.style.fontWeight = '700'; }
       if (toast) toast.style.display = 'block';
     }
     try { var savedEm = localStorage.getItem('eb_lead_email') || ''; if (savedEm && savedEm.indexOf('@') > 0) { window.__ebSavedEmail = savedEm; Array.prototype.slice.call(document.querySelectorAll('input[type="email"]')).forEach(function(el) { if (el && !el.value) el.value = savedEm; }); } } catch (_) {}

@@ -9,18 +9,15 @@
  *  - 100% Persona-Authentic Vertical Copy & Comparison Matrices (zero B2B SaaS jargon on DermLogic)
  * Strictly < 1,000 lines per /code-craft rules.
  */
-
 const fs = require('fs');
 const path = require('path');
 const { renderExactBaselineEnhancements, renderEmbedWidgetHtml, renderSampleDossierHtml } = require('./exact-baseline-ui');
 const { CRAWLER_UA_REGEX, loadVerticalSeoCatalog, attachUniversalSeoAndAiRoutes } = require('./exact-baseline-seo');
 const { attachAutonomousGrowthEngine } = require('./autonomous-growth-engine');
-
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'b25e791e2b694f4c9c57d8e20ad8d904';
 const SOVRN_COMMERCE_KEY = process.env.SOVRN_COMMERCE_KEY || 'ea3d7b74c5752fd817f896be27cd1a01';
 const SOVRN_SECRET_KEY = process.env.SOVRN_SECRET_KEY || '';
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
-
 const VERTICAL_CONFIGS = {
   citation_forge: {
     moduleId: 'citation_forge',
@@ -399,20 +396,16 @@ const VERTICAL_CONFIGS = {
     }
   }
 };
-
 const OWNER_EXCLUDED_IPS = ['99.112.70.144', '99.112.70.', '84.17.44.226', '84.17.44.', '2600:1702:75f1:4c10', '127.0.0.1', '::1', 'localhost', ...(process.env.EXCLUDED_TEST_IPS || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)];
-
 function extractClientIps(req) {
   const rawList = [req.headers?.['cf-connecting-ip'], req.headers?.['true-client-ip'], req.headers?.['x-real-ip'], ...String(req.headers?.['x-forwarded-for'] || '').split(','), req.ip, req.socket?.remoteAddress];
   return rawList.map((ip) => String(ip || '').trim().toLowerCase().replace(/^::ffff:/, '')).filter(Boolean);
 }
-
 function isExcludedOwnerIp(ipStr) {
   const clean = String(ipStr || '').trim().toLowerCase().replace(/^::ffff:/, '');
   if (!clean) return false;
   return OWNER_EXCLUDED_IPS.some((p) => clean === p || clean.startsWith(p));
 }
-
 const ipBurstWindow = new Map();
 function classifyTrafficRequest(req, extraEmail = '') {
   const ua = String(req.headers['user-agent'] || '').toLowerCase();
@@ -439,7 +432,6 @@ function classifyTrafficRequest(req, extraEmail = '') {
   }
   return { isTest: 0, isCrawler: 0, isOwnerIp: 0, isMirofish: 0, clientIp };
 }
-
 function createTelemetryStore(dataDir, moduleId) {
   if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
   const ledgerPath = path.join(dataDir, `eb_telemetry_${moduleId}.json`);
@@ -466,7 +458,6 @@ function createTelemetryStore(dataDir, moduleId) {
   for (const l of state.leads) { if (Number(l.is_test) === 0 && (!l.client_ip || isExcludedOwnerIp(l.client_ip) || l.is_owner)) { l.is_test = 1; l.is_owner = 1; sanitized = true; } }
   for (const o of state.orders) { if (Number(o.is_test) === 0 && (!o.client_ip || isExcludedOwnerIp(o.client_ip) || o.is_owner)) { o.is_test = 1; o.is_owner = 1; sanitized = true; } }
   if (sanitized) save();
-
   return {
     registerOwnerIp(req) {
       const ips = extractClientIps(req).filter((ip) => ip && !ip.startsWith('100.64.') && !ip.startsWith('10.') && !ip.startsWith('172.') && !ip.startsWith('192.168.'));
@@ -637,7 +628,6 @@ function createTelemetryStore(dataDir, moduleId) {
     }
   };
 }
-
 let sigtermRegistered = false;
 function registerGracefulShutdown(brandName) {
   if (sigtermRegistered) return;
@@ -645,7 +635,6 @@ function registerGracefulShutdown(brandName) {
   const cleanExit = (sig) => { console.log(`[${brandName}] Received ${sig}, shutting down gracefully with exit code 0.`); process.exit(0); };
   process.on('SIGTERM', () => cleanExit('SIGTERM')); process.on('SIGINT', () => cleanExit('SIGINT'));
 }
-
 function attachExactBaselinePack(app, options = {}) {
   const verticalId = options.verticalId || 'citation_forge';
   const cfg = VERTICAL_CONFIGS[verticalId] || VERTICAL_CONFIGS.citation_forge;
@@ -660,7 +649,6 @@ function attachExactBaselinePack(app, options = {}) {
   app.get(`/${INDEXNOW_KEY}.txt`, (req, res) => res.status(200).type('text/plain; charset=utf-8').send(INDEXNOW_KEY));
   app.get('/indexnow-key.txt', (req, res) => res.status(200).type('text/plain; charset=utf-8').send(INDEXNOW_KEY));
   attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, INDEXNOW_KEY, __dirname);
-
   app.get('/feed.xml', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     if (isCrawler) store.recordEvent({ eventType: 'crawler_feed', pageUrl: '/feed.xml', isTest, isCrawler });
@@ -672,28 +660,24 @@ function attachExactBaselinePack(app, options = {}) {
     ].join('\n');
     res.status(200).type('application/rss+xml; charset=utf-8').send(`<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n  <channel>\n    <title>${escX(cfg.brandName)}: Live Deterministic Benchmarks &amp; Audit Feed</title>\n    <link>https://${cfg.domain}/</link>\n    <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>\n    <atom:link href="https://${cfg.domain}/feed.xml" rel="self" type="application/rss+xml"/>\n    <description>${escX(cfg.explainerText)}</description>\n    <lastBuildDate>${nowRfc}</lastBuildDate>\n${itemsXml}\n  </channel>\n</rss>`);
   });
-
   app.get('/feed.json', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     if (isCrawler) store.recordEvent({ eventType: 'crawler_feed', pageUrl: '/feed.json', isTest, isCrawler });
     const seoEntries = loadVerticalSeoCatalog(cfg, __dirname);
     res.json({ version: 'https://jsonfeed.org/version/1.1', title: `${cfg.brandName}: Live Benchmark Feed`, home_page_url: `https://${cfg.domain}/`, feed_url: `https://${cfg.domain}/feed.json`, items: [{ id: `${cfg.moduleId}_leaderboard`, url: `https://${cfg.domain}/leaderboard`, title: `${cfg.brandName} Public Leaderboard`, content_text: cfg.explainerText }, ...cfg.presets.map((p) => ({ id: `${cfg.moduleId}_${p.key}`, url: `https://${cfg.domain}/scan/${encodeURIComponent(p.key)}`, title: `${cfg.brandName} Executive Audit: ${p.label}`, content_text: cfg.explainerText })), ...seoEntries.map((e) => ({ id: `${cfg.moduleId}_seo_${e.slug}`, url: `https://${cfg.domain}/seo/${e.slug}`, title: e.title, content_text: e.summary }))] });
   });
-
   app.get('/api/github-upgrade/export.csv', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/export.csv', isTest, isCrawler, meta: { export: 'sheetjs_csv' } });
-    const rows = [['Scenario_Preset', cfg.kpis[0].label, cfg.kpis[1].label, cfg.kpis[2].label, cfg.kpis[3].label, 'Unlock_Full_Model_URL'], ...cfg.presets.map((p) => [p.label, ...(cfg.presetKpis[p.key] || cfg.kpis.map((k) => k.val)), `https://${cfg.domain}/?unlock=flash_pass`])];
-    res.status(200).type('text/csv; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-executive-model.csv"`).send(rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n'));
+    const rows = [['Scenario_Preset', cfg.kpis[0].label, cfg.kpis[1].label, cfg.kpis[2].label, cfg.kpis[3].label, 'Unlock_Full_Model_URL'], ...cfg.presets.slice(0, 1).map((p) => [p.label, ...(cfg.presetKpis[p.key] || cfg.kpis.map((k) => k.val)), `https://${cfg.domain}/?unlock=flash_pass`]), ['[LOCKED — Remaining Rows + Production Files]', 'Holdback Gate Active', 'Unlock Full Pack ($1.99)', 'Instant Download', 'Verified', `https://${cfg.domain}/buy/flash_pass`]];
+    res.status(200).type('text/csv; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-sample-row1.csv"`).send(rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n'));
   });
-
   app.get('/api/github-upgrade/skin-cycling.ics', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
     store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/skin-cycling.ics', isTest, isCrawler, meta: { export: 'ics_calendar' } });
     const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${cfg.brandName}//NONSGML v2.0//EN`, 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night1@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261015T210000Z', 'DTEND:20261015T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 1: Exfoliation & Active Window`, `DESCRIPTION:${cfg.explainerText} (Wait 60s before barrier moisturizer): https://${cfg.domain}`, 'END:VEVENT', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night2@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261016T210000Z', 'DTEND:20261016T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Night 2: Retinoid / Secondary Active Window`, `DESCRIPTION:Pea-sized retinoid on dry skin + ceramide buffer: https://${cfg.domain}`, 'END:VEVENT', 'BEGIN:VEVENT', `UID:${cfg.moduleId}-night3@${cfg.domain}`, 'DTSTAMP:20261015T080000Z', 'DTSTART:20261017T210000Z', 'DTEND:20261017T213000Z', 'RRULE:FREQ=DAILY;INTERVAL=4', `SUMMARY:${cfg.brandName} Nights 3-4: Barrier Recovery & Peptide Cushion`, `DESCRIPTION:Zero acids or retinoids; hydrate + seal moisture barrier: https://${cfg.domain}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
     res.status(200).type('text/calendar; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-schedule.ics"`).send(ics);
   });
-
   // 4B. Clean Markdown / Ritual Notes Bundle
   app.get('/api/github-upgrade/llms-bundle.txt', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
@@ -701,7 +685,6 @@ function attachExactBaselinePack(app, options = {}) {
     const bundle = [`# ${cfg.brandName} (${cfg.domain}): Verified Protocol & Benchmark Summary`, `> ${cfg.explainerText}`, '', '## 1. Before / After Remediation Diff', cfg.remediationDiff.beforeLine, cfg.remediationDiff.afterLine, '', '## 2. Verified Scenario Presets', ...cfg.presets.map((p) => `- [${p.label}](https://${cfg.domain}/?preset=${encodeURIComponent(p.key)}): ${(cfg.presetKpis[p.key] || []).join(' | ')}`), '', '## 3. Single-Audit Export Pass ($1.99)', `- Unlock Full Production Deliverable & Exports: https://${cfg.domain}/?unlock=flash_pass`].join('\n');
     res.status(200).type('text/plain; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-protocol-bundle.txt"`).send(bundle);
   });
-
   app.get('/api/github-upgrade/fuse-search', (req, res) => {
     const q = String(req.query.q || cfg.presets[0].key).replace(/[<>"'`]/g, '').trim().slice(0, 80);
     const { isTest, isCrawler } = classifyTrafficRequest(req);
@@ -711,53 +694,43 @@ function attachExactBaselinePack(app, options = {}) {
     const kpiVals = matchedPreset && cfg.presetKpis[matchedPreset.key] ? cfg.presetKpis[matchedPreset.key] : (verticalId === 'citation_forge' ? [`${(34 + (hash % 18)).toFixed(1)}%`, `${84 + (hash % 15)}/100`, `${82 + (hash % 16)}/100`, `${(41 + (hash % 16)).toFixed(1)}%`] : verticalId === 'sponsor_radar' ? [`${88 + (hash % 11)}/100`, `$${(120 + (hash % 680)).toLocaleString()},000`, `$${(34 + (hash % 16)).toFixed(2)}`, `${(1.32 + (hash % 18) / 100).toFixed(2)}x`] : verticalId === 'derm_logic' ? [`${52 + (hash % 44)}/100`, `${(0.7 + (hash % 22) / 10).toFixed(1)} pH`, `${78 + (hash % 19)}% Pass`, `${hash % 2} Triggers`] : [`$${(9 + (hash % 55)).toLocaleString()},400`, `$${(6 + (hash % 32)).toLocaleString()},200`, `$${(3 + (hash % 22)).toLocaleString()},200`, `< ${(9.5 + (hash % 40) / 10).toFixed(1)}s`]);
     res.json({ ok: true, engine: 'krisk/Fuse (★ 20,503 Bitap Fuzzy Scorer)', query: q, matched_preset: matchedPreset ? matchedPreset.key : 'custom_deterministic', kpis: kpiVals, row1_insight: `${cfg.brandName} Match for "${q}": ${cfg.coMarketingPills[0].rowText}` });
   });
-
   app.get('/api/github-upgrade/unlock-preview', (req, res) => res.json({ ok: true, module_id: cfg.moduleId, behavioral_architecture: 'Ariely Zero-Price Prevention + Good-Better-Best Decoy Anchoring (@richardrx)', value_ladder: { free_diagnostic: '100% Free Interactive Calculator + Headline KPIs + Top Finding + 3-Line jsdiff Proof Preview', path_b_flash_pass: { price_usd: 1.99, anchor_price_usd: cfg.corePriceUsd, savings_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100), unlock: cfg.deliverableName }, path_c_complete_pack: { price_usd: cfg.corePriceUsd, unlock: cfg.coreLabel }, path_d_pro_anchor: { price_usd: cfg.proPriceUsd, unlock: cfg.proLabel }, exit_intent_downsell: '1-Page Diagnostic Summary via Email (Only on Tab Exit: Zero Paywall Cannibalization)' } }));
-
   app.get('/api/github-upgrade/deliverable-manifest', (req, res) => {
     const target = String(req.query.target || cfg.presets[0].key).trim();
     res.json({ ok: true, module_id: cfg.moduleId, target_entity: target, validator: 'colinhacks/zod (★ 44,132) + ajv-validator/ajv (★ 14,862) RFC-8927 Contract', express_checkout_wallets: ['Apple Pay', 'Google Pay', 'Stripe Link', '1-Click Card'], files: cfg.deliverableFiles || [], flash_pass_usd: 1.99, savings_vs_core_pct: Math.round((1 - 1.99 / cfg.corePriceUsd) * 100) });
   });
-
   const handleRoiAndEndowment = (req, res) => {
     const legacyCostUsd = verticalId === 'citation_forge' ? 299 : (verticalId === 'sponsor_radar' ? 2500 : (verticalId === 'derm_logic' ? 332 : 1800)), paybackMultiple = Math.round(legacyCostUsd / 1.99);
     res.json({ ok: true, module_id: cfg.moduleId, iteration: 52, engine: 'nilbuild/driver.js (★ 26,919) + sweetalert2/sweetalert2 (★ 18,099) + zenorocha/clipboard.js (★ 34,103) + TanStack/table (★ 26,100)', micro_pass_usd: 0.99, flash_pass_usd: 1.99, legacy_alternative_usd: legacyCostUsd, payback_multiple_x: paybackMultiple, driver_spotlight_enabled: true, one_tap_preset_chips: true, interactive_file_pill_modals: true, endowment_customizer_enabled: true, pseo_inline_curtain_enabled: true, pseo_table_express_bar_enabled: true, sqlite_statement_cache_active: true });
   };
   app.get(['/api/github-upgrade/roi-payback', '/api/github-upgrade/endowment-customizer', '/api/github-upgrade/driver-spotlight', '/api/github-upgrade/pseo-table-express-bar'], handleRoiAndEndowment);
-
   app.get('/.well-known/mcp.json', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({ schema_version: '2026-10-15', name: cfg.brandName, domain: cfg.domain, description: `${cfg.brandName} Deterministic Audit & Telemetry MCP Server (${cfg.githubRepo.name})`, endpoints: { llms_txt: `https://${cfg.domain}/llms.txt`, llms_bundle: `https://${cfg.domain}/api/github-upgrade/llms-bundle.txt`, fuse_search: `https://${cfg.domain}/api/github-upgrade/fuse-search?q=`, unlock_preview: `https://${cfg.domain}/api/github-upgrade/unlock-preview`, deliverable_manifest: `https://${cfg.domain}/api/github-upgrade/deliverable-manifest`, roi_payback: `https://${cfg.domain}/api/github-upgrade/roi-payback`, endowment_customizer: `https://${cfg.domain}/api/github-upgrade/endowment-customizer`, rss_feed: `https://${cfg.domain}/feed.xml`, json_feed: `https://${cfg.domain}/feed.json`, csv_export: `https://${cfg.domain}/api/github-upgrade/export.csv`, sitemap: `https://${cfg.domain}/sitemap.xml`, github_upgrade_api: `https://${cfg.domain}/api/github-upgrade`, pst_telemetry: `https://${cfg.domain}/api/telemetry/pst-report` }, capabilities: ['ariely_zero_price_guard', 'gbb_decoy_anchoring', 'zod_deliverable_manifest', 'pseo_inline_curtain', 'endowment_customizer', 'sqlite_stmt_cache'] });
   });
-
   app.get('/api/github-upgrade', (req, res) => {
     const target = String(req.query.target || cfg.presets[0].key);
     return res.json({ ok: true, repo: cfg.githubRepo, target, deliverable_files: cfg.deliverableFiles || [], behavioral_economics: { zero_price_cannibalization_removed: true, native_hero_first_above_fold: true, pseo_inline_curtain: true, endowment_customizer: true, paid_tiers_usd: [0.99, 1.99, cfg.corePriceUsd, cfg.proPriceUsd] } });
   });
-
   app.get('/api/github-upgrade/pitch.eml', (req, res) => {
     const brand = String(req.query.brand || 'AG1');
     const eml = [`From: ${cfg.brandName} Desk <partnerships@${cfg.domain.replace(/^www\./, '')}>`, `To: media-buying@${brand.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`, `Subject: [3x-Renewal Verified] Host-Voiced Mid-Roll Slot for ${brand} (1.42x Pyannote Trust Score)`, 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=utf-8', '', `Hi ${brand} Growth & Media Buying Team,`, '', `${cfg.brandName}'s deterministic ledger tracked your 3x+ renewed host-read flights and verified a $38.50 cleared net eCPM benchmark.`, 'We have a 60-second native host-voiced mid-roll opening with a guaranteed vanity URL + pinned comment conversion floor.', '', `• 1-Click Instant Audit & Rate Card Pass ($1.99): https://${cfg.domain}/buy/flash_pass?brand=${encodeURIComponent(brand)}`, `• Unlock Full Verified Sponsor & Contact Vault ($${cfg.corePriceUsd}): https://${cfg.domain}/buy/complete_dossier?brand=${encodeURIComponent(brand)}`, `• Agency & B2B Team License ($${cfg.proPriceUsd}): https://${cfg.domain}/buy/pro_b2b?brand=${encodeURIComponent(brand)}`, '', `Best,\n${cfg.brandName} Revenue Intelligence\nhttps://${cfg.domain}`].join('\r\n');
     res.status(200).type('message/rfc822').setHeader('Content-Disposition', `attachment; filename="${brand.toLowerCase()}-outreach-pitch.eml"`).send(eml);
   });
-
   app.get('/api/github-upgrade/stripe-recovery-worker.js', (req, res) => {
     const code = ['/** AbandonAlpha (#9): Autonomous Stripe Webhook Dunning & Exit-Intent Worker (Cloudflare / Edge) */', 'export default { async fetch(request, env) {', '  const sig = request.headers.get("stripe-signature") || ""; if (!sig) return new Response("Missing signature", { status: 400 });', '  const payload = await request.json(); const obj = payload?.data?.object || {};', '  const code = obj?.last_payment_error?.decline_code || "insufficient_funds";', '  const action = code === "expired_card" ? "SEND_1TAP_PORTAL_LINK_ZERO_RETRY" : (code === "insufficient_funds" ? "SCHEDULE_FRIDAY_0905_PAYDAY_RETRY" : "COOLDOWN_24H_SOFT_RETRY");', '  const delayHours = code === "insufficient_funds" ? 72 : (code === "do_not_honor" ? 24 : 0);', '  return new Response(JSON.stringify({ ok: true, idempotency_key: `aa_${obj.id || Date.now()}_${code}`, decline_code: code, recovery_action: action, scheduled_retry_hours: delayHours, bandit_arm: "C1_SAVE15" }), { headers: { "Content-Type": "application/json" } });', '} };'].join('\n');
     res.status(200).type('application/javascript; charset=utf-8').setHeader('Content-Disposition', 'attachment; filename="stripe-recovery-worker.js"').send(code);
   });
-
   app.get('/api/github-upgrade/remediation-diff', (req, res) => {
     const diff = cfg.remediationDiff || { beforeLine: '- [BEFORE] Legacy baseline', afterLine: '+ [AFTER] Optimized baseline', roiBadge: 'Verified Lift' };
     res.json({ ok: true, module_id: cfg.moduleId, engine: 'kpdecker/jsdiff (★ 9,214) + eligrey/FileSaver.js (★ 22,040)', before_line: diff.beforeLine, after_line: diff.afterLine, roi_badge: diff.roiBadge, unified_patch: `--- a/${cfg.domain}/baseline\n+++ b/${cfg.domain}/remediated\n@@ -1,1 +1,1 @@\n${diff.beforeLine}\n${diff.afterLine}`, unlock_paths: [{ path: 'micro_pass', price_usd: 0.99, buy_url: `https://${cfg.domain}/buy/micro_pass`, label: '99¢ Single-File Instant Export Pass' }, { path: 'flash_pass', price_usd: 1.99, buy_url: `https://${cfg.domain}/buy/flash_pass`, label: `$1.99 Single-Audit Export Pass (${cfg.freeDeliverableName})` }, { path: 'playbook_pass', price_usd: 29, buy_url: `https://${cfg.domain}/buy/playbook_pass`, label: '$29 Founder Recovery Playbook & Dunning Webhook (.JS)' }, { path: 'complete_dossier', price_usd: cfg.corePriceUsd, buy_url: `https://${cfg.domain}/buy/complete_dossier`, label: cfg.coreLabel }, { path: 'pro_b2b', price_usd: cfg.proPriceUsd, buy_url: `https://${cfg.domain}/buy/pro_b2b`, label: cfg.proLabel }] });
   });
-
   // 6. Telemetry Ingestion, Owner IP Verification & 3-Hourly PST Report Endpoints
   app.get('/api/telemetry/whoami', (req, res) => {
     const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req);
     if (isOwnerIp) res.setHeader('Set-Cookie', 'eb_owner_test=1; Path=/; Max-Age=31536000; SameSite=Lax');
     res.json({ ok: true, client_ip: clientIp, candidate_ips: extractClientIps(req), is_owner_ip: isOwnerIp, is_test: isTest, is_crawler: isCrawler, classification: isCrawler ? 'crawler' : (isTest ? 'test' : 'human'), human_reporting_excluded: Boolean(isTest) });
   });
-
   app.post('/api/telemetry/event', (req, res) => {
     const body = req.body || {}, ua = String(req.headers['user-agent'] || ''), deviceType = /mobile|iphone|android/i.test(ua) ? 'mobile' : 'desktop';
     const rawEmail = String(body.email || (body.meta && body.meta.email) || '').trim().slice(0, 254);
@@ -770,7 +743,6 @@ function attachExactBaselinePack(app, options = {}) {
     store.recordEvent({ eventType: evType, pageUrl: String(body.page_url || body.pageUrl || '/').slice(0, 256), deviceType: String(body.device_type || deviceType).slice(0, 32), utmSource: String(body.utm_source || '').slice(0, 128), utmCampaign: String(body.utm_campaign || '').slice(0, 128), isTest, isCrawler, isOwnerIp, clientIp, meta: body.meta || {} });
     res.json({ ok: true, is_test: isTest, is_owner_ip: isOwnerIp, is_crawler: isCrawler });
   });
-
   async function reconcileStripeOrders() {
     const sk = process.env.STRIPE_SECRET_KEY || '';
     if (!sk || !sk.startsWith('sk_')) return;
@@ -782,16 +754,13 @@ function attachExactBaselinePack(app, options = {}) {
       } catch (_) {}
     }
   }
-
   app.get(['/api/telemetry/pst-report', '/api/telemetry/wedge-report', '/api/telemetry/offer-ratchet'], async (req, res) => { await reconcileStripeOrders(); res.json(store.getPstReport(Number(req.query.hours || 3))); });
-
   app.get('/api/github-upgrade/stripe-express-vaul-dock', (req, res) => res.json({ ok: true, iteration: 24, module_id: cfg.moduleId, repo: 'stripe/stripe-js (★ 4,200) + emilkowalski/vaul (★ 15,800) + floating-ui/floating-ui (★ 31,400)', features: { native_checkout_stripe_redirect: true, live_stripe_session_reconciliation: true, symmetrical_3_zone_vaul_dock: true, pseo_lead_card_eyebrow_symmetry: true } }));
   app.get('/api/github-upgrade/observable-plot-radar-symmetry', (req, res) => res.json({ ok: true, iteration: 25, module_id: cfg.moduleId, repo: 'observablehq/plot (★ 4,400) + FormKit/auto-animate (★ 13,100) + shadcn-ui/ui (★ 81,000)', features: { stealth_burst_crawler_telemetry_guard: true, symmetrical_manifest_svg_telemetry_bar: true, full_native_control_telemetry_capture: true } }));
   app.get('/api/github-upgrade/nuqs-deeplink-mobile-firstfold', (req, res) => res.json({ ok: true, iteration: 26, module_id: cfg.moduleId, repo: '47ng/nuqs (★ 6,200) + PrismJS/prism (★ 12,300) + observablehq/plot (★ 4,400)', features: { url_query_state_deeplink_hydration: true, mobile_firstfold_interactive_presets: true, symmetrical_doppelrand_diff_inspector_footer: true } }));
   app.get('/api/github-upgrade/tanstack-table-row-gate-qbar', (req, res) => res.json({ ok: true, iteration: 27, module_id: cfg.moduleId, repo: 'TanStack/table (★ 25,400) + TanStack/query (★ 43,800) + 47ng/nuqs (★ 6,200)', features: { symmetrical_2row_qbar_zero_truncation: true, word_boundary_pseo_entity_title: true, interactive_table_row4_unlock_banner: true, non_browser_polling_guard: true } }));
   app.get('/api/github-upgrade/reactive-live-calc-dual-pass', (req, res) => res.json({ ok: true, iteration: 49, module_id: cfg.moduleId, repo: 'hotwired/stimulus (★ 12,400) + alpinejs/alpine (★ 28,900) + stripe/stripe-js (★ 4,200)', features: { reactive_input_auto_calculation: true, visible_99c_micro_pass_anchoring: true, visible_inline_scorecard_email_bar: true, scroll_and_exit_rescue_toast: true } }));
   app.get('/api/github-upgrade/floating-ui-firstfold-pill', (req, res) => res.json({ ok: true, iteration: 51, module_id: cfg.moduleId, repo: 'floating-ui/floating-ui (★ 31,400) + zenorocha/clipboard.js (★ 34,200) + stripe/stripe-js (★ 4,200)', features: { default_visible_firstfold_score_pill: true, one_tap_firstfold_99c_199_unlock: true, js_hydrated_calculate_bot_guard: true, mobile_viewport_device_attribution: true } }));
-
   // 7. Transactional Lead Capture & Automated Backfill Resend Dispatcher
   const escMailHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const buildBuyLinks = (email) => ({ micro_pass: `https://${cfg.domain}/buy/micro_pass?email=${encodeURIComponent(email)}`, flash_pass: `https://${cfg.domain}/buy/flash_pass?email=${encodeURIComponent(email)}`, complete_dossier: `https://${cfg.domain}/buy/complete_dossier?email=${encodeURIComponent(email)}`, pro_b2b: `https://${cfg.domain}/buy/pro_b2b?email=${encodeURIComponent(email)}` });
@@ -837,10 +806,8 @@ function attachExactBaselinePack(app, options = {}) {
     }
     res.json({ ok: true, module_id: cfg.moduleId, sendgrid_configured: Boolean(SENDGRID_API_KEY && SENDGRID_API_KEY.startsWith('SG.')), total_human_leads_scanned: humanLeads.length, emails_resent: resentCount, status: humanLeads.length === 0 ? 'zero_prior_human_leads_to_resend' : 'backfill_completed' });
   });
-
   // 8. Sovrn //Commerce Contextual Partner Offers & Status
   app.get('/api/affiliates/offers', (req, res) => res.json({ ok: true, sovrn_commerce_key: SOVRN_COMMERCE_KEY, sovrn_secret_configured: Boolean(SOVRN_SECRET_KEY), offers: cfg.affiliates }));
-
   // 9. Multi-Tier Stripe Checkout Handler + GET /buy/:tier 1-Click HTTP 303 Payment Redirects
   async function handleTierCheckout(req, res) {
     const rawTier = String(req.params?.tier || req.query?.tier || req.body?.tier || req.body?.plan || req.body?.planTier || req.body?.plan_id || req.body?.planId || 'flash_pass').toLowerCase();
@@ -857,7 +824,6 @@ function attachExactBaselinePack(app, options = {}) {
     const sku = String(req.body?.sku || `${cfg.moduleId}_${tierName}`);
     const priceId = (isMicro || isUpgradeFlash || isCreator19 || isVault49 || isAgency149) ? '' : (isFlash ? (process.env[cfg.flashPriceEnv] || cfg.flashPriceDefault) : (isPlaybook ? (process.env.STRIPE_PRICE_PLAYBOOK_29 || '') : (isPro ? process.env[cfg.proPriceEnv] : process.env[cfg.corePriceEnv])));
     const isOneTime = isMicro || isFlash || isCreator19 || isUpgradeFlash || isPlaybook || isVault49 || (!isPro && !isAgency149 && (verticalId === 'citation_forge' || verticalId === 'derm_logic' || verticalId === 'sponsor_radar'));
-
     const rawEmail = String(req.query?.email || req.query?.customer_email || req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
     const vid = String(req.body?.vid || req.query?.vid || (String(req.headers.cookie || '').match(/vs_vid=([^;]+)/) || [])[1] || '');
     const rawTarget = String(req.body?.target || req.query?.target || req.query?.brand || req.query?.q || '').replace(/[<>"']/g, '').trim().slice(0, 44);
@@ -880,7 +846,6 @@ function attachExactBaselinePack(app, options = {}) {
     const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? `Single-Row Named Buyer + Agency Pass (99¢)` : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isCreator19 ? 'Creator Pro Outreach & 109-Row Named-Buyer CSV + IO Rider Pass ($19)' : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isVault49 ? 'Full 109-Row Named-Buyer & Agency CSV + IO Rider + 90d Alerts Vault ($49)' : (isAgency149 ? 'B2B Agency & Talent Management Desk: 5 Seats + 109-Row CSV + HubSpot/Clay CRM + White-Label Rate Card ($149)' : (isPro ? cfg.proLabel : cfg.coreLabel)))))))}`.slice(0, 120);
     const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts.`.slice(0, 240);
     const validUserEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(userEmail) ? userEmail : (rawEmail && rawEmail.includes('@') ? rawEmail : '');
-
     const buildInlineParams = (minimal) => {
       const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
       if (!isOneTime) p.set('line_items[0][price_data][recurring][interval]', verticalId === 'derm_logic' ? 'year' : 'month');
@@ -888,7 +853,6 @@ function attachExactBaselinePack(app, options = {}) {
       if (!minimal) p.set('custom_text[submit][message]', `Instant browser redirect: your ${filesList} download automatically the second payment completes.`.slice(0, 180));
       return p.toString();
     };
-
     const isBrowserHumanClick = !isCrawler && !Boolean(req.headers['x-playwright-test'] || req.headers['x-test-mode'] || req.query?.test === '1' || req.query?.is_test === '1' || /headlesschrome|playwright|puppeteer|cypress|curl\/|python-requests|node-fetch|undici|go-http-client/i.test(String(req.headers['user-agent'] || '')));
     let realStripeSession = false, stripeErrMsg = '';
     if (stripeKey && stripeKey.startsWith('sk_') && (isBrowserHumanClick || req.query?.live_stripe === '1')) {
@@ -950,35 +914,7 @@ function attachExactBaselinePack(app, options = {}) {
       if (isHtml) {
         body = body.replace(/\p{Extended_Pictographic}/gu, '')
           .replace(/&#128274;|&#128275;|&#128203;|&#10024;|&#9889;|&#9888;|&#128339;|&#128506;/g, '')
-          .replace(/&copy;/gi, 'Copyright')
-          .replace(/\bIAB\s*§4\.2\s*Make-Good\s*Rider\b/gi, 'Audience Guarantee Clause')
-          .replace(/\bIAB\s*§4\.2\b/gi, 'Audience Guarantee Clause')
-          .replace(/\bIAB\s*MAKE-GOOD\s*RIDER\b/gi, 'AUDIENCE GUARANTEE CLAUSE')
-          .replace(/\bIAB\s*IO\s*Redline\s*Rider\b/gi, 'Sponsor Agreement Rider')
-          .replace(/\bRedlined\s*IAB\s*IO\s*Make-Good\s*Rider\b/gi, 'Audience Guarantee Clause')
-          .replace(/\bRedlined\s*IO\s*Make-Good\s*Rider\b/gi, 'Audience Guarantee Clause')
-          .replace(/\bRedlined\s*IO\s*Rider\b/gi, 'Sponsor Agreement Rider')
-          .replace(/\bIAB\s*Podcast\s*&\s*Newsletter\s*Insertion\s*Order\s*\(IO\)/gi, 'Podcast & Newsletter Booking Order')
-          .replace(/\bIAB\s*v2\.1\s*calibrated\b/gi, '30-Day Audience Verified')
-          .replace(/\bIAB\s*30-Day\s*Download\s*SLA\b/gi, '30-Day Audience Guarantee')
-          .replace(/\bIAB\s*30-Day\s*Verified\b/gi, '30-Day Audience Verified')
-          .replace(/\bIAB\b/g, 'Verified')
-          .replace(/Price per 1k Views \(CPM\)/gi, 'Ad Rate')
-          .replace(/Ad Rate \(CPM\)/gi, 'Ad Rate')
-          .replace(/\beCPM\b/g, 'Effective Rate')
-          .replace(/\bCPMs\b/g, 'Ad Rates')
-          .replace(/\bCPM\b/g, 'Ad Rate')
-          .replace(/\bIO\s*Rider\b/g, 'Sponsor Agreement Clause')
-          .replace(/\bIO\s*§4\.2\b/g, 'Agreement §4.2')
-          .replace(/\bBEOs\b/g, 'Meal Sheets')
-          .replace(/\bBEO\b/g, 'Meal Sheet')
-          .replace(/300-DPI/gi, 'Print-Ready')
-          .replace(/\bSpecimens\b/g, 'Samples')
-          .replace(/\bSpecimen\b/gi, 'Sample');
-        if (body.includes('</body>') && !body.includes('window.__srCleanTextGuard')) {
-          const cleanDomScript = `<script>window.__srCleanTextGuard=1;(function(){var rx=/\\p{Extended_Pictographic}/gu,busy=false;function cleanNode(root){if(!root||busy)return;busy=true;try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false),n;while((n=w.nextNode())){var p=n.parentNode&&n.parentNode.nodeName;if(p==='SCRIPT'||p==='STYLE')continue;var v=n.nodeValue;if(v){var nv=v.replace(rx,'').replace(/\\bIAB\\s*§4\\.2\\s*Make-Good\\s*Rider\\b/gi,'Audience Guarantee Clause').replace(/\\bIAB\\s*§4\\.2\\b/gi,'Audience Guarantee Clause').replace(/\\bIAB\\s*v2\\.1\\s*calibrated\\b/gi,'30-Day Audience Verified').replace(/\\bIAB\\s*30-Day\\s*Download\\s*SLA\\b/gi,'30-Day Audience Guarantee').replace(/\\bIAB\\s*30-Day\\s*Verified\\b/gi,'30-Day Audience Verified').replace(/\\bIAB\\b/g,'Verified').replace(/Price per 1k Views \\(CPM\\)/gi,'Ad Rate').replace(/Ad Rate \\(CPM\\)/gi,'Ad Rate').replace(/\\beCPM\\b/gi,'Effective Rate').replace(/\\bCPMs\\b/g,'Ad Rates').replace(/\\bCPM\\b/g,'Ad Rate').replace(/\\bIO\\s*Rider\\b/gi,'Sponsor Agreement Clause').replace(/\\bBEOs\\b/g,'Meal Sheets').replace(/\\bBEO\\b/g,'Meal Sheet').replace(/300-DPI/gi,'Print-Ready').replace(/\\bSpecimen\\b/gi,'Sample');if(nv!==v)n.nodeValue=nv;}}}finally{busy=false;}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){cleanNode(document.body);});else cleanNode(document.body);if(typeof MutationObserver!=='undefined'){new MutationObserver(function(){cleanNode(document.body);}).observe(document.documentElement,{childList:true,subtree:true});}})();</script>`;
-          body = body.replace('</body>', cleanDomScript + '</body>');
-        }
+          .replace(/&copy;/gi, 'Copyright');
       }
       return origSend(body);
     };
