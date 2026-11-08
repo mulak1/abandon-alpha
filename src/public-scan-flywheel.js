@@ -329,6 +329,12 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         var aov=Number((document.getElementById('eb-scan-vol-aov')||{}).value||92);
         var code=(document.getElementById('eb-scan-vol-decline')||{}).value||'insufficient_funds';
         var tgt=(document.getElementById('eb-scan-h1')&&document.getElementById('eb-scan-h1').getAttribute('data-entity-name'))||'${esc(scan.target)}';
+        var bp=document.getElementById('eb-scan-buy-playbook'),bf=document.getElementById('eb-scan-buy-flash'),dw=document.getElementById('eb-scan-dl-worker'),fixCta=document.getElementById('eb-scan-fix1-cta'),fixCode=document.getElementById('eb-scan-fix1-code'),sDet=document.getElementById('eb-scan-fix1-details'),qStr='?target='+encodeURIComponent(tgt)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;
+        if(bp){bp.textContent='Get Complete '+tgt+' Pack ($29) →';bp.href='/buy/playbook_pass'+qStr;}
+        if(bf)bf.href='/buy/flash_pass'+qStr;
+        if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;
+        if(fixCode){var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);fixCode.textContent='window.AbandonAlphaRules = { merchant: "'+tgt+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';}
+        if(sDet&&openDet!==false&&!sDet.open)sDet.open=true;
         fetch('/api/audit-leakage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({storeName:tgt,monthlySessions:sess,aovUsd:aov,primaryDeclineCode:code})}).then(function(r){return r.json()}).then(function(d){
           if(!d||!d.totalRecoverableUsd)return;
           var rec='+$'+Math.round(d.totalRecoverableUsd).toLocaleString()+'/mo Recoverable';
@@ -340,19 +346,12 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           var roiMult=Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString();
           var roiEl=document.getElementById('eb-scan-roi-proof');
           if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+roiMult+'x ROI) · 0% commission · 30-day guarantee';
-          var uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),bp=document.getElementById('eb-scan-buy-playbook'),bf=document.getElementById('eb-scan-buy-flash'),dw=document.getElementById('eb-scan-dl-worker'),cBtn=document.getElementById('eb-scan-copy-fix1-btn');
+          var uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),cBtn=document.getElementById('eb-scan-copy-fix1-btn');
           if(cBtn){cBtn.removeAttribute('data-copied');cBtn.textContent='Copy Free Fix #1 Snippet';cBtn.style.color='';}
           if(uSub)uSub.textContent='Compiled for '+tgt+' ($'+aov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
           if(fBtn)fBtn.textContent='Complete '+tgt+' Recovery Pack ($29 — One-Time) →';
-          var qStr='?target='+encodeURIComponent(tgt)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;
-          if(bp){bp.textContent='Get Complete '+tgt+' Pack ($29) →';bp.href='/buy/playbook_pass'+qStr;}
-          if(bf)bf.href='/buy/flash_pass'+qStr;
-          if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;
-          var fixCta=document.getElementById('eb-scan-fix1-cta'),fixCode=document.getElementById('eb-scan-fix1-code'),sDet=document.getElementById('eb-scan-fix1-details');
-          if(sDet&&openDet!==false&&!sDet.open)sDet.open=true;
           var dunLift='+$'+Math.round(d.recoverableDunningUsd||2098).toLocaleString()+'/mo';
           if(fixCta)fixCta.textContent='Get free Fix #1 snippet for '+tgt+' · '+code+' ('+dunLift+' lift · $0) →';
-          if(fixCode){var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);fixCode.textContent='window.AbandonAlphaRules = { merchant: "'+tgt+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';}
         });
       };
       window.addEventListener('DOMContentLoaded',function(){try{var sp=new URLSearchParams(window.location.search||''),qs=Number(sp.get('sessions')||0),qa=Number(sp.get('aov')||0),qd=(sp.get('decline')||'').trim();if(qs>=50&&document.getElementById('eb-scan-vol-sessions'))document.getElementById('eb-scan-vol-sessions').value=qs;if(qa>=5&&document.getElementById('eb-scan-vol-aov'))document.getElementById('eb-scan-vol-aov').value=qa;if(qd&&document.getElementById('eb-scan-vol-decline')){var dIn=document.getElementById('eb-scan-vol-decline');if(!Array.from(dIn.options).some(function(o){return o.value===qd;})){var o=document.createElement('option');o.value=qd;o.textContent=qd+' (Targeted Recovery)';dIn.appendChild(o);}dIn.value=qd;}if(qs||qa||qd)window.__ebRecalcScanVolume(false);}catch(_){}});

@@ -739,8 +739,11 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
             </div>
           </details>
           <div id="lp-roi-proof" style="font-size:12.5px;color:#475569;font-weight:500;">Pays for $29 pack in &lt; 1 recovered order (1,263x ROI) &middot; 0% commission &middot; 30-day guarantee</div>
-          <a id="lp-buy-29" href="/buy/playbook_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
-          <a id="lp-buy-199" href="/buy/flash_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
+          <a id="lp-buy-29" href="/buy/playbook_pass?utm_source=meta_lp&amp;target=Gymshark&amp;decline=insufficient_funds&amp;sessions=3200&amp;aov=92" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+            <a id="lp-buy-199" href="/buy/flash_pass?utm_source=meta_lp&amp;target=Gymshark&amp;decline=insufficient_funds&amp;sessions=3200&amp;aov=92" rel="nofollow" class="btn btn-ghost btn-sm" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
+            <a id="lp-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js?target=Gymshark&amp;decline=insufficient_funds" download style="font-size:12.5px;color:#475569;font-weight:500;text-decoration:underline;">Preview Worker (.JS)</a>
+          </div>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
         </div>
       </div>
@@ -823,6 +826,8 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
         b199.textContent = 'Or get ' + store + ' 3-File Patch ($1.99)';
       }
+      var lpw = document.getElementById('lp-dl-worker');
+      if (lpw) lpw.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code);
       var lpCopyBtn = document.getElementById('lp-copy-fix1-btn');
       if (lpCopyBtn) { lpCopyBtn.removeAttribute('data-copied'); lpCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; lpCopyBtn.style.color = ''; }
       var uSub = document.getElementById('in-card-unlock-sub');
