@@ -119,6 +119,7 @@ function runTests() {
   assert.ok(html.includes('id="pseo-fix1-details"') && lpHtml.includes('id="lp-fix1-details"') && sampleHtml.includes('id="sample-fix1-details"') && rawGrowthJs.includes('id="eb-growth-fix1-details"') && scanHtml.includes('id="eb-scan-fix1-details"') && lbHtml.includes('id="lb-fix1-details"'), 'All subpage calculators (/seo/*, /lp, /sample, /compare/*, /tools/*, /scan/*, /leaderboard) must auto-expand their Fix #1 snippet drawer upon user calculation');
   assert.ok(html.includes('id="pseo-open-grader-link"') && html.includes('id="pseo-open-wh-link"') && !html.includes('retryWindow: "${escapeHtml'), '/seo/* calculator must dynamically update deep-link and checkout query params without HTML-entity escaping inside JS textContent');
   assert.ok(rawGrowthJs.includes('id="eb-growth-buy-29"') && rawGrowthJs.includes('id="eb-growth-buy-199"'), '/compare/* and /tools/* must dynamically personalize inline $29/$1.99 action pack links on target check and volume calculation');
+  assert.ok(scanHtml.includes("bp.href='/buy/playbook_pass?target='+encodeURIComponent(tgt)+'&sessions='+sess+'&aov='+aov") && lbHtml.includes("roi.textContent='Compiled for '+s.target"), '/scan/* and /leaderboard must sync custom volume query parameters into $29/$1.99 links and reset copy buttons on target change');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
