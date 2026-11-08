@@ -6,7 +6,7 @@ const { getAllPseoPages, getPseoPageBySlug } = require('../src/pseo-data');
 const { renderPseoPageHtml, renderMetaLandingPageHtml, renderLegalPageHtml } = require('../src/views');
 const { VERTICAL_CONFIGS } = require('../src/exact-baseline-api');
 const { renderExactBaselineEnhancements } = require('../src/exact-baseline-ui');
-const { evaluateScanTarget, renderPublicScanPageHtml } = require('../src/public-scan-flywheel');
+const { evaluateScanTarget, renderPublicScanPageHtml, renderLeaderboardPageHtml } = require('../src/public-scan-flywheel');
 
 function runTests() {
   const pages = getAllPseoPages();
@@ -75,6 +75,9 @@ function runTests() {
   assert.ok(!scanHtml.includes('Step 1 of 3'), 'Public scan pages must not have Step 1 of 3 badge soup');
   assert.ok(!scanHtml.includes('Enter Email ($0) Above to Unmask Fix Plan'), 'Public scan pages must not lock Card 3 behind a purple pill');
   assert.ok(scanHtml.includes('/buy/playbook_pass?target='), 'Public scan pages must offer the $29 Complete Pack');
+
+  const lbHtml = renderLeaderboardPageHtml(cfg, '#0F172A');
+  assert.ok(!lbHtml.includes('#E11D48') && !lbHtml.includes('#D97706'), 'Leaderboard page must not use rainbow orange/red row bars');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

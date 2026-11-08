@@ -247,8 +247,8 @@ function renderGrowthPageHtml(cfg, item, kind) {
     </section>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-        <h2 style="font-size:18px;margin:0;">Side-by-Side Results &amp; Action Plan</h2>
-        <span style="font-size:12.5px;font-weight:700;color:${escXml(t.safeColor)};background:#ECFDF5;padding:4px 10px;border-radius:999px;">Verified Benchmark Data</span>
+        <h2 style="font-size:18px;margin:0;">Side-by-side results &amp; action plan</h2>
+        <span style="font-size:12.5px;font-weight:500;color:#64748B;">2026 Stripe &amp; Shopify benchmark</span>
       </div>
       <table aria-label="${escXml(item.title)} Benchmark Matrix" style="width:100%;border-collapse:collapse;font-size:14px;">
         <thead><tr style="background:${escXml(t.canvasBg)};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Option / Check</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Measured Result</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Recommended Step</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Status</th></tr></thead>
@@ -256,15 +256,16 @@ function renderGrowthPageHtml(cfg, item, kind) {
       </table>
       <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:12px;background:${escXml(t.canvasBg)};border:1px solid ${escXml(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>
-          <div style="font-size:14px;font-weight:800;color:${escXml(t.textPrimary)};">Download the Ready-to-Use Action Pack</div>
-          <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant download · One-time payment (never a subscription) · 30-day guarantee</div>
+          <div style="font-size:14px;font-weight:700;color:${escXml(t.textPrimary)};">Download the ready-to-use recovery pack</div>
+          <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant download · One-time payment · 30-day money-back guarantee</div>
         </div>
         <div id="eb-growth-row4-msg" style="display:none !important;">
           <input id="eb-growth-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" />
           <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <a href="/buy/flash_pass" rel="nofollow" style="padding:9px 16px;border-radius:8px;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:800;text-decoration:none;">Get Complete 3-File Pack ($1.99) →</a>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <a href="/buy/playbook_pass" rel="nofollow" style="padding:9px 16px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
+          <a href="/buy/flash_pass" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
         </div>
       </div>
     </section>

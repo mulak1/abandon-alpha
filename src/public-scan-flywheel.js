@@ -407,34 +407,34 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   const ledger = loadPublicScanLedger(cfg).slice().sort((a, b) => b.score - a.score);
   const podium = ledger.slice(0, 3);
   const medals = ['#1 Hall of Fame Leader', '#2 Verified Runner-Up', '#3 Top Category Benchmark'];
-  const podiumHtml = podium.map((item, idx) => `<div style="background:#FFFFFF;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+  const podiumHtml = podium.map((item, idx) => `<div style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-        <span style="font-size:13px;font-weight:800;color:${idx === 0 ? esc(badgeColor) : '#059669'};">${medals[idx]}</span>
-        <span style="padding:3px 10px;border-radius:999px;background:#ECFDF5;color:#059669;font-variant-numeric:tabular-nums;font-size:13px;font-weight:800;">${esc(item.grade)} (${item.score}/100)</span>
+        <span style="font-size:13px;font-weight:700;color:${idx === 0 ? '#047857' : '#475569'};">${medals[idx]}</span>
+        <span style="padding:3px 10px;border-radius:999px;background:${idx === 0 ? '#ECFDF5' : '#F1F5F9'};color:${idx === 0 ? '#047857' : '#0F172A'};font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;">${esc(item.grade)} (${item.score}/100)</span>
       </div>
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:18px;font-weight:800;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} →</a>
-      <div style="font-size:13.5px;font-weight:700;color:${esc(badgeColor)};margin-bottom:6px;">${esc(item.kpi1)} • ${esc(item.kpi2)}</div>
-      <div style="width:100%;height:8px;border-radius:999px;background:#E2E8F0;overflow:hidden;margin-bottom:8px;"><div style="width:${item.score}%;height:100%;background:#10B981;border-radius:999px;"></div></div>
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:18px;font-weight:700;color:${esc(t.textPrimary)};text-decoration:none;display:block;margin-bottom:4px;">${esc(item.target)} →</a>
+      <div style="font-size:13.5px;font-weight:600;color:${idx === 0 ? '#047857' : '#0F172A'};margin-bottom:6px;">${esc(item.kpi1)} • ${esc(item.kpi2)}</div>
+      <div style="width:100%;height:6px;border-radius:999px;background:#E2E8F0;overflow:hidden;margin-bottom:8px;"><div style="width:${item.score}%;height:100%;background:${idx === 0 ? '#047857' : '#64748B'};border-radius:999px;"></div></div>
       <p style="font-size:13.5px;color:${esc(t.textSecondary)};margin:0;line-height:1.45;">${esc(item.cnnReadout)}</p>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid ${esc(t.border)};font-size:13px;">
-      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:700;text-decoration:none;">Open Full Report →</a>
-      <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:${esc(t.textSecondary)};text-decoration:underline;">Live SVG Badge</a>
+      <a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:#0F172A;font-weight:600;text-decoration:none;">Open full report →</a>
+      <a href="/badge/${esc(encodeURIComponent(item.target))}.svg" target="_blank" rel="noopener" style="color:${esc(t.textSecondary)};text-decoration:underline;">SVG badge</a>
     </div>
   </div>`).join('');
 
   const rowsHtml = ledger.map((item, idx) => {
     const isTop = item.score >= 86;
-    const barColor = isTop ? '#059669' : (item.score >= 75 ? '#D97706' : '#E11D48');
+    const barColor = isTop ? '#047857' : '#64748B';
     const rowTier = isTop ? 'fame' : 'fix';
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;">#${idx + 1}</td>
-    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:${esc(badgeColor)};font-weight:800;text-decoration:none;">${esc(item.target)} →</a></th>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric:tabular-nums;font-weight:800;font-size:14px;color:${barColor};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:7px;background:#E2E8F0;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
+    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;">#${idx + 1}</td>
+    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:#0F172A;font-weight:700;text-decoration:none;">${esc(item.target)} →</a></th>
+    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;color:${isTop ? '#047857' : '#0F172A'};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:6px;background:#E2E8F0;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
     <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13.5px;font-weight:700;color:${barColor};text-decoration:none;">${isTop ? 'View Report' : 'View Fix Plan'} →</a></td>
+    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13.5px;font-weight:600;color:#0F172A;text-decoration:underline;">${isTop ? 'View report' : 'View fix plan'} →</a></td>
   </tr>`;
   }).join('');
 
@@ -618,4 +618,4 @@ function attachPublicScanFlywheel(app, cfg, badgeColor, renderHtmlFn, classifyFn
   });
 }
 
-module.exports = { attachPublicScanFlywheel, getAllPublicScanUrls, evaluateScanTarget, loadPublicScanLedger, renderPublicScanPageHtml };
+module.exports = { attachPublicScanFlywheel, getAllPublicScanUrls, evaluateScanTarget, loadPublicScanLedger, renderPublicScanPageHtml, renderLeaderboardPageHtml };
