@@ -276,10 +276,10 @@
 
             <!-- SINGLE CALM ACTION FOOTER (MAX 1 EMAIL SAVE + 1 PAID PACK LINK) -->
             <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:10px;background:#F8FAFC;padding:16px;border-radius:12px;border:1px solid #E2E8F0;">
-              <div id="aa-unmasked-subject-line-1" style="font-size:13px;line-height:1.4;color:#0A2540;">
+              <div id="aa-unmasked-subject-line-1" style="font-size:13px;line-height:1.45;color:#0A2540;">
                 <strong style="color:#047857;">&#10003; Unmasked Specimen #1 Subject Line (<span id="aa-spark-brand-label">Gymshark</span>):</strong>
-                <code style="font-weight:700;color:#0A2540;background:#FFFFFF;padding:2px 6px;border-radius:5px;border:1px solid #CBD5E1;font-size:12.5px;">"Quick heads-up on your [Brand] billing settings"</code>
-                <span style="color:#475569;">(41.8% Open Rate)</span>
+                <code id="aa-unmasked-subject-quote" style="font-weight:700;color:#0A2540;background:#FFFFFF;padding:2px 6px;border-radius:5px;border:1px solid #CBD5E1;font-size:12.5px;">"Quick heads-up on your Gymshark billing settings"</code>
+                <span id="aa-unmasked-subject-meta" style="color:#475569;">(41.8% Open Rate &bull; 1st/15th Payday Retry)</span>
                 <span id="aa-spark-split-nums" style="display:none;"></span>
               </div>
               <form id="aa-inline-sample-unlock-form" onsubmit="return window.__aaUnlockSampleSnippet(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
@@ -288,10 +288,19 @@
               </form>
               <div id="aa-inline-sample-status" style="display:none;font-size:13px;color:#047857;font-weight:700;"></div>
               <div id="out-sdk-unmasked-preview" style="display:none;"></div>
-              <code id="out-sdk-snippet" style="display:none;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12.5px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">export const AbandonAlphaConfig = { merchant: "gymshark" };</code>
+              <div id="out-sdk-snippet-wrap" style="display:none;flex-direction:column;gap:6px;">
+                <code id="out-sdk-snippet" style="display:block;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12.5px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">export const AbandonAlphaConfig = { merchant: "gymshark" };</code>
+                <div style="display:flex;justify-content:flex-end;">
+                  <button type="button" id="copy-sdk-btn" class="btn btn-ghost btn-sm" style="padding:5px 11px;font-size:12px;font-weight:700;" onclick="copySdkSnippet()">Copy Fix #1 Snippet</button>
+                </div>
+              </div>
               <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:4px;border-top:1px solid #E2E8F0;font-size:13px;color:#475569;">
-                <span>Need all 3 production files &amp; 20 bank retry schedules?</span>
-                <button type="button" id="aa-screen1-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#047857;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">Unlock 3-File Patch ($1.99) or Complete Store Pack ($29) &rarr;</button>
+                <span>Full 3-file production patch &amp; 20 bank schedules:</span>
+                <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <button type="button" id="aa-screen1-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0A2540;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">3-File Patch ($1.99)</button>
+                  <span style="color:#CBD5E1;" aria-hidden="true">|</span>
+                  <button type="button" id="aa-screen1-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('playbook_pass');}else{initiateStripeCheckout('starter');}" style="background:transparent;border:none;color:#047857;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">Complete Store Pack ($29) &rarr;</button>
+                </span>
               </div>
             </div>
           </div>

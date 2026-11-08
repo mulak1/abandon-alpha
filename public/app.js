@@ -80,14 +80,45 @@ function escapeUiHtml(str) {
   return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+const SPECIMEN_SUBJECT_BY_DECLINE = {
+  insufficient_funds: {
+    tpl: (b) => `"Quick heads-up on your ${b} billing settings"`,
+    meta: '(41.8% Open Rate • 1st/15th Payday Retry)'
+  },
+  do_not_honor: {
+    tpl: (b) => `"Bank security hold on your ${b} order — 1-tap verify"`,
+    meta: '(44.2% Open Rate • +24h Issuer Cooldown)'
+  },
+  expired_card: {
+    tpl: (b) => `"Your ${b} card on file expired — update in 1 tap"`,
+    meta: '(48.6% Open Rate • Apple Pay / Link 1-Tap Updater)'
+  },
+  authentication_required: {
+    tpl: (b) => `"Confirm your ${b} payment (3DS2 1-Tap Verification)"`,
+    meta: '(46.1% Open Rate • Instant Mobile 3DS2 Link)'
+  },
+  processing_error: {
+    tpl: (b) => `"We held your ${b} order while your bank clears a timeout"`,
+    meta: '(39.4% Open Rate • +4h Exponential Backoff)'
+  }
+};
+
 function updateUnmaskedSdkPreview(auditRes) {
-  const storeName = document.getElementById('input-store')?.value || 'Gymshark';
+  const storeName = document.getElementById('input-store')?.value?.trim() || 'Gymshark';
   const rawUrl = document.getElementById('input-store-url')?.value || storeName;
   const domain = cleanMerchantDomain(rawUrl);
   const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
   const activeRule = declineCode === 'auto_weighted' ? 'insufficient_funds' : declineCode;
   const exitUsd = auditRes?.recoverableExitUsd ? '+' + formatUsd(auditRes.recoverableExitUsd) + '/mo' : '+$34,521/mo';
   const dunningUsd = auditRes?.recoverableDunningUsd ? '+' + formatUsd(auditRes.recoverableDunningUsd) + '/mo' : '+$2,201/mo';
+
+  const brandLabelEl = document.getElementById('aa-spark-brand-label');
+  if (brandLabelEl) brandLabelEl.textContent = storeName;
+  const specObj = SPECIMEN_SUBJECT_BY_DECLINE[activeRule] || SPECIMEN_SUBJECT_BY_DECLINE.insufficient_funds;
+  const subjQuoteEl = document.getElementById('aa-unmasked-subject-quote');
+  if (subjQuoteEl) subjQuoteEl.textContent = specObj.tpl(storeName);
+  const subjMetaEl = document.getElementById('aa-unmasked-subject-meta');
+  if (subjMetaEl) subjMetaEl.textContent = specObj.meta;
 
   const permalinkEl = document.getElementById('aa-live-scan-permalink');
   if (permalinkEl) {
@@ -321,11 +352,15 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   updateUnmaskedSdkPreview(res);
   const isSampleUnlocked = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
   const snippetEl = document.getElementById('out-sdk-snippet');
+  const snippetWrapEl = document.getElementById('out-sdk-snippet-wrap');
   if (snippetEl) {
     snippetEl.textContent = isSampleUnlocked
       ? (res.sdkSnippet || `/* Fix #1 Copy-Paste Checkout Fix (${res.storeName}) */\n<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(res.storeName)}" data-aov="${res.aovUsd}" data-velocity-threshold="-0.80" async></script>`)
       : '/* [LOCKED PREVIEW]: Enter your work email ($0) above to unmask Fix #1 Copy-Paste Checkout Fix, or unlock the $1.99 Complete Recovery Code Patch */';
-    if (isSampleUnlocked) snippetEl.style.display = 'block';
+    if (isSampleUnlocked) {
+      snippetEl.style.display = 'block';
+      if (snippetWrapEl) snippetWrapEl.style.display = 'flex';
+    }
   }
 
   const statusEl = document.getElementById('audit-form-status');
@@ -404,10 +439,12 @@ window.__aaUnlockSampleSnippet = function(ev) {
     `<script>window.AbandonAlphaRules = { retryDecline: "${declineCode}", fridayPaydaySync: "09:05_LOCAL", allowPromoStacking: false };</script>`
   ].join('\n');
   const snippetEl = document.getElementById('out-sdk-snippet');
+  const snippetWrapEl = document.getElementById('out-sdk-snippet-wrap');
   if (snippetEl) {
     snippetEl.textContent = unmaskedCode;
     snippetEl.style.display = 'block';
   }
+  if (snippetWrapEl) snippetWrapEl.style.display = 'flex';
   const prevEl = document.getElementById('out-sdk-unmasked-preview');
   if (prevEl) prevEl.style.display = 'block';
   const leak2Badge = document.getElementById('aa-locked-badge-leak2');
