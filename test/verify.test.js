@@ -92,6 +92,7 @@ function runTests() {
   assert.ok(lbHtml.includes('id="lb-instant-preview-card"') && lbHtml.includes('id="lb-empty-row"'), '/leaderboard must include inline store check preview card and empty-filter live check fallback');
   const dirHtml = renderDirectoryHtml('https://www.abandonalpha.com');
   assert.ok(dirHtml.includes('id="dir-empty-scan-link"') && dirHtml.includes('id="dir-empty-calc-link"'), '/directory must wire dynamic scan and calculator links when a custom store or query is typed');
+  assert.ok(renderedHome.includes('id="aa-pack-roi-proof"') && html.includes('id="pseo-roi-proof"'), 'Fold 1 diagnosis card on / and /seo/* must surface live 1-order payback ROI proof');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

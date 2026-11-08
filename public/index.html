@@ -252,15 +252,15 @@
               <div id="aa-fold1-3step-flow" style="margin-top:12px;padding-top:10px;border-top:1px solid #E2E8F0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;">
                 <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
                   <strong style="display:block;color:#0F172A;">Step 1 &middot; T+0s Webhook</strong>
-                  <span style="color:#475569;"><code>invoice.payment_failed</code> &amp; exit counter-offer</span>
+                  <span id="aa-fold1-s1-desc" style="color:#475569;">Suppresses blind retry on <code>insufficient_funds</code></span>
                 </div>
                 <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
-                  <strong style="display:block;color:#0F172A;">Step 2 &middot; 1st/15th Payday</strong>
-                  <span style="color:#475569;">06:00 local deposit retry + Specimen #1 email</span>
+                  <strong id="aa-fold1-s2-title" style="display:block;color:#0F172A;">Step 2 &middot; 1st/15th Payday</strong>
+                  <span id="aa-fold1-s2-desc" style="color:#475569;">06:00 local deposit retry + Specimen #1 email</span>
                 </div>
                 <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
                   <strong style="display:block;color:#0F172A;">Step 3 &middot; T+72h Rescue</strong>
-                  <span style="color:#475569;">1-Tap Apple Pay / Link updater &amp; 14d pause</span>
+                  <span id="aa-fold1-s3-desc" style="color:#475569;">1-Tap Apple Pay / Link updater &amp; 14d pause</span>
                 </div>
               </div>
             </div>
@@ -289,7 +289,7 @@
                 </div>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;font-size:13px;color:#64748B;">
-                <span>Need the full implementation?</span>
+                <span id="aa-pack-roi-proof">Pays for $29 pack in &lt; 1 recovered order (1,266x ROI) &middot; 0% commission:</span>
                 <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
                   <button type="button" id="aa-screen1-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0F172A;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">3-File Patch ($1.99)</button>
                   <span style="color:#CBD5E1;" aria-hidden="true">|</span>

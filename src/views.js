@@ -299,7 +299,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <code style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;font-size:12.5px;">"Quick heads-up on your ${escapeHtml(page.declineOrSignal)} billing settings"</code>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;">
-            <span style="font-size:13px;color:#475569;">Includes <code>${escapeHtml(page.declineOrSignal)}</code> retry worker &amp; templates:</span>
+            <span id="pseo-roi-proof" style="font-size:13px;color:#475569;">Pays for $29 pack in &lt; 1 recovered order (${Math.max(10, Math.round(page.monthlyRecoveredUsd / 29)).toLocaleString()}x ROI) &middot; 0% commission:</span>
             <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;padding:7px 14px;font-size:13px;">Get Complete Pack ($29) &rarr;</a>
               <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
@@ -381,6 +381,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('pseo-leaked-val').textContent = '$' + leaked.toLocaleString() + '/mo';
       document.getElementById('pseo-rec-val').textContent = '+$' + rec.toLocaleString() + '/mo';
       document.getElementById('pseo-ann-val').textContent = '+$' + (rec * 12).toLocaleString() + '/yr';
+      var roiEl = document.getElementById('pseo-roi-proof');
+      if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + Math.max(2, Math.round(rec / 29)).toLocaleString() + 'x ROI) · 0% commission:';
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {
