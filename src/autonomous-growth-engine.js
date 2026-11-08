@@ -245,7 +245,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         var obj=(sp.get('objection')||ws.selectedObjection||'').trim();
         var tgt=(document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}';
         var b29=document.getElementById('eb-growth-buy-29'),b199=document.getElementById('eb-growth-buy-199'),dw=document.getElementById('eb-growth-dl-worker'),pl=document.getElementById('eb-growth-permalink-btn'),fixCta=document.getElementById('eb-growth-fix1-cta'),fixCode=document.getElementById('eb-growth-fix1-code'),gDet=document.getElementById('eb-growth-fix1-details'),qStr='?target='+encodeURIComponent(tgt)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov+(obj?'&objection='+encodeURIComponent(obj):'');
-        if(pl)pl.href='/scan/'+encodeURIComponent(tgt)+'?decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;
+        if(pl)pl.href='/scan/'+encodeURIComponent(tgt)+'?decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov+(obj?'&objection='+encodeURIComponent(obj):'');
         if(openDet!==false&&window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname+qStr);
         if(openDet!==false){try{ws.storeName=tgt;ws.monthlySessions=sess;ws.aovUsd=aov;ws.declineFocus=code;localStorage.setItem('aa_workspace_state_v1',JSON.stringify(ws));}catch(_){}if(window.__ebSyncNavLinks)window.__ebSyncNavLinks(true);}
         if(b29){b29.textContent='Get Complete '+tgt+' Pack ($29) →';b29.href='/buy/playbook_pass'+qStr;}

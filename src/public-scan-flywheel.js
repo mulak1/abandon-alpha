@@ -573,7 +573,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         if(b29){b29.href='/buy/playbook_pass?target='+encodeURIComponent(v)+qExtra;b29.textContent='Get Complete '+v+' Pack ($29) →';}
         if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(v)+qExtra;
         if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js?target='+encodeURIComponent(v)+qExtra;
-        if(rl)rl.href='/scan/'+encodeURIComponent(v)+'?decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'');
+        if(rl)rl.href='/scan/'+encodeURIComponent(v)+'?decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'')+(obj?'&objection='+encodeURIComponent(obj):'');
         if(fc)fc.textContent='Get free Fix #1 snippet for '+v+' · '+code+' (+$'+dLift.toLocaleString()+'/mo lift · $0) →';
         if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+v+'", declineCode: "'+code+'", aovUsd: '+effAov+', retryAfterHours: '+hrs+', allowPromoStacking: false'+(obj?', banditArm: "'+obj+'"':'')+' };';
         if(uSub)uSub.textContent='Compiled for '+v+' ($'+effAov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
@@ -592,7 +592,11 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           if(b29){b29.href='/buy/playbook_pass?target='+encodeURIComponent(s.target)+qExtra;b29.textContent='Get Complete '+s.target+' Pack ($29) →';}
           if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(s.target)+qExtra;
           if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js?target='+encodeURIComponent(s.target)+qExtra;
-          if(rl)rl.href='/scan/'+encodeURIComponent(s.target)+'?decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'');
+          if(rl)rl.href='/scan/'+encodeURIComponent(s.target)+'?decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'')+(obj?'&objection='+encodeURIComponent(obj):'');
+          if(fc)fc.textContent='Get free Fix #1 snippet for '+s.target+' · '+code+' (+$'+dLift.toLocaleString()+'/mo lift · $0) →';
+          if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+s.target+'", declineCode: "'+code+'", aovUsd: '+effAov+', retryAfterHours: '+hrs+', allowPromoStacking: false'+(obj?', banditArm: "'+obj+'"':'')+' };';
+          if(uSub)uSub.textContent='Compiled for '+s.target+' ($'+effAov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
+          if(fBtn)fBtn.textContent='Complete '+s.target+' Recovery Pack ($29 — One-Time) →';
         }).catch(function(){});
         return false;
       };
