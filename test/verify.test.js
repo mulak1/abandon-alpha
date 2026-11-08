@@ -1,7 +1,11 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const { computeLeakageAudit, selectBanditArm } = require('../src/engine');
 const { getAllPseoPages, getPseoPageBySlug } = require('../src/pseo-data');
 const { renderPseoPageHtml } = require('../src/views');
+const { VERTICAL_CONFIGS } = require('../src/exact-baseline-api');
+const { renderExactBaselineEnhancements } = require('../src/exact-baseline-ui');
 
 function runTests() {
   const pages = getAllPseoPages();
@@ -19,7 +23,19 @@ function runTests() {
 
   const bandit = selectBanditArm({ objectionCode: 'C1_PRICE', aovUsd: 9999999 });
   assert.ok(bandit.selectedArm.net_order_value_usd <= 50000, 'Expected bandit net_order_value_usd clamped');
-  console.log('PASS: abandon-alpha unit & SEO verification tests passed.');
+
+  const rawIndex = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
+  const cfg = VERTICAL_CONFIGS.abandon_alpha;
+  assert.equal(cfg.corePriceUsd, 29, 'Expected AbandonAlpha corePriceUsd to be 29');
+  assert.equal(cfg.proPriceUsd, 49, 'Expected AbandonAlpha proPriceUsd to be 49');
+  const renderedHome = renderExactBaselineEnhancements(rawIndex, cfg, '/');
+  assert.ok(!renderedHome.includes('Full 109-Row Buyer Vault'), 'Must not leak SponsorRadar 109-Row Buyer Vault into AbandonAlpha');
+  assert.ok(!renderedHome.includes('Unlock Creator Pass ($19)'), 'Must not leak SponsorRadar Creator Pass CTA into AbandonAlpha');
+  assert.ok(!renderedHome.includes('$39 Pack'), 'Must not have conflicting $39 Pack label on homepage');
+  assert.ok(renderedHome.includes('Complete Store Recovery Pack ($29'), 'Must feature unified $29 Complete Store Recovery Pack');
+  assert.ok(renderedHome.includes('3-File Patch ($1.99)'), 'Must feature $1.99 3-File Patch option');
+
+  console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
 
 runTests();

@@ -309,35 +309,35 @@ const VERTICAL_CONFIGS = {
     theme: {
       canvasBg: '#F8FAFC', cardBg: '#FFFFFF', subtleBg: '#F1F5F9', dockBg: 'rgba(248, 250, 252, 0.96)',
       border: '#E2E8F0', accentBorder: '#CBD5E1', textPrimary: '#0A2540', textSecondary: '#334155', textMuted: '#475569',
-      brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0F172A',
+      brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0A2540',
       safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
       fontDisplay: "'Playfair Display', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
       radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMtIaoGnkXxS8fAEYjqnp',
-    corePriceEnv: 'STRIPE_PRICE_STARTER_49', corePriceUsd: 49, coreLabel: 'Complete Store Recovery Suite ($49/mo)',
-    proPriceEnv: 'STRIPE_PRICE_GROWTH_149', proPriceUsd: 149, proLabel: 'Multi-Store & SMS Recovery Pro ($149/mo)',
+    corePriceEnv: 'STRIPE_PRICE_PLAYBOOK_29', corePriceUsd: 29, coreLabel: 'Complete Store Recovery Pack ($29 One-Time) →',
+    proPriceEnv: 'STRIPE_PRICE_STARTER_49', proPriceUsd: 49, proLabel: 'White-Label Multi-Store Agency Kit ($49 One-Time) →',
     lockedTitle: 'Stripe Decline-Code Retry Schedule',
-    deliverableName: 'Smart Exit-Offer Script + Stripe Retry Webhook (.JS) + Recovery Email/SMS Templates',
-    freeDeliverableName: 'Smart Exit-Offer Script & Stripe Retry Schedule',
-    unlockBannerTitle: 'Smart Checkout & Stripe Retry Pack',
-    explainerText: 'Recover leaving shoppers and retry failed Stripe cards on the exact day & hour banks approve them',
+    deliverableName: 'Smart Exit-Offer Script (.JS) + Payday Card Retry Worker (.JS) + Bank Retry Schedule (.CSV) + 3-Part Klaviyo/SMS Flows',
+    freeDeliverableName: '3-File Checkout & Stripe Card Recovery Patch',
+    unlockBannerTitle: 'Smart Checkout & Stripe Declined-Card Recovery Pack',
+    explainerText: 'Recover leaving shoppers and retry failed Stripe cards on the exact day & hour banks approve them (0% commission)',
     hudLabel: 'Checkout Ops HUD', redditSub: 'SaaS',
     sliderLabel: 'Monthly Sales ($k)', sliderMin: 15, sliderMax: 500, sliderVal: 85,
     searchPlaceholder: 'Search decline code or store type...',
-    tier1Tag: 'SINGLE-STORE RECOVERY PASS • SAVE 96% VS $49',
-    tier1Desc: 'Instantly unlocks the 1-click checkout recovery script, Stripe webhook retry worker (.JS), and bank decline retry schedule (.CSV).',
-    tier2Tag: 'STARTER STORE RECOVERY ($49/MO)',
-    tier2Desc: 'Automated checkout exit-offer matching + payday-aligned retry scheduling for failed Stripe renewals with 0% commission.',
-    tier3Tag: 'GROWTH & 1-TAP SMS SUITE ($149/MO)',
-    tier3Desc: 'Multi-store recovery, 1-Tap Apple Pay card-update SMS links, and direct Klaviyo & PostHog integration.',
+    tier1Tag: 'SINGLE-STORE 3-FILE PATCH • $1.99 ONE-TIME PASS',
+    tier1Desc: 'Instantly unlocks the 1-click checkout recovery script (.JS), Stripe webhook retry worker (.JS), and bank decline retry schedule (.CSV) for 1 store.',
+    tier2Tag: 'COMPLETE STORE RECOVERY PACK ($29 ONE-TIME • VS $99/MO SAAS)',
+    tier2Desc: 'All 8 drop-in checkout recovery patches, 20 Stripe bank decline retry schedules, 3-part Klaviyo/Shopify abandoned cart flows, and CFO 12-month forecast.',
+    tier3Tag: 'WHITE-LABEL MULTI-STORE AGENCY KIT ($49 ONE-TIME)',
+    tier3Desc: 'Unlimited client store audits, white-label CFO recovery exports, 1-Tap Apple Pay card-update SMS templates, and multi-store deployment kit.',
     battlecard: {
       heading: 'Why Stripe & Shopify Founders Switch to AbandonAlpha',
       colLegacy: '15%-Commission Recovery Apps', colManual: 'Generic 10%-Off Popups',
       rows: [
         ['Abandoned Checkout Recovery', 'Matches the right offer to why the shopper is leaving (shipping, price, trust)', 'Charges 10%–15% commission on recovered sales', 'Trains every customer to leave just to get a coupon'],
-        ['Failed Stripe Card Recovery', 'Retries cards on bank-liquidity windows when balances replenish', 'Blind daily retries that trigger bank fraud blocks', 'Generic "card declined" emails buyers ignore'],
-        ['Flat, Predictable Pricing', '$1.99 Single-Store Pass or $49/mo flat (0% commission)', '$500–$2,500+/mo in revenue-share fees', '$15k–$75k/mo in lost sales']
+        ['Failed Stripe Card Recovery', 'Retries cards on bank-liquidity windows when balances replenish (+62.4% lift)', 'Blind daily retries that trigger bank fraud blocks', 'Generic "card declined" emails buyers ignore'],
+        ['Flat, One-Time Pricing', '$1.99 Single-Store Patch or $29 Complete Pack (0% commission)', '$99–$499/mo + 10% revenue-share fees', '$15k–$75k/mo in lost checkout & renewal sales']
       ]
     },
     exportActions: [
@@ -785,14 +785,15 @@ function attachExactBaselinePack(app, options = {}) {
   async function handleLeadCaptureAndFollowUp(req, res) {
     const rawEmailIn = String(req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
     if (rawEmailIn.length > 254) return res.status(400).json({ ok: false, error: 'Email address must be 254 characters or fewer.' });
-    const email = rawEmailIn.slice(0, 254), summaryText = String(req.body?.summaryText || `${cfg.brandName} 3 Free Unmasked Verified Buyer Credits ($0) & Diagnostic Summary`).trim().slice(0, 1000), utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || 'free_3_buyer_credits').trim().slice(0, 128);
+    const isSRLead = cfg.moduleId === 'sponsor_radar';
+    const email = rawEmailIn.slice(0, 254), summaryText = String(req.body?.summaryText || (isSRLead ? `${cfg.brandName} 3 Free Unmasked Verified Buyer Credits ($0) & Diagnostic Summary` : `${cfg.brandName} Free Unmasked Fix #1 Snippet ($0) & Diagnostic Summary`)).trim().slice(0, 1000), utmSource = String(req.body?.utmSource || req.path.replace('/api/', '') || (isSRLead ? 'free_3_buyer_credits' : 'free_fix1_snippet')).trim().slice(0, 128);
     const buyerWedge = String(req.body?.buyer_wedge || req.body?.buyerWedge || (String(req.headers.cookie || '').match(/sr_wedge=([^;]+)/) || [])[1] || 'buyer').toLowerCase() === 'creator' ? 'creator' : 'buyer';
     if (!email || !email.includes('@')) return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
     const { isTest, isCrawler, isOwnerIp, clientIp } = classifyTrafficRequest(req, email), directBuyLinks = buildBuyLinks(email);
     store.recordLead({ email, summaryText: `${summaryText} [Buy: ${directBuyLinks.micro_pass}]`, utmSource, buyerWedge, isTest, isOwnerIp, clientIp });
     store.recordEvent({ eventType: 'lead_capture', pageUrl: String(req.body?.pageUrl || '/'), deviceType: /mobile|iphone|android/i.test(String(req.headers['user-agent'] || '')) ? 'mobile' : 'desktop', utmSource, isTest, isCrawler, isOwnerIp, clientIp, meta: { buyer_wedge: buyerWedge, unlocked_free_credits: 3 } });
     const emailDispatched = await sendOneClickLeadEmail(email, summaryText, isTest);
-    res.json({ ok: true, success: true, email, customer_email: email, allow_promotion_codes: false, unlocked_free_credits: 3, free_credits_badge: '✓ 3 of 3 Free Buyer Credits Unlocked — Verify on LinkedIn', buyer_wedge: buyerWedge, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: '3 Free Buyer Credits Unlocked! Download Full 109-Row CSV + IO Rider + Outreach Pack' } });
+    res.json({ ok: true, success: true, email, customer_email: email, allow_promotion_codes: false, unlocked_free_credits: 3, free_credits_badge: isSRLead ? '✓ 3 of 3 Free Buyer Credits Unlocked — Verify on LinkedIn' : '✓ Fix #1 Copy-Paste Checkout Snippet & Row #4 Unmasked Free', buyer_wedge: buyerWedge, summary_sent: true, email_dispatched: emailDispatched, direct_buy_links: directBuyLinks, tripwire_offer: { tier: 'micro_pass', sku: `${cfg.moduleId}_micro_pass`, price_usd: 0.99, buy_url: directBuyLinks.micro_pass, flash_buy_url: directBuyLinks.flash_pass, headline: isSRLead ? '3 Free Buyer Credits Unlocked! Download Full 109-Row CSV + IO Rider + Outreach Pack' : 'Fix #1 Snippet Unlocked! Download Complete 3-File Recovery Patch ($1.99) or $29 Store Pack' } });
   }
   app.post(['/api/leads', '/api/leads/capture', '/api/leads/consumer', '/api/studio/trial-signup'], handleLeadCaptureAndFollowUp);
   let lastBackfillMs = 0;
@@ -823,7 +824,7 @@ function attachExactBaselinePack(app, options = {}) {
     const tierName = isMicro ? 'micro_pass' : (isFlash ? 'flash_pass' : (isCreator19 ? 'creator_pass' : (isUpgradeFlash ? 'upgrade_from_flash' : (isPlaybook ? 'playbook_pass' : (isVault49 ? 'vault_49' : (isAgency149 ? 'agency_desk' : (isPro ? 'pro_b2b' : 'complete_dossier')))))));
     const sku = String(req.body?.sku || `${cfg.moduleId}_${tierName}`);
     const priceId = (isMicro || isUpgradeFlash || isCreator19 || isVault49 || isAgency149) ? '' : (isFlash ? (process.env[cfg.flashPriceEnv] || cfg.flashPriceDefault) : (isPlaybook ? (process.env.STRIPE_PRICE_PLAYBOOK_29 || '') : (isPro ? process.env[cfg.proPriceEnv] : process.env[cfg.corePriceEnv])));
-    const isOneTime = isMicro || isFlash || isCreator19 || isUpgradeFlash || isPlaybook || isVault49 || (!isPro && !isAgency149 && (verticalId === 'citation_forge' || verticalId === 'derm_logic' || verticalId === 'sponsor_radar'));
+    const isOneTime = isMicro || isFlash || isCreator19 || isUpgradeFlash || isPlaybook || isVault49 || verticalId === 'abandon_alpha' || (!isPro && !isAgency149 && (verticalId === 'citation_forge' || verticalId === 'derm_logic' || verticalId === 'sponsor_radar'));
     const rawEmail = String(req.query?.email || req.query?.customer_email || req.body?.email || req.body?.customerEmail || req.body?.customer_email || '').trim();
     const vid = String(req.body?.vid || req.query?.vid || (String(req.headers.cookie || '').match(/vs_vid=([^;]+)/) || [])[1] || '');
     const rawTarget = String(req.body?.target || req.query?.target || req.query?.brand || req.query?.q || '').replace(/[<>"']/g, '').trim().slice(0, 44);
@@ -843,8 +844,12 @@ function attachExactBaselinePack(app, options = {}) {
     }
     const baseUrl = `https://${cfg.domain}`, stripeKey = process.env.STRIPE_SECRET_KEY || '', targetPrefix = rawTarget ? `${rawTarget} · ` : '';
     let checkoutUrl = `https://checkout.stripe.com/c/pay/cs_live_${cfg.moduleId}_${tierName}_${Date.now()}`, sessionId = `cs_live_${cfg.moduleId}_${Date.now()}`, f0Lbl = (cfg.deliverableFiles && cfg.deliverableFiles[0] && (cfg.deliverableFiles[0].label || cfg.deliverableFiles[0].file)) || 'Single Deliverable File';
-    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? `Single-Row Named Buyer + Agency Pass (99¢)` : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isCreator19 ? 'Creator Pro Outreach & 109-Row Named-Buyer CSV + IO Rider Pass ($19)' : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isVault49 ? 'Full 109-Row Named-Buyer & Agency CSV + IO Rider + 90d Alerts Vault ($49)' : (isAgency149 ? 'B2B Agency & Talent Management Desk: 5 Seats + 109-Row CSV + HubSpot/Clay CRM + White-Label Rate Card ($149)' : (isPro ? cfg.proLabel : cfg.coreLabel)))))))}`.slice(0, 120);
-    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack', prodDesc = `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts.`.slice(0, 240);
+    const isSR = cfg.moduleId === 'sponsor_radar';
+    const prodLabel = `${cfg.brandName}: ${targetPrefix}${isMicro ? (isSR ? 'Single-Row Named Buyer + Agency Pass (99¢)' : `${f0Lbl} (99¢)`) : (isFlash ? `${cfg.freeDeliverableName || 'Full 3-File Deliverable Pack'} ($1.99)` : (isCreator19 ? (isSR ? 'Creator Pro Outreach & 109-Row Named-Buyer CSV + IO Rider Pass ($19)' : 'Starter Store Recovery Code Pack ($19)') : (isUpgradeFlash ? `${cfg.coreLabel} ($${upgPrice.toFixed(2)}, $1.99 Pass Credit Applied)` : (isPlaybook ? cfg.coreLabel : (isVault49 ? (isSR ? 'Full 109-Row Named-Buyer & Agency CSV + IO Rider + 90d Alerts Vault ($49)' : 'White-Label Multi-Store Agency Kit ($49)') : (isAgency149 ? (isSR ? 'B2B Agency & Talent Management Desk: 5 Seats + 109-Row CSV + HubSpot/Clay CRM + White-Label Rate Card ($149)' : 'Enterprise Multi-Store Fleet Recovery License ($149)') : (isPro ? cfg.proLabel : cfg.coreLabel)))))))}`.slice(0, 120);
+    const filesList = (cfg.deliverableFiles || []).map(f => f.file).join(' + ') || 'Full Deliverable Pack';
+    const prodDesc = (isSR
+      ? `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} + Redlined IAB IO Make-Good Rider (.TXT) + Cold Outreach Sequences + 90-Day Renewal Alerts.`
+      : `Instant browser unlock & download for ${rawTarget || cfg.brandName}: includes ${filesList} + 3-Part Klaviyo/Shopify Recovery Flows + 30-Day 5x ROI Guarantee.`).slice(0, 240);
     const validUserEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(userEmail) ? userEmail : (rawEmail && rawEmail.includes('@') ? rawEmail : '');
     const buildInlineParams = (minimal) => {
       const p = new URLSearchParams({ 'success_url': `${baseUrl}/?checkout=success&tier=${tierName}&target=${encodeURIComponent(rawTarget)}&session_id={CHECKOUT_SESSION_ID}`, 'cancel_url': `${baseUrl}/?checkout=cancel&tier=${tierName}&target=${encodeURIComponent(rawTarget)}`, 'mode': isOneTime ? 'payment' : 'subscription', 'allow_promotion_codes': 'false', 'line_items[0][price_data][currency]': 'usd', 'line_items[0][price_data][unit_amount]': String(Math.round(priceUsd * 100)), 'line_items[0][price_data][product_data][name]': prodLabel, 'line_items[0][price_data][product_data][description]': prodDesc, 'line_items[0][quantity]': '1', 'metadata[module_id]': cfg.moduleId, 'metadata[tier]': tierName, 'metadata[target]': rawTarget, 'metadata[vid]': vid, 'metadata[is_human]': (!isCrawler && !isTest) ? '1' : '0' });
