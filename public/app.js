@@ -841,6 +841,12 @@ function renderWebhookOutput(res, payload) {
     whCopyBtn.textContent = 'Copy Step-1 Email ($0)';
     whCopyBtn.style.color = '';
   }
+  const whDlWorker = document.getElementById('wh-dl-worker');
+  if (whDlWorker) {
+    const stName = payload.storeName || document.getElementById('input-store')?.value || 'Gymshark';
+    const dcName = payload.declineCode || document.getElementById('wh-decline-code')?.value || 'insufficient_funds';
+    whDlWorker.href = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(stName)}&decline=${encodeURIComponent(dcName)}`;
+  }
 }
 
 function copyWebhookEmailPreview(btnEl) {
@@ -1025,7 +1031,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (hasDeepLink || restoredFromStorage) {
-    await runAuditRequest(currentPreset, !hasDeepLink, hasDeepLink);
+    await runAuditRequest(currentPreset, !hasDeepLink, false);
     if (window.location.hash === '#webhook-lab' || qDecline) {
       await runWebhookSimulation();
     }
@@ -1055,7 +1061,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (statusEl && checkoutState === 'success') {
       const dlQs = `?target=${encodeURIComponent(activeStore)}&decline=${encodeURIComponent(rule)}&aov=${activeAov}`;
       statusEl.style.display = 'block';
-      statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt${dlQs}" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv${dlQs}" download style="color:#0F172A;text-decoration:underline;">Export Recovery Forecast (.CSV) &rarr;</a>`;
+      statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt${dlQs}" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/stripe-recovery-worker.js${dlQs}" download style="color:#0F172A;text-decoration:underline;">Download Stripe Worker (.JS) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv${dlQs}" download style="color:#0F172A;text-decoration:underline;">Export Forecast (.CSV) &rarr;</a>`;
     }
   }
 

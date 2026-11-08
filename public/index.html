@@ -498,6 +498,8 @@
               <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;font-size:13px;color:#64748B;">
                 <button type="button" id="wh-copy-email-btn" onclick="copyWebhookEmailPreview(this)" style="background:#0F172A;color:#FFFFFF;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;">Copy Step-1 Email ($0)</button>
                 <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <a id="wh-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js?target=Gymshark&amp;decline=insufficient_funds" download style="color:#475569;font-weight:500;text-decoration:underline;font-size:12px;">Preview Worker (.JS)</a>
+                  <span style="color:#CBD5E1;" aria-hidden="true">|</span>
                   <button type="button" id="wh-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0F172A;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">3-File Patch ($1.99)</button>
                   <span style="color:#CBD5E1;" aria-hidden="true">|</span>
                   <button type="button" id="wh-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('playbook_pass');}else{initiateStripeCheckout('starter');}" style="background:transparent;border:none;color:#047857;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">Complete Store Pack ($29) &rarr;</button>

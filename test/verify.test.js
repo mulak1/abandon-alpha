@@ -127,7 +127,7 @@ function runTests() {
   assert.ok(renderedHome.includes('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions') && rawEbApiJs.includes("p.set('metadata[sessions]', String(rawSessions))"), '__ebCheckout and handleTierCheckout must collect and forward sessions, aov, and decline into Stripe Checkout metadata and telemetry');
   assert.ok(rawAppJs.includes('const isDeclineLike =') && rawAppJs.includes('✓ Payment Confirmed for <strong>') && renderedHome.includes("cTgt ? (' for ' + cTgt) : ''"), 'Post-purchase (?checkout=success) and cancel-return (?checkout=cancel) must smartly hydrate target store vs decline code and unmask/fulfill the store-specific bundle');
   assert.ok(rawEbApiJs.includes('## 0. Custom Recovery Rules for ${qTgt}') && rawAppJs.includes('/api/github-upgrade/llms-bundle.txt${dlQs}'), 'Downloadable .TXT and .CSV fulfillment endpoints must dynamically include the buyer target store, decline code, and AOV');
-  assert.ok(rawEbApiJs.includes('const merchant = ${JSON.stringify(qTgt)};') && renderedHome.includes('id="cmdk-dl-csv"') && renderedHome.includes('id="cmdk-dl-txt"'), 'Cmd+K modal and downloadable Stripe worker endpoint must dynamically personalize store and decline parameters');
+  assert.ok(rawEbApiJs.includes('const merchant = ${JSON.stringify(qTgt)};') && renderedHome.includes('id="cmdk-dl-csv"') && renderedHome.includes('id="cmdk-dl-txt"') && renderedHome.includes('id="wh-dl-worker"'), 'Cmd+K modal, Webhook Retry Lab, and downloadable Stripe worker endpoint must dynamically personalize store and decline parameters');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
