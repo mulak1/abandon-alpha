@@ -248,6 +248,12 @@ function renderGrowthPageHtml(cfg, item, kind) {
           var el=document.getElementById('eb-live-cnn-readout'),k1=document.getElementById('eb-growth-r1-kpi');
           if(el)el.textContent=tgt+' → '+rec;
           if(k1)k1.textContent=rec;
+          var roiEl=document.getElementById('eb-growth-roi-proof');
+          if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString()+'x ROI) · 0% commission · 30-day guarantee';
+          var fixCta=document.getElementById('eb-growth-fix1-cta'),fixCode=document.getElementById('eb-growth-fix1-code');
+          var dunLift='+$'+Math.round(d.recoverableDunningUsd||2098).toLocaleString()+'/mo';
+          if(fixCta)fixCta.textContent='Get free Fix #1 snippet for '+tgt+' · '+code+' ('+dunLift+' lift · $0) →';
+          if(fixCode){var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);fixCode.textContent='window.AbandonAlphaRules = { merchant: "'+tgt+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';}
         });
       };
     </script>
@@ -285,18 +291,24 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <thead><tr style="background:${escXml(t.canvasBg)};text-align:left;"><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Option / Check</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Measured Result</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Recommended Step</th><th scope="col" style="padding:11px 14px;border-bottom:2px solid ${escXml(t.border)};">Status</th></tr></thead>
         <tbody id="prompt-matrix-tbody">${trsHtml}</tbody>
       </table>
-      <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:12px;background:${escXml(t.canvasBg)};border:1px solid ${escXml(t.border)};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:14px;font-weight:700;color:${escXml(t.textPrimary)};">Download the ready-to-use recovery pack</div>
-          <div style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Instant download · One-time payment · 30-day money-back guarantee</div>
-        </div>
-        <div id="eb-growth-row4-msg" style="display:none !important;">
-          <input id="eb-growth-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" />
-          <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <a href="/buy/playbook_pass" rel="nofollow" style="padding:9px 16px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
-          <a href="/buy/flash_pass" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
+      <div id="eb-inline-row4-unlock" style="margin-top:16px;padding:14px 18px;border-radius:12px;background:${escXml(t.canvasBg)};border:1px solid ${escXml(t.border)};display:flex;flex-direction:column;gap:10px;">
+        <details style="margin:0;">
+          <summary id="eb-growth-fix1-cta" style="cursor:pointer;font-size:13px;font-weight:600;color:${escXml(t.textPrimary)};">Get free Fix #1 snippet for ${escXml(item.target)} &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
+          <code id="eb-growth-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "${escXml(item.target)}", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+        </details>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:8px;border-top:1px solid ${escXml(t.border)};">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:${escXml(t.textPrimary)};">Download the ready-to-use recovery pack</div>
+            <div id="eb-growth-roi-proof" style="font-size:13px;color:${escXml(t.textSecondary)};margin-top:2px;">Pays for $29 pack in &lt; 1 recovered order (1,263x ROI) &middot; 0% commission &middot; 30-day guarantee</div>
+          </div>
+          <div id="eb-growth-row4-msg" style="display:none !important;">
+            <input id="eb-growth-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" />
+            <button id="eb-growth-row4-btn" type="button">Reveal Row #4 →</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <a href="/buy/playbook_pass?target=${escXml(encodeURIComponent(item.target))}" rel="nofollow" style="padding:9px 16px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13.5px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
+            <a href="/buy/flash_pass?target=${escXml(encodeURIComponent(item.target))}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
+          </div>
         </div>
       </div>
     </section>

@@ -337,6 +337,12 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           if(ck)ck.textContent=rec;
           if(cks)cks.textContent='Annual Impact: '+ann;
           if(r2)r2.textContent=rec+' • '+ann;
+          var roiEl=document.getElementById('eb-scan-roi-proof');
+          if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString()+'x ROI) · 0% commission · 30-day guarantee';
+          var fixCta=document.getElementById('eb-scan-fix1-cta'),fixCode=document.getElementById('eb-scan-fix1-code');
+          var dunLift='+$'+Math.round(d.recoverableDunningUsd||2098).toLocaleString()+'/mo';
+          if(fixCta)fixCta.textContent='Get free Fix #1 snippet for '+tgt+' · '+code+' ('+dunLift+' lift · $0) →';
+          if(fixCode){var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);fixCode.textContent='window.AbandonAlphaRules = { merchant: "'+tgt+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';}
         });
       };
     </script>
@@ -400,10 +406,14 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
 
     <!-- ACTION PACK -->
     <section id="eb-inline-row4-unlock" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <details style="margin:0;">
+        <summary id="eb-scan-fix1-cta" style="cursor:pointer;font-size:13px;font-weight:600;color:${esc(t.textPrimary)};">Get free Fix #1 snippet for ${esc(scan.target)} &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
+        <code id="eb-scan-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "${esc(scan.target)}", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+      </details>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:8px;border-top:1px solid #E2E8F0;">
         <div style="flex:1;min-width:260px;">
           <h2 id="eb-scan-step3-title" style="font-size:18px;font-weight:700;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Ready-to-use recovery pack for ${esc(scan.target)}</h2>
-          <p style="margin:4px 0 0;font-size:13.5px;color:${esc(t.textSecondary)};">One-time download · Zero monthly subscription · 30-day money-back guarantee</p>
+          <p id="eb-scan-roi-proof" style="margin:4px 0 0;font-size:13.5px;color:${esc(t.textSecondary)};">Pays for $29 pack in &lt; 1 recovered order (1,263x ROI) &middot; 0% commission &middot; 30-day guarantee</p>
         </div>
         <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;">

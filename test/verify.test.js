@@ -94,6 +94,8 @@ function runTests() {
   assert.ok(dirHtml.includes('id="dir-empty-scan-link"') && dirHtml.includes('id="dir-empty-calc-link"'), '/directory must wire dynamic scan and calculator links when a custom store or query is typed');
   assert.ok(renderedHome.includes('id="aa-pack-roi-proof"') && html.includes('id="pseo-roi-proof"'), 'Fold 1 diagnosis card on / and /seo/* must surface live 1-order payback ROI proof');
   assert.ok(renderedHome.includes('id="aa-fix1-summary-cta"') && rawAppJs.includes('buildDeclineSpecificFix1Snippet') && html.includes('id="pseo-fix1-summary-cta"'), 'Fold 1 diagnosis card on / and /seo/* must surface dynamic store & decline-specific Fix #1 snippet unlock');
+  const rawGrowthJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'autonomous-growth-engine.js'), 'utf8');
+  assert.ok(scanHtml.includes('id="eb-scan-roi-proof"') && scanHtml.includes('id="eb-scan-fix1-cta"') && rawGrowthJs.includes('id="eb-growth-roi-proof"') && rawGrowthJs.includes('id="eb-growth-fix1-cta"'), '/scan/*, /compare/*, and /tools/* must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
