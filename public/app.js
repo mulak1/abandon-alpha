@@ -679,15 +679,13 @@ async function runWebhookSimulation(e) {
     }, 3200);
   }
   const whStatusEl = document.getElementById('wh-form-status');
-  if (whStatusEl) {
+  if (whStatusEl && isExplicitWhClick) {
     whStatusEl.textContent = `✓ Simulated ${payload.eventType} (${payload.declineCode} • $${payload.amountUsd}): ${res.expectedRecoveryRatePct}% Expected Recovery`;
     whStatusEl.style.color = '#047857';
     whStatusEl.style.fontWeight = '700';
-    if (isExplicitWhClick) {
-      whStatusEl.style.background = '#ECFDF5';
-      whStatusEl.style.padding = '8px 12px';
-      whStatusEl.style.borderRadius = '8px';
-    }
+    whStatusEl.style.background = '#ECFDF5';
+    whStatusEl.style.padding = '8px 12px';
+    whStatusEl.style.borderRadius = '8px';
   }
   const whOutCard = document.getElementById('wh-out-classification')?.closest('.telemetry-card');
   if (isExplicitWhClick && whOutCard) {
@@ -715,28 +713,13 @@ function renderWebhookOutput(res, payload) {
       ? `${res.recoveryCopy.emailBody}\n\n[SMS & 1-Tap Apple Pay Worker Included in $1.99 / $29 Pack]`
       : `Enter your work email below ($0) to reveal the Step 2 retry window and customer recovery email copy for ${payload.declineCode}, or unlock the full webhook worker.`;
 
-  if (Array.isArray(res.retrySchedule)) {
-    document.getElementById('wh-timeline-container').innerHTML = res.retrySchedule.map((s, idx) => {
-      if (idx === 0 || window.__ebIsUnlocked || (idx === 1 && hasEmailSample)) {
-        return `
+  if (Array.isArray(res.retrySchedule) && res.retrySchedule.length > 0) {
+    const s = res.retrySchedule[0];
+    document.getElementById('wh-timeline-container').innerHTML = `
       <div class="timeline-step">
-        <strong>Step ${s.step} • ${escapeUiHtml(s.delay || 'Unmasked Window')} (${idx === 0 ? 'Unmasked Free Proof' : '✓ Unmasked via Email'})</strong>
+        <strong>Step ${s.step} • ${escapeUiHtml(s.delay || 'Unmasked Window')}</strong>
         <p>${escapeUiHtml(s.action || `Verified retry window for ${payload.declineCode}`)}</p>
       </div>`;
-      }
-      if (idx === 1) {
-        return `
-      <div class="timeline-step">
-        <strong>Step ${s.step} • Optimal Payday-Synced Retry Window [Enter Email ($0) Below to Unmask]</strong>
-        <p>Reveals exact timezone-synced retry timestamp &amp; customer recovery email body for free ($0).</p>
-      </div>`;
-      }
-      return `
-      <div class="timeline-step">
-        <strong>Step ${s.step} • Production Webhook Worker &amp; 1-Tap Apple Pay Link [Included in $1.99 / $29 Pack]</strong>
-        <p>Complete Node.js/Next.js Stripe webhook handler + 20 bank decline schedules.</p>
-      </div>`;
-    }).join('');
   }
 }
 
