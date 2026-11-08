@@ -298,7 +298,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <span style="color:#475569;font-weight:600;">Unmasked Step-1 webhook &amp; Specimen #1:</span>
             <code style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;font-size:12.5px;">"Quick heads-up on your ${escapeHtml(page.declineOrSignal)} billing settings"</code>
           </div>
-          <details style="margin:0;">
+          <details id="pseo-fix1-details" style="margin:0;">
             <summary id="pseo-fix1-summary-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo lift &middot; $0) &rarr;</summary>
             <code id="pseo-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "${escapeHtml(page.declineOrSignal)}", webhook: "${escapeHtml(page.webhookEvent)}", retryWindow: "${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday')}", expectedLiftPct: ${page.recoverableLiftPct} };</code>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
@@ -309,8 +309,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;">
             <span id="pseo-roi-proof" style="font-size:13px;color:#475569;">Pays for $29 pack in &lt; 1 recovered order (${Math.max(10, Math.round(page.monthlyRecoveredUsd / 29)).toLocaleString()}x ROI) &middot; 0% commission:</span>
             <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;padding:7px 14px;font-size:13px;">Get Complete Pack ($29) &rarr;</a>
-              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
+              <a id="pseo-buy-29" href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;padding:7px 14px;font-size:13px;">Get Complete Pack ($29) &rarr;</a>
+              <a id="pseo-buy-199" href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
             </div>
           </div>
         </div>
@@ -398,6 +398,12 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       if (fullBtn) fullBtn.textContent = 'Complete ${escapeHtml(page.declineOrSignal)} Recovery Pack ($29 — One-Time) →';
       var fix1El = document.getElementById('pseo-fix1-summary-cta');
       if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$' + rec.toLocaleString() + '/mo lift · $0) →';
+      var fix1Det = document.getElementById('pseo-fix1-details');
+      if (fix1Det && !fix1Det.open) fix1Det.open = true;
+      var fix1Code = document.getElementById('pseo-fix1-code');
+      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { declineOrSignal: "${escapeHtml(page.declineOrSignal)}", webhook: "${escapeHtml(page.webhookEvent)}", retryWindow: "${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday')}", monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
+      var b29 = document.getElementById('pseo-buy-29');
+      if (b29) b29.textContent = 'Get ${escapeHtml(page.declineOrSignal)} Pack ($29) →';
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {
@@ -714,7 +720,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         </div>
 
         <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
-          <details style="margin:0;">
+          <details id="lp-fix1-details" style="margin:0;">
             <summary id="lp-fix1-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for Gymshark &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
             <code id="lp-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "Gymshark", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
@@ -816,6 +822,8 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         var rHrs = code === 'expired_card' ? 0 : (code === 'do_not_honor' ? 24 : 72);
         fixCode.textContent = 'window.AbandonAlphaRules = { merchant: "' + store + '", declineCode: "' + code + '", retryAfterHours: ' + rHrs + ', allowPromoStacking: false };';
       }
+      var lpDet = document.getElementById('lp-fix1-details');
+      if (lpDet && !lpDet.open) lpDet.open = true;
     }
 
     async function runLpAudit(e) {
