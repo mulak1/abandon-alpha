@@ -601,8 +601,13 @@ function copySdkSnippet() {
   if (window.__ebLogEvent) window.__ebLogEvent('copy_summary', { type: 'copy_fix1_snippet' });
   const btn = document.getElementById('copy-sdk-btn');
   if (btn) {
-    btn.textContent = '✓ Copied File 1 of 3 — Unlock All 3 Production Files ($29) ↓';
+    btn.textContent = '✓ Copied File 1 of 3 — Get All 3 Production Files ($29) →';
     btn.style.color = '#047857';
+    btn.setAttribute('data-copied-fix1', '1');
+    btn.onclick = function() {
+      if (window.__ebCheckout) window.__ebCheckout('playbook_pass');
+      else initiateStripeCheckout('starter');
+    };
   }
 }
 

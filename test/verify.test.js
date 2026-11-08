@@ -113,6 +113,7 @@ function runTests() {
   assert.ok(renderedHome.includes('Fix #1 Snippet Unmasked on Page!') && rawAppJs.includes('sticky-sub-benefit'), 'Exit-intent rescue toast and sticky conversion dock must use AbandonAlpha Fix #1 copy and dynamic store/ROI personalization');
   assert.ok(!renderedHome.includes('skin-cycling.ics') && renderedHome.includes('id="cmdk-buy-29"'), 'Cmd+K modal must not leak DermLogic skin-cycling.ics into AbandonAlpha and must offer personalized $29/$1.99 actions');
   assert.ok(renderedHome.includes('id="aa-fix1-details"') && rawAppJs.includes('/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}'), 'Fold-1 $0 Fix #1 reveal form must keep <=3 initial Fold-1 inputs, auto-open on user interaction, and offer a personalized $29 Complete Pack upgrade link upon unlock');
+  assert.ok(rawAppJs.includes("btn.setAttribute('data-copied-fix1', '1')") && html.includes("getAttribute('data-copied')==='1'") && scanHtml.includes("getAttribute('data-copied')==='1'") && sampleHtml.includes("getAttribute('data-copied')==='1'"), 'Copy Free Fix #1 Snippet buttons across /, /seo/*, /compare/*, /tools/*, /scan/*, /lp, /sample, and /leaderboard must transform into 1-click $29 Complete Pack checkout triggers after copying');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
