@@ -162,6 +162,7 @@ function runTests() {
   assert.ok(renderedHome.includes('data-obj="C3_APPROVAL" onclick="modalSelectObjection(\'C3_APPROVAL\')"') && rawAppJs.includes("document.querySelectorAll('#objection-btn-group .objection-btn, #exit-intent-modal .objection-btn')") && rawAppJs.includes('selectedObjection:'), 'Selected objection state must synchronize across #bandit-lab and #exit-intent-modal and persist in aa_workspace_state_v1');
   assert.ok(rawEbApiJs.includes('const armMap = { C1_PRICE:') && rawAppJs.includes('&objection=${encodeURIComponent(selObj)}'), 'Downloadable .JS worker endpoint and worker preview links must dynamically include the visitor selected objection arm');
   assert.ok(rawEbApiJs.includes('banditArm: "${armCode}"') && renderedHome.includes("actObj ? '&objection=' + encodeURIComponent(actObj) : ''"), 'Downloadable .TXT bundle and Cmd+K modal download links must also include the visitor selected counter-offer objection arm');
+  assert.ok(rawEbApiJs.includes("${qTgt} (${qDec}${qObj ? ' • ' + qObj : ''})") && renderedHome.includes("cObj ? '&objection=' + encodeURIComponent(cObj) : ''"), 'Downloadable .CSV export and post-checkout (?checkout=success / ?checkout=cancel) fulfillment links must also include the selected objection arm');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

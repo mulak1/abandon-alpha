@@ -1139,7 +1139,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
     if (snipWrap) snipWrap.style.display = 'flex';
     const statusEl = document.getElementById('aa-inline-sample-status');
-    const dlQs = `?target=${encodeURIComponent(activeStore)}&decline=${encodeURIComponent(rule)}&sessions=${activeSessions}&aov=${activeAov}`;
+    const selObj = document.querySelector('#objection-btn-group .objection-btn.selected')?.getAttribute('data-obj') || 'C1_PRICE';
+    const dlQs = `?target=${encodeURIComponent(activeStore)}&decline=${encodeURIComponent(rule)}&sessions=${activeSessions}&aov=${activeAov}&objection=${encodeURIComponent(selObj)}`;
     if (statusEl && checkoutState === 'success') {
       statusEl.style.display = 'block';
       statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt${dlQs}" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/stripe-recovery-worker.js${dlQs}" download style="color:#0F172A;text-decoration:underline;">Download Stripe Worker (.JS) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv${dlQs}" download style="color:#0F172A;text-decoration:underline;">Export Forecast (.CSV) &rarr;</a>`;
