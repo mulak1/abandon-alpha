@@ -481,13 +481,17 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   }
 
   const statusEl = document.getElementById('audit-form-status');
-  if (statusEl && (isManualTrigger || isExplicitClick)) {
-    statusEl.innerHTML = `<span>Updated estimate for <strong>${escapeUiHtml(res.storeName)}</strong>: <strong>+${formatUsd(res.totalRecoverableUsd)}/mo recoverable</strong></span>`;
-    statusEl.style.color = '#475569';
-    statusEl.style.fontWeight = '500';
-    statusEl.style.background = 'transparent';
-    statusEl.style.border = 'none';
-    statusEl.style.padding = '2px 0';
+  if (isManualTrigger || isExplicitClick) {
+    const fix1Details = document.getElementById('aa-fix1-details');
+    if (fix1Details && !fix1Details.open) fix1Details.open = true;
+    if (statusEl) {
+      statusEl.innerHTML = `<span>Updated estimate for <strong>${escapeUiHtml(res.storeName)}</strong>: <strong>+${formatUsd(res.totalRecoverableUsd)}/mo recoverable</strong></span>`;
+      statusEl.style.color = '#475569';
+      statusEl.style.fontWeight = '500';
+      statusEl.style.background = 'transparent';
+      statusEl.style.border = 'none';
+      statusEl.style.padding = '2px 0';
+    }
   }
 
   if (Array.isArray(res.dunningBreakdown)) {
