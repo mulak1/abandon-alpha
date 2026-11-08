@@ -651,6 +651,30 @@ async function triggerBanditObjection(objectionCode, btnEl) {
   return res;
 }
 
+function copyBanditOfferPreview(btnEl) {
+  const ctx = (document.getElementById('bandit-store-context')?.textContent || '').trim();
+  const headline = (document.getElementById('bandit-offer-headline')?.textContent || '').trim();
+  const subtext = (document.getElementById('bandit-offer-subtext')?.textContent || '').trim();
+  const code = (document.getElementById('bandit-offer-code')?.textContent || '').trim();
+  const saveRate = (document.getElementById('bandit-sampled-theta')?.textContent || '').trim();
+  const erpv = (document.getElementById('bandit-erpv')?.textContent || '').trim();
+  const text = `${ctx}\nOffer: ${headline}\n${subtext}\nCode: ${code} · Save rate: ${saveRate} · Net saved/visitor: ${erpv}`;
+  if (navigator.clipboard && text) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  }
+  if (typeof window.__ebLogEvent === 'function') {
+    window.__ebLogEvent('copy_bandit_offer', {
+      store: document.getElementById('input-store')?.value || 'Gymshark',
+      code
+    });
+  }
+  if (btnEl) {
+    const prev = btnEl.textContent;
+    btnEl.textContent = '✓ Copied Counter-Offer (All 6 in $29 Pack)';
+    setTimeout(() => { btnEl.textContent = prev; }, 2400);
+  }
+}
+
 let whBtnResetTimer = null;
 async function runWebhookSimulation(e) {
   const isExplicitWhClick = Boolean(e && e.preventDefault);
