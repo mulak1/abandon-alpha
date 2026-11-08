@@ -1039,7 +1039,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const unlockForm = document.getElementById('aa-inline-sample-unlock-form');
     if (unlockForm) unlockForm.style.display = 'none';
     const fix1Det = document.getElementById('aa-fix1-details');
-    if (fix1Det && checkoutState === 'success') fix1Det.style.display = 'none';
+    if (fix1Det) fix1Det.open = false;
     const activeStore = document.getElementById('input-store')?.value || 'Gymshark';
     const activeAov = Number(document.getElementById('input-aov')?.value || 92);
     const activeDecline = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
