@@ -1067,7 +1067,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const unlockForm = document.getElementById('aa-inline-sample-unlock-form');
     if (unlockForm) unlockForm.style.display = 'none';
     const fix1Det = document.getElementById('aa-fix1-details');
-    if (fix1Det) fix1Det.open = false;
+    if (fix1Det) fix1Det.open = checkoutState === 'cancel';
     const activeStore = document.getElementById('input-store')?.value || 'Gymshark';
     const activeSessions = Number(document.getElementById('input-sessions')?.value || 42000);
     const activeAov = Number(document.getElementById('input-aov')?.value || 92);
@@ -1081,10 +1081,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
     if (snipWrap) snipWrap.style.display = 'flex';
     const statusEl = document.getElementById('aa-inline-sample-status');
+    const dlQs = `?target=${encodeURIComponent(activeStore)}&decline=${encodeURIComponent(rule)}&sessions=${activeSessions}&aov=${activeAov}`;
     if (statusEl && checkoutState === 'success') {
-      const dlQs = `?target=${encodeURIComponent(activeStore)}&decline=${encodeURIComponent(rule)}&sessions=${activeSessions}&aov=${activeAov}`;
       statusEl.style.display = 'block';
       statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt${dlQs}" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/stripe-recovery-worker.js${dlQs}" download style="color:#0F172A;text-decoration:underline;">Download Stripe Worker (.JS) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv${dlQs}" download style="color:#0F172A;text-decoration:underline;">Export Forecast (.CSV) &rarr;</a>`;
+    } else if (statusEl && checkoutState === 'cancel') {
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = `✓ Fix #1 Unmasked Free for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a id="cancel-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js${dlQs}" download style="color:#047857;text-decoration:underline;">Preview Worker (.JS) &rarr;</a> &middot; <a href="javascript:void(0)" onclick="if(window.__ebCheckout)window.__ebCheckout('flash_pass')" style="color:#0F172A;text-decoration:underline;">Or get ${escapeUiHtml(activeStore)} 3-File Patch ($1.99) &rarr;</a>`;
     }
   }
 
