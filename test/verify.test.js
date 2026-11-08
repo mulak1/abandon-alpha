@@ -16,6 +16,8 @@ function runTests() {
   const html = renderPseoPageHtml(page, 'https://www.abandonalpha.com');
   assert.ok(html.includes('BreadcrumbList'), 'Expected BreadcrumbList JSON-LD on /seo/:slug');
   assert.ok(html.includes('/#in-card-unlock-bar'), 'Expected pricing anchor to point to /#in-card-unlock-bar');
+  assert.ok(!html.includes('&amp;store=Stripe%20Decline'), 'Must not pass truncated SEO title as store name query param');
+  assert.ok(html.includes('/buy/flash_pass?playbook=') && html.includes('/buy/playbook_pass?playbook='), 'Must offer both $1.99 and $29 pack options on pSEO calculator');
 
   const audit = computeLeakageAudit({ monthlySessions: 999999999, aovUsd: 999999999 });
   assert.equal(audit.monthlySessions, 500000, 'Expected monthlySessions clamped to 500000');

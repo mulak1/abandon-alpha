@@ -253,8 +253,6 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       <span>${escapeHtml(page.category)}</span>
     </nav>
 
-    ${renderTopSubpageEmailBarHtml(`Free ${page.declineOrSignal} Retry Schedule ($0) + $29 Complete Recovery Kit`, 'Send Free Retry Schedule ($0) →', page.slug)}
-
     <style>@media(max-width:640px){.inline-calc-grid{grid-template-columns:1fr!important;}.inline-calc-grid>*,.calc-inputs,.calc-output-box,.pseo-section,.code-snippet-box{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important;padding-inline:14px!important;}.btn,#pseo-calc-btn{max-width:100%!important;white-space:normal!important;}}</style>
     <div class="hero-split pseo-hero" style="align-items:stretch;">
       <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
@@ -263,7 +261,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div class="status-pill" style="margin-top:8px;display:inline-flex;align-items:center;gap:8px;">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
           <p class="pseo-lead"><strong>${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(page.summary.replace(/`/g, ''))}</p>
           <div class="cta-row">
-            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}&amp;store=${encodeURIComponent(cleanTitle.slice(0, 32))}#grader" class="btn btn-indigo">
+            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#grader" class="btn btn-indigo">
               <span>Audit Your Store Leakage Free</span>
               <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
             </a>
@@ -297,6 +295,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
         </div>
       </div>
     </div>
+
+    ${renderTopSubpageEmailBarHtml(`Free ${page.declineOrSignal} Retry Schedule ($0) + $29 Complete Recovery Kit`, 'Send Free Retry Schedule ($0) →', page.slug)}
 
     <section class="pseo-section">
       <h2>Recovery Benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
@@ -340,8 +340,9 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div class="code-snippet-box">
             <div class="mono-label">Tailored Store Recovery Pack ($1.99 Single-Store Pass)</div>
             <p style="font-size:0.9375rem;line-height:1.55;margin-top:6px;">Includes your ready-to-use <code>${escapeHtml(page.declineOrSignal)}</code> Stripe retry schedule, 1-click Apple Pay recovery link template, and high-intent exit counter-offer rules.</p>
-            <div style="margin-top:8px;">
-              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-emerald btn-sm" style="display:inline-flex;">Unlock ${escapeHtml(page.declineOrSignal)} Recovery Pack ($1.99) &rarr;</a>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-emerald btn-sm" style="display:inline-flex;">3-File Patch ($1.99) &rarr;</a>
+              <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;">Complete Store Pack ($29) &rarr;</a>
             </div>
           </div>
         </div>
