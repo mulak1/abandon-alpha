@@ -161,7 +161,10 @@ app.post('/api/checkout', async (req, res) => {
         : isGrowth
           ? 'Growth Autonomous Recovery ($149/mo: Unlimited Sessions + Custom Gemini 4 Copy)'
           : 'For CRO & Shopify Agencies: White-Label Client Audit & Multi-Store Patch Kit ($49)';
-    const customerEmail = String(req.body?.customer_email || req.body?.customerEmail || req.body?.email || 'founder@merchant.io').trim();
+    const rawCustomerEmail = String(req.body?.customer_email || req.body?.customerEmail || req.body?.email || '').trim();
+    const isPlaceholderEmail = /^(founder@merchant\.io|founder@dtcstore\.io|test@|audit@|example@)/i.test(rawCustomerEmail);
+    const validCustomerEmail = (rawCustomerEmail.includes('@') && !isPlaceholderEmail) ? rawCustomerEmail : '';
+    const customerEmail = validCustomerEmail || 'guest@checkout.stripe.com';
     const storeDomain = String(req.body?.storeDomain || 'store.merchant.io').trim();
 
     let stripeSessionId = `cs_live_aa_${planTier}_${Date.now()}`;
@@ -171,15 +174,14 @@ app.post('/api/checkout', async (req, res) => {
     const ua = String(req.headers['user-agent'] || '');
     const isAutomatedTest = /HeadlessChrome|Playwright|Puppeteer|curl|node|python|Go-http-client/i.test(ua)
       || Boolean(req.headers['x-test'] || req.headers['x-studio-test'])
-      || /^(founder@merchant\.io|founder@dtcstore\.io|test@|audit@)/i.test(customerEmail);
+      || (rawCustomerEmail !== '' && isPlaceholderEmail);
 
     if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith('sk_') && (!isAutomatedTest || req.query?.live_stripe === '1')) {
       try {
         const Stripe = require('stripe');
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-        const session = await stripe.checkout.sessions.create({
+        const sessionPayload = {
           mode: isOneTime ? 'payment' : 'subscription',
-          customer_email: customerEmail,
           allow_promotion_codes: false,
           line_items: [
             {
@@ -196,7 +198,11 @@ app.post('/api/checkout', async (req, res) => {
           ],
           success_url: `${BASE_URL}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${BASE_URL}/?checkout=cancelled`
-        });
+        };
+        if (validCustomerEmail) {
+          sessionPayload.customer_email = validCustomerEmail;
+        }
+        const session = await stripe.checkout.sessions.create(sessionPayload);
         stripeSessionId = session.id;
         checkoutUrl = session.url;
         mode = 'stripe_live_api';

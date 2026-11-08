@@ -681,13 +681,24 @@ function renderWebhookOutput(res, payload) {
 async function initiateStripeCheckout(planTier) {
   if (typeof gtag === 'function') {
     gtag('event', 'begin_checkout', {
-      'value': planTier === 'starter' ? 49.00 : (planTier === 'growth' ? 149.00 : 29.00),
+      'value': planTier === 'starter' ? 49.00 : (planTier === 'growth' ? 149.00 : (planTier === 'flash_199' ? 1.99 : 29.00)),
       'currency': 'USD'
     });
   }
-  const capturedEmail = (document.getElementById('aa-inline-sample-email')?.value || document.getElementById('eb-inline-scorecard-email')?.value || localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email') || '').trim();
-  const email = (capturedEmail && capturedEmail.includes('@')) ? capturedEmail : (document.getElementById('wh-email')?.value || 'founder@merchant.io');
+  const placeholderRx = /^(founder@merchant\.io|founder@dtcstore\.io|test@|audit@|example@)/i;
+  const candidateEmails = [
+    document.getElementById('aa-hero-free-email')?.value,
+    document.getElementById('aa-inline-sample-email')?.value,
+    document.getElementById('eb-inline-scorecard-email')?.value,
+    document.getElementById('wh-email')?.value,
+    (() => { try { return localStorage.getItem('eb_lead_email') || localStorage.getItem('aa_captured_email') || ''; } catch (_) { return ''; } })()
+  ].map((v) => String(v || '').trim()).filter((v) => v.includes('@') && !placeholderRx.test(v));
+  const email = candidateEmails[0] || '';
   const storeDomain = document.getElementById('input-store')?.value || 'AuraBotanics DTC';
+
+  if (typeof window.__ebLogEvent === 'function') {
+    window.__ebLogEvent('checkout_intent', { tier: planTier, store: storeDomain });
+  }
 
   const res = await fetch('/api/checkout', {
     method: 'POST',
@@ -700,10 +711,15 @@ async function initiateStripeCheckout(planTier) {
   const banner = document.getElementById('checkout-status-banner');
   const text = document.getElementById('checkout-status-text');
   const badge = document.getElementById('checkout-session-badge');
-  banner.style.display = 'block';
-  badge.textContent = res.stripeSessionId;
-  text.innerHTML = `Initialized ${res.planLabel} for ${res.storeDomain} (${res.customerEmail}). Protected by ${res.guarantee}. <a href="${res.checkoutUrl || '/buy/complete_dossier'}" style="color:var(--accent-indigo);text-decoration:underline;font-weight:700;margin-left:6px;">Proceed to Stripe Checkout →</a>`;
-  if (!navigator.webdriver && res.checkoutUrl && res.checkoutUrl.startsWith('https://checkout.stripe.com')) window.location.href = res.checkoutUrl;
+  if (banner && text && badge) {
+    banner.style.display = 'block';
+    badge.textContent = res.stripeSessionId;
+    const emailLabel = res.customerEmail ? ` (${res.customerEmail})` : '';
+    text.innerHTML = `Initialized ${res.planLabel} for ${res.storeDomain}${emailLabel}. Protected by ${res.guarantee}. <a href="${res.checkoutUrl || '/buy/playbook_pass'}" style="color:var(--accent-indigo);text-decoration:underline;font-weight:700;margin-left:6px;">Proceed to Stripe Checkout →</a>`;
+  }
+  if (!navigator.webdriver && res.checkoutUrl && res.checkoutUrl.startsWith('https://checkout.stripe.com')) {
+    window.location.href = res.checkoutUrl;
+  }
 }
 
 function openExitIntentModal() {

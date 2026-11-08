@@ -64,6 +64,11 @@ function runTests() {
   assert.ok(!renderedHome.includes('id="aa-user-segments-strip"'), 'Must not bombard homepage with filler user-segment cards');
   assert.ok(!renderedHome.includes('tile-rose'), 'Must enforce single bright element rule (no competing neon pink metric tile)');
 
+  const rawAppJs = fs.readFileSync(path.join(__dirname, '..', 'public', 'app.js'), 'utf8');
+  assert.ok(rawAppJs.includes('const placeholderRx = /^(founder@merchant\\.io'), 'initiateStripeCheckout must filter out placeholder emails so guest buyers are not misclassified as automated tests');
+  const rawServerJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'server.js'), 'utf8');
+  assert.ok(rawServerJs.includes('rawCustomerEmail !== \'\' && isPlaceholderEmail'), 'POST /api/checkout must allow real guest buyers with empty email to create live Stripe sessions');
+
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
 
