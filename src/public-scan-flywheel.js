@@ -561,7 +561,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         var inp=document.getElementById('lb-check-input');
         var v=(inp&&inp.value.trim())||'';
         if(!v)return false;
-        var sp=new URLSearchParams(window.location.search||''),code=(sp.get('decline')||'insufficient_funds').trim(),sess=Number(sp.get('sessions')||0),aov=Number(sp.get('aov')||0),hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);
+        var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),code=(sp.get('decline')||(ws.declineFocus&&ws.declineFocus!=='auto_weighted'?ws.declineFocus:'')||'insufficient_funds').trim(),sess=Number(sp.get('sessions')||ws.monthlySessions||0),aov=Number(sp.get('aov')||ws.aovUsd||0),hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);
         var qExtra='&decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'');
         var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),dw=document.getElementById('lb-prev-dl-worker'),rl=document.getElementById('lb-prev-report-link'),fc=document.getElementById('lb-fix1-cta'),fk=document.getElementById('lb-fix1-code'),roi=document.getElementById('lb-roi-proof'),cBtn=document.getElementById('lb-copy-fix1-btn'),uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),lbDet=document.getElementById('lb-fix1-details');
         if(cBtn){cBtn.removeAttribute('data-copied');cBtn.textContent='Copy Free Fix #1 Snippet';cBtn.style.color='';}
@@ -608,7 +608,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
       };
       window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='#F8FAFC';bs[i].style.color='#0F172A';}if(btn){btn.style.background='${esc(badgeColor)}';btn.style.color='#FFFFFF';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};
       window.__lbSearch=function(){window.__lbApply();};
-      window.addEventListener('DOMContentLoaded',function(){try{var sp=new URLSearchParams(window.location.search||''),qt=(sp.get('target')||sp.get('q')||sp.get('store')||'').trim();if(qt&&document.getElementById('lb-check-input')){document.getElementById('lb-check-input').value=qt;window.__lbRunInlineCheck(null,false);}}catch(_){}});
+      window.addEventListener('DOMContentLoaded',function(){try{var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),qt=(sp.get('target')||sp.get('q')||sp.get('store')||ws.storeName||'').trim();if(qt&&document.getElementById('lb-check-input')){document.getElementById('lb-check-input').value=qt;window.__lbRunInlineCheck(null,false);}}catch(_){}});
     </script>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;">
       <table aria-label="${esc(cfg.brandName)} Public Leaderboard" style="width:100%;border-collapse:collapse;font-size:14px;">

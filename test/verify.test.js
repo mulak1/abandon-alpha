@@ -143,6 +143,7 @@ function runTests() {
   assert.ok(rawAppJs.includes('#out-dunning-breakdown a') && rawAppJs.includes('a[href^="/directory"]') && rawAppJs.includes('window.history.replaceState(null, \'\', `/?target='), 'Homepage must forward active store, decline, sessions, and aov into Fold-1 breakdown links and /directory navbar links, and sync URL state');
   assert.ok(renderedHome.includes('window.__ebSyncNavLinks = function(') && renderedHome.includes('footer a, .mobile-nav-strip a, a[href^="/scan/"]'), 'All pages and subpages must synchronize header, breadcrumb, footer, and /scan/* links with active target, decline, sessions, and aov parameters');
   assert.ok(renderedHome.includes("localStorage.getItem('aa_workspace_state_v1')") && html.includes('window.__pseoTarget=qt;'), 'Subpages must hydrate and persist storeName, monthlySessions, aovUsd, and declineFocus via aa_workspace_state_v1 in localStorage when visited without query parameters');
+  assert.ok(lbHtml.includes("ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}')") && dirHtml.includes("actTgt = (cleanFilter || sp.get('target') || ws.storeName || '').trim()"), '/leaderboard and /directory must hydrate active store, decline, sessions, and aov from aa_workspace_state_v1 on bare URL visits');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

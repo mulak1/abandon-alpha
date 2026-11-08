@@ -570,18 +570,18 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       });
       var st = document.getElementById('dir-match-status');
       if (st) st.textContent = !tokens.length ? ('Showing all ' + cards.length + ' Playbooks') : ('Showing ' + matchedCount + ' of ' + cards.length + ' Playbooks');
-      var cleanFilter = (q || '').trim(), sp = new URLSearchParams(window.location.search || ''), qDec = (sp.get('decline') || cleanFilter || 'insufficient_funds').trim(), qSess = Number(sp.get('sessions') || 0), qAov = Number(sp.get('aov') || 0), qExtra = (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : '') + (qDec ? '&decline=' + encodeURIComponent(qDec) : '') + (qSess >= 50 ? '&sessions=' + qSess : '') + (qAov >= 5 ? '&aov=' + qAov : ''), b29 = document.getElementById('dir-buy-29'), b199 = document.getElementById('dir-buy-199'), dlW = document.getElementById('dir-dl-worker'), uSub = document.getElementById('in-card-unlock-sub'), fBtn = document.getElementById('btn-prog-full-dossier');
-      cards.forEach(function(el) { var baseH = el.getAttribute('data-base-href') || el.getAttribute('href').split('?')[0]; el.setAttribute('data-base-href', baseH); el.href = baseH + (cleanFilter ? ('?target=' + encodeURIComponent(cleanFilter) + (qSess >= 50 ? '&sessions=' + qSess : '') + (qAov >= 5 ? '&aov=' + qAov : '')) : ''); });
-      if (b29) { b29.href = '/buy/playbook_pass?utm_source=directory' + qExtra; b29.textContent = cleanFilter ? ('Get ' + cleanFilter + ' + All 60 Playbooks ($29) →') : 'Get All 60 Playbooks ($29 Pack) →'; }
+      var cleanFilter = (q || '').trim(), sp = new URLSearchParams(window.location.search || ''), ws = JSON.parse(localStorage.getItem('aa_workspace_state_v1') || '{}'), actTgt = (cleanFilter || sp.get('target') || ws.storeName || '').trim(), qDec = (sp.get('decline') || cleanFilter || (ws.declineFocus && ws.declineFocus !== 'auto_weighted' ? ws.declineFocus : '') || 'insufficient_funds').trim(), qSess = Number(sp.get('sessions') || ws.monthlySessions || 0), qAov = Number(sp.get('aov') || ws.aovUsd || 0), qExtra = (actTgt ? '&target=' + encodeURIComponent(actTgt) : '') + (qDec ? '&decline=' + encodeURIComponent(qDec) : '') + (qSess >= 50 ? '&sessions=' + qSess : '') + (qAov >= 5 ? '&aov=' + qAov : ''), b29 = document.getElementById('dir-buy-29'), b199 = document.getElementById('dir-buy-199'), dlW = document.getElementById('dir-dl-worker'), uSub = document.getElementById('in-card-unlock-sub'), fBtn = document.getElementById('btn-prog-full-dossier');
+      cards.forEach(function(el) { var baseH = el.getAttribute('data-base-href') || el.getAttribute('href').split('?')[0]; el.setAttribute('data-base-href', baseH); el.href = baseH + (actTgt ? ('?target=' + encodeURIComponent(actTgt) + (qSess >= 50 ? '&sessions=' + qSess : '') + (qAov >= 5 ? '&aov=' + qAov : '')) : ''); });
+      if (b29) { b29.href = '/buy/playbook_pass?utm_source=directory' + qExtra; b29.textContent = actTgt ? ('Get ' + actTgt + ' + All 60 Playbooks ($29) →') : 'Get All 60 Playbooks ($29 Pack) →'; }
       if (b199) b199.href = '/buy/flash_pass?utm_source=directory' + qExtra;
-      if (dlW) dlW.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(cleanFilter || 'Shopify') + '&decline=' + encodeURIComponent(qDec) + (qSess >= 50 ? '&sessions=' + qSess : '') + (qAov >= 5 ? '&aov=' + qAov : '');
-      if (uSub && cleanFilter) uSub.textContent = 'Compiled for ' + cleanFilter + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
-      if (fBtn && cleanFilter) fBtn.textContent = 'Complete ' + cleanFilter + ' Recovery Pack ($29 — One-Time) →';
+      if (dlW) dlW.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(actTgt || 'Shopify') + '&decline=' + encodeURIComponent(qDec) + (qSess >= 50 ? '&sessions=' + qSess : '') + (qAov >= 5 ? '&aov=' + qAov : '');
+      if (uSub && actTgt) uSub.textContent = 'Compiled for ' + actTgt + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
+      if (fBtn && actTgt) fBtn.textContent = 'Complete ' + actTgt + ' Recovery Pack ($29 — One-Time) →';
       var dCta = document.getElementById('dir-fix1-cta'), dCode = document.getElementById('dir-fix1-code'), dDet = document.getElementById('dir-fix1-details'), dBtn = document.getElementById('dir-copy-fix1-btn');
       if (dBtn) { dBtn.removeAttribute('data-copied'); dBtn.textContent = 'Copy Free Fix #1 Snippet'; dBtn.style.color = ''; }
-      var fTarget = cleanFilter || 'insufficient_funds', fHrs = fTarget.indexOf('expired') !== -1 ? 0 : (fTarget.indexOf('do_not_honor') !== -1 ? 24 : 72);
-      if (dCta) dCta.textContent = 'Get free Fix #1 snippet for ' + fTarget + ' (+$2,098/mo lift · $0) →';
-      if (dCode) dCode.textContent = 'window.AbandonAlphaRules = { declineOrSignal: "' + fTarget + '", retryAfterHours: ' + fHrs + ', allowPromoStacking: false };';
+      var fTarget = cleanFilter || qDec || 'insufficient_funds', fHrs = fTarget.indexOf('expired') !== -1 ? 0 : (fTarget.indexOf('do_not_honor') !== -1 ? 24 : 72);
+      if (dCta) dCta.textContent = 'Get free Fix #1 snippet for ' + (actTgt && actTgt !== fTarget ? (actTgt + ' · ' + fTarget) : fTarget) + ' (+$2,098/mo lift · $0) →';
+      if (dCode) dCode.textContent = 'window.AbandonAlphaRules = { ' + (actTgt ? 'merchant: "' + actTgt + '", ' : '') + 'declineOrSignal: "' + fTarget + '", retryAfterHours: ' + fHrs + ', allowPromoStacking: false };';
       if (dDet && openDet !== false && cleanFilter && !dDet.open) dDet.open = true;
       if (openDet !== false && window.history && window.history.replaceState) window.history.replaceState(null, '', '/directory' + (cleanFilter ? '?q=' + encodeURIComponent(cleanFilter) : ''));
       var emp = document.getElementById('dir-empty-state');
@@ -592,7 +592,7 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
         if (cLink) { cLink.href = '/?store=' + encodeURIComponent(cleanQ) + '#grader'; cLink.textContent = 'Calculate recovery for "' + cleanQ + '" →'; }
       }
     }
-    window.addEventListener('DOMContentLoaded', function() { try { var sp = new URLSearchParams(window.location.search || ''), qt = (sp.get('q') || sp.get('target') || sp.get('decline') || '').trim(), inp = document.getElementById('dir-search'); if (qt && inp) { inp.value = qt; filterDirectory(qt, false); } } catch (_) {} });
+    window.addEventListener('DOMContentLoaded', function() { try { var sp = new URLSearchParams(window.location.search || ''), qt = (sp.get('q') || sp.get('target') || sp.get('decline') || '').trim(), inp = document.getElementById('dir-search'); if (qt && inp) { inp.value = qt; filterDirectory(qt, false); } else { filterDirectory('', false); } } catch (_) {} });
   </script>
 </body>
 </html>`;
