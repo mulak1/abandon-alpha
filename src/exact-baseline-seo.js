@@ -351,7 +351,8 @@ function attachUniversalSeoAndAiRoutes(app, cfg, store, classifyTrafficRequest, 
             if (score > bestScore && score >= 4) { bestScore = score; matched = e; }
           }
         }
-        if (matched) return res.redirect(301, `/seo/${matched.slug}`);
+        const qs = req.url && req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+        if (matched) return res.redirect(301, `/seo/${matched.slug}${qs}`);
       }
     }
     next();

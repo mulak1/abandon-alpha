@@ -645,7 +645,8 @@ function attachPublicScanFlywheel(app, cfg, badgeColor, renderHtmlFn, classifyFn
 
   app.get('/scan', (req, res) => {
     const q = cleanTargetInput(req.query.q || req.query.target, cat.entities[0].target);
-    return res.redirect(302, `/scan/${encodeURIComponent(q)}`);
+    const qs = req.url && req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    return res.redirect(302, `/scan/${encodeURIComponent(q)}${qs}`);
   });
 
   app.get(['/scan/:target', '/report/:target', '/u/:target'], (req, res) => {

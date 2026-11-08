@@ -392,7 +392,8 @@ app.get('/seo/:slug', (req, res) => {
       for (const t of candTokens) { if (pTokens.includes(t) || pSlug.includes(t)) score += 2; }
       if (score > bestScore && score >= 4) { bestScore = score; bestSlug = p.slug; }
     }
-    if (bestSlug) return res.redirect(301, `/seo/${bestSlug}`);
+    const qs = req.url && req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    if (bestSlug) return res.redirect(301, `/seo/${bestSlug}${qs}`);
     return res.status(404).send(renderNotFoundHtml());
   }
   res.send(renderPseoPageHtml(page, BASE_URL));
