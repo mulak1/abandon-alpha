@@ -833,17 +833,17 @@ function buildClientRuntimeScript(cfg) {
     if (!m) return;
     var nextOpen = m.style.display !== 'flex';
     if (nextOpen) {
-      var stEl = document.getElementById('input-store') || document.getElementById('eb-growth-wb-input') || document.getElementById('eb-scan-wb-input') || document.getElementById('lp-flow-store') || document.getElementById('sample-flow-store') || document.getElementById('pseo-flow-store');
-      var dcEl = document.getElementById('input-decline-focus') || document.getElementById('eb-growth-wb-decline') || document.getElementById('eb-scan-wb-decline') || document.getElementById('lp-flow-decline') || document.getElementById('sample-flow-decline') || document.getElementById('pseo-flow-decline') || document.getElementById('lb-flow-decline');
-      var sEl = document.querySelector('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions, #eb-scan-vol-sessions, #lp-sessions'), aEl = document.querySelector('#input-aov, #pseo-aov, #eb-growth-vol-aov, #eb-scan-vol-aov, #lp-aov');
-      var stName = stEl && stEl.value ? String(stEl.value).trim() : 'Your Store';
-      var dcName = dcEl && dcEl.value ? String(dcEl.value).trim() : 'do_not_honor';
-      var actSess = Number(sEl && sEl.value) || 0, actAov = Number(aEl && aEl.value) || 0;
+      var stEl = document.querySelector('#input-store, #lp-store, #sample-store, #eb-cnn-wb-input, #lb-check-input, #dir-search');
+      var dcEl = document.querySelector('#input-decline-focus, #eb-growth-vol-decline, #eb-scan-vol-decline, #lp-decline, #sample-decline, #wh-decline-code');
+      var sEl = document.querySelector('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions, #eb-scan-vol-sessions, #lp-sessions'), aEl = document.querySelector('#input-aov, #pseo-aov, #eb-growth-vol-aov, #eb-scan-vol-aov, #lp-aov'), objEl = document.querySelector('#objection-btn-group .objection-btn.selected');
+      var stName = (stEl && stEl.value ? String(stEl.value).trim() : '') || window.__ebActiveEntity || 'Gymshark';
+      var dcName = dcEl && dcEl.value && dcEl.value !== 'auto_weighted' ? String(dcEl.value).trim() : 'insufficient_funds';
+      var actSess = Number(sEl && sEl.value) || 0, actAov = Number(aEl && aEl.value) || 0, actObj = (objEl && objEl.getAttribute('data-obj')) || '';
       var b29 = document.getElementById('cmdk-buy-29-label'), b199 = document.getElementById('cmdk-buy-199-label');
       var dlCsv = document.getElementById('cmdk-dl-csv'), dlTxt = document.getElementById('cmdk-dl-txt'), dlJs = document.getElementById('cmdk-dl-js');
       if (b29) b29.textContent = 'Get Complete ' + stName + ' Pack ($29) — 8 Decline Rules + 14-Day Refund';
       if (b199) b199.textContent = 'Get ' + stName + ' 3-File Patch ($1.99) — Instant Download';
-      var qStr = '?target=' + encodeURIComponent(stName) + '&decline=' + encodeURIComponent(dcName) + (actSess ? '&sessions=' + actSess : '') + (actAov ? '&aov=' + actAov : '');
+      var qStr = '?target=' + encodeURIComponent(stName) + '&decline=' + encodeURIComponent(dcName) + (actSess ? '&sessions=' + actSess : '') + (actAov ? '&aov=' + actAov : '') + (actObj ? '&objection=' + encodeURIComponent(actObj) : '');
       if (dlCsv) { dlCsv.href = '/api/github-upgrade/export.csv' + qStr; var s1 = dlCsv.querySelector('span'); if (s1) s1.textContent = 'Export ' + stName + ' Recovery Forecast (.CSV)'; }
       if (dlTxt) { dlTxt.href = '/api/github-upgrade/llms-bundle.txt' + qStr; var s2 = dlTxt.querySelector('span'); if (s2) s2.textContent = 'Download ' + stName + ' 3-File Recovery Bundle (.TXT)'; }
       if (dlJs) { dlJs.href = '/api/github-upgrade/stripe-recovery-worker.js' + qStr; var s3 = dlJs.querySelector('span'); if (s3) s3.textContent = 'Download ' + stName + ' Stripe Edge Worker (.JS)'; }

@@ -891,7 +891,8 @@ function renderWebhookOutput(res, payload) {
   const dcName = payload.declineCode || document.getElementById('wh-decline-code')?.value || 'insufficient_funds';
   const sessVal = Number(document.getElementById('input-sessions')?.value || 42000);
   const aovVal = Number(payload.amountUsd || document.getElementById('input-aov')?.value || 92);
-  const dlQs = `?target=${encodeURIComponent(stName)}&decline=${encodeURIComponent(dcName)}&sessions=${sessVal}&aov=${aovVal}`;
+  const selObj = document.querySelector('#objection-btn-group .objection-btn.selected')?.getAttribute('data-obj') || 'C1_PRICE';
+  const dlQs = `?target=${encodeURIComponent(stName)}&decline=${encodeURIComponent(dcName)}&sessions=${sessVal}&aov=${aovVal}&objection=${encodeURIComponent(selObj)}`;
   ['wh-dl-worker', 'modal-dl-worker', 'cmdk-dl-js'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.href = `/api/github-upgrade/stripe-recovery-worker.js${dlQs}`;
