@@ -169,6 +169,7 @@ function runTests() {
   assert.ok(sampleHtml.includes("var qStr='?target='+encodeURIComponent(st)+'&decline='+encodeURIComponent(cd)+'&sessions='+sess+'&aov='+aov") && sampleHtml.includes("Compiled for '+st+' ($'+aov+' AOV)"), '/dossier/sample must dynamically compute ROI multiple, Fix #1 lift, and download query strings from active sessions, aov, and objection');
   assert.ok(dirHtml.includes("if (rProof && actTgt) rProof.textContent = 'Compiled for ' + actTgt + ' ($' + effAov + ' AOV)") && dirHtml.includes("aovUsd: ' + effAov"), '/directory must dynamically compute ROI multiple, Fix #1 lift, and snippet aovUsd from active sessions and aov');
   assert.ok(rawAppJs.includes('data-objection="${selObj}"') && rawAppJs.includes('banditArm: "${armCode}"') && renderedHome.includes("#pseo-fix1-code, #dir-fix1-code, #lp-fix1-code, #sample-fix1-code"), 'On-page Fix #1 snippet previews across / and all subpages must dynamically include the visitor selected counter-offer banditArm');
+  assert.ok(lpHtml.includes("if (roiEl) roiEl.textContent = 'Compiled for ' + store + ' ($' + aovVal + ' AOV)") && lpHtml.includes("aovUsd: ' + aovVal"), 'updateLpFlowPreview on /lp must dynamically compute leaked revenue, recoverable revenue, ROI multiple, Fix #1 lift, and worker query parameters from active sessions and aov');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

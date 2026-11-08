@@ -833,21 +833,17 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
         b199.textContent = 'Or get ' + store + ' 3-File Patch ($1.99)';
       }
-      var lpw = document.getElementById('lp-dl-worker');
-      if (lpw) lpw.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code);
-      var lpCopyBtn = document.getElementById('lp-copy-fix1-btn');
+      var lpw = document.getElementById('lp-dl-worker'), totRec = Math.max(250, Math.round(sessVal * aovVal * 0.0095)), dLift = Math.max(120, Math.round(totRec * 0.32)), roiMult = Math.max(10, Math.round(totRec / 29)).toLocaleString(), roiEl = document.getElementById('lp-roi-proof'), lOut = document.getElementById('lp-leaked-out'), rOut = document.getElementById('lp-rec-out');
+      if (lpw) lpw.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal;
+      if (lOut) lOut.textContent = '$' + Math.round(sessVal * aovVal * 0.715).toLocaleString();
+      if (rOut) rOut.textContent = '+$' + totRec.toLocaleString() + '/mo';
+      if (roiEl) roiEl.textContent = 'Compiled for ' + store + ' ($' + aovVal + ' AOV) · Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission · 30-day guarantee';
+      var lpCopyBtn = document.getElementById('lp-copy-fix1-btn'), uSub = document.getElementById('in-card-unlock-sub'), fBtn = document.getElementById('btn-prog-full-dossier'), fixCta = document.getElementById('lp-fix1-cta'), fixCode = document.getElementById('lp-fix1-code');
       if (lpCopyBtn) { lpCopyBtn.removeAttribute('data-copied'); lpCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; lpCopyBtn.style.color = ''; }
-      var uSub = document.getElementById('in-card-unlock-sub');
-      var fBtn = document.getElementById('btn-prog-full-dossier');
-      if (uSub) uSub.textContent = 'Compiled for ' + store + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
+      if (uSub) uSub.textContent = 'Compiled for ' + store + ' ($' + aovVal + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
       if (fBtn) fBtn.textContent = 'Complete ' + store + ' Recovery Pack ($29 — One-Time) →';
-      var fixCta = document.getElementById('lp-fix1-cta');
-      var fixCode = document.getElementById('lp-fix1-code');
-      if (fixCta) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$2,098/mo lift · $0) →';
-      if (fixCode) {
-        var rHrs = code === 'expired_card' ? 0 : (code === 'do_not_honor' ? 24 : 72);
-        fixCode.textContent = 'window.AbandonAlphaRules = { merchant: "' + store + '", declineCode: "' + code + '", retryAfterHours: ' + rHrs + ', allowPromoStacking: false };';
-      }
+      if (fixCta) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + dLift.toLocaleString() + '/mo lift · $0) →';
+      if (fixCode) { var rHrs = code === 'expired_card' ? 0 : (code === 'do_not_honor' ? 24 : 72); fixCode.textContent = 'window.AbandonAlphaRules = { merchant: "' + store + '", declineCode: "' + code + '", aovUsd: ' + aovVal + ', retryAfterHours: ' + rHrs + ', allowPromoStacking: false };'; }
       var lpDet = document.getElementById('lp-fix1-details');
       if (lpDet && openDet !== false && !lpDet.open) lpDet.open = true;
       if (openDet !== false && window.history && window.history.replaceState) window.history.replaceState(null, '', '/lp?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal);
