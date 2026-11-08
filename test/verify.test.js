@@ -18,6 +18,8 @@ function runTests() {
   assert.ok(html.includes('/#in-card-unlock-bar'), 'Expected pricing anchor to point to /#in-card-unlock-bar');
   assert.ok(!html.includes('&amp;store=Stripe%20Decline'), 'Must not pass truncated SEO title as store name query param');
   assert.ok(html.includes('/buy/flash_pass?playbook=') && html.includes('/buy/playbook_pass?playbook='), 'Must offer both $1.99 and $29 pack options on pSEO calculator');
+  assert.ok(!html.includes('>Stripe</h1>'), 'Must not truncate pSEO H1 title to a single word');
+  assert.ok(!html.includes('tile-rose'), 'Must not use competing neon pink metric tile on pSEO pages');
 
   const audit = computeLeakageAudit({ monthlySessions: 999999999, aovUsd: 999999999 });
   assert.equal(audit.monthlySessions, 500000, 'Expected monthlySessions clamped to 500000');

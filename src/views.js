@@ -2,20 +2,17 @@ const { PSEO_PAGES, getPseoPageBySlug } = require('./pseo-data');
 
 const AA_LOCK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
 
-function renderTopSubpageEmailBarHtml(titleText = 'Free Store Recovery Kit ($0) + Complete $29 Recovery Pack', ctaLabel = 'Send Free Retry Schedule ($0) →', slug = '') {
-  return `<section id="aa-subpage-top-email-bar" style="background:linear-gradient(135deg,#0A2540 0%,#1E293B 100%);color:#F8FAFC;border-radius:14px;padding:14px 16px;margin:0 0 16px;border:1px solid #334155;box-shadow:0 8px 24px -10px rgba(10,37,64,0.35);">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="padding:2px 8px;border-radius:999px;background:#10B981;color:#052E16;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">ITEM #1 UNMASKED FREE</span>
-        <span style="font-size:13.5px;font-weight:800;color:#FFFFFF;">${escapeHtml(titleText)}</span>
-      </div>
-      <a href="/buy/flash_pass${slug ? `?playbook=${encodeURIComponent(slug)}` : ''}" rel="nofollow" style="padding:5px 11px;border-radius:999px;background:rgba(16,185,129,0.18);border:1px solid #34D399;color:#6EE7B7;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;">Unlock Complete Store Recovery Pack ($29 / $1.99 Single Pass) &rarr;</a>
+function renderTopSubpageEmailBarHtml(titleText = 'Send the free retry schedule & snippet ($0)', ctaLabel = 'Send Free Schedule ($0)', slug = '') {
+  return `<section id="aa-subpage-top-email-bar" style="background:#F8FAFC;color:#0F172A;border-radius:12px;padding:16px 20px;margin:0 0 24px;border:1px solid #E2E8F0;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+      <span style="font-size:14px;font-weight:600;color:#0F172A;">${escapeHtml(titleText)}</span>
+      <span style="font-size:13px;color:#64748B;">Or instant download: <a href="/buy/flash_pass${slug ? `?playbook=${encodeURIComponent(slug)}` : ''}" rel="nofollow" style="color:#0F172A;font-weight:600;text-decoration:underline;">3-File Patch ($1.99)</a> &middot; <a href="/buy/playbook_pass${slug ? `?playbook=${encodeURIComponent(slug)}` : ''}" rel="nofollow" style="color:#047857;font-weight:600;text-decoration:underline;">Complete Store Pack ($29) &rarr;</a></span>
     </div>
     <form onsubmit="return window.__aaUnlockSubpage(event);" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0;">
-      <input id="aa-subpage-top-email-input" type="email" required placeholder="Enter work email ($0) to unmask retry windows &amp; exit offers..." aria-label="Enter work email to unmask retry windows and exit offers" style="flex:1 1 210px;min-width:0;padding:9px 12px;border-radius:8px;border:1px solid #475569;background:#0F172A;color:#F8FAFC;font-size:13px;" />
-      <button type="submit" style="padding:9px 14px;border-radius:8px;border:none;background:#10B981;color:#052E16;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;">${escapeHtml(ctaLabel)}</button>
+      <input id="aa-subpage-top-email-input" type="email" required placeholder="Enter work email to receive the retry schedule &amp; Fix #1 snippet ($0)..." aria-label="Enter work email to receive the retry schedule and Fix #1 snippet" style="flex:1 1 210px;min-width:0;padding:9px 12px;border-radius:8px;border:1px solid #CBD5E1;background:#FFFFFF;color:#0F172A;font-size:13.5px;" />
+      <button type="submit" class="btn btn-indigo btn-sm" style="padding:9px 16px;font-size:13.5px;white-space:nowrap;">${escapeHtml(ctaLabel)}</button>
     </form>
-    <div id="aa-subpage-top-email-status" style="display:none;margin-top:8px;font-size:12.5px;font-weight:700;color:#6EE7B7;">All locked retry schedules and exit counter-offers unmasked below!</div>
+    <div id="aa-subpage-top-email-status" style="display:none;margin-top:8px;font-size:13px;font-weight:600;color:#047857;">Sent &amp; unlocked below.</div>
   </section>
   <script>
     window.__aaUnlockSubpage = function(e) {
@@ -62,23 +59,19 @@ function renderUnifiedHeaderHtml(tagText = '') {
         <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
-        <a href="/#grader">Revenue Calculator</a>
-        <a href="/#bandit-lab">Exit Simulator</a>
-        <a href="/#webhook-lab">Stripe Retry Lab</a>
-        <a href="/leaderboard">Leaderboard</a>
-        <a href="/directory">Playbooks (60)</a>
+        <a href="/#grader">Calculator</a>
+        <a href="/#bandit-lab">Simulators</a>
+        <a href="/directory">Playbooks</a>
         <a href="/#in-card-unlock-bar">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
           <span>Calculate Revenue</span>
-          <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
         </a>
       </nav>
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
       <a href="/#grader">Calculator</a>
-      <a href="/#bandit-lab">Exit Simulator</a>
-      <a href="/leaderboard">Leaderboard</a>
-      <a href="/directory">60 Playbooks</a>
+      <a href="/#bandit-lab">Simulators</a>
+      <a href="/directory">Playbooks</a>
       <a href="/#in-card-unlock-bar">Pricing</a>
     </nav>
   </header>`;
@@ -257,92 +250,90 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     <div class="hero-split pseo-hero" style="align-items:stretch;">
       <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
         <div>
-          <h1 class="pseo-h1" style="font-size:clamp(1.5rem, 2.2vw, 2.15rem);line-height:1.14;max-width:28ch;">${escapeHtml(cleanTitle.replace(/\s*\(.*?\)/g, '').split(/[: · –|]/)[0].trim().split(/\s+/).slice(0, 5).join(' '))}</h1>
-          <div class="status-pill" style="margin-top:8px;display:inline-flex;align-items:center;gap:8px;">${escapeHtml(page.category)} • Signal: <code>${escapeHtml(page.declineOrSignal)}</code></div>
-          <p class="pseo-lead"><strong>${escapeHtml(cleanTitle)}:</strong> ${escapeHtml(page.summary.replace(/`/g, ''))}</p>
+          <p class="section-kicker" style="margin:0 0 8px;">${escapeHtml(page.category)} · <code>${escapeHtml(page.declineOrSignal)}</code></p>
+          <h1 class="pseo-h1" style="font-size:clamp(1.65rem, 2.4vw, 2.25rem);line-height:1.14;max-width:26ch;">${escapeHtml(cleanTitle)}</h1>
+          <p class="pseo-lead">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
           <div class="cta-row">
             <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#grader" class="btn btn-indigo">
-              <span>Audit Your Store Leakage Free</span>
-              <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
+              <span>Calculate store leakage</span>
             </a>
-            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)} Live</a>
+            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)}</a>
           </div>
         </div>
       </div>
 
       <div class="telemetry-card">
         <div class="card-header-bar">
-          <span class="mono-label">BENCHMARK TELEMETRY MATRIX</span>
-          <span class="badge-live">VERIFIED 2026</span>
+          <span class="mono-label">Recovery benchmark</span>
+          <span style="font-size:12px;color:#64748B;font-weight:500;">2026 Stripe &amp; Shopify data</span>
         </div>
         <div class="metric-duo">
-          <div class="metric-tile tile-rose">
-            <span class="tile-label">Baseline Loss / Decline Share</span>
-            <strong class="tile-value text-rose">${page.baselineAbandonmentOrFailPct}%</strong>
-            <span class="tile-sub">Unoptimized Stripe / Checkout</span>
+          <div class="metric-tile" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;">
+            <span class="tile-label">Baseline loss / decline share</span>
+            <strong class="tile-value" style="color:#0F172A;">${page.baselineAbandonmentOrFailPct}%</strong>
+            <span class="tile-sub">Unoptimized Stripe / checkout</span>
           </div>
           <div class="metric-tile tile-emerald">
-            <span class="tile-label">AbandonAlpha Recovery Lift</span>
+            <span class="tile-label">Recovery lift</span>
             <strong class="tile-value text-emerald">+${page.recoverableLiftPct}%</strong>
-            <span class="tile-sub">With Smart Exit Offer + Timed Retry</span>
+            <span class="tile-sub">Timed retry + exit offer</span>
           </div>
         </div>
         <div class="playbook-spec-list">
-          <div class="spec-row"><span class="spec-k">1. Target Webhook (Free Proof)</span><code class="spec-v">${escapeHtml(page.webhookEvent)}</code></div>
-          <div class="spec-row"><span class="spec-k">2. Optimal Retry Timing</span><span class="spec-v"><span class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;font-size:12px;font-weight:700;">${AA_LOCK_SVG}Enter Email ($0) to Unmask Timing</span><span class="aa-unlocked-spec-proof" style="display:none;color:#047857;font-weight:700;">${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday Window (09:05 Local)')}</span></span></div>
-          <div class="spec-row"><span class="spec-k">3. Winning Exit Counter-Offer</span><span class="spec-v"><span class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;font-size:12px;font-weight:700;">${AA_LOCK_SVG}Enter Email ($0) to Unmask Offer</span><span class="aa-unlocked-spec-proof" style="display:none;color:#047857;font-weight:700;">${escapeHtml(page.winningArm || '1-Click Apple Pay / Pause-Instead-of-Cancel')}</span></span></div>
-          <div class="spec-row"><span class="spec-k">Est. Recovered Cashflow</span><strong class="spec-v text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo ($${page.annualRecoveredUsd.toLocaleString()}/yr)</strong></div>
+          <div class="spec-row"><span class="spec-k">Target webhook</span><code class="spec-v">${escapeHtml(page.webhookEvent)}</code></div>
+          <div class="spec-row"><span class="spec-k">Optimal retry timing</span><span class="spec-v" style="color:#0F172A;font-weight:600;">${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday Window (09:05 Local)')}</span></div>
+          <div class="spec-row"><span class="spec-k">Winning counter-offer</span><span class="spec-v" style="color:#0F172A;font-weight:600;">${escapeHtml(page.winningArm || '1-Click Apple Pay / Pause-Instead-of-Cancel')}</span></div>
+          <div class="spec-row"><span class="spec-k">Estimated recovered cashflow</span><strong class="spec-v text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo ($${page.annualRecoveredUsd.toLocaleString()}/yr)</strong></div>
         </div>
       </div>
     </div>
 
-    ${renderTopSubpageEmailBarHtml(`Free ${page.declineOrSignal} Retry Schedule ($0) + $29 Complete Recovery Kit`, 'Send Free Retry Schedule ($0) →', page.slug)}
+    ${renderTopSubpageEmailBarHtml(`Free ${page.declineOrSignal} retry schedule & recovery rules`, 'Send free schedule →', page.slug)}
 
     <section class="pseo-section">
-      <h2>Recovery Benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
-      <p class="section-sub">Empirical 2026 recovery performance comparing naive 24-hour retries, standard platform retries, and AbandonAlpha's Payday-Timed Window + Smart Exit Offer Engine.</p>
+      <h2>Recovery benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
+      <p class="section-sub">Empirical 2026 recovery performance comparing naive 24-hour retries, standard platform retries, and payday-timed recovery windows.</p>
       <div class="posterior-table-wrap">
         <table class="posterior-table">
-          <thead><tr><th>Recovery Architecture</th><th>Recovery Rate (%)</th><th>Avg Time-to-Recover</th><th>Customer Churn Risk</th><th>Net Revenue Lift</th></tr></thead>
+          <thead><tr><th>Recovery architecture</th><th>Recovery rate</th><th>Avg time to recover</th><th>Churn risk</th><th>Net revenue lift</th></tr></thead>
           <tbody>
-            <tr><td><strong>1. Naive 24h Cron Retry (Free Proof)</strong></td><td class="text-rose">${naiveRecRate}%</td><td>14.2 Days (High Issuer Lockout)</td><td class="text-rose">High (${page.baselineAbandonmentOrFailPct}% Unrecovered Loss)</td><td>Baseline (+0.0%)</td></tr>
-            <tr><td><strong>2. Standard Platform Retry</strong></td><td>${standardRecRate}%</td><td>5.8 Days (Generic Reminder Email)</td><td>Moderate (No Exit Counter-Offer Match)</td><td>+${standardRecRate}%</td></tr>
-            <tr style="background: rgba(16, 185, 129, 0.08);"><td><strong class="text-indigo">3. AbandonAlpha Smart Window + Exit Offer</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><span class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:#ECFDF5;border:1px solid #6EE7B7;color:#065F46;font-size:12px;font-weight:700;">${AA_LOCK_SVG}Unmask 4.2h Window ($0 Email)</span><strong class="aa-unlocked-spec-proof" style="display:none;">&lt; 4.2 Hours (Payday Deposit Sync)</strong></td><td class="text-emerald"><strong>Low (Visa/MC Safe Limit)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
+            <tr><td><strong>1. Naive 24h cron retry</strong></td><td>${naiveRecRate}%</td><td>14.2 days (issuer lockout risk)</td><td>High (${page.baselineAbandonmentOrFailPct}% unrecovered)</td><td>Baseline (+0.0%)</td></tr>
+            <tr><td><strong>2. Standard platform retry</strong></td><td>${standardRecRate}%</td><td>5.8 days (generic reminder)</td><td>Moderate</td><td>+${standardRecRate}%</td></tr>
+            <tr style="background: rgba(16, 185, 129, 0.06);"><td><strong>3. Payday-timed window + counter-offer</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><strong>&lt; 4.2 hours (payday deposit sync)</strong></td><td class="text-emerald"><strong>Low (Visa/MC safe limit)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <section class="pseo-section">
-      <h2><code>${escapeHtml(page.declineOrSignal)}</code> Recovery Calculator</h2>
-      <p class="section-sub">Adjust your monthly checkout sessions and average order value below to model your exact recoverable cashflow.</p>
+      <h2><code>${escapeHtml(page.declineOrSignal)}</code> recovery calculator</h2>
+      <p class="section-sub">Adjust your monthly checkout attempts and average order value below to model your recoverable cashflow.</p>
       <div class="inline-calc-grid">
         <div class="calc-inputs">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-            <span class="mono-label" style="font-size:13px;color:#0F172A;font-weight:700;">1-Click Tier:</span>
-            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#ECFDF5;border:none;color:#047857;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$25k Store</button>
-            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#EEF2FF;border:none;color:#3730A3;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$120k Brand</button>
-            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" style="background:#FEF3C7;border:none;color:#92400E;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">$500k Scale</button>
+            <span class="mono-label" style="font-size:13px;color:#475569;font-weight:600;">Preset size:</span>
+            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-chip" style="padding:5px 10px;font-size:13px;">$25k store</button>
+            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-chip" style="padding:5px 10px;font-size:13px;">$120k brand</button>
+            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-chip" style="padding:5px 10px;font-size:13px;">$500k scale</button>
           </div>
-          <label class="field-label" for="pseo-sessions">Monthly Checkout / Renewal Attempts</label>
+          <label class="field-label" for="pseo-sessions">Monthly checkout or renewal attempts</label>
           <input id="pseo-sessions" type="number" class="field-input" value="${page.sampleMonthlySessions}" min="50" max="500000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
-          <label class="field-label" for="pseo-aov">Average Order / Invoice Value ($ USD)</label>
+          <label class="field-label" for="pseo-aov">Average order or invoice value ($)</label>
           <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
           <button type="button" id="pseo-calc-btn" class="btn btn-indigo" onclick="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})">
-            <span>Recalculate Recoverable Revenue</span>
-            <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
+            <span>Recalculate recoverable revenue</span>
           </button>
         </div>
         <div class="calc-output-box">
-          <div class="spec-row"><span>Monthly Revenue Exposed to <code>${escapeHtml(page.declineOrSignal)}</code>:</span><strong id="pseo-leaked-val" class="text-rose">$${page.monthlyLeakedUsd.toLocaleString()}/mo</strong></div>
-          <div class="spec-row"><span>Autonomous Monthly Cashflow Recovered:</span><strong id="pseo-rec-val" class="text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong></div>
-          <div class="spec-row"><span>12-Month Net Bottom-Line Impact:</span><strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong></div>
+          <div class="spec-row"><span>Monthly revenue exposed to <code>${escapeHtml(page.declineOrSignal)}</code>:</span><strong id="pseo-leaked-val" style="color:#0F172A;">$${page.monthlyLeakedUsd.toLocaleString()}/mo</strong></div>
+          <div class="spec-row"><span>Monthly cashflow recovered:</span><strong id="pseo-rec-val" class="text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong></div>
+          <div class="spec-row"><span>12-month net impact:</span><strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong></div>
           <div class="code-snippet-box">
-            <div class="mono-label">Tailored Store Recovery Pack ($1.99 Single-Store Pass)</div>
-            <p style="font-size:0.9375rem;line-height:1.55;margin-top:6px;">Includes your ready-to-use <code>${escapeHtml(page.declineOrSignal)}</code> Stripe retry schedule, 1-click Apple Pay recovery link template, and high-intent exit counter-offer rules.</p>
-            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-emerald btn-sm" style="display:inline-flex;">3-File Patch ($1.99) &rarr;</a>
-              <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;">Complete Store Pack ($29) &rarr;</a>
+            <div class="mono-label">Complete Recovery Pack ($29 one-time)</div>
+            <p style="font-size:0.9375rem;line-height:1.55;margin-top:6px;">Includes your ready-to-use <code>${escapeHtml(page.declineOrSignal)}</code> Stripe retry schedule, 1-click Apple Pay recovery link template, and exit counter-offer rules.</p>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;">Get Complete Pack ($29) &rarr;</a>
+              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;margin-left:4px;">or $1.99 single-store patch</a>
             </div>
           </div>
         </div>
@@ -350,12 +341,9 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     </section>
 
     <section class="pseo-section">
-      <h2>Key Questions: ${escapeHtml(page.declineOrSignal)}</h2>
+      <h2>Common questions: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
       <div class="faq-grid">
-        ${page.faqs.map((f, idx) => idx === 0
-          ? `<div class="faq-card"><h3>1. ${escapeHtml(f.q)} <span style="font-size:11px;color:#047857;font-weight:800;">(Free Proof)</span></h3><p>${escapeHtml(f.a)}</p></div>`
-          : `<div class="faq-card"><h3>${idx + 1}. ${escapeHtml(f.q)}</h3><div class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;margin-top:6px;padding:8px 12px;border-radius:8px;background:#F8FAFC;border:1px solid #CBD5E1;color:#1E293B;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>${AA_LOCK_SVG}Answer #${idx + 1} Locked — Enter Email ($0) Above to Unmask</span><span style="color:#533AFD;font-weight:800;">Unmask ($0) &rarr;</span></div><p class="aa-unlocked-spec-proof" style="display:none;">${escapeHtml(f.a)}</p></div>`
-        ).join('')}
+        ${page.faqs.map((f, idx) => `<div class="faq-card"><h3>${idx + 1}. ${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`).join('')}
       </div>
     </section>
 

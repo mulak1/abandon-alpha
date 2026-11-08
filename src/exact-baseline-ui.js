@@ -430,7 +430,7 @@ function buildClientRuntimeScript(cfg) {
   window.__ebMountDeliverableCurtain = function(entityOverride, customBadge, customDiagLine) {
     if (entityOverride) window.__ebActiveEntity = String(entityOverride);
     var pName = window.location.pathname || '/', isDerm = CFG.moduleId === 'derm_logic';
-    if (CFG.moduleId === 'abandon_alpha' && (pName === '/' || pName === '/index.html')) return;
+    if (CFG.moduleId === 'abandon_alpha') return;
     var isHubOrDir = pName === '/directory' || pName === '/leaderboard' || new RegExp('^/(celebrity|bottle|ingredient|brand|concern)(/|$)').test(pName);
     if (isDerm && isHubOrDir) return;
     var targetEl = document.getElementById('compiler-code-output') || document.getElementById('res-pitch-body') || document.getElementById('out-sdk-snippet') || document.getElementById('walletConflicts') || document.getElementById('appleWalletCardPreview');

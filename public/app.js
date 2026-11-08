@@ -315,25 +315,25 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   if (!res || !res.ok) {
     if (btn) {
       btn.style.background = '';
-      btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+      btn.innerHTML = '<span>Calculate recoverable revenue</span>';
     }
-    if (navBtn) navBtn.innerHTML = '<span>Calculate Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    if (navBtn) navBtn.innerHTML = '<span>Calculate revenue</span>';
     return;
   }
 
   if (isExplicitClick && btn) {
     if (auditBtnResetTimer) clearTimeout(auditBtnResetTimer);
     btn.style.background = '#047857';
-    btn.innerHTML = `<span>✓ Calculated: +${formatUsd(res.totalRecoverableUsd)}/mo Recoverable</span><span class="btn-icon-circle" aria-hidden="true">✓</span>`;
+    btn.innerHTML = `<span>Calculated: +${formatUsd(res.totalRecoverableUsd)}/mo recoverable</span>`;
     auditBtnResetTimer = setTimeout(() => {
       btn.style.background = '';
-      btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+      btn.innerHTML = '<span>Calculate recoverable revenue</span>';
     }, 3200);
   } else if (btn) {
     btn.style.background = '';
-    btn.innerHTML = '<span>Calculate My Recoverable Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+    btn.innerHTML = '<span>Calculate recoverable revenue</span>';
   }
-  if (navBtn) navBtn.innerHTML = '<span>Calculate Revenue</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span>';
+  if (navBtn) navBtn.innerHTML = '<span>Calculate revenue</span>';
 
   window.__LAST_AUDIT_RES__ = res;
   if (isManualTrigger) saveAaWorkspaceState();
