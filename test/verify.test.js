@@ -89,6 +89,7 @@ function runTests() {
   assert.ok(lpHtml.includes('id="lp-decline"') && !lpHtml.includes('[Brand]'), '/lp must include dynamic decline selector and zero [Brand] placeholders');
   const sampleHtml = renderSampleDossierHtml(cfg);
   assert.ok(sampleHtml.includes('id="sample-decline"') && sampleHtml.includes('id="btn-sample-buy-29"'), '/sample must include interactive 2-column sample flow customizer and $29 Complete Pack button');
+  assert.ok(lbHtml.includes('id="lb-instant-preview-card"') && lbHtml.includes('id="lb-empty-row"'), '/leaderboard must include inline store check preview card and empty-filter live check fallback');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

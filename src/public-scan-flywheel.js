@@ -481,19 +481,76 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     <h1 style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
     <p class="pseo-lead" style="margin:0 0 16px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
-    <div id="leaderboard-filter-bar" style="background:#FFFFFF;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">
-        <button type="button" onclick="window.__lbFilter('all',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">All Ranked (${ledger.length})</button>
-        <button type="button" onclick="window.__lbFilter('fame',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:none;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Hall of Fame (A+/A)</button>
-        <button type="button" onclick="window.__lbFilter('fix',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:none;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Needs Fix (B/C/D)</button>
-        <input type="search" id="lb-search-input" aria-label="Filter leaderboard rows" placeholder="Filter leaderboard by name or metric..." oninput="window.__lbSearch(this.value)" style="padding:7px 12px;border-radius:8px;border:1px solid ${esc(t.border)};font-size:13.5px;min-width:220px;" />
+    <div id="leaderboard-filter-bar" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">
+          <button type="button" onclick="window.__lbFilter('all',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">All Ranked (${ledger.length})</button>
+          <button type="button" onclick="window.__lbFilter('fame',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:none;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Hall of Fame (A+/A)</button>
+          <button type="button" onclick="window.__lbFilter('fix',this)" class="lb-tab-btn" style="padding:7px 14px;border-radius:999px;border:none;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-size:13.5px;font-weight:700;cursor:pointer;">Needs Fix (B/C/D)</button>
+          <input type="search" id="lb-search-input" aria-label="Filter leaderboard rows" placeholder="Filter leaderboard by name or metric..." oninput="window.__lbSearch(this.value)" style="padding:7px 12px;border-radius:8px;border:1px solid ${esc(t.border)};font-size:13.5px;min-width:220px;" />
+        </div>
+        <form id="lb-check-form" action="/scan" method="get" onsubmit="return window.__lbRunInlineCheck(event);" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
+          <input id="lb-check-input" type="text" name="q" required aria-label="Target entity to scan" placeholder="Test any store: ${esc(cat.inputPlaceholder)}" style="padding:8px 12px;border-radius:8px;border:1px solid ${esc(t.border)};font-size:14px;min-width:210px;" />
+          <button type="submit" style="padding:8px 16px;border-radius:8px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer;">Check &amp; Rank →</button>
+        </form>
       </div>
-      <form action="/scan" method="get" onsubmit="if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_check'});" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
-        <input type="text" name="q" required aria-label="Target entity to scan" placeholder="Test new: ${esc(cat.inputPlaceholder)}" style="padding:8px 12px;border-radius:8px;border:1px solid ${esc(t.border)};font-size:14px;min-width:210px;" />
-        <button type="submit" style="padding:8px 16px;border-radius:8px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer;">Check &amp; Rank →</button>
-      </form>
+      <div id="lb-instant-preview-card" style="display:none;padding:12px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <strong id="lb-prev-target" style="font-size:15px;color:#0F172A;">store.com</strong>
+            <span id="lb-prev-grade" style="padding:2px 8px;border-radius:999px;background:#ECFDF5;color:#047857;font-size:12px;font-weight:700;">Grade B (78/100)</span>
+            <span id="lb-prev-kpi" style="font-size:13.5px;font-weight:700;color:#047857;">+$14,200/mo Recoverable</span>
+          </div>
+          <div id="lb-prev-finding" style="font-size:12.5px;color:#475569;margin-top:3px;">Payday-timed retry schedule &amp; exit counter-offer ready</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <a id="lb-prev-buy-29" href="/buy/playbook_pass" rel="nofollow" style="padding:7px 14px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
+          <a id="lb-prev-buy-199" href="/buy/flash_pass" rel="nofollow" style="font-size:12.5px;color:#475569;text-decoration:underline;">$1.99 patch</a>
+          <a id="lb-prev-report-link" href="/scan/gymshark.com" style="font-size:12.5px;font-weight:600;color:#0F172A;text-decoration:underline;">Full scorecard →</a>
+        </div>
+      </div>
     </div>
-    <script>window.__lbTier='all';window.__lbApply=function(){var q=((document.getElementById('lb-search-input')||{}).value||'').toLowerCase(),trs=document.querySelectorAll('#prompt-matrix-tbody tr[data-lb-tier]');for(var i=0;i<trs.length;i++){var tOk=window.__lbTier==='all'||trs[i].getAttribute('data-lb-tier')===window.__lbTier;var qOk=!q||(trs[i].getAttribute('data-lb-text')||'').indexOf(q)!==-1;trs[i].style.display=(tOk&&qOk)?'':'none';}};window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='#F8FAFC';bs[i].style.color='#0F172A';}if(btn){btn.style.background='${esc(badgeColor)}';btn.style.color='#FFFFFF';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};window.__lbSearch=function(){window.__lbApply();};</script>
+    <script>
+      window.__lbTier='all';
+      window.__lbRunInlineCheck=function(e){
+        if(e&&e.preventDefault)e.preventDefault();
+        var inp=document.getElementById('lb-check-input');
+        var v=(inp&&inp.value.trim())||'';
+        if(!v)return false;
+        if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_check',target:v});
+        fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){
+          if(!d||!d.scan){window.location.href='/scan/'+encodeURIComponent(v);return;}
+          var s=d.scan,card=document.getElementById('lb-instant-preview-card');
+          if(card)card.style.display='flex';
+          var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),pf=document.getElementById('lb-prev-finding'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),rl=document.getElementById('lb-prev-report-link');
+          if(pt)pt.textContent=s.target;
+          if(pg)pg.textContent='Grade '+s.grade+' ('+s.score+'/100)';
+          if(pk)pk.textContent=s.kpi1+' • '+s.kpi2;
+          if(pf)pf.textContent=s.cnnReadout+' — '+s.issue;
+          if(b29)b29.href='/buy/playbook_pass?target='+encodeURIComponent(s.target);
+          if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(s.target);
+          if(rl)rl.href='/scan/'+encodeURIComponent(s.target);
+        }).catch(function(){window.location.href='/scan/'+encodeURIComponent(v);});
+        return false;
+      };
+      window.__lbApply=function(){
+        var q=((document.getElementById('lb-search-input')||{}).value||'').toLowerCase().trim(),trs=document.querySelectorAll('#prompt-matrix-tbody tr[data-lb-tier]'),vis=0;
+        for(var i=0;i<trs.length;i++){
+          var tOk=window.__lbTier==='all'||trs[i].getAttribute('data-lb-tier')===window.__lbTier;
+          var qOk=!q||(trs[i].getAttribute('data-lb-text')||'').indexOf(q)!==-1;
+          trs[i].style.display=(tOk&&qOk)?'':'none';
+          if(tOk&&qOk)vis++;
+        }
+        var emp=document.getElementById('lb-empty-row');
+        if(emp){
+          emp.style.display=(vis===0&&q)?'':'none';
+          var btn=document.getElementById('lb-empty-scan-btn');
+          if(btn&&q){btn.textContent='Run live scorecard & recovery check for \"'+q+'\" →';btn.onclick=function(){var ci=document.getElementById('lb-check-input');if(ci)ci.value=q;window.__lbRunInlineCheck();};}
+        }
+      };
+      window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='#F8FAFC';bs[i].style.color='#0F172A';}if(btn){btn.style.background='${esc(badgeColor)}';btn.style.color='#FFFFFF';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};
+      window.__lbSearch=function(){window.__lbApply();};
+    </script>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;">
       <table aria-label="${esc(cfg.brandName)} Public Leaderboard" style="width:100%;border-collapse:collapse;font-size:14px;">
         <thead>
@@ -506,7 +563,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
             <th scope="col" style="padding:11px 14px;border-bottom:2px solid ${esc(t.border)};">Next Step</th>
           </tr>
         </thead>
-        <tbody id="prompt-matrix-tbody">${rowsHtml}</tbody>
+        <tbody id="prompt-matrix-tbody">${rowsHtml}<tr id="lb-empty-row" style="display:none;"><td colspan="6" style="padding:18px;text-align:center;"><button id="lb-empty-scan-btn" type="button" style="padding:8px 16px;border-radius:999px;border:none;background:#0F172A;color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer;">Run live scorecard &amp; recovery check →</button></td></tr></tbody>
       </table>
     </section>
     <details style="background:#FFFFFF;border-radius:14px;padding:14px 18px;margin-top:16px;">
