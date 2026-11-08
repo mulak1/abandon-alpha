@@ -164,6 +164,7 @@ function runTests() {
   assert.ok(rawEbApiJs.includes('banditArm: "${armCode}"') && renderedHome.includes("actObj ? '&objection=' + encodeURIComponent(actObj) : ''"), 'Downloadable .TXT bundle and Cmd+K modal download links must also include the visitor selected counter-offer objection arm');
   assert.ok(rawEbApiJs.includes("${qTgt} (${qDec}${qObj ? ' • ' + qObj : ''})") && renderedHome.includes("cObj ? '&objection=' + encodeURIComponent(cObj) : ''"), 'Downloadable .CSV export and post-checkout (?checkout=success / ?checkout=cancel) fulfillment links must also include the selected objection arm');
   assert.ok(rawEbApiJs.includes("if (rawObjection) p.set('metadata[objection]', rawObjection)") && renderedHome.includes("decline: actDec, objection: actObj"), '__ebCheckout and handleTierCheckout must collect and forward the selected objection arm into Stripe Checkout metadata, return URLs, and fallback /buy/:tier links');
+  assert.ok(rawAppJs.includes("if (hasDeepLink) saveAaWorkspaceState()") && renderedHome.includes("window.__pseoTarget || ws.storeName") && html.includes("window.__pseoDecline=qd"), 'Deep-link visits on / must persist workspace state and subpages (/seo/*) must forward active store, decline, and objection into Cmd+K and __ebCheckout');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

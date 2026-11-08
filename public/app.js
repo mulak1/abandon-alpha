@@ -1113,6 +1113,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   }).catch(() => null);
 
   if (hasDeepLink || restoredFromStorage) {
+    if (hasDeepLink) saveAaWorkspaceState();
     await runAuditRequest(currentPreset, !hasDeepLink, false);
     if (window.location.hash === '#webhook-lab' || qDecline || qStore || qAov) {
       await runWebhookSimulation();

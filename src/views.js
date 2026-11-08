@@ -426,7 +426,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
         }).catch(function() {});
       }, immediate ? 0 : 350);
     }
-    (function(){try{var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),qs=Number(sp.get('sessions')||ws.monthlySessions||0),qa=Number(sp.get('aov')||ws.aovUsd||0),qt=(sp.get('target')||ws.storeName||'').trim();window.__pseoTarget=qt;if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
+    (function(){try{var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),qs=Number(sp.get('sessions')||ws.monthlySessions||0),qa=Number(sp.get('aov')||ws.aovUsd||0),qt=(sp.get('target')||ws.storeName||'').trim(),qd=(sp.get('decline')||(ws.declineFocus&&ws.declineFocus!=='auto_weighted'?ws.declineFocus:'')||${JSON.stringify(page.declineOrSignal)}).trim();window.__pseoTarget=qt;window.__pseoDecline=qd;if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
   </script>
 </body>
 </html>`;
