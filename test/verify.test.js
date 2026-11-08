@@ -181,6 +181,7 @@ function runTests() {
   assert.ok(renderedHome.includes("var rawH = (a.getAttribute('href') || '').split('?')[0], bh = rawH.indexOf('/scan/') === 0 ? rawH :"), '__ebSyncNavLinks must preserve dynamic /scan/:target paths on #eb-growth-permalink-btn and #lb-prev-report-link without overwriting them from a stale data-base-nav-href attribute');
   assert.ok(rawEbApiJs.includes('0.124735') && lpHtml.includes('0.124735') && dirHtml.includes('0.124735') && lbHtml.includes('0.124735') && sampleHtml.includes('0.124735'), 'All subpages (/lp, /directory, /leaderboard, /dossier/sample) and .CSV exports must use the canonical 0.124735 recoverable revenue multiplier matching computeLeakageAudit');
   assert.ok(rawEbApiJs.includes("const csvQs = (qDec ? '&decline=' + encodeURIComponent(qDec) : '')") && rawEbApiJs.includes('Projected Monthly Recovery: +$${totRec.toLocaleString()}/mo (${roiMult}x ROI vs. $29 Pack'), '.CSV and .TXT exports must include full query params in Unlock_Full_Model_URL links and Projected Monthly Recovery in .TXT bundles');
+  assert.ok(rawAppJs.includes("params.get('unlock') === 'flash_pass' ? 'success' : ''") && renderedHome.includes('id="toast-succ-dl-txt"') && renderedHome.includes('wsC.storeName'), 'Post-purchase (?checkout=success / ?unlock=flash_pass) and cancel-return (?checkout=cancel) must hydrate aa_workspace_state_v1 first and expose 3-file fulfillment links across / and subpages');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

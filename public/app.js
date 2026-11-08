@@ -1129,7 +1129,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     await runAuditRequest('shopify_dtc', true, false);
   }
 
-  const checkoutState = params.get('checkout');
+  const checkoutState = params.get('checkout') || (params.get('unlock') === 'flash_pass' ? 'success' : '');
   if (checkoutState === 'success' || checkoutState === 'cancel') {
     window.__aaSampleEmailUnlocked = true;
     const unlockForm = document.getElementById('aa-inline-sample-unlock-form');
