@@ -775,8 +775,18 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       var b199 = document.getElementById('lp-buy-199');
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
       var qSuffix = '&target=' + encodeURIComponent(store) + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
-      if (b29) b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
-      if (b199) b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
+      if (b29) {
+        b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
+        b29.textContent = 'Get Complete ' + store + ' Recovery Pack ($29 one-time) →';
+      }
+      if (b199) {
+        b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
+        b199.textContent = 'Or get ' + store + ' 3-File Patch ($1.99)';
+      }
+      var uSub = document.getElementById('in-card-unlock-sub');
+      var fBtn = document.getElementById('btn-prog-full-dossier');
+      if (uSub) uSub.textContent = 'Compiled for ' + store + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
+      if (fBtn) fBtn.textContent = 'Complete ' + store + ' Recovery Pack ($29 — One-Time) →';
       var fixCta = document.getElementById('lp-fix1-cta');
       var fixCode = document.getElementById('lp-fix1-code');
       if (fixCta) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$2,098/mo lift · $0) →';
@@ -810,7 +820,10 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('lp-leaked-out').textContent = '$' + Math.round(res.totalMonthlyLeakedUsd).toLocaleString();
       document.getElementById('lp-rec-out').textContent = '+$' + Math.round(res.totalRecoverableUsd).toLocaleString() + '/mo';
       var roiEl = document.getElementById('lp-roi-proof');
-      if (roiEl && res.totalRecoverableUsd) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + Math.max(10, Math.round(res.totalRecoverableUsd / 29)).toLocaleString() + 'x ROI) · 0% commission · 30-day guarantee';
+      var roiMult = Math.max(10, Math.round((res.totalRecoverableUsd || 36722) / 29)).toLocaleString();
+      if (roiEl && res.totalRecoverableUsd) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission · 30-day guarantee';
+      var uSub = document.getElementById('in-card-unlock-sub');
+      if (uSub) uSub.textContent = 'Compiled for ' + store + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
       var fixCta = document.getElementById('lp-fix1-cta');
       if (fixCta && res.recoverableDunningUsd) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + Math.round(res.recoverableDunningUsd).toLocaleString() + '/mo lift · $0) →';
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';

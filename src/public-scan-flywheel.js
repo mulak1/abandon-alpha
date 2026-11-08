@@ -562,7 +562,10 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           if(pt)pt.textContent=s.target;
           if(pg)pg.textContent='Grade '+s.grade+' ('+s.score+'/100)';
           if(pk)pk.textContent=s.kpi1+' • '+s.kpi2;
-          if(b29)b29.href='/buy/playbook_pass?target='+encodeURIComponent(s.target);
+          if(b29){b29.href='/buy/playbook_pass?target='+encodeURIComponent(s.target);b29.textContent='Get Complete '+s.target+' Pack ($29) →';}
+          var uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier');
+          if(uSub)uSub.textContent='Compiled for '+s.target+' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
+          if(fBtn)fBtn.textContent='Complete '+s.target+' Recovery Pack ($29 — One-Time) →';
           if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(s.target);
           if(rl)rl.href='/scan/'+encodeURIComponent(s.target);
           if(fc)fc.textContent='Get free Fix #1 snippet for '+s.target+' · insufficient_funds (+$2,098/mo lift · $0) →';
