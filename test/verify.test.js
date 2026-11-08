@@ -141,7 +141,8 @@ function runTests() {
   assert.ok(rawServerJs.includes('/seo/${bestSlug}${qs}') && dirHtml.includes("el.setAttribute('data-base-href', baseH)"), '/seo/:slug fallback redirects must preserve query strings and /directory must forward active target/volume params into playbook links');
   assert.ok(html.includes('.related-links-grid a.related-card') && rawGrowthJs.includes('window.history.replaceState(null,\'\',window.location.pathname+qStr)'), '/seo/* related playbook cards must carry active target, sessions, and aov parameters and subpage calculators must sync URL state');
   assert.ok(rawAppJs.includes('#out-dunning-breakdown a') && rawAppJs.includes('a[href^="/directory"]') && rawAppJs.includes('window.history.replaceState(null, \'\', `/?target='), 'Homepage must forward active store, decline, sessions, and aov into Fold-1 breakdown links and /directory navbar links, and sync URL state');
-  assert.ok(renderedHome.includes('window.__ebSyncNavLinks = function()') && renderedHome.includes('footer a, .mobile-nav-strip a, a[href^="/scan/"]'), 'All pages and subpages must synchronize header, breadcrumb, footer, and /scan/* links with active target, decline, sessions, and aov parameters');
+  assert.ok(renderedHome.includes('window.__ebSyncNavLinks = function(') && renderedHome.includes('footer a, .mobile-nav-strip a, a[href^="/scan/"]'), 'All pages and subpages must synchronize header, breadcrumb, footer, and /scan/* links with active target, decline, sessions, and aov parameters');
+  assert.ok(renderedHome.includes("localStorage.getItem('aa_workspace_state_v1')") && html.includes('window.__pseoTarget=qt;'), 'Subpages must hydrate and persist storeName, monthlySessions, aovUsd, and declineFocus via aa_workspace_state_v1 in localStorage when visited without query parameters');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

@@ -393,7 +393,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       var roiMult = Math.max(2, Math.round(rec / 29)).toLocaleString();
       var roiEl = document.getElementById('pseo-roi-proof');
       if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission:';
-      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || '').trim();
+      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || window.__pseoTarget || '').trim();
       var pLabel = qTgt ? (qTgt + ' · ' + ${JSON.stringify(page.declineOrSignal)}) : ${JSON.stringify(page.declineOrSignal)};
       var unlockSubEl = document.getElementById('in-card-unlock-sub');
       if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ' + pLabel + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
@@ -426,7 +426,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
         }).catch(function() {});
       }, immediate ? 0 : 350);
     }
-    (function(){try{var sp=new URLSearchParams(window.location.search||''),qs=Number(sp.get('sessions')||0),qa=Number(sp.get('aov')||0),qt=(sp.get('target')||'').trim();if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
+    (function(){try{var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),qs=Number(sp.get('sessions')||ws.monthlySessions||0),qa=Number(sp.get('aov')||ws.aovUsd||0),qt=(sp.get('target')||ws.storeName||'').trim();window.__pseoTarget=qt;if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
   </script>
 </body>
 </html>`;
