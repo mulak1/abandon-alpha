@@ -166,6 +166,20 @@ function updateUnmaskedSdkPreview(auditRes) {
     fix1SummaryEl.textContent = 'Get free Fix #1 snippet for ' + storeName + ' · ' + activeRule + ' (' + dunningUsd + ' lift · $0) →';
   }
   const aovVal = Number(document.getElementById('input-aov')?.value || auditRes?.aovUsd || 92);
+  const unlockSubEl = document.getElementById('in-card-unlock-sub');
+  if (unlockSubEl) {
+    const totalRec = Number(auditRes?.totalRecoverableUsd || 36722);
+    const roiMult = Math.max(10, Math.round(totalRec / 29)).toLocaleString();
+    unlockSubEl.textContent = `Compiled for ${storeName} ($${aovVal} order) · $29 Pack pays for itself in < 1 recovered order (${roiMult}x monthly ROI) · 30-day guarantee`;
+  }
+  const fullDossierBtn = document.getElementById('btn-prog-full-dossier');
+  if (fullDossierBtn) {
+    fullDossierBtn.textContent = `Complete ${storeName} Recovery Pack ($29 — One-Time) →`;
+  }
+  const flashPassBtn = document.getElementById('btn-prog-flash-pass');
+  if (flashPassBtn) {
+    flashPassBtn.textContent = `Get ${storeName} 3-File Patch ($1.99) →`;
+  }
   const liveSnippetEl = document.getElementById('out-sdk-snippet');
   const isUnlockedNow = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))));
   if (liveSnippetEl && isUnlockedNow) {

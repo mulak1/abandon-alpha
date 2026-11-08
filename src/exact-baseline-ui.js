@@ -114,7 +114,7 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
   </div>`}
   <div id="in-card-unlock-bar" class="eb-panel-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-      <div><h2 id="in-card-unlock-title" style="margin:0;font-size:20px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">${esc(cfg.unlockBannerTitle)}</h2><div style="font-size:15px;color:${t.textSecondary};margin-top:4px;">Instant browser download · One-time payment · 30-day money-back guarantee</div></div>
+      <div><h2 id="in-card-unlock-title" style="margin:0;font-size:20px;font-family:${t.fontDisplay};font-weight:600;color:${t.textPrimary};">${esc(cfg.unlockBannerTitle)}</h2><div id="in-card-unlock-sub" style="font-size:15px;color:${t.textSecondary};margin-top:4px;">Instant browser download · One-time payment · 30-day money-back guarantee</div></div>
     </div>
     <div class="eb-gbb-grid">
       <div class="eb-tier-card">
