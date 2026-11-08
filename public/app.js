@@ -180,6 +180,14 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (flashPassBtn) {
     flashPassBtn.textContent = `Get ${storeName} 3-File Patch ($1.99) →`;
   }
+  ['aa-screen1-buy-29', 'wh-buy-29'].forEach((btnId) => {
+    const b = document.getElementById(btnId);
+    if (b) b.textContent = `Complete ${storeName} Pack ($29) →`;
+  });
+  const modalBuy29 = document.getElementById('modal-buy-29');
+  if (modalBuy29) {
+    modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
+  }
   const liveSnippetEl = document.getElementById('out-sdk-snippet');
   const isUnlockedNow = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))));
   if (liveSnippetEl && isUnlockedNow) {
@@ -840,6 +848,16 @@ async function initiateStripeCheckout(planTier) {
 }
 
 function openExitIntentModal() {
+  const storeName = (document.getElementById('input-store')?.value || '').trim() || 'Gymshark';
+  const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
+  const titleEl = document.getElementById('exit-modal-title');
+  if (titleEl) {
+    titleEl.textContent = `Wait: Before You Leave Your ${storeName} Checkout ($${aovUsd.toLocaleString()}), What Stopped You Today?`;
+  }
+  const modalBuy29 = document.getElementById('modal-buy-29');
+  if (modalBuy29) {
+    modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
+  }
   const modal = document.getElementById('exit-intent-modal');
   if (modal) modal.classList.add('open');
 }
@@ -853,7 +871,7 @@ async function modalSelectObjection(objectionCode) {
   const res = await triggerBanditObjection(objectionCode, null);
   if (res && res.selectedArm) {
     document.getElementById('modal-offer-headline').textContent = `${res.selectedArm.offer_headline} (Code: ${res.selectedArm.offer_code})`;
-    document.getElementById('modal-offer-subtext').textContent = `${res.selectedArm.offer_subtext}: SQLite Posterior α updated to ${res.selectedArm.updated_alpha}!`;
+    document.getElementById('modal-offer-subtext').textContent = `${res.selectedArm.offer_subtext} · Save rate: ${res.selectedArm.posterior_mean_pct}% (+$${res.selectedArm.erpv_usd} net saved/visitor)`;
   }
 }
 

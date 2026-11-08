@@ -564,7 +564,11 @@
       <div id="modal-bandit-result" class="code-snippet-box" style="margin-top:12px;">
         <div class="mono-label">Instant Counter-Offer Unlocked</div>
         <strong id="modal-offer-headline" style="display:block; margin-top:4px; font-size:1rem;">Unlock 15% Instant Founders Rebate (Code: ALPHA15)</strong>
-        <p id="modal-offer-subtext" style="font-size:0.9375rem; margin-top:4px;">Click below to apply this offer and update the live counter-offer performance table.</p>
+        <p id="modal-offer-subtext" style="font-size:0.9375rem; margin:4px 0 10px 0;">Applies code ALPHA15 automatically to your active checkout session (23.1% save rate).</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:8px;border-top:1px solid #E2E8F0;">
+          <button type="button" id="modal-buy-29" class="btn btn-indigo btn-sm" onclick="closeExitIntentModal();if(window.__ebCheckout){window.__ebCheckout('playbook_pass');}else{initiateStripeCheckout('starter');}">Deploy Exit Modal on Your Store ($29 Pack) &rarr;</button>
+          <button type="button" id="modal-buy-199" onclick="closeExitIntentModal();if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#475569;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">or $1.99 single-store patch</button>
+        </div>
       </div>
     </div>
   </div>
