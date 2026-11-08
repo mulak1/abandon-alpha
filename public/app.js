@@ -189,6 +189,20 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (modalBuy29) {
     modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
   }
+  const totalRecVal = Number(auditRes?.totalRecoverableUsd || 36722);
+  const roiMultVal = Math.max(10, Math.round(totalRecVal / 29)).toLocaleString();
+  const stickySubEl = document.getElementById('sticky-sub-benefit');
+  if (stickySubEl) {
+    stickySubEl.textContent = `${storeName} (+${formatUsd(totalRecVal)}/mo recoverable) · $29 Pack pays for itself in < 1 order (${roiMultVal}x ROI)`;
+  }
+  const stickyVaultBtn = document.getElementById('btn-sticky-vault-unlock');
+  if (stickyVaultBtn) {
+    stickyVaultBtn.textContent = `Complete ${storeName} Pack ($29) →`;
+  }
+  const toastTitleEl = document.getElementById('eb-ouibounce-title');
+  if (toastTitleEl) {
+    toastTitleEl.textContent = `Save Your ${storeName} Recovery Plan (+${formatUsd(totalRecVal)}/mo)`;
+  }
   const liveSnippetEl = document.getElementById('out-sdk-snippet');
   const isUnlockedNow = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))));
   if (liveSnippetEl && isUnlockedNow) {

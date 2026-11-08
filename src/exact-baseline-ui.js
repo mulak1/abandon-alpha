@@ -687,15 +687,21 @@ function buildClientRuntimeScript(cfg) {
   window.__ebLogObjection = function(code, btn) {
     window.__ebLogEvent('tab_switch', { store_pill: 'objection_' + code, page: window.location.pathname });
     if (btn) { btn.style.background = CFG.theme.brandSoftBg; btn.style.color = CFG.theme.brandPrimary; btn.style.borderColor = CFG.theme.accentBorder; }
-    var desc = document.getElementById('eb-ouibounce-desc'), em = document.getElementById('eb-ouibounce-email');
-    if (code === 'need_agency_depth' && desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #1 Sample Unmasked on Page!</strong> Or grab the Complete 3-File Pack for <strong>$1.99</strong> below:';
-    else if (desc) { desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">No card required!</strong> Enter your email below to reveal Row #4 free on-screen right now:'; if (em) em.focus(); }
+    var desc = document.getElementById('eb-ouibounce-desc'), em = document.getElementById('eb-ouibounce-email'), isAA = CFG.moduleId === 'abandon_alpha';
+    if (code === 'need_agency_depth' && desc) desc.innerHTML = isAA ? '<strong style="color:' + CFG.theme.safeColor + ';">Step-1 Webhook &amp; Subject Line Unmasked on Page!</strong> Or grab the <strong>3-File Patch ($1.99)</strong> / <strong>Complete Store Pack ($29)</strong> below:' : '<strong style="color:' + CFG.theme.safeColor + ';">Row #1 Sample Unmasked on Page!</strong> Or grab the Complete 3-File Pack for <strong>$1.99</strong> below:';
+    else if (desc) { desc.innerHTML = isAA ? '<strong style="color:' + CFG.theme.safeColor + ';">No card required!</strong> Enter your work email below ($0) to unmask your Fix #1 Copy-Paste Checkout Snippet right now:' : '<strong style="color:' + CFG.theme.safeColor + ';">No card required!</strong> Enter your email below to reveal Row #4 free on-screen right now:'; if (em) em.focus(); }
   };
   window.__ebSendExitSummary = function(ev) {
     if (ev && ev.preventDefault) ev.preventDefault();
     var input = document.getElementById('eb-ouibounce-email'), email = input ? input.value.trim() : ''; if (!email) return false;
+    var isAA = CFG.moduleId === 'abandon_alpha';
+    if (isAA) {
+      var topEm = document.getElementById('aa-inline-sample-email');
+      if (topEm) topEm.value = email;
+      if (typeof window.__aaUnlockSampleSnippet === 'function') window.__aaUnlockSampleSnippet();
+    }
     var r4 = document.querySelector('tr.eb-blurred-deliverable'); if (r4) { r4.classList.remove('eb-blurred-deliverable'); r4.style.background = CFG.theme.safeSoftBg; }
-    fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'exit_intent_downsell' }) }).then(function() { var btn = document.getElementById('btn-ouibounce-submit'), desc = document.getElementById('eb-ouibounce-desc'); if (btn) btn.textContent = 'Row #4 Revealed!'; if (desc) desc.innerHTML = '<strong style="color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Sent!</strong> <a href="/buy/flash_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Unlock complete 3-file pack ($1.99) →</a>'; }).catch(function() {});
+    fetch('/api/leads/capture', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, pageUrl: window.location.pathname, utmSource: 'exit_intent_downsell' }) }).then(function() { var btn = document.getElementById('btn-ouibounce-submit'), desc = document.getElementById('eb-ouibounce-desc'); if (btn) btn.textContent = isAA ? '✓ Fix #1 Unmasked!' : 'Row #4 Revealed!'; if (desc) desc.innerHTML = isAA ? '<strong style="color:' + CFG.theme.safeColor + ';">Fix #1 Snippet Unmasked on Page!</strong> <a href="/buy/playbook_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Unlock Complete Store Pack ($29) →</a>' : '<strong style="color:' + CFG.theme.safeColor + ';">Row #4 Unblurred &amp; 1-Click Links Sent!</strong> <a href="/buy/flash_pass" style="color:' + CFG.theme.brandPrimary + ';font-weight:700;">Unlock complete 3-file pack ($1.99) →</a>'; }).catch(function() {});
     return false;
   };
   var origFetch = window.fetch;

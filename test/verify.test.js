@@ -110,6 +110,7 @@ function runTests() {
   assert.ok(renderedHome.includes('id="modal-buy-29"') && !rawAppJs.includes('SQLite Posterior α updated'), 'Exit-Intent preview modal must feature store-personalized title, plain-English save rate copy, and direct $29/$1.99 checkout actions');
   assert.ok(dirHtml.includes('id="dir-inline-action-bar"') && dirHtml.includes('id="dir-buy-29"'), '/directory must include Fold-1 inline $29/$1.99 action bar that personalizes on filter selection');
   assert.ok(renderedHome.includes('#input-store, #lp-store, #sample-store, #eb-cnn-wb-input') && rawAppJs.includes('window.__ebActiveEntity = storeName'), '__ebCheckout must pass active store/domain target across all AbandonAlpha routes into Stripe Checkout');
+  assert.ok(renderedHome.includes('Fix #1 Snippet Unmasked on Page!') && rawAppJs.includes('sticky-sub-benefit'), 'Exit-intent rescue toast and sticky conversion dock must use AbandonAlpha Fix #1 copy and dynamic store/ROI personalization');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
