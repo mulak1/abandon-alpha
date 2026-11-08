@@ -742,14 +742,20 @@ async function triggerBanditObjection(objectionCode, btnEl) {
   document.getElementById('bandit-sampled-theta').textContent = win.posterior_mean_pct ? `${win.posterior_mean_pct}%` : win.sampled_theta;
   document.getElementById('bandit-erpv').textContent = `$${win.erpv_usd}`;
   document.getElementById('bandit-velocity-pill').textContent = `Exit Signal Active • Score: ${res.trajectory.score}/100`;
+  const mHead = document.getElementById('modal-offer-headline');
+  const mSub = document.getElementById('modal-offer-subtext');
+  if (mHead) mHead.textContent = `${win.offer_headline} (Code: ${win.offer_code})`;
+  if (mSub) mSub.textContent = `${win.offer_subtext} · Save rate: ${win.posterior_mean_pct || win.sampled_theta}% (+$${win.erpv_usd} net saved/visitor)`;
 
   renderPosteriorTable(res.posteriors, win.id);
-  const copyOfferBtn = document.getElementById('bandit-copy-offer-btn');
-  if (copyOfferBtn) {
-    copyOfferBtn.removeAttribute('data-copied');
-    copyOfferBtn.textContent = 'Copy Counter-Offer ($0)';
-    copyOfferBtn.style.color = '';
-  }
+  ['bandit-copy-offer-btn', 'modal-copy-offer-btn'].forEach((cid) => {
+    const copyOfferBtn = document.getElementById(cid);
+    if (copyOfferBtn) {
+      copyOfferBtn.removeAttribute('data-copied');
+      copyOfferBtn.textContent = 'Copy Counter-Offer ($0)';
+      copyOfferBtn.style.color = '';
+    }
+  });
   return res;
 }
 
@@ -975,6 +981,15 @@ function openExitIntentModal() {
   if (modalBuy199) {
     modalBuy199.textContent = `or ${storeName} 3-File Patch ($1.99)`;
   }
+  const bHead = (document.getElementById('bandit-offer-headline')?.textContent || '').trim();
+  const bSub = (document.getElementById('bandit-offer-subtext')?.textContent || '').trim();
+  const bCode = (document.getElementById('bandit-offer-code')?.textContent || '').trim();
+  const bRate = (document.getElementById('bandit-sampled-theta')?.textContent || '').trim();
+  const bErpv = (document.getElementById('bandit-erpv')?.textContent || '').trim();
+  const mHead = document.getElementById('modal-offer-headline');
+  const mSub = document.getElementById('modal-offer-subtext');
+  if (mHead && bHead) mHead.textContent = `${bHead} (Code: ${bCode || 'ALPHA15'})`;
+  if (mSub && bSub) mSub.textContent = `${bSub} · Save rate: ${bRate || '23.1%'} (+${bErpv || '$24.42'} net saved/visitor)`;
   const modal = document.getElementById('exit-intent-modal');
   if (modal) modal.classList.add('open');
 }

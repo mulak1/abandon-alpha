@@ -158,6 +158,7 @@ function runTests() {
   assert.ok(rawAppJs.includes("if (id === 'input-aov' && Number(el.value) >= 5 && document.getElementById('wh-amount'))") && rawAppJs.includes("window.location.hash === '#webhook-lab' || qDecline || qStore || qAov"), 'Deep-link AOV and #input-aov edits must synchronize #wh-amount and auto-run #webhook-lab simulation');
   assert.ok(rawAppJs.includes("if (id === 'input-store' || id === 'input-aov')") && rawAppJs.includes("if (res.estimatedAovUsd) {"), 'probeLiveMerchantStore and live #input-store/#input-aov edits must re-simulate both #webhook-lab and #bandit-lab in lockstep');
   assert.ok(renderedHome.includes('id="wh-amount" type="number" class="field-input" value="92"') && rawAppJs.includes("else if (id === 'wh-amount' && Number(el.value) >= 5)"), '#wh-amount must initialize to $92 (matching active preset AOV) and two-way sync with #input-aov');
+  assert.ok(renderedHome.includes('id="modal-copy-offer-btn"') && rawAppJs.includes("['bandit-copy-offer-btn', 'modal-copy-offer-btn'].forEach") && rawAppJs.includes("if (mHead && bHead) mHead.textContent ="), 'Exit-intent modal (#exit-intent-modal) must mirror active #bandit-lab counter-offer headline, code, save rate, and ERPV on open and expose #modal-copy-offer-btn');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
