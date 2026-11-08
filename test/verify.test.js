@@ -166,6 +166,7 @@ function runTests() {
   assert.ok(rawEbApiJs.includes("if (rawObjection) p.set('metadata[objection]', rawObjection)") && renderedHome.includes("decline: actDec, objection: actObj"), '__ebCheckout and handleTierCheckout must collect and forward the selected objection arm into Stripe Checkout metadata, return URLs, and fallback /buy/:tier links');
   assert.ok(rawAppJs.includes("if (hasDeepLink) saveAaWorkspaceState()") && renderedHome.includes("window.__pseoTarget || ws.storeName") && html.includes("window.__pseoDecline=qd"), 'Deep-link visits on / must persist workspace state and subpages (/seo/*) must forward active store, decline, and objection into Cmd+K and __ebCheckout');
   assert.ok(renderedHome.includes('querySelectorAll(\'a[href^="/api/github-upgrade/"]\')') && renderedHome.includes("obj ? '&objection=' + encodeURIComponent(obj) : ''"), '__ebSyncNavLinks must propagate the active objection arm across all /api/github-upgrade/ download links and cross-page navigation links on every subpage');
+  assert.ok(sampleHtml.includes("var qStr='?target='+encodeURIComponent(st)+'&decline='+encodeURIComponent(cd)+'&sessions='+sess+'&aov='+aov") && sampleHtml.includes("Compiled for '+st+' ($'+aov+' AOV)"), '/dossier/sample must dynamically compute ROI multiple, Fix #1 lift, and download query strings from active sessions, aov, and objection');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
