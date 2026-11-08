@@ -116,6 +116,7 @@ function buildDeclineSpecificFix1Snippet(storeName, aovUsd, activeRule, specObj)
 
 function updateUnmaskedSdkPreview(auditRes) {
   const storeName = document.getElementById('input-store')?.value?.trim() || 'Gymshark';
+  window.__ebActiveEntity = storeName;
   const rawUrl = document.getElementById('input-store-url')?.value || storeName;
   const domain = cleanMerchantDomain(rawUrl);
   const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';

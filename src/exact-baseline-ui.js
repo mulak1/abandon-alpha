@@ -889,7 +889,9 @@ function buildClientRuntimeScript(cfg) {
   };
   ['blur', 'change'].forEach(function(evName) { document.addEventListener(evName, function(e) { var t = e.target; if (t && t.type === 'email' && t.value) window.__ebCaptureEmailLead(t.value, t.id || 'email_input_' + evName); }, true); });
   window.__ebCheckout = function(tier, confirmed) {
-    var cleanTier = typeof tier === 'string' ? tier : 'flash_pass', actTarget = window.__ebActiveEntity || (document.getElementById('lookup-query') && document.getElementById('lookup-query').value) || '';
+    var hostTargetEl = document.querySelector('#input-store, #lp-store, #sample-store, #eb-cnn-wb-input, #lb-check-input, #dir-search, #lookup-query');
+    var scanH1Attr = document.getElementById('eb-scan-h1') && document.getElementById('eb-scan-h1').getAttribute('data-entity-name');
+    var cleanTier = typeof tier === 'string' ? tier : 'flash_pass', actTarget = (hostTargetEl && hostTargetEl.value && hostTargetEl.value.trim()) || window.__ebActiveEntity || scanH1Attr || '';
     var emInputs = Array.prototype.slice.call(document.querySelectorAll('input[type="email"]')).filter(function(el) { return el && el.value && el.value.indexOf('@') > 0 && !/^(creator|agency)@sponsorradar\.io$/i.test(el.value.trim()); });
     var rawEm = (emInputs[0] && emInputs[0].value.trim()) || window.__ebSavedEmail || ''; try { if (!rawEm) rawEm = localStorage.getItem('eb_lead_email') || ''; } catch (_) {}
     var emVal = rawEm ? window.__ebCaptureEmailLead(rawEm, 'checkout_prefill_' + cleanTier) : '', wedge = window.__ebGetBuyerWedge();
