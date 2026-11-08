@@ -463,6 +463,26 @@ window.__aaUnlockSampleSnippet = function(ev) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, pageUrl: window.location.pathname, utmSource: 'aa_inline_fix1_sample' })
   }).catch(() => {});
+  if (window.__LAST_WH_RES__) renderWebhookOutput(window.__LAST_WH_RES__, window.__LAST_WH_PAYLOAD__);
+  return false;
+};
+
+window.__aaUnlockWebhookSample = function(ev) {
+  if (ev && ev.preventDefault) ev.preventDefault();
+  const emIn = document.getElementById('wh-inline-sample-email') || document.getElementById('aa-inline-sample-email');
+  const email = emIn && emIn.value ? emIn.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    if (emIn) emIn.focus();
+    return false;
+  }
+  const topEmIn = document.getElementById('aa-inline-sample-email');
+  if (topEmIn && !topEmIn.value) topEmIn.value = email;
+  window.__aaUnlockSampleSnippet();
+  const whBtn = document.getElementById('wh-inline-sample-btn');
+  if (whBtn) whBtn.textContent = '✓ Retry Copy Unmasked!';
+  if (!window.__LAST_WH_RES__) {
+    runWebhookSimulation();
+  }
   return false;
 };
 
@@ -641,6 +661,14 @@ async function runWebhookSimulation(e) {
     setTimeout(() => { whOutCard.style.boxShadow = ''; }, 1400);
   }
 
+  window.__LAST_WH_RES__ = res;
+  window.__LAST_WH_PAYLOAD__ = payload;
+  renderWebhookOutput(res, payload);
+}
+
+function renderWebhookOutput(res, payload) {
+  if (!res || !payload) return;
+  const hasEmailSample = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
   document.getElementById('wh-out-classification').textContent = res.classification;
   document.getElementById('wh-out-recovery-rate').textContent = `Expected Recovery: ${res.expectedRecoveryRatePct}%`;
   document.getElementById('wh-out-network-rule').textContent = `Card Network Mandate: ${res.cardNetworkRule}`;
@@ -648,20 +676,32 @@ async function runWebhookSimulation(e) {
   document.getElementById('wh-out-subject').textContent = `Subject: ${res.recoveryCopy.emailSubject}`;
   document.getElementById('wh-out-body').textContent = window.__ebIsUnlocked
     ? `${res.recoveryCopy.emailBody}\n\n[SMS Dispatch]: ${res.recoveryCopy.smsBody}`
-    : `[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Audit Pass to reveal the exact ${payload.declineCode} retry schedule, 1-click Apple Pay link generator, and customer Email/SMS recovery copy.`;
+    : hasEmailSample
+      ? `${res.recoveryCopy.emailBody}\n\n[SMS & 1-Tap Apple Pay Worker Included in $1.99 / $29 Pack]`
+      : `Enter your work email below ($0) to reveal the Step 2 retry window and customer recovery email copy for ${payload.declineCode}, or unlock the full webhook worker.`;
 
   if (Array.isArray(res.retrySchedule)) {
-    document.getElementById('wh-timeline-container').innerHTML = res.retrySchedule.map((s, idx) => idx === 0 || window.__ebIsUnlocked ? `
+    document.getElementById('wh-timeline-container').innerHTML = res.retrySchedule.map((s, idx) => {
+      if (idx === 0 || window.__ebIsUnlocked || (idx === 1 && hasEmailSample)) {
+        return `
       <div class="timeline-step">
-        <strong>Step ${s.step} • Bank Classification Verified (${res.expectedRecoveryRatePct}% Recoverable)</strong>
-        <p>Diagnostic complete for <code>${payload.declineCode}</code>.</p>
-      </div>
-    ` : `
+        <strong>Step ${s.step} • ${escapeUiHtml(s.delay || 'Unmasked Window')} (${idx === 0 ? 'Unmasked Free Proof' : '✓ Unmasked via Email'})</strong>
+        <p>${escapeUiHtml(s.action || `Verified retry window for ${payload.declineCode}`)}</p>
+      </div>`;
+      }
+      if (idx === 1) {
+        return `
       <div class="timeline-step">
-        <strong>Step ${s.step} • Optimal Retry Window &amp; Fallback [REDACTED IN PREVIEW]</strong>
-        <p>Unlock the $1.99 Single-Audit Pass to reveal exact retry timestamps and webhook code.</p>
-      </div>
-    `).join('');
+        <strong>Step ${s.step} • Optimal Payday-Synced Retry Window [Enter Email ($0) Below to Unmask]</strong>
+        <p>Reveals exact timezone-synced retry timestamp &amp; customer recovery email body for free ($0).</p>
+      </div>`;
+      }
+      return `
+      <div class="timeline-step">
+        <strong>Step ${s.step} • Production Webhook Worker &amp; 1-Tap Apple Pay Link [Included in $1.99 / $29 Pack]</strong>
+        <p>Complete Node.js/Next.js Stripe webhook handler + 20 bank decline schedules.</p>
+      </div>`;
+    }).join('');
   }
 }
 

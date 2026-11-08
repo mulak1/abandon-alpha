@@ -482,23 +482,37 @@
 
             <div id="wh-timeline-container">
               <div class="timeline-step">
-                <strong>Step 1 &bull; Bank Decline Classification Verified (Soft Decline: 62.4% Recoverable)</strong>
-                <p>Diagnostic complete: standard 24h cron retries fail during temporary bank balance dips.</p>
+                <strong>Step 1 &bull; T+4 Hours (Unmasked Free Proof)</strong>
+                <p>Silent Stripe Charge Retry &mdash; tests whether temporary bank balance dip cleared before sending any customer email.</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 2 &bull; Optimal Bank-Liquidity Retry Schedule [REDACTED IN PREVIEW]</strong>
-                <p>Unlock the $1.99 Single-Audit Pass to reveal exact timezone-synced retry timestamps &amp; cron rules.</p>
+                <strong>Step 2 &bull; Optimal Payday-Synced Retry Window [Enter Email ($0) Below to Unmask]</strong>
+                <p>Reveals exact timezone-synced retry timestamp &amp; customer recovery email body for free ($0).</p>
               </div>
               <div class="timeline-step">
-                <strong>Step 3 &bull; Multi-Channel SMS &amp; 1-Click Wallet Fallback [REDACTED IN PREVIEW]</strong>
-                <p>Unlock the $1.99 Pass to download the Stripe Webhook Worker &amp; recovery templates.</p>
+                <strong>Step 3 &bull; Production Webhook Worker &amp; 1-Tap Apple Pay Link [Included in $1.99 / $29 Pack]</strong>
+                <p>Complete Node.js/Next.js Stripe webhook handler + 20 bank decline schedules.</p>
               </div>
             </div>
 
-            <div class="code-snippet-box">
-              <div class="mono-label">Customer Recovery Email &amp; SMS Preview (<span id="wh-out-model">Stripe Declined-Card Recovery</span>)</div>
-              <p id="wh-out-subject" style="font-size:0.9375rem; font-weight:700; color:var(--emerald); margin-top:6px;">Subject: [Action Required] Gymshark payment ($149): Soft Decline Detected</p>
-              <p id="wh-out-body" style="white-space:pre-wrap; font-family:var(--font-sans); font-size:0.9375rem; line-height:1.55; margin-top:6px;">Unlock the $1.99 Single-Audit Pass to view the exact Stripe webhook retry timestamps, 1-click Apple Pay link generator, and customer Email/SMS recovery copy.</p>
+            <div class="code-snippet-box" style="display:flex;flex-direction:column;gap:10px;">
+              <div>
+                <div class="mono-label">Customer Recovery Email &amp; SMS Preview (<span id="wh-out-model">Stripe Declined-Card Recovery</span>)</div>
+                <p id="wh-out-subject" style="font-size:0.9375rem; font-weight:700; color:var(--emerald); margin:6px 0 4px;">Subject: [Action Required] Gymshark payment ($149): Soft Decline Detected</p>
+                <p id="wh-out-body" style="white-space:pre-wrap; font-family:var(--font-sans); font-size:0.875rem; line-height:1.55; margin:0; color:#334155;">Enter your work email below ($0) to reveal the Step 2 retry window and customer recovery email copy, or unlock the full webhook worker.</p>
+              </div>
+              <form id="wh-inline-unlock-form" onsubmit="return window.__aaUnlockWebhookSample(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
+                <input type="email" id="wh-inline-sample-email" required placeholder="Work email to reveal Step 2 &amp; email copy ($0)..." aria-label="Enter work email ($0) to reveal Step 2 retry schedule and recovery email copy" style="flex:1 1 190px;min-width:0;max-width:100%;padding:8px 12px;min-height:38px;border-radius:8px;border:1px solid #CBD5E1;background:#FFFFFF;color:#0A2540;font-size:13.5px;" />
+                <button type="submit" id="wh-inline-sample-btn" class="btn btn-indigo btn-sm" style="padding:8px 14px;min-height:38px;font-size:13.5px;white-space:nowrap;">Reveal Retry Copy ($0) &rarr;</button>
+              </form>
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;font-size:13px;color:#475569;">
+                <span>Export production Stripe webhook worker:</span>
+                <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <button type="button" id="wh-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0A2540;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">3-File Patch ($1.99)</button>
+                  <span style="color:#CBD5E1;" aria-hidden="true">|</span>
+                  <button type="button" id="wh-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('playbook_pass');}else{initiateStripeCheckout('starter');}" style="background:transparent;border:none;color:#047857;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">Complete Store Pack ($29) &rarr;</button>
+                </span>
+              </div>
             </div>
           </div>
         </div>
