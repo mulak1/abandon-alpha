@@ -478,6 +478,8 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
           <div id="dir-inline-action-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;font-size:12.5px;color:#475569;">
             <span id="dir-roi-proof">All 60 recovery playbooks included &middot; Pays for $29 pack in &lt; 1 recovered order (0% commission):</span>
             <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <a id="dir-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js?target=Shopify&amp;decline=insufficient_funds" download style="color:#475569;font-weight:500;text-decoration:underline;">Preview Worker (.JS)</a>
+              <span style="color:#CBD5E1;" aria-hidden="true">|</span>
               <a id="dir-buy-29" href="/buy/playbook_pass?utm_source=directory" rel="nofollow" style="color:#047857;font-weight:700;text-decoration:underline;">Get All 60 Playbooks ($29 Pack) &rarr;</a>
               <span style="color:#CBD5E1;" aria-hidden="true">|</span>
               <a id="dir-buy-199" href="/buy/flash_pass?utm_source=directory" rel="nofollow" style="color:#0F172A;font-weight:600;text-decoration:underline;">3-File Patch ($1.99)</a>
@@ -534,7 +536,7 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
   ${renderCookieAndFooterHtml()}
 
   <script>
-    function filterDirectory(q) {
+    function filterDirectory(q, openDet) {
       var raw = (q || '').toLowerCase().replace(/[_.-]+/g, ' ').trim();
       var tokens = raw ? raw.split(/\\s+/).filter(Boolean) : [];
       var cards = Array.prototype.slice.call(document.querySelectorAll('.dir-item'));
@@ -556,8 +558,7 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       }
       var clusters = document.querySelectorAll('.dir-cluster');
       clusters.forEach(function(sec) {
-        var secCards = sec.querySelectorAll('.dir-item');
-        var secVis = 0;
+        var secCards = sec.querySelectorAll('.dir-item'), secVis = 0;
         secCards.forEach(function(c) { if (c.style.display !== 'none') secVis++; });
         sec.style.display = secVis > 0 ? '' : 'none';
         var cntEl = sec.querySelector('.dir-cluster-count');
@@ -565,43 +566,27 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       });
       var st = document.getElementById('dir-match-status');
       if (st) st.textContent = !tokens.length ? ('Showing all ' + cards.length + ' Playbooks') : ('Showing ' + matchedCount + ' of ' + cards.length + ' Playbooks');
-      var cleanFilter = (q || '').trim();
-      var b29 = document.getElementById('dir-buy-29');
-      var b199 = document.getElementById('dir-buy-199');
-      var uSub = document.getElementById('in-card-unlock-sub');
-      var fBtn = document.getElementById('btn-prog-full-dossier');
-      if (b29) {
-        b29.href = '/buy/playbook_pass?utm_source=directory' + (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : '');
-        b29.textContent = cleanFilter ? ('Get ' + cleanFilter + ' + All 60 Playbooks ($29) →') : 'Get All 60 Playbooks ($29 Pack) →';
-      }
-      if (b199) {
-        b199.href = '/buy/flash_pass?utm_source=directory' + (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : '');
-      }
+      var cleanFilter = (q || '').trim(), b29 = document.getElementById('dir-buy-29'), b199 = document.getElementById('dir-buy-199'), dlW = document.getElementById('dir-dl-worker'), uSub = document.getElementById('in-card-unlock-sub'), fBtn = document.getElementById('btn-prog-full-dossier');
+      if (b29) { b29.href = '/buy/playbook_pass?utm_source=directory' + (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : ''); b29.textContent = cleanFilter ? ('Get ' + cleanFilter + ' + All 60 Playbooks ($29) →') : 'Get All 60 Playbooks ($29 Pack) →'; }
+      if (b199) b199.href = '/buy/flash_pass?utm_source=directory' + (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : '');
+      if (dlW) dlW.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(cleanFilter || 'Shopify') + '&decline=' + encodeURIComponent(cleanFilter || 'insufficient_funds');
       if (uSub && cleanFilter) uSub.textContent = 'Compiled for ' + cleanFilter + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
       if (fBtn && cleanFilter) fBtn.textContent = 'Complete ' + cleanFilter + ' Recovery Pack ($29 — One-Time) →';
       var dCta = document.getElementById('dir-fix1-cta'), dCode = document.getElementById('dir-fix1-code'), dDet = document.getElementById('dir-fix1-details'), dBtn = document.getElementById('dir-copy-fix1-btn');
       if (dBtn) { dBtn.removeAttribute('data-copied'); dBtn.textContent = 'Copy Free Fix #1 Snippet'; dBtn.style.color = ''; }
-      var fTarget = cleanFilter || 'insufficient_funds';
-      var fHrs = fTarget.indexOf('expired') !== -1 ? 0 : (fTarget.indexOf('do_not_honor') !== -1 ? 24 : 72);
+      var fTarget = cleanFilter || 'insufficient_funds', fHrs = fTarget.indexOf('expired') !== -1 ? 0 : (fTarget.indexOf('do_not_honor') !== -1 ? 24 : 72);
       if (dCta) dCta.textContent = 'Get free Fix #1 snippet for ' + fTarget + ' (+$2,098/mo lift · $0) →';
       if (dCode) dCode.textContent = 'window.AbandonAlphaRules = { declineOrSignal: "' + fTarget + '", retryAfterHours: ' + fHrs + ', allowPromoStacking: false };';
-      if (dDet && cleanFilter && !dDet.open) dDet.open = true;
+      if (dDet && openDet !== false && cleanFilter && !dDet.open) dDet.open = true;
       var emp = document.getElementById('dir-empty-state');
       if (emp) emp.style.display = matchedCount === 0 ? 'block' : 'none';
       if (matchedCount === 0 && q && q.trim()) {
-        var cleanQ = q.trim();
-        var sLink = document.getElementById('dir-empty-scan-link');
-        if (sLink) {
-          sLink.href = '/scan/' + encodeURIComponent(cleanQ);
-          sLink.textContent = 'Run live store scorecard for "' + cleanQ + '" →';
-        }
-        var cLink = document.getElementById('dir-empty-calc-link');
-        if (cLink) {
-          cLink.href = '/?store=' + encodeURIComponent(cleanQ) + '#grader';
-          cLink.textContent = 'Calculate recovery for "' + cleanQ + '" →';
-        }
+        var cleanQ = q.trim(), sLink = document.getElementById('dir-empty-scan-link'), cLink = document.getElementById('dir-empty-calc-link');
+        if (sLink) { sLink.href = '/scan/' + encodeURIComponent(cleanQ); sLink.textContent = 'Run live store scorecard for "' + cleanQ + '" →'; }
+        if (cLink) { cLink.href = '/?store=' + encodeURIComponent(cleanQ) + '#grader'; cLink.textContent = 'Calculate recovery for "' + cleanQ + '" →'; }
       }
     }
+    window.addEventListener('DOMContentLoaded', function() { try { var sp = new URLSearchParams(window.location.search || ''), qt = (sp.get('q') || sp.get('target') || sp.get('decline') || '').trim(), inp = document.getElementById('dir-search'); if (qt && inp) { inp.value = qt; filterDirectory(qt, false); } } catch (_) {} });
   </script>
 </body>
 </html>`;
