@@ -226,7 +226,8 @@ function updateUnmaskedSdkPreview(auditRes) {
     cmdkBuy29Lbl.textContent = `Get Complete ${storeName} Recovery Pack`;
   }
   const sessVal = Number(document.getElementById('input-sessions')?.value || auditRes?.monthlySessions || 42000);
-  const workerUrl = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
+  const selObj = document.querySelector('#objection-btn-group .objection-btn.selected')?.getAttribute('data-obj') || 'C1_PRICE';
+  const workerUrl = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}&objection=${encodeURIComponent(selObj)}`;
   ['wh-dl-worker', 'modal-dl-worker', 'bandit-dl-worker'].forEach((wId) => {
     const wEl = document.getElementById(wId);
     if (wEl) wEl.href = workerUrl;
@@ -717,6 +718,7 @@ async function triggerBanditObjection(objectionCode, btnEl) {
     b.classList.toggle('selected', Boolean(match));
   });
   saveAaWorkspaceState();
+  updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
 
   const storeName = (document.getElementById('input-store')?.value || '').trim() || 'Gymshark';
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);

@@ -160,6 +160,7 @@ function runTests() {
   assert.ok(renderedHome.includes('id="wh-amount" type="number" class="field-input" value="92"') && rawAppJs.includes("else if (id === 'wh-amount' && Number(el.value) >= 5)"), '#wh-amount must initialize to $92 (matching active preset AOV) and two-way sync with #input-aov');
   assert.ok(renderedHome.includes('id="modal-copy-offer-btn"') && rawAppJs.includes("['bandit-copy-offer-btn', 'modal-copy-offer-btn'].forEach") && rawAppJs.includes("if (mHead && bHead) mHead.textContent ="), 'Exit-intent modal (#exit-intent-modal) must mirror active #bandit-lab counter-offer headline, code, save rate, and ERPV on open and expose #modal-copy-offer-btn');
   assert.ok(renderedHome.includes('data-obj="C3_APPROVAL" onclick="modalSelectObjection(\'C3_APPROVAL\')"') && rawAppJs.includes("document.querySelectorAll('#objection-btn-group .objection-btn, #exit-intent-modal .objection-btn')") && rawAppJs.includes('selectedObjection:'), 'Selected objection state must synchronize across #bandit-lab and #exit-intent-modal and persist in aa_workspace_state_v1');
+  assert.ok(rawEbApiJs.includes('const armMap = { C1_PRICE:') && rawAppJs.includes('&objection=${encodeURIComponent(selObj)}'), 'Downloadable .JS worker endpoint and worker preview links must dynamically include the visitor selected objection arm');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
