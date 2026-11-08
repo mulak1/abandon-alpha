@@ -253,8 +253,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           </button>
         </div>
         <div class="cta-row" style="padding-top:10px;border-top:1px solid #E2E8F0;justify-content:space-between;">
-          <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#grader" style="font-size:13px;font-weight:600;color:#0F172A;text-decoration:underline;">Open full store audit &rarr;</a>
-          <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" style="font-size:13px;font-weight:600;color:#475569;text-decoration:underline;">Simulate ${escapeHtml(page.webhookEvent)}</a>
+          <a id="pseo-open-grader-link" href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#grader" style="font-size:13px;font-weight:600;color:#0F172A;text-decoration:underline;">Open full store audit &rarr;</a>
+          <a id="pseo-open-wh-link" href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" style="font-size:13px;font-weight:600;color:#475569;text-decoration:underline;">Simulate ${escapeHtml(page.webhookEvent)}</a>
         </div>
       </div>
 
@@ -393,17 +393,21 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       var roiEl = document.getElementById('pseo-roi-proof');
       if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission:';
       var unlockSubEl = document.getElementById('in-card-unlock-sub');
-      if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ${escapeHtml(page.declineOrSignal)} ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
+      if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ' + ${JSON.stringify(page.declineOrSignal)} + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
       var fullBtn = document.getElementById('btn-prog-full-dossier');
-      if (fullBtn) fullBtn.textContent = 'Complete ${escapeHtml(page.declineOrSignal)} Recovery Pack ($29 — One-Time) →';
+      if (fullBtn) fullBtn.textContent = 'Complete ' + ${JSON.stringify(page.declineOrSignal)} + ' Recovery Pack ($29 — One-Time) →';
       var fix1El = document.getElementById('pseo-fix1-summary-cta');
-      if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$' + rec.toLocaleString() + '/mo lift · $0) →';
+      if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ' + ${JSON.stringify(page.declineOrSignal)} + ' (+$' + rec.toLocaleString() + '/mo lift · $0) →';
       var fix1Det = document.getElementById('pseo-fix1-details');
       if (fix1Det && !fix1Det.open) fix1Det.open = true;
       var fix1Code = document.getElementById('pseo-fix1-code');
-      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { declineOrSignal: "${escapeHtml(page.declineOrSignal)}", webhook: "${escapeHtml(page.webhookEvent)}", retryWindow: "${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday')}", monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
-      var b29 = document.getElementById('pseo-buy-29');
-      if (b29) b29.textContent = 'Get ${escapeHtml(page.declineOrSignal)} Pack ($29) →';
+      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
+      var b29 = document.getElementById('pseo-buy-29'), b199 = document.getElementById('pseo-buy-199'), grLnk = document.getElementById('pseo-open-grader-link'), whLnk = document.getElementById('pseo-open-wh-link');
+      var qStr = 'playbook=${encodeURIComponent(page.slug)}&target=${encodeURIComponent(page.declineOrSignal)}&sessions=' + s + '&aov=' + aov;
+      if (b29) { b29.textContent = 'Get ' + ${JSON.stringify(page.declineOrSignal)} + ' Pack ($29) →'; b29.href = '/buy/playbook_pass?' + qStr; }
+      if (b199) b199.href = '/buy/flash_pass?' + qStr;
+      if (grLnk) grLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}&sessions=' + s + '&aov=' + aov + '#grader';
+      if (whLnk) whLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}&sessions=' + s + '&aov=' + aov + '#webhook-lab';
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {

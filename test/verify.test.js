@@ -117,6 +117,7 @@ function runTests() {
   assert.ok(rawAppJs.includes('✓ Copied Counter-Offer — Get All 6 in $29 Pack →') && rawAppJs.includes('✓ Copied Step-1 Email — Get SMS + Worker ($29) →'), 'Bandit counter-offer and Webhook Step-1 email copy buttons must transform into 1-click $29 Pack checkout triggers after copying and reset on new simulation');
   assert.ok(scanHtml.includes("h1.setAttribute('data-entity-name',s.target)") && rawGrowthJs.includes("fBtn.textContent='Complete '+s.target+' Recovery Pack ($29 — One-Time) →'"), '__ebRunScanWb on /scan/* and __ebRunGrowthWb on /compare/* and /tools/* must dynamically update data-entity-name, Fix #1 snippet, and bottom $29 Pack CTAs');
   assert.ok(html.includes('id="pseo-fix1-details"') && lpHtml.includes('id="lp-fix1-details"') && sampleHtml.includes('id="sample-fix1-details"') && rawGrowthJs.includes('id="eb-growth-fix1-details"') && scanHtml.includes('id="eb-scan-fix1-details"') && lbHtml.includes('id="lb-fix1-details"'), 'All subpage calculators (/seo/*, /lp, /sample, /compare/*, /tools/*, /scan/*, /leaderboard) must auto-expand their Fix #1 snippet drawer upon user calculation');
+  assert.ok(html.includes('id="pseo-open-grader-link"') && html.includes('id="pseo-open-wh-link"') && !html.includes('retryWindow: "${escapeHtml'), '/seo/* calculator must dynamically update deep-link and checkout query params without HTML-entity escaping inside JS textContent');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
