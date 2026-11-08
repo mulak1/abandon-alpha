@@ -200,6 +200,7 @@ function buildBottomConversionSuiteHtml(cfg, reqPath) {
       <button type="button" id="cmdk-buy-199" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;" onclick="window.__ebCheckout('flash_pass')"><span id="cmdk-buy-199-label">${cfg.moduleId === 'sponsor_radar' ? 'Get Creator Pass (Single Show)' : 'Get Single-Store 3-File Patch'}</span><strong style="color:${t.textPrimary};">$1.99 →</strong></button>
       <a id="cmdk-dl-csv" href="/api/github-upgrade/export.csv" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download Benchmark .CSV Table</span><strong>.CSV ↗</strong></a>
       <a id="cmdk-dl-txt" href="${cfg.moduleId === 'sponsor_radar' ? '/api/github-upgrade/pitch.eml' : (cfg.moduleId === 'abandon_alpha' ? '/api/github-upgrade/llms-bundle.txt' : '/api/github-upgrade/skin-cycling.ics')}" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>${cfg.moduleId === 'sponsor_radar' ? 'Download Counter-Offer &amp; Pitch (.EML)' : (cfg.moduleId === 'abandon_alpha' ? 'Download Recovery Rules Preview (.TXT)' : 'Download Schedule (.ICS)')}</span><strong>${cfg.moduleId === 'sponsor_radar' ? '.EML ↗' : (cfg.moduleId === 'abandon_alpha' ? '.TXT ↗' : '.ICS ↗')}</strong></a>
+      ${cfg.moduleId === 'abandon_alpha' ? '<a id="cmdk-dl-js" href="/api/github-upgrade/stripe-recovery-worker.js" download class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>Download Stripe Edge Worker (.JS)</span><strong>.JS ↗</strong></a>' : ''}
       <a href="/dossier/sample" class="eb-action-btn" style="justify-content:space-between;padding:9px 12px;border-radius:8px;"><span>View Sample Deliverable</span><strong>Open →</strong></a>
     </div>
   </div>
@@ -833,15 +834,18 @@ function buildClientRuntimeScript(cfg) {
     if (nextOpen) {
       var stEl = document.getElementById('input-store') || document.getElementById('eb-growth-wb-input') || document.getElementById('eb-scan-wb-input') || document.getElementById('lp-flow-store') || document.getElementById('sample-flow-store') || document.getElementById('pseo-flow-store');
       var dcEl = document.getElementById('input-decline-focus') || document.getElementById('eb-growth-wb-decline') || document.getElementById('eb-scan-wb-decline') || document.getElementById('lp-flow-decline') || document.getElementById('sample-flow-decline') || document.getElementById('pseo-flow-decline') || document.getElementById('lb-flow-decline');
+      var sEl = document.querySelector('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions, #eb-scan-vol-sessions, #lp-sessions'), aEl = document.querySelector('#input-aov, #pseo-aov, #eb-growth-vol-aov, #eb-scan-vol-aov, #lp-aov');
       var stName = stEl && stEl.value ? String(stEl.value).trim() : 'Your Store';
       var dcName = dcEl && dcEl.value ? String(dcEl.value).trim() : 'do_not_honor';
+      var actSess = Number(sEl && sEl.value) || 0, actAov = Number(aEl && aEl.value) || 0;
       var b29 = document.getElementById('cmdk-buy-29-label'), b199 = document.getElementById('cmdk-buy-199-label');
-      var dlCsv = document.getElementById('cmdk-dl-csv'), dlTxt = document.getElementById('cmdk-dl-txt');
+      var dlCsv = document.getElementById('cmdk-dl-csv'), dlTxt = document.getElementById('cmdk-dl-txt'), dlJs = document.getElementById('cmdk-dl-js');
       if (b29) b29.textContent = 'Get Complete ' + stName + ' Pack ($29) — 8 Decline Rules + 14-Day Refund';
       if (b199) b199.textContent = 'Get ' + stName + ' 3-File Patch ($1.99) — Instant Download';
-      var qStr = '?target=' + encodeURIComponent(stName) + '&decline=' + encodeURIComponent(dcName);
+      var qStr = '?target=' + encodeURIComponent(stName) + '&decline=' + encodeURIComponent(dcName) + (actSess ? '&sessions=' + actSess : '') + (actAov ? '&aov=' + actAov : '');
       if (dlCsv) { dlCsv.href = '/api/github-upgrade/export.csv' + qStr; var s1 = dlCsv.querySelector('span'); if (s1) s1.textContent = 'Export ' + stName + ' Recovery Forecast (.CSV)'; }
       if (dlTxt) { dlTxt.href = '/api/github-upgrade/llms-bundle.txt' + qStr; var s2 = dlTxt.querySelector('span'); if (s2) s2.textContent = 'Download ' + stName + ' 3-File Recovery Bundle (.TXT)'; }
+      if (dlJs) { dlJs.href = '/api/github-upgrade/stripe-recovery-worker.js' + qStr; var s3 = dlJs.querySelector('span'); if (s3) s3.textContent = 'Download ' + stName + ' Stripe Edge Worker (.JS)'; }
     }
     m.style.display = nextOpen ? 'flex' : 'none';
     window.__ebLogEvent('tab_switch', { store_pill: 'cmdk_palette' });

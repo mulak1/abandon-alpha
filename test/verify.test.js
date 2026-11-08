@@ -128,6 +128,7 @@ function runTests() {
   assert.ok(rawAppJs.includes('const isDeclineLike =') && rawAppJs.includes('✓ Payment Confirmed for <strong>') && renderedHome.includes("cTgt ? (' for ' + cTgt) : ''"), 'Post-purchase (?checkout=success) and cancel-return (?checkout=cancel) must smartly hydrate target store vs decline code and unmask/fulfill the store-specific bundle');
   assert.ok(rawEbApiJs.includes('## 0. Custom Recovery Rules for ${qTgt}') && rawAppJs.includes('/api/github-upgrade/llms-bundle.txt${dlQs}'), 'Downloadable .TXT and .CSV fulfillment endpoints must dynamically include the buyer target store, decline code, and AOV');
   assert.ok(rawEbApiJs.includes('const merchant = ${JSON.stringify(qTgt)};') && renderedHome.includes('id="cmdk-dl-csv"') && renderedHome.includes('id="cmdk-dl-txt"') && renderedHome.includes('id="wh-dl-worker"'), 'Cmd+K modal, Webhook Retry Lab, and downloadable Stripe worker endpoint must dynamically personalize store and decline parameters');
+  assert.ok(rawEbApiJs.includes('Step 1 (T+0m): Webhook intercept') && rawEbApiJs.includes('const totRec = (qSess > 0 || qAov > 0)') && renderedHome.includes('id="cmdk-dl-js"'), 'Exported .CSV and .TXT bundles must compute custom volume KPIs and 3-step recovery schedule, and Cmd+K must expose .JS worker download');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
