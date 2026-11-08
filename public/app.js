@@ -858,12 +858,23 @@ function renderWebhookOutput(res, payload) {
     whCopyBtn.textContent = 'Copy Step-1 Email ($0)';
     whCopyBtn.style.color = '';
   }
-  const whDlWorker = document.getElementById('wh-dl-worker');
-  if (whDlWorker) {
-    const stName = payload.storeName || document.getElementById('input-store')?.value || 'Gymshark';
-    const dcName = payload.declineCode || document.getElementById('wh-decline-code')?.value || 'insufficient_funds';
-    whDlWorker.href = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(stName)}&decline=${encodeURIComponent(dcName)}`;
-  }
+  const stName = payload.storeName || document.getElementById('input-store')?.value || 'Gymshark';
+  const dcName = payload.declineCode || document.getElementById('wh-decline-code')?.value || 'insufficient_funds';
+  const sessVal = Number(document.getElementById('input-sessions')?.value || 42000);
+  const aovVal = Number(payload.amountUsd || document.getElementById('input-aov')?.value || 92);
+  const dlQs = `?target=${encodeURIComponent(stName)}&decline=${encodeURIComponent(dcName)}&sessions=${sessVal}&aov=${aovVal}`;
+  ['wh-dl-worker', 'modal-dl-worker', 'cmdk-dl-js'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.href = `/api/github-upgrade/stripe-recovery-worker.js${dlQs}`;
+  });
+  const cmdkTxt = document.getElementById('cmdk-dl-txt');
+  if (cmdkTxt) cmdkTxt.href = `/api/github-upgrade/llms-bundle.txt${dlQs}`;
+  const cmdkCsv = document.getElementById('cmdk-dl-csv');
+  if (cmdkCsv) cmdkCsv.href = `/api/github-upgrade/export.csv${dlQs}`;
+  const whBuy29 = document.getElementById('wh-buy-29');
+  if (whBuy29) whBuy29.textContent = `Get Complete ${stName} Pack ($29) →`;
+  const whBuy199 = document.getElementById('wh-buy-199');
+  if (whBuy199) whBuy199.textContent = `or ${stName} 3-File Patch ($1.99)`;
 }
 
 function copyWebhookEmailPreview(btnEl) {
@@ -1108,7 +1119,21 @@ window.addEventListener('DOMContentLoaded', async () => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('change', () => {
+        if (id === 'wh-decline-code' && el.value) {
+          const topDec = document.getElementById('input-decline-focus');
+          if (topDec) {
+            if (!Array.from(topDec.options).some((o) => o.value === el.value)) {
+              const opt = document.createElement('option');
+              opt.value = el.value;
+              opt.textContent = `${el.value} (Targeted Recovery)`;
+              topDec.appendChild(opt);
+            }
+            topDec.value = el.value;
+          }
+          updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
+        }
         saveAaWorkspaceState();
+        if (window.__ebSyncNavLinks) window.__ebSyncNavLinks(true);
         if (liveWhTimer) clearTimeout(liveWhTimer);
         liveWhTimer = setTimeout(() => runWebhookSimulation(), 320);
       });

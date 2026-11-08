@@ -153,6 +153,8 @@ function runTests() {
     });
   });
 
+  assert.ok(rawAppJs.includes("['wh-dl-worker', 'modal-dl-worker', 'cmdk-dl-js'].forEach") && rawAppJs.includes("if (id === 'wh-decline-code' && el.value)"), 'Webhook Retry Lab (#webhook-lab) must synchronize Fold-1 decline focus, navigation links, and .JS/.TXT/.CSV download URLs when decline code or invoice amount changes');
+
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
 
