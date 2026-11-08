@@ -472,31 +472,23 @@
 
             <div id="wh-timeline-container">
               <div class="timeline-step">
-                <strong>Step 1 &middot; T+4 hours</strong>
-                <p>Silent Stripe charge retry to check whether temporary balance hold cleared before emailing the customer.</p>
-              </div>
-              <div class="timeline-step">
-                <strong>Step 2 &middot; Payday-synced retry window</strong>
-                <p>Timezone-synced retry timestamp and customer recovery email copy.</p>
-              </div>
-              <div class="timeline-step">
-                <strong>Step 3 &middot; Production webhook worker</strong>
-                <p>Node.js/Next.js Stripe webhook handler and 1-tap Apple Pay update link.</p>
+                <strong>Step 1 &middot; T + 4 Hours (Silent Retry #1)</strong>
+                <p>Off-session Stripe PaymentIntent confirm before customer notification (clears 28% of temporary bank holds).</p>
               </div>
             </div>
 
             <div class="code-snippet-box" style="display:flex;flex-direction:column;gap:8px;background:#F8FAFC;">
               <div>
-                <div style="font-size:0.75rem;color:#64748B;font-weight:500;">Recovery email preview (<span id="wh-out-model">Stripe dunning</span>)</div>
-                <p id="wh-out-subject" style="font-size:0.875rem; font-weight:600; color:#0F172A; margin:4px 0;">Subject: [Action Required] Gymshark payment ($149): Soft Decline Detected</p>
-                <p id="wh-out-body" style="white-space:pre-wrap; font-family:var(--font-sans); font-size:0.8125rem; line-height:1.5; margin:0; color:#475569;">Enter your work email in the diagnosis panel above ($0) to reveal the full recovery email copy, or export the webhook worker below.</p>
+                <div style="font-size:0.75rem;color:#64748B;font-weight:500;">Unmasked Step-1 recovery email (<span id="wh-out-model">Stripe dunning</span>)</div>
+                <p id="wh-out-subject" style="font-size:0.875rem; font-weight:600; color:#0F172A; margin:4px 0;">Subject: [Action Required] Gymshark payment ($92): Soft Decline (Liquidity / Payday Timing)</p>
+                <p id="wh-out-body" style="white-space:pre-wrap; font-family:var(--font-sans); font-size:0.8125rem; line-height:1.5; margin:0; color:#475569;">Hi alex — your $92 Gymshark payment returned bank code "insufficient_funds" (Soft Decline). Step 1 (T + 4 Hours): Silent Stripe PaymentIntent retry before customer notification.</p>
               </div>
               <form id="wh-inline-unlock-form" onsubmit="return window.__aaUnlockWebhookSample(event)" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
                 <input type="email" id="wh-inline-sample-email" placeholder="Work email ($0)..." />
                 <button type="submit" id="wh-inline-sample-btn" class="btn btn-indigo btn-sm">Reveal Retry Copy ($0)</button>
               </form>
               <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;font-size:13px;color:#64748B;">
-                <span>Export webhook worker:</span>
+                <button type="button" id="wh-copy-email-btn" onclick="copyWebhookEmailPreview(this)" style="background:#0F172A;color:#FFFFFF;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;">Copy Step-1 Email ($0)</button>
                 <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
                   <button type="button" id="wh-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0F172A;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">3-File Patch ($1.99)</button>
                   <span style="color:#CBD5E1;" aria-hidden="true">|</span>

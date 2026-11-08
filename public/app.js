@@ -718,7 +718,6 @@ async function runWebhookSimulation(e) {
 
 function renderWebhookOutput(res, payload) {
   if (!res || !payload) return;
-  const hasEmailSample = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
   document.getElementById('wh-out-classification').textContent = res.classification;
   document.getElementById('wh-out-recovery-rate').textContent = `Expected Recovery: ${res.expectedRecoveryRatePct}%`;
   document.getElementById('wh-out-network-rule').textContent = `Card Network Mandate: ${res.cardNetworkRule}`;
@@ -726,17 +725,35 @@ function renderWebhookOutput(res, payload) {
   document.getElementById('wh-out-subject').textContent = `Subject: ${res.recoveryCopy.emailSubject}`;
   document.getElementById('wh-out-body').textContent = window.__ebIsUnlocked
     ? `${res.recoveryCopy.emailBody}\n\n[SMS Dispatch]: ${res.recoveryCopy.smsBody}`
-    : hasEmailSample
-      ? `${res.recoveryCopy.emailBody}\n\n[SMS & 1-Tap Apple Pay Worker Included in $1.99 / $29 Pack]`
-      : `Enter your work email below ($0) to reveal the Step 2 retry window and customer recovery email copy for ${payload.declineCode}, or unlock the full webhook worker.`;
+    : `${res.recoveryCopy.emailBody}`;
 
   if (Array.isArray(res.retrySchedule) && res.retrySchedule.length > 0) {
     const s = res.retrySchedule[0];
     document.getElementById('wh-timeline-container').innerHTML = `
       <div class="timeline-step">
-        <strong>Step ${s.step} • ${escapeUiHtml(s.delay || 'Unmasked Window')}</strong>
+        <strong>Step ${s.step} • ${escapeUiHtml(s.timing || s.delay || 'Unmasked Window')}</strong>
         <p>${escapeUiHtml(s.action || `Verified retry window for ${payload.declineCode}`)}</p>
       </div>`;
+  }
+}
+
+function copyWebhookEmailPreview(btnEl) {
+  const subj = (document.getElementById('wh-out-subject')?.textContent || '').trim();
+  const body = (document.getElementById('wh-out-body')?.textContent || '').trim();
+  const text = `${subj}\n\n${body}`;
+  if (navigator.clipboard && text) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  }
+  if (typeof window.__ebLogEvent === 'function') {
+    window.__ebLogEvent('copy_webhook_email', {
+      store: document.getElementById('input-store')?.value || 'Gymshark',
+      decline: document.getElementById('wh-decline-code')?.value || 'insufficient_funds'
+    });
+  }
+  if (btnEl) {
+    const prev = btnEl.textContent;
+    btnEl.textContent = '✓ Copied Step-1 Email (SMS + Worker in $29 Pack)';
+    setTimeout(() => { btnEl.textContent = prev; }, 2400);
   }
 }
 

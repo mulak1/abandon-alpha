@@ -102,6 +102,7 @@ function runTests() {
   assert.ok(renderedHome.includes('Copy Free Fix #1 Snippet') && rawAppJs.includes('copy_fix1_snippet'), 'Main calculator must wire Copy Free Fix #1 Snippet telemetry and File 1 of 3 upgrade nudge');
   assert.ok(rawAppJs.includes("if (typeof runWebhookSimulation === 'function') runWebhookSimulation()"), 'Changing Fold-1 preset or decline code must automatically sync and re-simulate the Stripe Webhook Retry Lab');
   assert.ok(renderedHome.includes('id="bandit-store-context"') && rawAppJs.includes('Matched counter-offer for ${storeName}'), 'Exit Counter-Offer Simulator must dynamically sync with Fold-1 store name and AOV');
+  assert.ok(renderedHome.includes('id="wh-copy-email-btn"') && rawAppJs.includes('copyWebhookEmailPreview'), 'Stripe Webhook Retry Lab must surface unmasked Step-1 recovery email with 1-click copy and $29 pack upgrade framing');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

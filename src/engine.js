@@ -437,11 +437,11 @@ async function simulateStripeWebhook({
   if (eventType === 'checkout.session.expired') {
     customSubject = `[Saved Cart] Complete your ${storeName} checkout with ${matchedArm.offer_code} (${matchedArm.discount_pct}% off)`;
     customSms = `${storeName}: Your checkout session expired, but we locked your cart + ${matchedArm.discount_pct}% off (${matchedArm.offer_code}) for 48h: https://www.abandonalpha.com/buy/complete_dossier?code=${matchedArm.offer_code}`;
-    customEmailBody = `Hi ${customerEmail.split('@')[0]},\n\nWe noticed your Stripe Checkout session ($${amountUsd}) timed out after you indicated "${matchedArm.objection_label}".\n\nOffer Unlocked: ${matchedArm.offer_headline}\nPromo Code Applied: ${matchedArm.offer_code} (Net Checkout: $${(amountUsd * (1 - matchedArm.discount_pct / 100)).toFixed(2)})\n\nResume in 1 click (pre-filled Stripe Checkout): https://www.abandonalpha.com/buy/complete_dossier?code=${matchedArm.offer_code}\nOr unlock the Single-Audit Recovery Pass ($1.99): https://www.abandonalpha.com/buy/flash_pass`;
+    customEmailBody = `Hi ${customerEmail.split('@')[0]} — your ${storeName} checkout ($${amountUsd}) timed out, so we reserved your cart with code ${matchedArm.offer_code} (${matchedArm.discount_pct}% off, net $${(amountUsd * (1 - matchedArm.discount_pct / 100)).toFixed(2)}) for 48 hours.`;
   } else {
     customSubject = `[Action Required] ${storeName} payment ($${amountUsd}): ${playbook.classification}`;
     customSms = `${storeName}: Your $${amountUsd} renewal returned "${declineCode}". Update card in 1 tap (Apple Pay ready): https://www.abandonalpha.com/buy/complete_dossier?decline=${declineCode}`;
-    customEmailBody = `Hi ${customerEmail.split('@')[0]},\n\nStripe notified us that your $${amountUsd} invoice failed with bank code \`${declineCode}\` (${playbook.classification}).\n\nBecause of our Smart Dunning Policy (${playbook.cardNetworkRule}), we have scheduled your optimal recovery window:\n• ${playbook.retrySchedule[0].timing}: ${playbook.retrySchedule[0].action}\n• Or complete in 1 click via Apple Pay / Link: https://www.abandonalpha.com/buy/complete_dossier?customer=${encodeURIComponent(customerEmail)}`;
+    customEmailBody = `Hi ${customerEmail.split('@')[0]} — your $${amountUsd} ${storeName} payment returned bank code "${declineCode}" (${playbook.classification}). Step 1 (${playbook.retrySchedule[0].timing}): ${playbook.retrySchedule[0].action}.`;
   }
 
   if (process.env.GEMINI_API_KEY) {
@@ -619,9 +619,9 @@ function redactWebhookSimulationForPreview(sim) {
     retrySchedule: Array.isArray(sim.retrySchedule)
       ? sim.retrySchedule.map((s, idx) => (idx === 0 ? {
           step: s.step,
-          timing: 'Diagnostic Verified (Exact Retry Window Locked)',
+          timing: s.timing,
           channel: s.channel,
-          action: 'Bank classification & Visa/Mastercard retry ceiling verified. Unlock $1.99 Pass for exact payday/cooldown schedule.'
+          action: s.action
         } : {
           step: s.step,
           timing: '[LOCKED IN FREE PREVIEW]',
@@ -632,9 +632,7 @@ function redactWebhookSimulationForPreview(sim) {
     recoveryCopy: sim.recoveryCopy
       ? {
           ...sim.recoveryCopy,
-          offerCode: 'LOCKED_199',
-          emailBody: '[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the full customer recovery email template, pre-filled Stripe Billing Portal magic link, and C1-C6 Bandit offer code.',
-          smsBody: '[LOCKED IN FREE PREVIEW]: Unlock the $1.99 Single-Store Stripe Recovery Pass (/buy/flash_pass) to reveal the 1-tap Apple Pay / Google Pay SMS recovery template.'
+          smsBody: '[LOCKED IN FREE PREVIEW]: Unlock the $1.99 3-File Patch or $29 Complete Store Pack to reveal the 1-tap Apple Pay SMS template & Next.js webhook worker.'
         }
       : {}
   };
