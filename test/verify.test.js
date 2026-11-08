@@ -86,6 +86,8 @@ function runTests() {
   assert.ok(scanHtml.includes('id="eb-scan-volume-adjuster"'), 'Public scan pages must include inline custom store volume calculator');
   assert.ok(!scanHtml.includes('● Verified Source:') && !lbHtml.includes('● Verified Source:'), 'Scan and leaderboard pages must not have 3-column green-dot provenance banner clutter');
 
+  assert.ok(lpHtml.includes('id="lp-decline"') && !lpHtml.includes('[Brand]'), '/lp must include dynamic decline selector and zero [Brand] placeholders');
+
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
 

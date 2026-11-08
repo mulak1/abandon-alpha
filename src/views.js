@@ -582,11 +582,25 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
               <input id="lp-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="30" required />
             </div>
           </div>
-          <div style="margin-top:12px;">
+          <div class="form-row-2" style="margin-top:10px;">
+            <div>
+              <label class="field-label" for="lp-store">Store or SaaS name</label>
+              <input id="lp-store" type="text" class="field-input" value="Gymshark" oninput="updateLpFlowPreview()" required />
+            </div>
+            <div>
+              <label class="field-label" for="lp-decline">Top card decline reason</label>
+              <select id="lp-decline" class="field-input" onchange="updateLpFlowPreview()">
+                <option value="insufficient_funds">insufficient_funds (Payday Sync)</option>
+                <option value="do_not_honor">do_not_honor (24h Cooldown)</option>
+                <option value="expired_card">expired_card (1-Tap Updater)</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
             <label class="field-label" for="lp-email">Work email (optional, for free retry schedule)</label>
             <input id="lp-email" type="email" class="field-input" placeholder="you@company.com" />
           </div>
-          <button type="submit" id="lp-submit-btn" class="btn btn-indigo btn-block" style="margin-top:14px;">
+          <button type="submit" id="lp-submit-btn" class="btn btn-indigo btn-block" style="margin-top:12px;">
             <span>Calculate recoverable revenue</span>
           </button>
         </form>
@@ -596,7 +610,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         <div>
           <div class="card-header-bar">
             <span class="mono-label">2. Live 3-step recovery flow &amp; diagnosis</span>
-            <span style="font-size:12px;color:#047857;font-weight:600;">62.4% Soft-Decline Lift</span>
+            <span id="lp-lift-badge" style="font-size:12px;color:#047857;font-weight:600;">62.4% Soft-Decline Lift</span>
           </div>
 
           <div id="lp-result-panel" class="lp-result-panel" style="margin-top:0;">
@@ -621,7 +635,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
               <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;border:1px solid #E2E8F0;">
                 <div style="font-weight:700;color:#047857;">Step 1 · T+0m</div>
                 <div style="color:#0F172A;font-weight:600;margin-top:2px;">Webhook Intercept</div>
-                <div style="color:#64748B;font-size:11.5px;margin-top:2px;">Suppresses blind retry on <code>insufficient_funds</code></div>
+                <div id="lp-s1-desc" style="color:#64748B;font-size:11.5px;margin-top:2px;">Suppresses blind retry on <code>insufficient_funds</code></div>
               </div>
               <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;border:1px solid #E2E8F0;">
                 <div style="font-weight:700;color:#0F172A;">Step 2 · T+24h</div>
@@ -631,19 +645,19 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
               <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;border:1px solid #E2E8F0;">
                 <div style="font-weight:700;color:#0F172A;">Step 3 · Payday</div>
                 <div style="color:#0F172A;font-weight:600;margin-top:2px;">ACH Deposit Retry</div>
-                <div style="color:#64748B;font-size:11.5px;margin-top:2px;">Retries Friday 09:05 local deposit window</div>
+                <div id="lp-s3-desc" style="color:#64748B;font-size:11.5px;margin-top:2px;">Retries Friday 09:05 local deposit window</div>
               </div>
             </div>
             <div style="margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;font-size:12px;color:#334155;">
-              <div><strong style="color:#0F172A;">Unmasked Step-1 Dunning Webhook:</strong> <code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: 72</code></div>
-              <div style="margin-top:3px;"><strong style="color:#0F172A;">Subject Line Specimen #1:</strong> <span style="color:#047857;font-weight:600;">"Quick heads-up on your [Brand] billing settings"</span> (41.8% open rate)</div>
+              <div><strong style="color:#0F172A;">Unmasked Step-1 Dunning Webhook:</strong> <span id="lp-wh-line"><code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: 72</code></span></div>
+              <div style="margin-top:3px;"><strong style="color:#0F172A;">Subject Line Specimen #1:</strong> <span id="lp-subj-line" style="color:#047857;font-weight:600;">"Quick heads-up on your Gymshark billing settings"</span> (41.8% open rate)</div>
             </div>
           </div>
         </div>
 
         <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
-          <a href="/buy/playbook_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
-          <a href="/buy/flash_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
+          <a id="lp-buy-29" href="/buy/playbook_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
+          <a id="lp-buy-199" href="/buy/flash_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
         </div>
       </div>
@@ -686,8 +700,37 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       }
     }
 
+    function updateLpFlowPreview() {
+      var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark';
+      var code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
+      var s1 = document.getElementById('lp-s1-desc');
+      if (s1) s1.innerHTML = 'Suppresses blind retry on <code>' + code + '</code>';
+      var wh = document.getElementById('lp-wh-line');
+      if (wh) {
+        var hrs = code === 'expired_card' ? '0 (halt retry)' : (code === 'do_not_honor' ? '24' : '72');
+        wh.innerHTML = '<code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: ' + hrs + '</code>';
+      }
+      var subj = document.getElementById('lp-subj-line');
+      if (subj) {
+        subj.textContent = code === 'expired_card'
+          ? ('"Update your expired card to keep your ' + store + ' access"')
+          : (code === 'do_not_honor'
+            ? ('"Action needed: verify your ' + store + ' payment method"')
+            : ('"Quick heads-up on your ' + store + ' billing settings"'));
+      }
+      var b29 = document.getElementById('lp-buy-29');
+      var b199 = document.getElementById('lp-buy-199');
+      var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
+      var qSuffix = '&target=' + encodeURIComponent(store) + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
+      if (b29) b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
+      if (b199) b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
+    }
+
     async function runLpAudit(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
+      updateLpFlowPreview();
+      var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark';
+      var code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
       var sessions = Number(document.getElementById('lp-sessions').value || 3200);
       var aov = Number(document.getElementById('lp-aov').value || 92);
       var abandon = Number(document.getElementById('lp-abandon').value || 71.5);
@@ -696,15 +739,24 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          storeName: 'Meta LP Merchant',
+          storeName: store,
           monthlySessions: sessions,
           aovUsd: aov,
           abandonRatePct: abandon,
-          failedCardRatePct: fail
+          failedCardRatePct: fail,
+          primaryDeclineCode: code
         })
       }).then(function(r) { return r.json(); });
       document.getElementById('lp-leaked-out').textContent = '$' + Math.round(res.totalMonthlyLeakedUsd).toLocaleString();
       document.getElementById('lp-rec-out').textContent = '+$' + Math.round(res.totalRecoverableUsd).toLocaleString() + '/mo';
+      var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
+      if (em && em.indexOf('@') > 0) {
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: em, pageUrl: '/lp', utmSource: 'meta_lp_calculator' })
+        }).catch(function() {});
+      }
       await fireCapi('Lead', res.totalRecoverableUsd);
     }
 
