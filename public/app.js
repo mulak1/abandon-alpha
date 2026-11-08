@@ -36,7 +36,7 @@ function saveAaWorkspaceState() {
       whEventType: document.getElementById('wh-event-type')?.value || 'invoice.payment_failed',
       whDeclineCode: document.getElementById('wh-decline-code')?.value || 'insufficient_funds',
       whEmail: document.getElementById('wh-email')?.value || 'founder@merchant.io',
-      whAmount: Number(document.getElementById('wh-amount')?.value || 149),
+      whAmount: Number(document.getElementById('wh-amount')?.value || 92),
       savedAt: Date.now()
     };
     localStorage.setItem(AA_STATE_KEY, JSON.stringify(state));
@@ -795,7 +795,7 @@ async function runWebhookSimulation(e) {
     eventType: document.getElementById('wh-event-type').value,
     declineCode: document.getElementById('wh-decline-code').value,
     customerEmail: document.getElementById('wh-email').value,
-    amountUsd: Number(document.getElementById('wh-amount').value || 149),
+    amountUsd: Number(document.getElementById('wh-amount').value || document.getElementById('input-aov')?.value || 92),
     storeName: document.getElementById('input-store').value || 'Gymshark',
     website_url: document.getElementById('wh-honeypot')?.value || ''
   };
@@ -1164,6 +1164,10 @@ window.addEventListener('DOMContentLoaded', async () => {
             }
             topDec.value = el.value;
           }
+          updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
+        } else if (id === 'wh-amount' && Number(el.value) >= 5) {
+          const topAov = document.getElementById('input-aov');
+          if (topAov) topAov.value = Number(el.value);
           updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
         }
         saveAaWorkspaceState();
