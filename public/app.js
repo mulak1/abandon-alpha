@@ -208,7 +208,7 @@ function updateUnmaskedSdkPreview(auditRes) {
     stickyVaultBtn.textContent = `Complete ${storeName} Pack ($29) →`;
   }
   const toastTitleEl = document.getElementById('eb-ouibounce-title');
-  if (toastTitleEl) {
+  if (toastTitleEl && !window.location.search.includes('checkout=cancel')) {
     toastTitleEl.textContent = `Save Your ${storeName} Recovery Plan (+${formatUsd(totalRecVal)}/mo)`;
   }
   const cmdkBuy29Lbl = document.getElementById('cmdk-buy-29-label');

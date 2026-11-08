@@ -146,6 +146,12 @@ function runTests() {
   assert.ok(lbHtml.includes("ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}')") && dirHtml.includes("actTgt = (cleanFilter || sp.get('target') || ws.storeName || '').trim()"), '/leaderboard and /directory must hydrate active store, decline, sessions, and aov from aa_workspace_state_v1 on bare URL visits');
   assert.ok(renderedHome.includes('id="modal-dl-worker"') && rawAppJs.includes("['wh-dl-worker', 'modal-dl-worker'].forEach") && renderedHome.includes('id="toast-dl-worker"'), 'Exit-intent modal (#exit-intent-modal) and toast (#eb-ouibounce-toast) must expose personalized worker (.JS) downloads and checkout links');
   assert.ok(rawAppJs.includes('id="cancel-dl-worker"') && renderedHome.includes('id="toast-cancel-dl-worker"') && rawAppJs.includes("fix1Det.open = checkoutState === 'cancel'"), 'Cancel-return (?checkout=cancel) must auto-expand Fix #1 snippet drawer and surface personalized Preview Worker (.JS) downloads in both the inline status bar and rescue toast');
+  [renderedHome, html, scanHtml, lpHtml, sampleHtml, dirHtml, lbHtml].forEach((pageHtml, idx) => {
+    const scriptMatches = Array.from(pageHtml.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/gi));
+    scriptMatches.forEach((m) => {
+      if (m[1] && m[1].trim()) assert.doesNotThrow(() => new Function(m[1]), `Inline <script> in page index ${idx} must be syntactically valid JS`);
+    });
+  });
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
