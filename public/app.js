@@ -293,6 +293,10 @@ function applyPreset(presetKey, btnEl) {
   saveAaWorkspaceState();
   runAuditRequest(presetKey, false, true, true);
   if (typeof runWebhookSimulation === 'function') runWebhookSimulation();
+  if (typeof triggerBanditObjection === 'function') {
+    const selObjBtn = document.querySelector('#objection-btn-group .objection-btn.selected');
+    triggerBanditObjection(selObjBtn?.getAttribute('data-obj') || 'C1_PRICE', selObjBtn);
+  }
 }
 
 function onDeclineFocusChange(declineCode) {
@@ -307,7 +311,15 @@ function onDeclineFocusChange(declineCode) {
 
 async function submitLeakageAudit(e) {
   if (e && e.preventDefault) e.preventDefault();
+  const whAmtEl = document.getElementById('wh-amount');
+  const aovVal = Number(document.getElementById('input-aov')?.value || 92);
+  if (whAmtEl && aovVal > 0) whAmtEl.value = aovVal;
   await runAuditRequest(currentPreset, false, true, true);
+  if (typeof runWebhookSimulation === 'function') runWebhookSimulation();
+  if (typeof triggerBanditObjection === 'function') {
+    const selObjBtn = document.querySelector('#objection-btn-group .objection-btn.selected');
+    triggerBanditObjection(selObjBtn?.getAttribute('data-obj') || 'C1_PRICE', selObjBtn);
+  }
   return false;
 }
 
@@ -603,7 +615,12 @@ async function triggerBanditObjection(objectionCode, btnEl) {
     b.classList.toggle('selected', match);
   });
 
+  const storeName = (document.getElementById('input-store')?.value || '').trim() || 'Gymshark';
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
+  const storeCtxEl = document.getElementById('bandit-store-context');
+  if (storeCtxEl) {
+    storeCtxEl.textContent = `Matched counter-offer for ${storeName} ($${aovUsd.toLocaleString()} order)`;
+  }
   const res = await fetch('/api/bandit-select', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

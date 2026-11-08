@@ -101,6 +101,7 @@ function runTests() {
   assert.ok(html.includes('id="pseo-copy-fix1-btn"') && rawGrowthJs.includes('id="eb-growth-copy-fix1-btn"') && scanHtml.includes('id="eb-scan-copy-fix1-btn"') && lpHtml.includes('id="lp-copy-fix1-btn"') && sampleHtml.includes('id="sample-copy-fix1-btn"') && lbHtml.includes('id="lb-copy-fix1-btn"'), 'All subpages must provide 1-click Copy Free Fix #1 Snippet with Step 1 of 3 upgrade framing');
   assert.ok(renderedHome.includes('Copy Free Fix #1 Snippet') && rawAppJs.includes('copy_fix1_snippet'), 'Main calculator must wire Copy Free Fix #1 Snippet telemetry and File 1 of 3 upgrade nudge');
   assert.ok(rawAppJs.includes("if (typeof runWebhookSimulation === 'function') runWebhookSimulation()"), 'Changing Fold-1 preset or decline code must automatically sync and re-simulate the Stripe Webhook Retry Lab');
+  assert.ok(renderedHome.includes('id="bandit-store-context"') && rawAppJs.includes('Matched counter-offer for ${storeName}'), 'Exit Counter-Offer Simulator must dynamically sync with Fold-1 store name and AOV');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
