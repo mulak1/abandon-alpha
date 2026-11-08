@@ -31,6 +31,10 @@ function runTests() {
   assert.equal(audit.monthlySessions, 500000, 'Expected monthlySessions clamped to 500000');
   assert.equal(audit.aovUsd, 50000, 'Expected aovUsd clamped to 50000');
 
+  const deepLinkAudit = computeLeakageAudit({ monthlySessions: 3550, aovUsd: 185, primaryDeclineCode: 'fraudulent' });
+  assert.equal(deepLinkAudit.dunningBreakdown[0].declineCode, 'fraudulent', 'Expected deep-linked decline code (e.g. fraudulent) to be ranked #1 in dunningBreakdown');
+  assert.equal(deepLinkAudit.roiMultipleStarter, Number((deepLinkAudit.totalRecoverableUsd / 29).toFixed(1)), 'Expected roiMultipleStarter to use $29 Complete Store Recovery Pack price');
+
   const bandit = selectBanditArm({ objectionCode: 'C1_PRICE', aovUsd: 9999999 });
   assert.ok(bandit.selectedArm.net_order_value_usd <= 50000, 'Expected bandit net_order_value_usd clamped');
 

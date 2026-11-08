@@ -790,13 +790,19 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (qAov && Number(qAov) >= 5) document.getElementById('input-aov').value = Number(qAov);
 
   if (qDecline) {
-    const focusSel = document.getElementById('input-decline-focus');
-    if (focusSel && Array.from(focusSel.options).some((o) => o.value === qDecline)) {
-      focusSel.value = qDecline;
-    }
-    const whSel = document.getElementById('wh-decline-code');
-    if (whSel && Array.from(whSel.options).some((o) => o.value === qDecline)) {
-      whSel.value = qDecline;
+    const cleanDecline = String(qDecline).replace(/[^a-zA-Z0-9_.-]/g, '').slice(0, 48);
+    if (cleanDecline) {
+      ['input-decline-focus', 'wh-decline-code'].forEach((selId) => {
+        const sel = document.getElementById(selId);
+        if (!sel) return;
+        if (!Array.from(sel.options).some((o) => o.value === cleanDecline)) {
+          const opt = document.createElement('option');
+          opt.value = cleanDecline;
+          opt.textContent = `${cleanDecline} (Targeted Recovery)`;
+          sel.appendChild(opt);
+        }
+        sel.value = cleanDecline;
+      });
     }
   }
 

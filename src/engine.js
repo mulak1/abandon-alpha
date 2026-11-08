@@ -184,7 +184,10 @@ function computeLeakageAudit(input = {}) {
     subscription_app: { insufficient_funds: 0.42, do_not_honor: 0.25, expired_card: 0.19, authentication_required: 0.09, processing_error: 0.05 }
   };
   const weights = { ...(baseWeightsByVertical[presetKey] || baseWeightsByVertical.shopify_dtc) };
-  if (primaryDeclineCode !== 'auto_weighted' && weights[primaryDeclineCode] !== undefined) {
+  if (primaryDeclineCode !== 'auto_weighted') {
+    if (weights[primaryDeclineCode] === undefined) {
+      weights[primaryDeclineCode] = 0.25;
+    }
     const remCodes = Object.keys(weights).filter((k) => k !== primaryDeclineCode);
     const remSum = remCodes.reduce((acc, k) => acc + weights[k], 0) || 1;
     weights[primaryDeclineCode] = 0.52;
@@ -230,6 +233,19 @@ function computeLeakageAudit(input = {}) {
       strategy: 'Silent exponential backoff at T+15m and T+4h without customer friction'
     }
   ];
+
+  if (primaryDeclineCode !== 'auto_weighted' && !rawRows.some((r) => r.declineCode === primaryDeclineCode)) {
+    const customPlaybook = DECLINE_CODE_PLAYBOOKS[primaryDeclineCode];
+    rawRows.unshift({
+      declineCode: primaryDeclineCode,
+      label: customPlaybook ? `${primaryDeclineCode} (${customPlaybook.classification})` : `${primaryDeclineCode} (Targeted Recovery Flow)`,
+      weight: weights[primaryDeclineCode] || 0.52,
+      recoveryRatePct: customPlaybook ? customPlaybook.recoveryRatePct : 48.5,
+      strategy: customPlaybook && customPlaybook.retrySchedule && customPlaybook.retrySchedule[0]
+        ? customPlaybook.retrySchedule[0].action
+        : 'Halt blind retries; dispatch 1-click Apple Pay / Google Pay replacement link'
+    });
+  }
 
   if (primaryDeclineCode !== 'auto_weighted') {
     rawRows.sort((a, b) => (a.declineCode === primaryDeclineCode ? -1 : b.declineCode === primaryDeclineCode ? 1 : b.weight - a.weight));
@@ -310,8 +326,8 @@ function computeLeakageAudit(input = {}) {
     gradeScore,
     letterGrade,
     roiMultipleFlashPass: Number((totalRecoverableUsd / 1.99).toFixed(0)),
-    roiMultipleStarter: Number((totalRecoverableUsd / 49).toFixed(1)),
-    roiMultipleGrowth: Number((totalRecoverableUsd / 149).toFixed(1)),
+    roiMultipleStarter: Number((totalRecoverableUsd / 29).toFixed(1)),
+    roiMultipleGrowth: Number((totalRecoverableUsd / 49).toFixed(1)),
     dunningBreakdown,
     webhookSequence,
     sdkSnippet
@@ -398,7 +414,18 @@ async function simulateStripeWebhook({
   objectionCode = 'C1_PRICE',
   storeName = 'AuraBotanics DTC'
 }) {
-  const playbook = DECLINE_CODE_PLAYBOOKS[declineCode] || DECLINE_CODE_PLAYBOOKS.insufficient_funds;
+  const playbook = DECLINE_CODE_PLAYBOOKS[declineCode] || {
+    code: declineCode,
+    classification: `Targeted ${declineCode} Recovery Flow`,
+    shareOfFailuresPct: 18,
+    recoveryRatePct: 48.5,
+    cardNetworkRule: 'Halt blind daily retries; dispatch 1-click Apple Pay / Google Pay replacement link.',
+    retrySchedule: [
+      { step: 1, timing: 'T + 5 Minutes', channel: '1-Click Apple Pay / Google Pay Link', action: `Bypass ${declineCode} issuer block via tokenized wallet swap` },
+      { step: 2, timing: 'T + 24 Hours', channel: 'Passwordless Stripe Billing Portal Email', action: 'Allow instant card replacement without login friction' },
+      { step: 3, timing: 'T + 72 Hours', channel: 'Plain-Text Grace Period Alert', action: 'Preserve subscription & cart state upon payment method update' }
+    ]
+  };
   const arms = getAllBanditArms();
   const matchedArm = arms.find((a) => a.objection_code === objectionCode) || arms[0];
 
