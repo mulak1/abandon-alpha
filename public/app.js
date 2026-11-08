@@ -1033,13 +1033,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (document.getElementById('input-store-url') && p.storeUrl) document.getElementById('input-store-url').value = p.storeUrl;
     document.getElementById('input-sessions').value = p.monthlySessions;
     document.getElementById('input-aov').value = p.aovUsd;
+    if (document.getElementById('wh-amount') && p.aovUsd) document.getElementById('wh-amount').value = p.aovUsd;
     document.getElementById('input-abandon').value = p.abandonRatePct;
     document.getElementById('input-fail').value = p.failedCardRatePct;
   }
 
   if (qStore) document.getElementById('input-store').value = qStore;
   if (qSessions && Number(qSessions) >= 50) document.getElementById('input-sessions').value = Number(qSessions);
-  if (qAov && Number(qAov) >= 5) document.getElementById('input-aov').value = Number(qAov);
+  if (qAov && Number(qAov) >= 5) {
+    document.getElementById('input-aov').value = Number(qAov);
+    if (document.getElementById('wh-amount')) document.getElementById('wh-amount').value = Number(qAov);
+  }
 
   if (qDecline) {
     const cleanDecline = String(qDecline).replace(/[^a-zA-Z0-9_.-]/g, '').slice(0, 48);
@@ -1065,7 +1069,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   if (hasDeepLink || restoredFromStorage) {
     await runAuditRequest(currentPreset, !hasDeepLink, false);
-    if (window.location.hash === '#webhook-lab' || qDecline) {
+    if (window.location.hash === '#webhook-lab' || qDecline || qStore || qAov) {
       await runWebhookSimulation();
     }
   } else {
@@ -1107,6 +1111,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', () => {
+        if (id === 'input-aov' && Number(el.value) >= 5 && document.getElementById('wh-amount')) {
+          document.getElementById('wh-amount').value = Number(el.value);
+        }
         saveAaWorkspaceState();
         updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
         if (liveAuditTimer) clearTimeout(liveAuditTimer);

@@ -154,6 +154,7 @@ function runTests() {
   });
 
   assert.ok(rawAppJs.includes("['wh-dl-worker', 'modal-dl-worker', 'cmdk-dl-js'].forEach") && rawAppJs.includes("if (id === 'wh-decline-code' && el.value)") && !renderedHome.includes('#audit-form button\''), 'Webhook Retry Lab (#webhook-lab) must synchronize Fold-1 decline focus and download URLs without __ebTriggerHostCalc clicking .preset-btn and resetting custom store inputs');
+  assert.ok(rawAppJs.includes("if (id === 'input-aov' && Number(el.value) >= 5 && document.getElementById('wh-amount'))") && rawAppJs.includes("window.location.hash === '#webhook-lab' || qDecline || qStore || qAov"), 'Deep-link AOV and #input-aov edits must synchronize #wh-amount and auto-run #webhook-lab simulation');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
