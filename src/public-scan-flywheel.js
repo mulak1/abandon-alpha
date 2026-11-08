@@ -337,8 +337,13 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           if(ck)ck.textContent=rec;
           if(cks)cks.textContent='Annual Impact: '+ann;
           if(r2)r2.textContent=rec+' • '+ann;
+          var roiMult=Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString();
           var roiEl=document.getElementById('eb-scan-roi-proof');
-          if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString()+'x ROI) · 0% commission · 30-day guarantee';
+          if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+roiMult+'x ROI) · 0% commission · 30-day guarantee';
+          var uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),bp=document.getElementById('eb-scan-buy-playbook');
+          if(uSub)uSub.textContent='Compiled for '+tgt+' ($'+aov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
+          if(fBtn)fBtn.textContent='Complete '+tgt+' Recovery Pack ($29 — One-Time) →';
+          if(bp)bp.textContent='Get Complete '+tgt+' Pack ($29) →';
           var fixCta=document.getElementById('eb-scan-fix1-cta'),fixCode=document.getElementById('eb-scan-fix1-code');
           var dunLift='+$'+Math.round(d.recoverableDunningUsd||2098).toLocaleString()+'/mo';
           if(fixCta)fixCta.textContent='Get free Fix #1 snippet for '+tgt+' · '+code+' ('+dunLift+' lift · $0) →';

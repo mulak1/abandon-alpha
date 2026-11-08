@@ -248,8 +248,12 @@ function renderGrowthPageHtml(cfg, item, kind) {
           var el=document.getElementById('eb-live-cnn-readout'),k1=document.getElementById('eb-growth-r1-kpi');
           if(el)el.textContent=tgt+' → '+rec;
           if(k1)k1.textContent=rec;
+          var roiMult=Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString();
           var roiEl=document.getElementById('eb-growth-roi-proof');
-          if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+Math.max(10,Math.round(d.totalRecoverableUsd/29)).toLocaleString()+'x ROI) · 0% commission · 30-day guarantee';
+          if(roiEl)roiEl.textContent='Pays for $29 pack in < 1 recovered order ('+roiMult+'x ROI) · 0% commission · 30-day guarantee';
+          var uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier');
+          if(uSub)uSub.textContent='Compiled for '+tgt+' ($'+aov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
+          if(fBtn)fBtn.textContent='Complete '+tgt+' Recovery Pack ($29 — One-Time) →';
           var fixCta=document.getElementById('eb-growth-fix1-cta'),fixCode=document.getElementById('eb-growth-fix1-code');
           var dunLift='+$'+Math.round(d.recoverableDunningUsd||2098).toLocaleString()+'/mo';
           if(fixCta)fixCta.textContent='Get free Fix #1 snippet for '+tgt+' · '+code+' ('+dunLift+' lift · $0) →';

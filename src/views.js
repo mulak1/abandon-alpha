@@ -389,8 +389,13 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('pseo-leaked-val').textContent = '$' + leaked.toLocaleString() + '/mo';
       document.getElementById('pseo-rec-val').textContent = '+$' + rec.toLocaleString() + '/mo';
       document.getElementById('pseo-ann-val').textContent = '+$' + (rec * 12).toLocaleString() + '/yr';
+      var roiMult = Math.max(2, Math.round(rec / 29)).toLocaleString();
       var roiEl = document.getElementById('pseo-roi-proof');
-      if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + Math.max(2, Math.round(rec / 29)).toLocaleString() + 'x ROI) · 0% commission:';
+      if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission:';
+      var unlockSubEl = document.getElementById('in-card-unlock-sub');
+      if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ${escapeHtml(page.declineOrSignal)} ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
+      var fullBtn = document.getElementById('btn-prog-full-dossier');
+      if (fullBtn) fullBtn.textContent = 'Complete ${escapeHtml(page.declineOrSignal)} Recovery Pack ($29 — One-Time) →';
       var fix1El = document.getElementById('pseo-fix1-summary-cta');
       if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$' + rec.toLocaleString() + '/mo lift · $0) →';
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);

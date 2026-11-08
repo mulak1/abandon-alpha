@@ -105,6 +105,7 @@ function runTests() {
   assert.ok(renderedHome.includes('id="wh-copy-email-btn"') && rawAppJs.includes('copyWebhookEmailPreview'), 'Stripe Webhook Retry Lab must surface unmasked Step-1 recovery email with 1-click copy and $29 pack upgrade framing');
   assert.ok(renderedHome.includes('id="bandit-copy-offer-btn"') && rawAppJs.includes('copyBanditOfferPreview'), 'Exit Counter-Offer Simulator must surface 1-click counter-offer copy and $1.99/$29 upgrade links');
   assert.ok(renderedHome.includes('id="in-card-unlock-sub"') && rawAppJs.includes('Complete ${storeName} Recovery Pack ($29'), 'Bottom pricing bar must dynamically personalize to visitor store name, AOV, and 1-order ROI payback');
+  assert.ok(html.includes('in-card-unlock-sub') && rawGrowthJs.includes('in-card-unlock-sub') && scanHtml.includes('Get Complete '), 'Subpage calculators on /seo/*, /compare/*, /tools/*, and /scan/* must also personalize bottom pricing bar and CTAs');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
