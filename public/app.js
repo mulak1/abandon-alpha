@@ -981,8 +981,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
   const restoredFromStorage = restoreAaWorkspaceState();
   const qPreset = params.get('preset');
-  const qDecline = params.get('decline') || params.get('q') || params.get('target');
-  const qStore = params.get('store');
+  const rawTargetOrQ = (params.get('target') || params.get('q') || '').trim();
+  const isDeclineLike = /^(insufficient_funds|do_not_honor|expired_card|generic_decline|authentication_required|processing_error|card_velocity_exceeded|lost_card|stolen_card|invoice\.|checkout\.|customer\.)/i.test(rawTargetOrQ);
+  const qDecline = params.get('decline') || (isDeclineLike ? rawTargetOrQ : '');
+  const qStore = params.get('store') || (!isDeclineLike ? rawTargetOrQ : '');
   const qSessions = params.get('sessions');
   const qAov = params.get('aov');
   const hasDeepLink = Boolean(qPreset || qDecline || qStore || qSessions || qAov);
@@ -1029,6 +1031,27 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   } else {
     await runAuditRequest('shopify_dtc', true, false);
+  }
+
+  const checkoutState = params.get('checkout');
+  if (checkoutState === 'success' || checkoutState === 'cancel') {
+    window.__aaSampleEmailUnlocked = true;
+    const activeStore = document.getElementById('input-store')?.value || 'Gymshark';
+    const activeAov = Number(document.getElementById('input-aov')?.value || 92);
+    const activeDecline = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
+    const rule = activeDecline === 'auto_weighted' ? 'insufficient_funds' : activeDecline;
+    const snipEl = document.getElementById('out-sdk-snippet');
+    const snipWrap = document.getElementById('out-sdk-snippet-wrap');
+    if (snipEl) {
+      snipEl.textContent = buildDeclineSpecificFix1Snippet(activeStore, activeAov, rule);
+      snipEl.style.display = 'block';
+    }
+    if (snipWrap) snipWrap.style.display = 'flex';
+    const statusEl = document.getElementById('aa-inline-sample-status');
+    if (statusEl && checkoutState === 'success') {
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv" download style="color:#0F172A;text-decoration:underline;">Export Recovery Forecast (.CSV) &rarr;</a>`;
+    }
   }
 
   let liveAuditTimer = null;

@@ -125,6 +125,7 @@ function runTests() {
   assert.ok(rawAppJs.includes("copySdkBtnEl.removeAttribute('data-copied-fix1')") && rawAppJs.includes("['aa-screen1-buy-199', 'wh-buy-199'].forEach"), 'Homepage calculator must reset copy-sdk-btn 2-stage state and personalize $1.99/$29 status links when store or decline code changes');
   const rawEbApiJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'exact-baseline-api.js'), 'utf8');
   assert.ok(renderedHome.includes('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions') && rawEbApiJs.includes("p.set('metadata[sessions]', String(rawSessions))"), '__ebCheckout and handleTierCheckout must collect and forward sessions, aov, and decline into Stripe Checkout metadata and telemetry');
+  assert.ok(rawAppJs.includes('const isDeclineLike =') && rawAppJs.includes('✓ Payment Confirmed for <strong>') && renderedHome.includes("cTgt ? (' for ' + cTgt) : ''"), 'Post-purchase (?checkout=success) and cancel-return (?checkout=cancel) must smartly hydrate target store vs decline code and unmask/fulfill the store-specific bundle');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
