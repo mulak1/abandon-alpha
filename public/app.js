@@ -185,6 +185,10 @@ function updateUnmaskedSdkPreview(auditRes) {
     const b = document.getElementById(btnId);
     if (b) b.textContent = `Complete ${storeName} Pack ($29) →`;
   });
+  ['aa-screen1-buy-199', 'wh-buy-199'].forEach((btnId) => {
+    const b = document.getElementById(btnId);
+    if (b) b.textContent = `${storeName} 3-File Patch ($1.99)`;
+  });
   const modalBuy29 = document.getElementById('modal-buy-29');
   if (modalBuy29) {
     modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
@@ -207,10 +211,21 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (cmdkBuy29Lbl) {
     cmdkBuy29Lbl.textContent = `Get Complete ${storeName} Recovery Pack`;
   }
+  const copySdkBtnEl = document.getElementById('copy-sdk-btn');
+  if (copySdkBtnEl) {
+    copySdkBtnEl.removeAttribute('data-copied-fix1');
+    copySdkBtnEl.textContent = 'Copy Free Fix #1 Snippet';
+    copySdkBtnEl.style.color = '';
+  }
   const liveSnippetEl = document.getElementById('out-sdk-snippet');
   const isUnlockedNow = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))));
   if (liveSnippetEl && isUnlockedNow) {
     liveSnippetEl.textContent = buildDeclineSpecificFix1Snippet(storeName, aovVal, activeRule, specObj);
+    const statusEl = document.getElementById('aa-inline-sample-status');
+    const savedEm = (document.getElementById('aa-inline-sample-email')?.value || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))) || '').trim();
+    if (statusEl && statusEl.style.display !== 'none' && savedEm) {
+      statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(savedEm)}</strong> &bull; <a href="/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(savedEm)}" style="color:#047857;text-decoration:underline;">Get Complete ${escapeUiHtml(storeName)} Pack ($29) &rarr;</a> &middot; <a href="/buy/flash_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(savedEm)}" style="color:#0F172A;text-decoration:underline;">${escapeUiHtml(storeName)} 3-File Patch ($1.99) &rarr;</a>`;
+    }
   }
   const fold1WhLine = document.getElementById('aa-fold1-wh-line');
   if (fold1WhLine) {
@@ -579,6 +594,12 @@ window.__aaUnlockWebhookSample = function(ev) {
 };
 
 function copySdkSnippet() {
+  const btn = document.getElementById('copy-sdk-btn');
+  if (btn && btn.getAttribute('data-copied-fix1') === '1') {
+    if (window.__ebCheckout) window.__ebCheckout('playbook_pass');
+    else initiateStripeCheckout('starter');
+    return;
+  }
   const hasEm = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email')));
   const emIn = document.getElementById('aa-inline-sample-email');
   if (!hasEm) {
@@ -589,7 +610,6 @@ function copySdkSnippet() {
         emIn.focus();
         if (emIn.scrollIntoView) emIn.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      const btn = document.getElementById('copy-sdk-btn');
       if (btn) btn.textContent = 'Enter Work Email ($0) Below to Unmask & Copy!';
       return;
     }
@@ -599,15 +619,10 @@ function copySdkSnippet() {
     navigator.clipboard.writeText(code).catch(() => {});
   }
   if (window.__ebLogEvent) window.__ebLogEvent('copy_summary', { type: 'copy_fix1_snippet' });
-  const btn = document.getElementById('copy-sdk-btn');
   if (btn) {
     btn.textContent = '✓ Copied File 1 of 3 — Get All 3 Production Files ($29) →';
     btn.style.color = '#047857';
     btn.setAttribute('data-copied-fix1', '1');
-    btn.onclick = function() {
-      if (window.__ebCheckout) window.__ebCheckout('playbook_pass');
-      else initiateStripeCheckout('starter');
-    };
   }
 }
 
