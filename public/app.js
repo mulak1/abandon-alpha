@@ -193,6 +193,10 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (modalBuy29) {
     modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
   }
+  const modalBuy199 = document.getElementById('modal-buy-199');
+  if (modalBuy199) {
+    modalBuy199.textContent = `or ${storeName} 3-File Patch ($1.99)`;
+  }
   const totalRecVal = Number(auditRes?.totalRecoverableUsd || 36722);
   const roiMultVal = Math.max(10, Math.round(totalRecVal / 29)).toLocaleString();
   const stickySubEl = document.getElementById('sticky-sub-benefit');
@@ -212,10 +216,11 @@ function updateUnmaskedSdkPreview(auditRes) {
     cmdkBuy29Lbl.textContent = `Get Complete ${storeName} Recovery Pack`;
   }
   const sessVal = Number(document.getElementById('input-sessions')?.value || auditRes?.monthlySessions || 42000);
-  const whDlWorkerEl = document.getElementById('wh-dl-worker');
-  if (whDlWorkerEl) {
-    whDlWorkerEl.href = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
-  }
+  const workerUrl = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
+  ['wh-dl-worker', 'modal-dl-worker'].forEach((wId) => {
+    const wEl = document.getElementById(wId);
+    if (wEl) wEl.href = workerUrl;
+  });
   const copySdkBtnEl = document.getElementById('copy-sdk-btn');
   if (copySdkBtnEl) {
     copySdkBtnEl.removeAttribute('data-copied-fix1');
@@ -940,6 +945,10 @@ function openExitIntentModal() {
   const modalBuy29 = document.getElementById('modal-buy-29');
   if (modalBuy29) {
     modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
+  }
+  const modalBuy199 = document.getElementById('modal-buy-199');
+  if (modalBuy199) {
+    modalBuy199.textContent = `or ${storeName} 3-File Patch ($1.99)`;
   }
   const modal = document.getElementById('exit-intent-modal');
   if (modal) modal.classList.add('open');
