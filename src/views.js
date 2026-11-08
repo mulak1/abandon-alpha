@@ -583,6 +583,7 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       if (dCta) dCta.textContent = 'Get free Fix #1 snippet for ' + fTarget + ' (+$2,098/mo lift · $0) →';
       if (dCode) dCode.textContent = 'window.AbandonAlphaRules = { declineOrSignal: "' + fTarget + '", retryAfterHours: ' + fHrs + ', allowPromoStacking: false };';
       if (dDet && openDet !== false && cleanFilter && !dDet.open) dDet.open = true;
+      if (openDet !== false && window.history && window.history.replaceState) window.history.replaceState(null, '', '/directory' + (cleanFilter ? '?q=' + encodeURIComponent(cleanFilter) : ''));
       var emp = document.getElementById('dir-empty-state');
       if (emp) emp.style.display = matchedCount === 0 ? 'block' : 'none';
       if (matchedCount === 0 && q && q.trim()) {
@@ -848,6 +849,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       }
       var lpDet = document.getElementById('lp-fix1-details');
       if (lpDet && openDet !== false && !lpDet.open) lpDet.open = true;
+      if (openDet !== false && window.history && window.history.replaceState) window.history.replaceState(null, '', '/lp?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal);
     }
 
     async function runLpAudit(e, openDet) {

@@ -245,6 +245,9 @@ function updateUnmaskedSdkPreview(auditRes) {
     permalinkEl.href = `/scan/${encodeURIComponent(domain)}?decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
     permalinkEl.textContent = 'Shareable report: /scan/' + domain + ' →';
   }
+  const navQs = `?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
+  document.querySelectorAll('a[href^="/directory"]').forEach((a) => { a.href = `/directory${navQs}&q=${encodeURIComponent(activeRule)}`; });
+  document.querySelectorAll('#out-dunning-breakdown a').forEach((a) => { const bh = a.getAttribute('href').split('?')[0]; a.href = `${bh}${navQs}`; });
 
   const previewEl = document.getElementById('out-sdk-unmasked-preview');
   if (previewEl) {
@@ -502,6 +505,9 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
 
   const statusEl = document.getElementById('audit-form-status');
   if (isManualTrigger || isExplicitClick) {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', `/?target=${encodeURIComponent(res.storeName || 'Gymshark')}&decline=${encodeURIComponent(primaryDeclineCode)}&sessions=${res.monthlySessions || 42000}&aov=${res.aovUsd || 92}`);
+    }
     const fix1Details = document.getElementById('aa-fix1-details');
     if (fix1Details && !fix1Details.open) fix1Details.open = true;
     if (statusEl) {
@@ -515,8 +521,9 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   }
 
   if (Array.isArray(res.dunningBreakdown)) {
+    const bdQs = `?target=${encodeURIComponent(res.storeName || 'Gymshark')}&sessions=${res.monthlySessions || 42000}&aov=${res.aovUsd || 92}`;
     const breakdownHtml = res.dunningBreakdown.slice(0, 3).map((d) => {
-      const seoHref = DECLINE_SEO_LINKS[d.declineCode] || '/directory';
+      const seoHref = (DECLINE_SEO_LINKS[d.declineCode] || '/directory') + bdQs;
       return `
       <li>
         <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:6px;text-decoration:none;padding:2px 0;">

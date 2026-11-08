@@ -140,6 +140,7 @@ function runTests() {
   assert.ok(lbHtml.includes("var qExtra='&decline='+encodeURIComponent(code)") && html.includes('var pLabel = qTgt ?'), '/leaderboard and /seo/* must synchronously hydrate decline, sessions, aov, and target merchant across Fix #1 snippets, worker downloads, and /scan/* links');
   assert.ok(rawServerJs.includes('/seo/${bestSlug}${qs}') && dirHtml.includes("el.setAttribute('data-base-href', baseH)"), '/seo/:slug fallback redirects must preserve query strings and /directory must forward active target/volume params into playbook links');
   assert.ok(html.includes('.related-links-grid a.related-card') && rawGrowthJs.includes('window.history.replaceState(null,\'\',window.location.pathname+qStr)'), '/seo/* related playbook cards must carry active target, sessions, and aov parameters and subpage calculators must sync URL state');
+  assert.ok(rawAppJs.includes('#out-dunning-breakdown a') && rawAppJs.includes('a[href^="/directory"]') && rawAppJs.includes('window.history.replaceState(null, \'\', `/?target='), 'Homepage must forward active store, decline, sessions, and aov into Fold-1 breakdown links and /directory navbar links, and sync URL state');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
