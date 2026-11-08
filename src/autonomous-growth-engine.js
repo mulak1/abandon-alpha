@@ -244,6 +244,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         var tgt=(document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}';
         var b29=document.getElementById('eb-growth-buy-29'),b199=document.getElementById('eb-growth-buy-199'),dw=document.getElementById('eb-growth-dl-worker'),pl=document.getElementById('eb-growth-permalink-btn'),fixCta=document.getElementById('eb-growth-fix1-cta'),fixCode=document.getElementById('eb-growth-fix1-code'),gDet=document.getElementById('eb-growth-fix1-details'),qStr='?target='+encodeURIComponent(tgt)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;
         if(pl)pl.href='/scan/'+encodeURIComponent(tgt)+'?decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;
+        if(openDet!==false&&window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname+qStr);
         if(b29){b29.textContent='Get Complete '+tgt+' Pack ($29) →';b29.href='/buy/playbook_pass'+qStr;}
         if(b199)b199.href='/buy/flash_pass'+qStr;
         if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;

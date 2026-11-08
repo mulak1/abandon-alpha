@@ -414,6 +414,9 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       if (dlW) dlW.href = '/api/github-upgrade/stripe-recovery-worker.js?' + qStr;
       if (grLnk) grLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + '#grader';
       if (whLnk) whLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + '#webhook-lab';
+      var relCards = document.querySelectorAll('.related-links-grid a.related-card'), relQs = (qTgt ? 'target=' + encodeURIComponent(qTgt) + '&' : '') + 'sessions=' + s + '&aov=' + aov;
+      relCards.forEach(function(rc) { var bh = rc.getAttribute('data-base-href') || rc.getAttribute('href').split('?')[0]; rc.setAttribute('data-base-href', bh); rc.href = bh + '?' + relQs; });
+      if (openDet !== false && window.history && window.history.replaceState) window.history.replaceState(null, '', window.location.pathname + '?' + relQs);
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {
