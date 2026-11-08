@@ -203,6 +203,10 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (toastTitleEl) {
     toastTitleEl.textContent = `Save Your ${storeName} Recovery Plan (+${formatUsd(totalRecVal)}/mo)`;
   }
+  const cmdkBuy29Lbl = document.getElementById('cmdk-buy-29-label');
+  if (cmdkBuy29Lbl) {
+    cmdkBuy29Lbl.textContent = `Get Complete ${storeName} Recovery Pack`;
+  }
   const liveSnippetEl = document.getElementById('out-sdk-snippet');
   const isUnlockedNow = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))));
   if (liveSnippetEl && isUnlockedNow) {

@@ -111,6 +111,7 @@ function runTests() {
   assert.ok(dirHtml.includes('id="dir-inline-action-bar"') && dirHtml.includes('id="dir-buy-29"'), '/directory must include Fold-1 inline $29/$1.99 action bar that personalizes on filter selection');
   assert.ok(renderedHome.includes('#input-store, #lp-store, #sample-store, #eb-cnn-wb-input') && rawAppJs.includes('window.__ebActiveEntity = storeName'), '__ebCheckout must pass active store/domain target across all AbandonAlpha routes into Stripe Checkout');
   assert.ok(renderedHome.includes('Fix #1 Snippet Unmasked on Page!') && rawAppJs.includes('sticky-sub-benefit'), 'Exit-intent rescue toast and sticky conversion dock must use AbandonAlpha Fix #1 copy and dynamic store/ROI personalization');
+  assert.ok(!renderedHome.includes('skin-cycling.ics') && renderedHome.includes('id="cmdk-buy-29"'), 'Cmd+K modal must not leak DermLogic skin-cycling.ics into AbandonAlpha and must offer personalized $29/$1.99 actions');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
