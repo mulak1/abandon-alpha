@@ -37,6 +37,7 @@ function saveAaWorkspaceState() {
       whDeclineCode: document.getElementById('wh-decline-code')?.value || 'insufficient_funds',
       whEmail: document.getElementById('wh-email')?.value || 'founder@merchant.io',
       whAmount: Number(document.getElementById('wh-amount')?.value || 92),
+      selectedObjection: document.querySelector('#objection-btn-group .objection-btn.selected')?.getAttribute('data-obj') || 'C1_PRICE',
       savedAt: Date.now()
     };
     localStorage.setItem(AA_STATE_KEY, JSON.stringify(state));
@@ -70,6 +71,11 @@ function restoreAaWorkspaceState() {
     setVal('wh-decline-code', s.whDeclineCode);
     setVal('wh-email', s.whEmail);
     setVal('wh-amount', s.whAmount);
+    if (s.selectedObjection) {
+      document.querySelectorAll('#objection-btn-group .objection-btn, #exit-intent-modal .objection-btn').forEach((b) => {
+        b.classList.toggle('selected', b.getAttribute('data-obj') === s.selectedObjection);
+      });
+    }
     return true;
   } catch (_) {
     return false;
@@ -706,10 +712,11 @@ function renderPosteriorTable(arms, selectedId) {
 
 async function triggerBanditObjection(objectionCode, btnEl) {
   const normCode = objectionCode === 'C2_TIMING' ? 'C2_BROWSING' : objectionCode;
-  document.querySelectorAll('#objection-btn-group .objection-btn').forEach((b) => {
-    const match = btnEl ? (b === btnEl) : (b.getAttribute('data-obj') === normCode || b.getAttribute('data-obj') === objectionCode);
-    b.classList.toggle('selected', match);
+  document.querySelectorAll('#objection-btn-group .objection-btn, #exit-intent-modal .objection-btn').forEach((b) => {
+    const match = b.getAttribute('data-obj') === normCode || b.getAttribute('data-obj') === objectionCode || (btnEl && b === btnEl);
+    b.classList.toggle('selected', Boolean(match));
   });
+  saveAaWorkspaceState();
 
   const storeName = (document.getElementById('input-store')?.value || '').trim() || 'Gymshark';
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
