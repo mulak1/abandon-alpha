@@ -133,6 +133,7 @@ function runTests() {
   assert.ok(lpHtml.includes("'&decline=' + encodeURIComponent(code)") && lpHtml.includes('if (qt || qd || qs || qa) runLpAudit(null, false)'), '/lp must hydrate store, decline, sessions, and aov from URL query params and forward decline code into $29/$1.99 buy links');
   assert.ok(html.includes('id="pseo-dl-worker"') && html.includes('if(qs||qa||qt)recalcPseo('), '/seo/* playbooks must expose a dynamic Preview Worker (.JS) download link and hydrate URL query params on load');
   assert.ok(scanHtml.includes('id="eb-scan-dl-worker"') && rawGrowthJs.includes('id="eb-growth-dl-worker"'), '/scan/*, /compare/*, and /tools/* must expose dynamic Preview Worker (.JS) links and forward decline codes into buy links');
+  assert.ok(lbHtml.includes('id="lb-prev-dl-worker"') && lbHtml.includes('window.__lbRunInlineCheck(null,false)') && scanHtml.includes('window.__ebRecalcScanVolume(false)'), '/leaderboard and /scan/* must hydrate URL query parameters on load and expose Preview Worker (.JS) downloads');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

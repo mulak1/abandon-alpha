@@ -324,7 +324,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
 
     <script>
       window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → Grade '+s.grade+' ('+s.score+'/100)';var h1=document.getElementById('eb-scan-h1'),bc=document.getElementById('eb-scan-bc-target'),lt=document.getElementById('eb-scan-lead-target'),lg=document.getElementById('eb-scan-lead-grade'),fc=document.getElementById('eb-scan-fix1-cta'),fk=document.getElementById('eb-scan-fix1-code'),uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),sDet=document.getElementById('eb-scan-fix1-details'),cBtn=document.getElementById('eb-scan-copy-fix1-btn');if(sDet&&!sDet.open)sDet.open=true;if(cBtn){cBtn.removeAttribute('data-copied');cBtn.textContent='Copy Free Fix #1 Snippet';cBtn.style.color='';}if(h1){h1.textContent=s.target+' : ${esc(cfg.brandName)} Scorecard & Action Report';h1.setAttribute('data-entity-name',s.target);}if(bc)bc.textContent=s.target;if(lt)lt.textContent=s.target;if(lg)lg.textContent='Grade '+s.grade+' '+s.score+'/100';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val'),cg=document.getElementById('eb-card-grade-big'),ck=document.getElementById('eb-card-kpi-big'),cks=document.getElementById('eb-card-kpi-sub'),cf=document.getElementById('eb-card-finding-big'),ci=document.getElementById('eb-card-issue-sub'),s3=document.getElementById('eb-scan-step3-title'),bp=document.getElementById('eb-scan-buy-playbook'),bf=document.getElementById('eb-scan-buy-flash'),dw=document.getElementById('eb-scan-dl-worker');var sess=Number((document.getElementById('eb-scan-vol-sessions')||{}).value||3200),aov=Number((document.getElementById('eb-scan-vol-aov')||{}).value||92),code=(document.getElementById('eb-scan-vol-decline')||{}).value||'insufficient_funds';if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.score>=86?'Verified Leader':'Action Recommended';if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(cg)cg.textContent='Grade '+s.grade+' ('+s.score+'/100)';if(ck)ck.textContent=s.kpi1;if(cks)cks.textContent='${esc(vCopy.card2SubPrefix)} '+s.kpi2;if(cf)cf.textContent=s.cnnReadout;if(ci)ci.textContent='Key takeaway: '+s.issue;if(s3)s3.textContent='Ready-to-use recovery pack for '+s.target;var qStr='?target='+encodeURIComponent(s.target)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;if(bp){bp.href='/buy/playbook_pass'+qStr;bp.textContent='Get Complete '+s.target+' Pack ($29) →';}if(bf)bf.href='/buy/flash_pass'+qStr;if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;if(uSub)uSub.textContent='Compiled for '+s.target+' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';if(fBtn)fBtn.textContent='Complete '+s.target+' Recovery Pack ($29 — One-Time) →';var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);if(fc)fc.textContent='Get free Fix #1 snippet for '+s.target+' · '+code+' (+$2,098/mo lift · $0) →';if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+s.target+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};
-      window.__ebRecalcScanVolume=function(){
+      window.__ebRecalcScanVolume=function(openDet){
         var sess=Number((document.getElementById('eb-scan-vol-sessions')||{}).value||3200);
         var aov=Number((document.getElementById('eb-scan-vol-aov')||{}).value||92);
         var code=(document.getElementById('eb-scan-vol-decline')||{}).value||'insufficient_funds';
@@ -349,12 +349,13 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           if(bf)bf.href='/buy/flash_pass'+qStr;
           if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;
           var fixCta=document.getElementById('eb-scan-fix1-cta'),fixCode=document.getElementById('eb-scan-fix1-code'),sDet=document.getElementById('eb-scan-fix1-details');
-          if(sDet&&!sDet.open)sDet.open=true;
+          if(sDet&&openDet!==false&&!sDet.open)sDet.open=true;
           var dunLift='+$'+Math.round(d.recoverableDunningUsd||2098).toLocaleString()+'/mo';
           if(fixCta)fixCta.textContent='Get free Fix #1 snippet for '+tgt+' · '+code+' ('+dunLift+' lift · $0) →';
           if(fixCode){var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);fixCode.textContent='window.AbandonAlphaRules = { merchant: "'+tgt+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';}
         });
       };
+      window.addEventListener('DOMContentLoaded',function(){try{var sp=new URLSearchParams(window.location.search||''),qs=Number(sp.get('sessions')||0),qa=Number(sp.get('aov')||0),qd=(sp.get('decline')||'').trim();if(qs>=50&&document.getElementById('eb-scan-vol-sessions'))document.getElementById('eb-scan-vol-sessions').value=qs;if(qa>=5&&document.getElementById('eb-scan-vol-aov'))document.getElementById('eb-scan-vol-aov').value=qa;if(qd&&document.getElementById('eb-scan-vol-decline')){var dIn=document.getElementById('eb-scan-vol-decline');if(!Array.from(dIn.options).some(function(o){return o.value===qd;})){var o=document.createElement('option');o.value=qd;o.textContent=qd+' (Targeted Recovery)';dIn.appendChild(o);}dIn.value=qd;}if(qs||qa||qd)window.__ebRecalcScanVolume(false);}catch(_){}});
     </script>
 
     <!-- VERIFIED SCORECARD & KEY METRICS -->
@@ -546,6 +547,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           </details>
         </div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <a id="lb-prev-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js?target=gymshark.com&amp;decline=insufficient_funds" download style="font-size:12.5px;color:#475569;text-decoration:underline;">Preview Worker (.JS)</a>
           <a id="lb-prev-buy-29" href="/buy/playbook_pass?target=gymshark.com" rel="nofollow" style="padding:7px 14px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
           <a id="lb-prev-buy-199" href="/buy/flash_pass?target=gymshark.com" rel="nofollow" style="font-size:12.5px;color:#475569;text-decoration:underline;">$1.99 patch</a>
           <a id="lb-prev-report-link" href="/scan/gymshark.com" style="font-size:12.5px;font-weight:600;color:#0F172A;text-decoration:underline;">Full scorecard →</a>
@@ -554,7 +556,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     </div>
     <script>
       window.__lbTier='all';
-      window.__lbRunInlineCheck=function(e){
+      window.__lbRunInlineCheck=function(e,openDet){
         if(e&&e.preventDefault)e.preventDefault();
         var inp=document.getElementById('lb-check-input');
         var v=(inp&&inp.value.trim())||'';
@@ -564,7 +566,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           if(!d||!d.scan){window.location.href='/scan/'+encodeURIComponent(v);return;}
           var s=d.scan,card=document.getElementById('lb-instant-preview-card');
           if(card)card.style.display='flex';
-          var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),rl=document.getElementById('lb-prev-report-link'),fc=document.getElementById('lb-fix1-cta'),fk=document.getElementById('lb-fix1-code'),roi=document.getElementById('lb-roi-proof'),cBtn=document.getElementById('lb-copy-fix1-btn');
+          var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),dw=document.getElementById('lb-prev-dl-worker'),rl=document.getElementById('lb-prev-report-link'),fc=document.getElementById('lb-fix1-cta'),fk=document.getElementById('lb-fix1-code'),roi=document.getElementById('lb-roi-proof'),cBtn=document.getElementById('lb-copy-fix1-btn');
           if(cBtn){cBtn.removeAttribute('data-copied');cBtn.textContent='Copy Free Fix #1 Snippet';cBtn.style.color='';}
           if(pt)pt.textContent=s.target;
           if(pg)pg.textContent='Grade '+s.grade+' ('+s.score+'/100)';
@@ -575,10 +577,11 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           if(uSub)uSub.textContent='Compiled for '+s.target+' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
           if(fBtn)fBtn.textContent='Complete '+s.target+' Recovery Pack ($29 — One-Time) →';
           if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(s.target);
+          if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js?target='+encodeURIComponent(s.target)+'&decline=insufficient_funds';
           if(rl)rl.href='/scan/'+encodeURIComponent(s.target);
           if(fc)fc.textContent='Get free Fix #1 snippet for '+s.target+' · insufficient_funds (+$2,098/mo lift · $0) →';
           if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+s.target+'", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };';
-          var lbDet=document.getElementById('lb-fix1-details');if(lbDet&&!lbDet.open)lbDet.open=true;
+          var lbDet=document.getElementById('lb-fix1-details');if(lbDet&&openDet!==false&&!lbDet.open)lbDet.open=true;
         }).catch(function(){window.location.href='/scan/'+encodeURIComponent(v);});
         return false;
       };
@@ -599,6 +602,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
       };
       window.__lbFilter=function(t,btn){window.__lbTier=t;var bs=document.querySelectorAll('.lb-tab-btn');for(var i=0;i<bs.length;i++){bs[i].style.background='#F8FAFC';bs[i].style.color='#0F172A';}if(btn){btn.style.background='${esc(badgeColor)}';btn.style.color='#FFFFFF';}if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_filter',tier:t});window.__lbApply();};
       window.__lbSearch=function(){window.__lbApply();};
+      window.addEventListener('DOMContentLoaded',function(){try{var sp=new URLSearchParams(window.location.search||''),qt=(sp.get('target')||sp.get('q')||sp.get('store')||'').trim();if(qt&&document.getElementById('lb-check-input')){document.getElementById('lb-check-input').value=qt;window.__lbRunInlineCheck(null,false);}}catch(_){}});
     </script>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;">
       <table aria-label="${esc(cfg.brandName)} Public Leaderboard" style="width:100%;border-collapse:collapse;font-size:14px;">
