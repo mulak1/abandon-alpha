@@ -113,10 +113,13 @@ function buildDeclineSpecificFix1Snippet(storeName, aovUsd, activeRule, specObj)
   const retryHrs = activeRule === 'expired_card' ? 0 : (activeRule === 'do_not_honor' ? 24 : (activeRule === 'authentication_required' ? 1 : (activeRule === 'processing_error' ? 4 : 72)));
   const windowKey = activeRule === 'expired_card' ? 'ZERO_RETRY_1TAP_UPDATER' : (activeRule === 'do_not_honor' ? '24H_ISSUER_COOLDOWN' : (activeRule === 'authentication_required' ? 'INSTANT_3DS2_LINK' : (activeRule === 'processing_error' ? '4H_EXP_BACKOFF' : '1ST_15TH_0600_LOCAL')));
   const subj = (specObj || SPECIMEN_SUBJECT_BY_DECLINE[activeRule] || SPECIMEN_SUBJECT_BY_DECLINE.insufficient_funds).tpl(storeName);
+  const selObj = document.querySelector('#objection-btn-group .objection-btn.selected')?.getAttribute('data-obj') || 'C1_PRICE';
+  const armMap = { C1_PRICE: 'ALPHA15 (15% Founders Rebate)', C2_BROWSING: 'CARTLOCK48 (48h Saved Cart)', C3_APPROVAL: 'CFO-LOCK14 (14-Day CFO Price Lock)', C4_TRUST: 'GUARANTEE30 (30-Day Refund Shield)', C5_SUBSCRIPTION: 'PAUSE60 (1-Tap 60-Day Pause)', C6_FEATURE_FIT: 'SANDBOX7 (7-Day Free Sandbox)' };
+  const armCode = armMap[selObj] || `${selObj} (ALPHA15)`;
   return [
-    `/* Fix #1 Copy-Paste Checkout & Stripe Retry Rule (${storeName} · ${activeRule}) */`,
-    `<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(storeName)}" data-aov="${aovUsd}" data-decline-focus="${activeRule}" async></script>`,
-    `<script>window.AbandonAlphaRules = { declineCode: "${activeRule}", retryAfterHours: ${retryHrs}, window: "${windowKey}", subjectLine: ${subj}, allowPromoStacking: false };</script>`
+    `/* Fix #1 Copy-Paste Checkout & Stripe Retry Rule (${storeName} · ${activeRule} · ${selObj}) */`,
+    `<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(storeName)}" data-aov="${aovUsd}" data-decline-focus="${activeRule}" data-objection="${selObj}" async></script>`,
+    `<script>window.AbandonAlphaRules = { declineCode: "${activeRule}", retryAfterHours: ${retryHrs}, window: "${windowKey}", banditArm: "${armCode}", subjectLine: ${subj}, allowPromoStacking: false };</script>`
   ].join('\n');
 }
 
