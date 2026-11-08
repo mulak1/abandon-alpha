@@ -136,6 +136,7 @@ function runTests() {
   assert.ok(lbHtml.includes('id="lb-prev-dl-worker"') && lbHtml.includes('window.__lbRunInlineCheck(null,false)') && scanHtml.includes('window.__ebRecalcScanVolume(false)'), '/leaderboard and /scan/* must hydrate URL query parameters on load and expose Preview Worker (.JS) downloads');
   assert.ok(dirHtml.includes('id="dir-dl-worker"') && dirHtml.includes('filterDirectory(qt, false)') && rawGrowthJs.includes('window.__ebRecalcGrowthVolume(false)'), '/directory, /compare/*, and /tools/* must hydrate URL query parameters on load and expose Preview Worker (.JS) downloads');
   assert.ok(lpHtml.includes('id="lp-dl-worker"') && rawGrowthJs.includes('item.slug}${qs}'), '/lp must expose Preview Worker (.JS) download and /compare/* / /tools/* fallback redirects must preserve query parameters');
+  assert.ok(rawAppJs.includes('/scan/${encodeURIComponent(domain)}?decline=') && rawGrowthJs.includes("pl.href='/scan/'+encodeURIComponent(tgt)+'?decline='"), 'Homepage and /compare/* / /tools/* permalink links to /scan/* must carry active decline, sessions, and aov query parameters');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

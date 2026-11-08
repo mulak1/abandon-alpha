@@ -211,9 +211,10 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (cmdkBuy29Lbl) {
     cmdkBuy29Lbl.textContent = `Get Complete ${storeName} Recovery Pack`;
   }
+  const sessVal = Number(document.getElementById('input-sessions')?.value || auditRes?.monthlySessions || 42000);
   const whDlWorkerEl = document.getElementById('wh-dl-worker');
   if (whDlWorkerEl) {
-    whDlWorkerEl.href = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}`;
+    whDlWorkerEl.href = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
   }
   const copySdkBtnEl = document.getElementById('copy-sdk-btn');
   if (copySdkBtnEl) {
@@ -241,7 +242,7 @@ function updateUnmaskedSdkPreview(auditRes) {
 
   const permalinkEl = document.getElementById('aa-live-scan-permalink');
   if (permalinkEl) {
-    permalinkEl.href = '/scan/' + encodeURIComponent(domain);
+    permalinkEl.href = `/scan/${encodeURIComponent(domain)}?decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
     permalinkEl.textContent = 'Shareable report: /scan/' + domain + ' →';
   }
 
