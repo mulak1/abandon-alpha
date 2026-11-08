@@ -316,12 +316,17 @@ async function probeLiveMerchantStore(domainOverride) {
 
   if (res.storeName) document.getElementById('input-store').value = res.storeName;
   if (res.estimatedSessions) document.getElementById('input-sessions').value = res.estimatedSessions;
-  if (res.estimatedAovUsd) document.getElementById('input-aov').value = res.estimatedAovUsd;
+  if (res.estimatedAovUsd) {
+    document.getElementById('input-aov').value = res.estimatedAovUsd;
+    if (document.getElementById('wh-amount')) document.getElementById('wh-amount').value = res.estimatedAovUsd;
+  }
   if (res.estimatedAbandonRatePct) document.getElementById('input-abandon').value = res.estimatedAbandonRatePct;
   if (res.estimatedFailedCardRatePct) document.getElementById('input-fail').value = res.estimatedFailedCardRatePct;
   if (res.recommendedDeclineFocus) {
     const df = document.getElementById('input-decline-focus');
     if (df) df.value = res.recommendedDeclineFocus;
+    const whSel = document.getElementById('wh-decline-code');
+    if (whSel && Array.from(whSel.options).some((o) => o.value === res.recommendedDeclineFocus)) whSel.value = res.recommendedDeclineFocus;
   }
   const customStackEl = document.getElementById('custom-stack');
   if (customStackEl && res.detectedStack && Array.from(customStackEl.options).some((o) => o.value === res.detectedStack)) {
@@ -333,6 +338,11 @@ async function probeLiveMerchantStore(domainOverride) {
   }
   saveAaWorkspaceState();
   await runAuditRequest('custom', false, true);
+  if (typeof runWebhookSimulation === 'function') runWebhookSimulation();
+  if (typeof triggerBanditObjection === 'function') {
+    const selObjBtn = document.querySelector('#objection-btn-group .objection-btn.selected');
+    triggerBanditObjection(selObjBtn?.getAttribute('data-obj') || 'C1_PRICE', selObjBtn);
+  }
 }
 
 function applyPreset(presetKey, btnEl) {
@@ -1125,7 +1135,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         saveAaWorkspaceState();
         updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
         if (liveAuditTimer) clearTimeout(liveAuditTimer);
-        liveAuditTimer = setTimeout(() => runAuditRequest('custom', false, true), 480);
+        liveAuditTimer = setTimeout(() => {
+          runAuditRequest('custom', false, true);
+          if (id === 'input-store' || id === 'input-aov') {
+            if (typeof runWebhookSimulation === 'function') runWebhookSimulation();
+            if (typeof triggerBanditObjection === 'function') {
+              const selObjBtn = document.querySelector('#objection-btn-group .objection-btn.selected');
+              triggerBanditObjection(selObjBtn?.getAttribute('data-obj') || 'C1_PRICE', selObjBtn);
+            }
+          }
+        }, 480);
       });
     }
   });
