@@ -248,7 +248,8 @@ function updateUnmaskedSdkPreview(auditRes) {
     const statusEl = document.getElementById('aa-inline-sample-status');
     const savedEm = (document.getElementById('aa-inline-sample-email')?.value || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))) || '').trim();
     if (statusEl && statusEl.style.display !== 'none' && savedEm) {
-      statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(savedEm)}</strong> &bull; <a href="/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(savedEm)}" style="color:#047857;text-decoration:underline;">Get Complete ${escapeUiHtml(storeName)} Pack ($29) &rarr;</a> &middot; <a href="/buy/flash_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(savedEm)}" style="color:#0F172A;text-decoration:underline;">${escapeUiHtml(storeName)} 3-File Patch ($1.99) &rarr;</a>`;
+      const leadQs = `&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}&objection=${encodeURIComponent(selObj)}`;
+      statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(savedEm)}</strong> &bull; <a href="${workerUrl}" download style="color:#047857;text-decoration:underline;">Preview Worker (.JS) &rarr;</a> &middot; <a href="/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(savedEm)}${leadQs}" style="color:#047857;text-decoration:underline;">Get Complete ${escapeUiHtml(storeName)} Pack ($29) &rarr;</a> &middot; <a href="/buy/flash_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(savedEm)}${leadQs}" style="color:#0F172A;text-decoration:underline;">${escapeUiHtml(storeName)} 3-File Patch ($1.99) &rarr;</a>`;
     }
   }
   const fold1WhLine = document.getElementById('aa-fold1-wh-line');
@@ -582,9 +583,13 @@ window.__aaUnlockSampleSnippet = function(ev) {
     localStorage.setItem('eb_captured_email', email);
   } catch (_) {}
   const storeName = document.getElementById('input-store')?.value || 'Gymshark';
+  const sessVal = Number(document.getElementById('input-sessions')?.value || 3200);
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
   const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
   const activeRule = declineCode === 'auto_weighted' ? 'insufficient_funds' : declineCode;
+  const selObj = document.querySelector('#objection-btn-group .objection-btn.selected')?.getAttribute('data-obj') || 'C1_PRICE';
+  const leadQs = `&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovUsd}&objection=${encodeURIComponent(selObj)}`;
+  const workerUrl = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}${leadQs}`;
   const unmaskedCode = buildDeclineSpecificFix1Snippet(storeName, aovUsd, activeRule);
   const snippetEl = document.getElementById('out-sdk-snippet');
   const snippetWrapEl = document.getElementById('out-sdk-snippet-wrap');
@@ -604,12 +609,12 @@ window.__aaUnlockSampleSnippet = function(ev) {
   const statusEl = document.getElementById('aa-inline-sample-status');
   if (statusEl) {
     statusEl.style.display = 'block';
-    statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}" style="color:#047857;text-decoration:underline;">Get Complete ${escapeUiHtml(storeName)} Pack ($29) &rarr;</a> &middot; <a href="/buy/flash_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}" style="color:#0F172A;text-decoration:underline;">3-File Patch ($1.99) &rarr;</a>`;
+    statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="${workerUrl}" download style="color:#047857;text-decoration:underline;">Preview Worker (.JS) &rarr;</a> &middot; <a href="/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}${leadQs}" style="color:#047857;text-decoration:underline;">Get Complete ${escapeUiHtml(storeName)} Pack ($29) &rarr;</a> &middot; <a href="/buy/flash_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}${leadQs}" style="color:#0F172A;text-decoration:underline;">3-File Patch ($1.99) &rarr;</a>`;
   }
   fetch('/api/leads', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, pageUrl: window.location.pathname, utmSource: 'aa_inline_fix1_sample' })
+    body: JSON.stringify({ email, target: storeName, decline: activeRule, sessions: sessVal, aov: aovUsd, objection: selObj, pageUrl: window.location.pathname, utmSource: 'aa_inline_fix1_sample' })
   }).catch(() => {});
   if (window.__LAST_WH_RES__) renderWebhookOutput(window.__LAST_WH_RES__, window.__LAST_WH_PAYLOAD__);
   return false;
