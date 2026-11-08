@@ -668,8 +668,10 @@ function attachExactBaselinePack(app, options = {}) {
   });
   app.get('/api/github-upgrade/export.csv', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
-    store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/export.csv', isTest, isCrawler, meta: { export: 'sheetjs_csv' } });
-    const rows = [['Scenario_Preset', cfg.kpis[0].label, cfg.kpis[1].label, cfg.kpis[2].label, cfg.kpis[3].label, 'Unlock_Full_Model_URL'], ...cfg.presets.slice(0, 1).map((p) => [p.label, ...(cfg.presetKpis[p.key] || cfg.kpis.map((k) => k.val)), `https://${cfg.domain}/?unlock=flash_pass`]), ['[LOCKED — Remaining Rows + Production Files]', 'Holdback Gate Active', 'Unlock Full Pack ($1.99)', 'Instant Download', 'Verified', `https://${cfg.domain}/buy/flash_pass`]];
+    const qTgt = String(req.query.target || '').replace(/[<>"']/g, '').trim().slice(0, 44), qDec = String(req.query.decline || 'insufficient_funds').replace(/[<>"']/g, '').trim().slice(0, 40);
+    store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/export.csv', isTest, isCrawler, meta: { export: 'sheetjs_csv', target: qTgt || undefined } });
+    const firstRowLabel = qTgt ? `${qTgt} (${qDec})` : cfg.presets[0].label;
+    const rows = [['Scenario_Preset', cfg.kpis[0].label, cfg.kpis[1].label, cfg.kpis[2].label, cfg.kpis[3].label, 'Unlock_Full_Model_URL'], [firstRowLabel, ...(cfg.presetKpis[cfg.presets[0].key] || cfg.kpis.map((k) => k.val)), `https://${cfg.domain}/?unlock=flash_pass&target=${encodeURIComponent(qTgt || cfg.presets[0].key)}`], ['[LOCKED — Remaining Rows + Production Files]', 'Holdback Gate Active', 'Unlock Full Pack ($1.99)', 'Instant Download', 'Verified', `https://${cfg.domain}/buy/flash_pass${qTgt ? '?target=' + encodeURIComponent(qTgt) : ''}`]];
     res.status(200).type('text/csv; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-sample-row1.csv"`).send(rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n'));
   });
   app.get('/api/github-upgrade/skin-cycling.ics', (req, res) => {
@@ -681,8 +683,10 @@ function attachExactBaselinePack(app, options = {}) {
   // 4B. Clean Markdown / Ritual Notes Bundle
   app.get('/api/github-upgrade/llms-bundle.txt', (req, res) => {
     const { isTest, isCrawler } = classifyTrafficRequest(req);
-    store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/llms-bundle.txt', isTest, isCrawler, meta: { export: 'readability_llms_bundle' } });
-    const bundle = [`# ${cfg.brandName} (${cfg.domain}): Verified Protocol & Benchmark Summary`, `> ${cfg.explainerText}`, '', '## 1. Before / After Remediation Diff', cfg.remediationDiff.beforeLine, cfg.remediationDiff.afterLine, '', '## 2. Verified Scenario Presets', ...cfg.presets.map((p) => `- [${p.label}](https://${cfg.domain}/?preset=${encodeURIComponent(p.key)}): ${(cfg.presetKpis[p.key] || []).join(' | ')}`), '', '## 3. Single-Audit Export Pass ($1.99)', `- Unlock Full Production Deliverable & Exports: https://${cfg.domain}/?unlock=flash_pass`].join('\n');
+    const qTgt = String(req.query.target || '').replace(/[<>"']/g, '').trim().slice(0, 44), qDec = String(req.query.decline || 'insufficient_funds').replace(/[<>"']/g, '').trim().slice(0, 40), qAov = Number(req.query.aov || 92) || 92;
+    store.recordEvent({ eventType: 'calculate', pageUrl: '/api/github-upgrade/llms-bundle.txt', isTest, isCrawler, meta: { export: 'readability_llms_bundle', target: qTgt || undefined } });
+    const customHeader = qTgt ? [`## 0. Custom Recovery Rules for ${qTgt} (${qDec} • $${qAov} AOV)`, `window.AbandonAlphaRules = { merchant: "${qTgt}", declineCode: "${qDec}", aovUsd: ${qAov}, retryAfterHours: ${qDec === 'expired_card' ? 0 : (qDec === 'do_not_honor' ? 24 : 72)}, allowPromoStacking: false };`, ''] : [];
+    const bundle = [`# ${cfg.brandName} (${cfg.domain}): Verified Protocol & Benchmark Summary`, `> ${cfg.explainerText}`, '', ...customHeader, '## 1. Before / After Remediation Diff', cfg.remediationDiff.beforeLine, cfg.remediationDiff.afterLine, '', '## 2. Verified Scenario Presets', ...cfg.presets.map((p) => `- [${p.label}](https://${cfg.domain}/?preset=${encodeURIComponent(p.key)}): ${(cfg.presetKpis[p.key] || []).join(' | ')}`), '', '## 3. Single-Audit Export Pass ($1.99)', `- Unlock Full Production Deliverable & Exports: https://${cfg.domain}/?unlock=flash_pass`].join('\n');
     res.status(200).type('text/plain; charset=utf-8').setHeader('Content-Disposition', `attachment; filename="${cfg.moduleId}-protocol-bundle.txt"`).send(bundle);
   });
   app.get('/api/github-upgrade/fuse-search', (req, res) => {

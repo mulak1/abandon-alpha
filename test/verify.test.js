@@ -126,6 +126,7 @@ function runTests() {
   const rawEbApiJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'exact-baseline-api.js'), 'utf8');
   assert.ok(renderedHome.includes('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions') && rawEbApiJs.includes("p.set('metadata[sessions]', String(rawSessions))"), '__ebCheckout and handleTierCheckout must collect and forward sessions, aov, and decline into Stripe Checkout metadata and telemetry');
   assert.ok(rawAppJs.includes('const isDeclineLike =') && rawAppJs.includes('✓ Payment Confirmed for <strong>') && renderedHome.includes("cTgt ? (' for ' + cTgt) : ''"), 'Post-purchase (?checkout=success) and cancel-return (?checkout=cancel) must smartly hydrate target store vs decline code and unmask/fulfill the store-specific bundle');
+  assert.ok(rawEbApiJs.includes('## 0. Custom Recovery Rules for ${qTgt}') && rawAppJs.includes('/api/github-upgrade/llms-bundle.txt${dlQs}'), 'Downloadable .TXT and .CSV fulfillment endpoints must dynamically include the buyer target store, decline code, and AOV');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

@@ -1053,8 +1053,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (snipWrap) snipWrap.style.display = 'flex';
     const statusEl = document.getElementById('aa-inline-sample-status');
     if (statusEl && checkoutState === 'success') {
+      const dlQs = `?target=${encodeURIComponent(activeStore)}&decline=${encodeURIComponent(rule)}&aov=${activeAov}`;
       statusEl.style.display = 'block';
-      statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv" download style="color:#0F172A;text-decoration:underline;">Export Recovery Forecast (.CSV) &rarr;</a>`;
+      statusEl.innerHTML = `✓ Payment Confirmed for <strong>${escapeUiHtml(activeStore)}</strong> &bull; <a href="/api/github-upgrade/llms-bundle.txt${dlQs}" download style="color:#047857;text-decoration:underline;">Download 3-File Recovery Bundle (.TXT) &rarr;</a> &middot; <a href="/api/github-upgrade/export.csv${dlQs}" download style="color:#0F172A;text-decoration:underline;">Export Recovery Forecast (.CSV) &rarr;</a>`;
     }
   }
 
