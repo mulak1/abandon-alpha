@@ -108,6 +108,7 @@ function runTests() {
   assert.ok(html.includes('in-card-unlock-sub') && rawGrowthJs.includes('in-card-unlock-sub') && scanHtml.includes('Get Complete '), 'Subpage calculators on /seo/*, /compare/*, /tools/*, and /scan/* must also personalize bottom pricing bar and CTAs');
   assert.ok(lpHtml.includes('Get Complete \' + store + \' Recovery Pack') && sampleHtml.includes('Get Complete \'+st+\' Recovery Pack') && lbHtml.includes('Get Complete \'+s.target+\' Pack'), '/lp, /sample, and /leaderboard must also dynamically personalize primary $29 Pack CTAs and bottom pricing bar');
   assert.ok(renderedHome.includes('id="modal-buy-29"') && !rawAppJs.includes('SQLite Posterior α updated'), 'Exit-Intent preview modal must feature store-personalized title, plain-English save rate copy, and direct $29/$1.99 checkout actions');
+  assert.ok(dirHtml.includes('id="dir-inline-action-bar"') && dirHtml.includes('id="dir-buy-29"'), '/directory must include Fold-1 inline $29/$1.99 action bar that personalizes on filter selection');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

@@ -459,6 +459,14 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
             <span style="font-size:12.5px;font-weight:700;color:#475569;">Quick Filter:</span>
             ${['All', 'do_not_honor', 'insufficient_funds', 'expired_card', 'generic_decline', 'Shopify', 'invoice.payment_failed'].map((tag) => `<button type="button" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='${tag === 'All' ? '' : tag}';filterDirectory(inp.value);}" style="padding:4px 10px;border-radius:999px;border:none;background:#F1F5F9;color:#0F172A;font-size:12.5px;font-weight:600;cursor:pointer;">${tag}</button>`).join('')}
           </div>
+          <div id="dir-inline-action-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;font-size:12.5px;color:#475569;">
+            <span id="dir-roi-proof">All 60 recovery playbooks included &middot; Pays for $29 pack in &lt; 1 recovered order (0% commission):</span>
+            <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <a id="dir-buy-29" href="/buy/playbook_pass?utm_source=directory" rel="nofollow" style="color:#047857;font-weight:700;text-decoration:underline;">Get All 60 Playbooks ($29 Pack) &rarr;</a>
+              <span style="color:#CBD5E1;" aria-hidden="true">|</span>
+              <a id="dir-buy-199" href="/buy/flash_pass?utm_source=directory" rel="nofollow" style="color:#0F172A;font-weight:600;text-decoration:underline;">3-File Patch ($1.99)</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -533,6 +541,20 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       });
       var st = document.getElementById('dir-match-status');
       if (st) st.textContent = !tokens.length ? ('Showing all ' + cards.length + ' Playbooks') : ('Showing ' + matchedCount + ' of ' + cards.length + ' Playbooks');
+      var cleanFilter = (q || '').trim();
+      var b29 = document.getElementById('dir-buy-29');
+      var b199 = document.getElementById('dir-buy-199');
+      var uSub = document.getElementById('in-card-unlock-sub');
+      var fBtn = document.getElementById('btn-prog-full-dossier');
+      if (b29) {
+        b29.href = '/buy/playbook_pass?utm_source=directory' + (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : '');
+        b29.textContent = cleanFilter ? ('Get ' + cleanFilter + ' + All 60 Playbooks ($29) →') : 'Get All 60 Playbooks ($29 Pack) →';
+      }
+      if (b199) {
+        b199.href = '/buy/flash_pass?utm_source=directory' + (cleanFilter ? '&target=' + encodeURIComponent(cleanFilter) : '');
+      }
+      if (uSub && cleanFilter) uSub.textContent = 'Compiled for ' + cleanFilter + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
+      if (fBtn && cleanFilter) fBtn.textContent = 'Complete ' + cleanFilter + ' Recovery Pack ($29 — One-Time) →';
       var emp = document.getElementById('dir-empty-state');
       if (emp) emp.style.display = matchedCount === 0 ? 'block' : 'none';
       if (matchedCount === 0 && q && q.trim()) {
