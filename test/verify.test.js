@@ -121,6 +121,7 @@ function runTests() {
   assert.ok(rawGrowthJs.includes('id="eb-growth-buy-29"') && rawGrowthJs.includes('id="eb-growth-buy-199"'), '/compare/* and /tools/* must dynamically personalize inline $29/$1.99 action pack links on target check and volume calculation');
   assert.ok(scanHtml.includes("bp.href='/buy/playbook_pass?target='+encodeURIComponent(tgt)+'&sessions='+sess+'&aov='+aov") && lbHtml.includes("roi.textContent='Compiled for '+s.target"), '/scan/* and /leaderboard must sync custom volume query parameters into $29/$1.99 links and reset copy buttons on target change');
   assert.ok(lpHtml.includes("'&sessions=' + sessVal + '&aov=' + aovVal") && sampleHtml.includes("b199.textContent='Or unlock '+st+' 3-File Patch ($1.99)'") && html.includes("pseoCopyBtn.removeAttribute('data-copied')"), '/lp, /sample, and /seo/* must reset 2-stage copy buttons on input change and personalize $29/$1.99 links with sessions, aov, and store name');
+  assert.ok(dirHtml.includes('id="dir-fix1-details"') && dirHtml.includes('id="dir-copy-fix1-btn"'), '/directory must include a dynamic Fix #1 snippet drawer and 2-stage copy button that updates and opens on filter selection');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

@@ -479,6 +479,14 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
               <a id="dir-buy-199" href="/buy/flash_pass?utm_source=directory" rel="nofollow" style="color:#0F172A;font-weight:600;text-decoration:underline;">3-File Patch ($1.99)</a>
             </span>
           </div>
+          <details id="dir-fix1-details" style="margin-top:6px;">
+            <summary id="dir-fix1-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
+            <code id="dir-fix1-code" style="display:block;margin-top:6px;padding:8px 10px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
+              <button type="button" id="dir-copy-fix1-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:12px;font-weight:600;" onclick="if(this.getAttribute('data-copied')==='1'){var b29=document.getElementById('dir-buy-29');window.location.href=(b29&&b29.href)||'/buy/playbook_pass?utm_source=directory';return;}var c=document.getElementById('dir-fix1-code');if(navigator.clipboard&&c)navigator.clipboard.writeText(c.textContent);this.setAttribute('data-copied','1');this.textContent='✓ Copied Step-1 Rule — Get All 60 Playbooks ($29) →';this.style.color='#047857';">Copy Free Fix #1 Snippet</button>
+              <span style="font-size:11.5px;color:#64748B;">Step 1 of 3 &middot; All 60 playbooks in $29 pack</span>
+            </div>
+          </details>
         </div>
       </div>
     </div>
@@ -567,6 +575,13 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       }
       if (uSub && cleanFilter) uSub.textContent = 'Compiled for ' + cleanFilter + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
       if (fBtn && cleanFilter) fBtn.textContent = 'Complete ' + cleanFilter + ' Recovery Pack ($29 — One-Time) →';
+      var dCta = document.getElementById('dir-fix1-cta'), dCode = document.getElementById('dir-fix1-code'), dDet = document.getElementById('dir-fix1-details'), dBtn = document.getElementById('dir-copy-fix1-btn');
+      if (dBtn) { dBtn.removeAttribute('data-copied'); dBtn.textContent = 'Copy Free Fix #1 Snippet'; dBtn.style.color = ''; }
+      var fTarget = cleanFilter || 'insufficient_funds';
+      var fHrs = fTarget.indexOf('expired') !== -1 ? 0 : (fTarget.indexOf('do_not_honor') !== -1 ? 24 : 72);
+      if (dCta) dCta.textContent = 'Get free Fix #1 snippet for ' + fTarget + ' (+$2,098/mo lift · $0) →';
+      if (dCode) dCode.textContent = 'window.AbandonAlphaRules = { declineOrSignal: "' + fTarget + '", retryAfterHours: ' + fHrs + ', allowPromoStacking: false };';
+      if (dDet && cleanFilter && !dDet.open) dDet.open = true;
       var emp = document.getElementById('dir-empty-state');
       if (emp) emp.style.display = matchedCount === 0 ? 'block' : 'none';
       if (matchedCount === 0 && q && q.trim()) {
