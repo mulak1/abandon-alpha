@@ -243,30 +243,28 @@ function getVerticalScanCopy(cfg, scan) {
 
 function renderScanSummaryCardsHtml(cfg, scan, badgeColor) {
   const isHigh = scan.score >= 86;
-  const strokeCol = isHigh ? '#047857' : '#BE123C';
-  const softBg = isHigh ? '#ECFDF5' : '#FFF1F2';
+  const strokeCol = isHigh ? '#047857' : '#0F172A';
+  const softBg = isHigh ? '#ECFDF5' : '#F1F5F9';
   const statusLabel = isHigh ? 'Top Performer' : (scan.score >= 75 ? 'Moderate Opportunity' : 'Action Needed');
   const vCopy = getVerticalScanCopy(cfg, scan);
-  const lockSvg = (AA_VIEWS && AA_VIEWS.AA_LOCK_SVG) || '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
   return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px;">
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-        <span style="font-size:13px;font-weight:700;color:#475569;">1. Overall Benchmark Score (Free Proof)</span>
-        <span style="padding:2px 9px;border-radius:999px;background:${softBg};color:${strokeCol};font-size:11.5px;font-weight:700;white-space:nowrap;">${statusLabel}</span>
+        <span style="font-size:13px;font-weight:600;color:#475569;">Overall benchmark score</span>
+        <span style="padding:2px 9px;border-radius:999px;background:${softBg};color:${strokeCol};font-size:11.5px;font-weight:600;white-space:nowrap;">${statusLabel}</span>
       </div>
-      <div id="eb-card-grade-big" style="font-size:23px;font-weight:800;color:${strokeCol};font-variant-numeric:tabular-nums;line-height:1.15;">Grade ${esc(scan.grade)} (${scan.score}/100)</div>
-      <div style="width:100%;height:7px;border-radius:999px;background:#E2E8F0;overflow:hidden;"><div style="width:${scan.score}%;height:100%;background:${strokeCol};border-radius:999px;"></div></div>
+      <div id="eb-card-grade-big" style="font-size:23px;font-weight:700;color:#0F172A;font-variant-numeric:tabular-nums;line-height:1.15;">Grade ${esc(scan.grade)} (${scan.score}/100)</div>
+      <div style="width:100%;height:6px;border-radius:999px;background:#E2E8F0;overflow:hidden;"><div style="width:${scan.score}%;height:100%;background:#047857;border-radius:999px;"></div></div>
+    </div>
+    <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:12px;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
+      <span style="font-size:13px;font-weight:600;color:#065F46;">${esc(vCopy.card2Title)}</span>
+      <div id="eb-card-kpi-big" style="font-size:22px;font-weight:700;color:#047857;font-variant-numeric:tabular-nums;line-height:1.2;">${esc(scan.kpi1)}</div>
+      <div id="eb-card-kpi-sub" style="font-size:13px;font-weight:500;color:#047857;">${esc(vCopy.card2SubPrefix)} ${esc(scan.kpi2)}</div>
     </div>
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
-      <span style="font-size:13px;font-weight:700;color:#475569;">2. ${esc(vCopy.card2Title)}</span>
-      <div id="eb-card-kpi-big" style="font-size:22px;font-weight:800;color:#0F172A;font-variant-numeric:tabular-nums;line-height:1.2;">${esc(scan.kpi1)}</div>
-      <div id="eb-card-kpi-sub" style="font-size:13px;font-weight:600;color:#047857;">${esc(vCopy.card2SubPrefix)} ${esc(scan.kpi2)}</div>
-    </div>
-    <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:13px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;">
-      <span style="font-size:13px;font-weight:700;color:#475569;">3. ${esc(scan.cnnSensorLabel || 'Key Diagnostic Finding')}</span>
-      <div class="aa-locked-spec-badge" onclick="var el=document.getElementById('aa-subpage-top-email-input');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}" style="cursor:pointer;padding:6px 10px;border-radius:8px;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;font-size:12.5px;font-weight:700;">${lockSvg}Enter Email ($0) Above to Unmask Fix Plan</div>
-      <div id="eb-card-finding-big" class="aa-unlocked-spec-proof" style="display:none;font-size:14.5px;font-weight:700;color:#0F172A;line-height:1.3;">${esc(scan.cnnReadout)}</div>
-      <div id="eb-card-issue-sub" class="aa-unlocked-spec-proof" style="display:none;font-size:12.5px;font-weight:600;color:#475569;">Key Takeaway: ${esc(scan.issue)}</div>
+      <span style="font-size:13px;font-weight:600;color:#475569;">${esc(scan.cnnSensorLabel || 'Key diagnostic finding')}</span>
+      <div id="eb-card-finding-big" style="font-size:14.5px;font-weight:600;color:#0F172A;line-height:1.35;">${esc(scan.cnnReadout)}</div>
+      <div id="eb-card-issue-sub" style="font-size:12.5px;font-weight:500;color:#475569;">Key takeaway: ${esc(scan.issue)}</div>
     </div>
   </div>`;
 }
@@ -331,63 +329,53 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
 
     <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → Grade '+s.grade+' ('+s.score+'/100)';var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' : ${esc(cfg.brandName)} Scorecard & Action Report';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val'),cg=document.getElementById('eb-card-grade-big'),ck=document.getElementById('eb-card-kpi-big'),cks=document.getElementById('eb-card-kpi-sub'),cf=document.getElementById('eb-card-finding-big'),ci=document.getElementById('eb-card-issue-sub'),s3=document.getElementById('eb-scan-step3-title'),bm=document.getElementById('eb-scan-buy-micro'),bf=document.getElementById('eb-scan-buy-flash');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.score>=86?'Verified Leader':'Action Recommended';if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(cg)cg.textContent='Grade '+s.grade+' ('+s.score+'/100)';if(ck)ck.textContent=s.kpi1;if(cks)cks.textContent='${esc(vCopy.card2SubPrefix)} '+s.kpi2;if(cf)cf.textContent=s.cnnReadout;if(ci)ci.textContent='Key Takeaway: '+s.issue;if(s3)s3.textContent='Step 3 · Download the Ready-to-Use Action Pack for '+s.target;if(bm)bm.href='/buy/micro_pass?target='+encodeURIComponent(s.target);if(bf)bf.href='/buy/flash_pass?target='+encodeURIComponent(s.target);if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
 
-    <!-- STEP 1 OF 3: UNIFIED TYPOGRAPHY & CARD LAYOUT -->
+    <!-- VERIFIED SCORECARD & KEY METRICS -->
     <section id="eb-onnx-cnn-workbench" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">
         <div>
-          <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:2px;">
-            <span style="padding:2px 9px;border-radius:999px;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">Step 1 of 3</span>
-            <span style="font-size:12.5px;font-weight:700;color:#047857;">Free Benchmark Summary</span>
-          </div>
-          <h2 style="font-size:18px;font-weight:800;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Step 1 &middot; Review Verified Scorecard &amp; Key Metrics</h2>
+          <h2 style="font-size:18px;font-weight:700;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Verified scorecard &amp; key metrics</h2>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:#F8FAFC;padding:6px 10px;border-radius:10px;border:1px solid #E2E8F0;">
-          <span style="font-size:12.5px;font-weight:700;color:#475569;margin-right:2px;">Compare:</span>
-          ${cat.entities.slice(0, 3).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:4px 10px;border-radius:999px;border:1px solid #CBD5E1;background:#FFFFFF;color:${esc(t.textPrimary)};font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">${esc(e.target)}</button>`).join('')}
+          <span style="font-size:12.5px;font-weight:600;color:#475569;margin-right:2px;">Compare:</span>
+          ${cat.entities.slice(0, 3).map((e) => `<button type="button" onclick="window.__ebRunScanWb('${esc(e.target)}')" style="padding:4px 10px;border-radius:999px;border:1px solid #CBD5E1;background:#FFFFFF;color:${esc(t.textPrimary)};font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;">${esc(e.target)}</button>`).join('')}
           <input id="eb-cnn-wb-input" type="text" placeholder="Or type another..." aria-label="Custom scan target" style="padding:5px 9px;border-radius:8px;border:1px solid #CBD5E1;background:#FFFFFF;color:${esc(t.textPrimary)};font-size:12.5px;width:145px;" />
-          <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" style="padding:5px 11px;border-radius:999px;border:none;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;">Check &rarr;</button>
+          <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" style="padding:5px 11px;border-radius:999px;border:none;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;">Check &rarr;</button>
           <span id="eb-live-cnn-readout" style="display:none;">${esc(scan.target)} → Grade ${esc(scan.grade)} (${scan.score}/100)</span>
         </div>
       </div>
       ${renderScanSummaryCardsHtml(cfg, scan, primaryBtnBg)}
     </section>
 
-    <!-- STEP 2 OF 3: UNIFIED TYPOGRAPHY & CARD LAYOUT -->
+    <!-- DIAGNOSTIC BREAKDOWN -->
     <section class="table-wrap" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">
         <div>
-          <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:2px;">
-            <span style="padding:2px 9px;border-radius:999px;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">Step 2 of 3</span>
-            <span style="font-size:12.5px;font-weight:700;color:#047857;">Actionable Takeaways</span>
-          </div>
-          <h2 style="font-size:18px;font-weight:800;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Step 2 &middot; Diagnostic Breakdown &amp; What To Do Next</h2>
+          <h2 style="font-size:18px;font-weight:700;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Diagnostic breakdown &amp; recommended actions</h2>
         </div>
-        <a href="/leaderboard" style="font-size:13px;color:${esc(primaryBtnBg)};font-weight:700;text-decoration:none;padding:6px 12px;border-radius:999px;background:#F8FAFC;border:1px solid #E2E8F0;">Compare on Full Leaderboard &rarr;</a>
+        <a href="/leaderboard" style="font-size:13px;color:${esc(primaryBtnBg)};font-weight:600;text-decoration:none;padding:6px 12px;border-radius:999px;background:#F8FAFC;border:1px solid #E2E8F0;">Compare on leaderboard &rarr;</a>
       </div>
       <table aria-label="${esc(scan.target)} Public Scan Matrix" style="width:100%;border-collapse:collapse;font-size:13.5px;">
         <thead><tr style="background:${esc(t.canvasBg)};text-align:left;border-bottom:2px solid #E2E8F0;"><th scope="col" style="padding:8px 12px;">Check Category</th><th scope="col" style="padding:8px 12px;">Measured Result</th><th scope="col" style="padding:8px 12px;">How You Can Use This</th><th scope="col" style="padding:8px 12px;">Status</th></tr></thead>
         <tbody id="prompt-matrix-tbody">
-          <tr style="border-bottom:1px solid #E2E8F0;"><th scope="row" style="padding:9px 12px;text-align:left;">1. Overall Grade</th><td id="eb-scan-r1-val" style="padding:9px 12px;font-variant-numeric:tabular-nums;font-weight:700;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act" style="padding:9px 12px;">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="padding:9px 12px;font-weight:700;color:${scan.score >= 86 ? '#047857' : '#BE123C'};">${scan.score >= 86 ? 'Verified Leader' : 'Action Recommended'}</td></tr>
+          <tr style="border-bottom:1px solid #E2E8F0;"><th scope="row" style="padding:9px 12px;text-align:left;">1. Overall Grade</th><td id="eb-scan-r1-val" style="padding:9px 12px;font-variant-numeric:tabular-nums;font-weight:700;">${esc(scan.grade)} (${scan.score}/100)</td><td id="eb-scan-r1-act" style="padding:9px 12px;">${esc(scan.issue)}</td><td id="eb-scan-r1-st" style="padding:9px 12px;font-weight:700;color:${scan.score >= 86 ? '#047857' : '#0F172A'};">${scan.score >= 86 ? 'Verified Leader' : 'Action Recommended'}</td></tr>
           <tr style="background:${esc(t.canvasBg)};border-bottom:1px solid #E2E8F0;"><th scope="row" style="padding:9px 12px;text-align:left;">2. ${esc(vCopy.card2Title)}</th><td id="eb-scan-r2-val" style="padding:9px 12px;font-variant-numeric:tabular-nums;font-weight:700;">${esc(scan.kpi1)} • ${esc(scan.kpi2)}</td><td style="padding:9px 12px;">Compare against category peers on the <a href="/leaderboard" style="color:${esc(primaryBtnBg)};font-weight:700;text-decoration:underline;">Public Leaderboard</a></td><td style="padding:9px 12px;font-weight:700;color:#047857;">Verified</td></tr>
           <tr style="border-bottom:1px solid #E2E8F0;"><th scope="row" style="padding:9px 12px;text-align:left;">3. ${esc(scan.cnnSensorLabel || 'Quality Audit')}</th><td id="eb-scan-r3-val" style="padding:9px 12px;font-variant-numeric:tabular-nums;font-weight:700;">${esc(scan.cnnReadout)}</td><td style="padding:9px 12px;">${esc(vCopy.row3Action)}</td><td style="padding:9px 12px;font-weight:700;color:#047857;">Verified</td></tr>
-          <tr id="eb-scan-row4-tr" style="background:${esc(t.canvasBg)};"><th scope="row" style="padding:9px 12px;text-align:left;">4. ${esc(vCopy.row4Title)}</th><td id="eb-scan-row4-val" style="padding:9px 12px;font-variant-numeric:tabular-nums;font-weight:700;">${esc(vCopy.row4Val)}</td><td style="padding:9px 12px;">${esc(vCopy.row4Action)} (Step 3 below)</td><td id="eb-scan-row4-status" style="padding:9px 12px;font-weight:700;color:#047857;">Ready</td></tr>
+          <tr id="eb-scan-row4-tr" style="background:${esc(t.canvasBg)};"><th scope="row" style="padding:9px 12px;text-align:left;">4. ${esc(vCopy.row4Title)}</th><td id="eb-scan-row4-val" style="padding:9px 12px;font-variant-numeric:tabular-nums;font-weight:700;">${esc(vCopy.row4Val)}</td><td style="padding:9px 12px;">${esc(vCopy.row4Action)}</td><td id="eb-scan-row4-status" style="padding:9px 12px;font-weight:700;color:#047857;">Ready</td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- STEP 3 OF 3: UNIFIED TYPOGRAPHY & CARD LAYOUT -->
-    <section id="eb-inline-row4-unlock" style="background:#FFFFFF;border:2px solid ${esc(primaryBtnBg)};border-radius:14px;padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
+    <!-- ACTION PACK -->
+    <section id="eb-inline-row4-unlock" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div style="flex:1;min-width:260px;">
-          <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:2px;">
-            <span style="padding:2px 9px;border-radius:999px;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;">Step 3 of 3</span>
-            <span style="font-size:12.5px;font-weight:700;color:#047857;">One-Time $1.99 Pass &bull; Instant Download</span>
-          </div>
-          <h2 id="eb-scan-step3-title" style="font-size:18px;font-weight:800;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Step 3 &middot; Download the Ready-to-Use Action Pack for ${esc(scan.target)}</h2>
+          <h2 id="eb-scan-step3-title" style="font-size:18px;font-weight:700;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Ready-to-use recovery pack for ${esc(scan.target)}</h2>
+          <p style="margin:4px 0 0;font-size:13.5px;color:${esc(t.textSecondary)};">One-time download · Zero monthly subscription · 30-day money-back guarantee</p>
         </div>
         <div id="eb-scan-row4-msg" style="display:none !important;"><input id="eb-scan-row4-email" type="email" placeholder="you@company.com" aria-label="Work email to unlock Row 4" /><button id="eb-scan-row4-btn" type="button">Reveal Row #4 →</button></div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;">
-          <a id="eb-scan-buy-flash" href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="padding:10px 20px;border-radius:999px;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:14px;font-weight:800;text-decoration:none;white-space:nowrap;">Get All 3 Files ($1.99) &rarr;</a>
+          <a id="eb-scan-buy-playbook" href="/buy/playbook_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="padding:10px 18px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Get Complete Pack ($29) &rarr;</a>
+          <a id="eb-scan-buy-flash" href="/buy/flash_pass?target=${esc(encodeURIComponent(scan.target))}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;white-space:nowrap;">or $1.99 single-store patch</a>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;">
@@ -630,4 +618,4 @@ function attachPublicScanFlywheel(app, cfg, badgeColor, renderHtmlFn, classifyFn
   });
 }
 
-module.exports = { attachPublicScanFlywheel, getAllPublicScanUrls, evaluateScanTarget, loadPublicScanLedger };
+module.exports = { attachPublicScanFlywheel, getAllPublicScanUrls, evaluateScanTarget, loadPublicScanLedger, renderPublicScanPageHtml };

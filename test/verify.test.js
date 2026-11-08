@@ -6,6 +6,7 @@ const { getAllPseoPages, getPseoPageBySlug } = require('../src/pseo-data');
 const { renderPseoPageHtml, renderMetaLandingPageHtml, renderLegalPageHtml } = require('../src/views');
 const { VERTICAL_CONFIGS } = require('../src/exact-baseline-api');
 const { renderExactBaselineEnhancements } = require('../src/exact-baseline-ui');
+const { evaluateScanTarget, renderPublicScanPageHtml } = require('../src/public-scan-flywheel');
 
 function runTests() {
   const pages = getAllPseoPages();
@@ -68,6 +69,12 @@ function runTests() {
   assert.ok(rawAppJs.includes('const placeholderRx = /^(founder@merchant\\.io'), 'initiateStripeCheckout must filter out placeholder emails so guest buyers are not misclassified as automated tests');
   const rawServerJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'server.js'), 'utf8');
   assert.ok(rawServerJs.includes('rawCustomerEmail !== \'\' && isPlaceholderEmail'), 'POST /api/checkout must allow real guest buyers with empty email to create live Stripe sessions');
+
+  const scanObj = evaluateScanTarget(cfg, 'gymshark.com');
+  const scanHtml = renderPublicScanPageHtml(cfg, scanObj, '#0F172A');
+  assert.ok(!scanHtml.includes('Step 1 of 3'), 'Public scan pages must not have Step 1 of 3 badge soup');
+  assert.ok(!scanHtml.includes('Enter Email ($0) Above to Unmask Fix Plan'), 'Public scan pages must not lock Card 3 behind a purple pill');
+  assert.ok(scanHtml.includes('/buy/playbook_pass?target='), 'Public scan pages must offer the $29 Complete Pack');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
