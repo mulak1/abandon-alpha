@@ -167,6 +167,7 @@ function runTests() {
   assert.ok(rawAppJs.includes("if (hasDeepLink) saveAaWorkspaceState()") && renderedHome.includes("window.__pseoTarget || ws.storeName") && html.includes("window.__pseoDecline=qd"), 'Deep-link visits on / must persist workspace state and subpages (/seo/*) must forward active store, decline, and objection into Cmd+K and __ebCheckout');
   assert.ok(renderedHome.includes('querySelectorAll(\'a[href^="/api/github-upgrade/"]\')') && renderedHome.includes("obj ? '&objection=' + encodeURIComponent(obj) : ''"), '__ebSyncNavLinks must propagate the active objection arm across all /api/github-upgrade/ download links and cross-page navigation links on every subpage');
   assert.ok(sampleHtml.includes("var qStr='?target='+encodeURIComponent(st)+'&decline='+encodeURIComponent(cd)+'&sessions='+sess+'&aov='+aov") && sampleHtml.includes("Compiled for '+st+' ($'+aov+' AOV)"), '/dossier/sample must dynamically compute ROI multiple, Fix #1 lift, and download query strings from active sessions, aov, and objection');
+  assert.ok(dirHtml.includes("if (rProof && actTgt) rProof.textContent = 'Compiled for ' + actTgt + ' ($' + effAov + ' AOV)") && dirHtml.includes("aovUsd: ' + effAov"), '/directory must dynamically compute ROI multiple, Fix #1 lift, and snippet aovUsd from active sessions and aov');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
