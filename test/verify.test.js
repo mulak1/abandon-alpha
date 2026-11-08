@@ -114,6 +114,7 @@ function runTests() {
   assert.ok(!renderedHome.includes('skin-cycling.ics') && renderedHome.includes('id="cmdk-buy-29"'), 'Cmd+K modal must not leak DermLogic skin-cycling.ics into AbandonAlpha and must offer personalized $29/$1.99 actions');
   assert.ok(renderedHome.includes('id="aa-fix1-details"') && rawAppJs.includes('/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}'), 'Fold-1 $0 Fix #1 reveal form must keep <=3 initial Fold-1 inputs, auto-open on user interaction, and offer a personalized $29 Complete Pack upgrade link upon unlock');
   assert.ok(rawAppJs.includes("btn.setAttribute('data-copied-fix1', '1')") && html.includes("getAttribute('data-copied')==='1'") && scanHtml.includes("getAttribute('data-copied')==='1'") && sampleHtml.includes("getAttribute('data-copied')==='1'"), 'Copy Free Fix #1 Snippet buttons across /, /seo/*, /compare/*, /tools/*, /scan/*, /lp, /sample, and /leaderboard must transform into 1-click $29 Complete Pack checkout triggers after copying');
+  assert.ok(rawAppJs.includes('✓ Copied Counter-Offer — Get All 6 in $29 Pack →') && rawAppJs.includes('✓ Copied Step-1 Email — Get SMS + Worker ($29) →'), 'Bandit counter-offer and Webhook Step-1 email copy buttons must transform into 1-click $29 Pack checkout triggers after copying and reset on new simulation');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

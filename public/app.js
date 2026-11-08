@@ -698,10 +698,21 @@ async function triggerBanditObjection(objectionCode, btnEl) {
   document.getElementById('bandit-velocity-pill').textContent = `Exit Signal Active • Score: ${res.trajectory.score}/100`;
 
   renderPosteriorTable(res.posteriors, win.id);
+  const copyOfferBtn = document.getElementById('bandit-copy-offer-btn');
+  if (copyOfferBtn) {
+    copyOfferBtn.removeAttribute('data-copied');
+    copyOfferBtn.textContent = 'Copy Counter-Offer ($0)';
+    copyOfferBtn.style.color = '';
+  }
   return res;
 }
 
 function copyBanditOfferPreview(btnEl) {
+  if (btnEl && btnEl.getAttribute('data-copied') === '1') {
+    if (window.__ebCheckout) window.__ebCheckout('playbook_pass');
+    else initiateStripeCheckout('starter');
+    return;
+  }
   const ctx = (document.getElementById('bandit-store-context')?.textContent || '').trim();
   const headline = (document.getElementById('bandit-offer-headline')?.textContent || '').trim();
   const subtext = (document.getElementById('bandit-offer-subtext')?.textContent || '').trim();
@@ -719,9 +730,9 @@ function copyBanditOfferPreview(btnEl) {
     });
   }
   if (btnEl) {
-    const prev = btnEl.textContent;
-    btnEl.textContent = '✓ Copied Counter-Offer (All 6 in $29 Pack)';
-    setTimeout(() => { btnEl.textContent = prev; }, 2400);
+    btnEl.setAttribute('data-copied', '1');
+    btnEl.textContent = '✓ Copied Counter-Offer — Get All 6 in $29 Pack →';
+    btnEl.style.color = '#047857';
   }
 }
 
@@ -809,9 +820,20 @@ function renderWebhookOutput(res, payload) {
         <p>${escapeUiHtml(s.action || `Verified retry window for ${payload.declineCode}`)}</p>
       </div>`;
   }
+  const whCopyBtn = document.getElementById('wh-copy-email-btn');
+  if (whCopyBtn) {
+    whCopyBtn.removeAttribute('data-copied');
+    whCopyBtn.textContent = 'Copy Step-1 Email ($0)';
+    whCopyBtn.style.color = '';
+  }
 }
 
 function copyWebhookEmailPreview(btnEl) {
+  if (btnEl && btnEl.getAttribute('data-copied') === '1') {
+    if (window.__ebCheckout) window.__ebCheckout('playbook_pass');
+    else initiateStripeCheckout('starter');
+    return;
+  }
   const subj = (document.getElementById('wh-out-subject')?.textContent || '').trim();
   const body = (document.getElementById('wh-out-body')?.textContent || '').trim();
   const text = `${subj}\n\n${body}`;
@@ -825,9 +847,9 @@ function copyWebhookEmailPreview(btnEl) {
     });
   }
   if (btnEl) {
-    const prev = btnEl.textContent;
-    btnEl.textContent = '✓ Copied Step-1 Email (SMS + Worker in $29 Pack)';
-    setTimeout(() => { btnEl.textContent = prev; }, 2400);
+    btnEl.setAttribute('data-copied', '1');
+    btnEl.textContent = '✓ Copied Step-1 Email — Get SMS + Worker ($29) →';
+    btnEl.style.color = '#047857';
   }
 }
 
