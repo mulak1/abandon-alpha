@@ -1060,7 +1060,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   const qStore = params.get('store') || (!isDeclineLike ? rawTargetOrQ : '');
   const qSessions = params.get('sessions');
   const qAov = params.get('aov');
-  const hasDeepLink = Boolean(qPreset || qDecline || qStore || qSessions || qAov);
+  const qObjection = (params.get('objection') || '').replace(/[^A-Z0-9_]/gi, '').slice(0, 32);
+  const hasDeepLink = Boolean(qPreset || qDecline || qStore || qSessions || qAov || qObjection);
 
   if (qPreset && PRESET_DATA[qPreset]) {
     currentPreset = qPreset;
@@ -1100,6 +1101,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     }
   }
+  if (qObjection && document.querySelector(`.objection-btn[data-obj="${qObjection}"]`)) {
+    document.querySelectorAll('#objection-btn-group .objection-btn, #exit-intent-modal .objection-btn').forEach((b) => {
+      b.classList.toggle('selected', b.getAttribute('data-obj') === qObjection);
+    });
+  }
   updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
 
   fetch('/api/bandit-arms').then((r) => r.json()).then((armsRes) => {
@@ -1111,7 +1117,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     if (window.location.hash === '#webhook-lab' || qDecline || qStore || qAov) {
       await runWebhookSimulation();
     }
-    if (qStore || qAov || restoredFromStorage) {
+    if (qStore || qAov || qObjection || restoredFromStorage) {
       const selObjBtn = document.querySelector('#objection-btn-group .objection-btn.selected');
       await triggerBanditObjection(selObjBtn?.getAttribute('data-obj') || 'C1_PRICE', selObjBtn);
     }
