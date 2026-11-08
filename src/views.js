@@ -510,12 +510,36 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       </div>
     </div>
 
+    <div id="aa-dir-visual-showcase" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin:12px 0 14px;">
+      <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
+        <img src="/banana-saas-war-room.jpg" alt="Fintech engineering war room reviewing Stripe payment recovery telemetry" width="380" height="162" loading="eager" decoding="async" style="width:100%;height:162px;object-fit:cover;border-radius:10px;display:block;" />
+        <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
+          <strong style="color:#0F172A;">60 Decline &amp; Exit Playbooks</strong>
+          <span style="color:#047857;font-weight:700;">Payday-Synced Retries</span>
+        </figcaption>
+      </figure>
+      <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
+        <img src="/banana-payment-recovery-flow.jpg" alt="Apple Pay and Stripe 1-tap card update flow on mobile and desktop" width="380" height="162" loading="eager" decoding="async" style="width:100%;height:162px;object-fit:cover;border-radius:10px;display:block;" />
+        <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
+          <strong style="color:#0F172A;">1-Tap Billing Portal Flow</strong>
+          <span style="color:#4F46E5;font-weight:700;">Expired Card Rescue</span>
+        </figcaption>
+      </figure>
+      <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
+        <img src="/editorial-hero.jpg" alt="E-commerce checkout conversion studio and dunning workflow" width="380" height="162" loading="eager" decoding="async" style="width:100%;height:162px;object-fit:cover;border-radius:10px;display:block;" />
+        <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
+          <strong style="color:#0F172A;">3-File Drop-In Bundle</strong>
+          <span style="color:#047857;font-weight:700;">$1.99 Single / $29 Pack</span>
+        </figcaption>
+      </figure>
+    </div>
+
     ${categories.map((cat, cIdx) => {
       const items = PSEO_PAGES.filter((p) => p.category === cat);
       const breakHtml = cIdx === 1
-        ? `<div class="editorial-break-card" style="margin:12px 0;padding:12px 16px;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="140" style="height:136px;min-height:136px;" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;">Payday-synced retry schedules for soft declines</h2><p class="section-sub" style="margin:0;">Each decline playbook includes the exact retry delay, webhook payload filter, and customer billing-portal email copy.</p></div></div>`
+        ? `<div class="editorial-break-card" style="margin:12px 0;padding:12px 16px;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="158" style="height:158px;min-height:158px;" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;">Payday-synced retry schedules for soft declines</h2><p class="section-sub" style="margin:0;">Each decline playbook includes the exact retry delay, webhook payload filter, and customer billing-portal email copy.</p></div></div>`
         : (cIdx === 3
-          ? `<div class="editorial-break-card" style="margin:12px 0;padding:12px 16px;"><img src="/editorial-checkout-hardware.jpg" alt="Wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="140" style="height:136px;min-height:136px;" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;">Deploy all 60 recovery rules in one bundle</h2><p class="section-sub" style="margin:0;">Unlock the Complete Store Recovery Pack ($29 one-time) or Single-Store 3-File Patch ($1.99) with zero revenue-share commission.</p></div></div>`
+          ? `<div class="editorial-break-card" style="margin:12px 0;padding:12px 16px;"><img src="/editorial-checkout-hardware.jpg" alt="Wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="158" style="height:158px;min-height:158px;" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;">Deploy all 60 recovery rules in one bundle</h2><p class="section-sub" style="margin:0;">Unlock the Complete Store Recovery Pack ($29 one-time) or Single-Store 3-File Patch ($1.99) with zero revenue-share commission.</p></div></div>`
           : '');
       return `
       <section class="pseo-section dir-cluster" data-total="${items.length}" style="padding:6px 0;margin-top:10px;">
