@@ -123,7 +123,7 @@ function updateUnmaskedSdkPreview(auditRes) {
   const permalinkEl = document.getElementById('aa-live-scan-permalink');
   if (permalinkEl) {
     permalinkEl.href = '/scan/' + encodeURIComponent(domain);
-    permalinkEl.textContent = 'Public Scan (/scan/' + domain + ') →';
+    permalinkEl.textContent = 'Shareable report: /scan/' + domain + ' →';
   }
 
   const previewEl = document.getElementById('out-sdk-unmasked-preview');
@@ -338,7 +338,7 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   window.__LAST_AUDIT_RES__ = res;
   if (isManualTrigger) saveAaWorkspaceState();
 
-  document.getElementById('out-grade-badge').textContent = `Grade: ${res.letterGrade} (${res.gradeScore}/100)`;
+  document.getElementById('out-grade-badge').textContent = `Score: ${res.gradeScore}/100`;
   document.getElementById('out-total-leaked').textContent = formatUsd(res.totalMonthlyLeakedUsd);
   document.getElementById('out-leaked-sub').textContent = `${formatUsd(res.leakedCheckoutUsd)} Cart + ${formatUsd(res.leakedDunningUsd)} Failed Cards`;
   document.getElementById('out-total-recovered').textContent = `+${formatUsd(res.totalRecoverableUsd)}/mo`;
@@ -365,37 +365,12 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
 
   const statusEl = document.getElementById('audit-form-status');
   if (statusEl && (isManualTrigger || isExplicitClick)) {
-    statusEl.innerHTML = `<span style="display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;" onclick="var c=document.getElementById('aa-step2-card');if(c&&c.scrollIntoView)c.scrollIntoView({behavior:'smooth',block:'nearest'});"><span>✓ Step 1 Done for <strong>${escapeUiHtml(res.storeName)}</strong> &rarr; <strong>Now Focus on Step 2 (Right): +${formatUsd(res.totalRecoverableUsd)}/mo Recoverable</strong></span><span style="text-decoration:underline;white-space:nowrap;">Focus Step 2 &rarr;</span></span>`;
-    statusEl.style.color = '#047857';
-    statusEl.style.fontWeight = '700';
-    statusEl.style.background = '#ECFDF5';
-    statusEl.style.border = '1px solid #A7F3D0';
-    statusEl.style.padding = '8px 12px';
-    statusEl.style.borderRadius = '8px';
-  }
-
-  const mrrTile = document.getElementById('recoverable-mrr-tile') || document.getElementById('out-total-recovered')?.parentElement;
-  const rightCard = document.getElementById('aa-step2-card') || (mrrTile ? mrrTile.closest('.telemetry-card') : null);
-  const gradeBadge = document.getElementById('out-grade-badge');
-  if ((isManualTrigger || isExplicitClick) && mrrTile) {
-    if (gradeBadge) {
-      gradeBadge.textContent = `→ FOCUS HERE NEXT • ${res.storeName} (${res.letterGrade})`;
-      gradeBadge.style.background = '#047857';
-      gradeBadge.style.color = '#FFFFFF';
-    }
-    mrrTile.style.transition = 'transform 250ms ease, box-shadow 250ms ease';
-    mrrTile.style.transform = 'scale(1.02)';
-    mrrTile.style.boxShadow = '0 0 0 2px #10B981';
-    if (rightCard) {
-      rightCard.style.boxShadow = '0 0 0 3px #10B981, 0 14px 32px rgba(4, 120, 87, 0.16)';
-      if (window.innerWidth < 960 && rightCard.scrollIntoView) {
-        rightCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-    setTimeout(() => {
-      mrrTile.style.transform = '';
-      mrrTile.style.boxShadow = '';
-    }, 1800);
+    statusEl.innerHTML = `<span>Updated estimate for <strong>${escapeUiHtml(res.storeName)}</strong>: <strong>+${formatUsd(res.totalRecoverableUsd)}/mo recoverable</strong></span>`;
+    statusEl.style.color = '#475569';
+    statusEl.style.fontWeight = '500';
+    statusEl.style.background = 'transparent';
+    statusEl.style.border = 'none';
+    statusEl.style.padding = '2px 0';
   }
 
   if (Array.isArray(res.dunningBreakdown)) {
@@ -403,13 +378,12 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
       const seoHref = DECLINE_SEO_LINKS[d.declineCode] || '/directory';
       return `
       <li>
-        <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;text-decoration:none;padding:3px 6px;border-radius:6px;background:#F8FAFC;">
-          <span style="font-size:0.8125rem;color:#334155;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <span style="color:#64748B;font-weight:800;" aria-hidden="true">&bull;</span>
-            <code style="font-weight:700;color:#0A2540;">${d.declineCode}</code>
-            <span style="color:#64748B;font-size:0.75rem;">(${d.recoveryRatePct}% recoverable &bull; ${d.sharePct}% share)</span>
+        <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:6px;text-decoration:none;padding:2px 0;">
+          <span style="font-size:0.8125rem;color:#475569;">
+            <code style="font-weight:600;color:#0F172A;">${d.declineCode}</code>
+            <span style="color:#64748B;font-size:0.75rem;"> (${d.recoveryRatePct}% recoverable &middot; ${d.sharePct}% share)</span>
           </span>
-          <strong class="text-emerald" style="font-size:0.8125rem;white-space:nowrap;">+${formatUsd(d.recoveredUsd)}/mo</strong>
+          <span style="font-size:0.8125rem;color:#334155;font-weight:600;white-space:nowrap;">+${formatUsd(d.recoveredUsd)}/mo</span>
         </a>
       </li>`;
     }).join('');
@@ -534,20 +508,19 @@ function renderPosteriorTable(arms, selectedId) {
     const barWidth = Math.min(100, Math.max(12, Math.round(arm.posterior_mean_pct * 3.2)));
     const humanTitle = HUMAN_OBJECTION_TITLES[arm.objection_code] || arm.objection_label;
     return `
-      <tr data-objection="${arm.objection_code}" style="cursor:pointer;${isWin ? 'background: #ECFDF5;' : ''}" onclick="triggerBanditObjection('${arm.objection_code}')">
+      <tr data-objection="${arm.objection_code}" style="cursor:pointer;${isWin ? 'background: #F8FAFC;' : ''}" onclick="triggerBanditObjection('${arm.objection_code}')">
         <td>
-          <strong style="color:${isWin ? '#047857' : '#0A2540'}">${humanTitle}</strong>
-          <div style="font-size:0.9375rem; color:#475569; font-family:var(--font-sans);">${arm.objection_label}</div>
-          <div><button type="button" class="eb-row-sim-pill" onclick="event.stopPropagation();triggerBanditObjection('${arm.objection_code}')">${isWin ? '✓ Active Offer' : 'Simulate Offer →'}</button></div>
+          <strong style="color:#0F172A;font-weight:600;">${humanTitle}</strong>
+          <div style="font-size:0.8125rem; color:#64748B;">${arm.objection_label}</div>
         </td>
-        <td><code class="text-indigo">${arm.offer_code}</code> (-${arm.discount_pct}%)</td>
-        <td>${arm.alpha}</td>
-        <td>${Number(arm.alpha || 0) + Number(arm.beta || 0)}</td>
+        <td><code style="color:#0F172A;font-weight:600;">${arm.offer_code}</code> <span style="color:#64748B;font-size:0.8125rem;">(-${arm.discount_pct}%)</span></td>
+        <td style="color:#334155;">${arm.alpha}</td>
+        <td style="color:#64748B;">${Number(arm.alpha || 0) + Number(arm.beta || 0)}</td>
         <td>
-          <strong style="color:#0A2540;">${arm.posterior_mean_pct}%</strong>
+          <strong style="color:#0F172A;font-weight:600;">${arm.posterior_mean_pct}%</strong>
           <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${barWidth}%"></div></div>
         </td>
-        <td class="text-emerald">$${Math.round(arm.recovered_revenue_usd).toLocaleString()}</td>
+        <td style="color:#047857;font-weight:600;">$${Math.round(arm.recovered_revenue_usd).toLocaleString()}</td>
       </tr>
     `;
   }).join('');

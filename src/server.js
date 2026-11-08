@@ -73,47 +73,10 @@ app.use((req, res, next) => {
   next();
 });
 
-function renderHomepagePseoHubHtml() {
-  const allPages = getAllPseoPages();
-  const clusters = [
-    'Stripe Decline Codes',
-    'Stripe Webhooks & Dunning',
-    'Platform Playbooks',
-    'Bandit & Exit-Intent Science'
-  ];
-  const clusterBlocks = clusters.map((cat) => {
-    const items = allPages.filter((p) => p.category === cat).slice(0, 6);
-    return `
-      <div style="margin-top:20px;">
-        <h3 style="font-size:1.125rem; margin-bottom:10px; color:var(--text-navy);">${escapeHtml(cat.replace(/Dunning/gi, 'Declined-Card Recovery'))} (6 Playbooks)</h3>
-        <div class="related-links-grid">
-          ${items.map((p) => `
-            <a href="/seo/${encodeURIComponent(p.slug)}" class="related-card">
-              <span class="mono-label">${escapeHtml(p.declineOrSignal)} &bull; +${p.recoverableLiftPct}% Lift</span>
-              <strong>${escapeHtml(p.title.replace(/`/g, '').replace(/Dunning/gi, 'Declined-Card Recovery').replace(/Liquid\/JS/gi, 'Copy-Paste'))}</strong>
-            </a>
-          `).join('')}
-        </div>
-      </div>`;
-  }).join('');
-
-  return `
-    <section id="pseo-recovery-hub" class="lab-section">
-      <div class="container">
-        <div class="section-header-stack">
-          <h2 class="section-h2">Stripe Decline &amp; Checkout Playbooks</h2>
-          <p class="section-sub">Explore 24 featured technical playbooks across all 4 FinOps clusters · or browse the <a href="/directory" style="color:var(--text-navy); font-weight:700;">Complete 60-Playbook Directory</a> and <a href="/llms.txt" style="color:var(--text-navy); font-weight:700;">/llms.txt Index</a>.</p>
-        </div>
-        ${clusterBlocks}
-      </div>
-    </section>`;
-}
-
 // Explicit homepage handler so ExactBaseline enhancements inject cleanly before static middleware
 app.get('/', (req, res) => {
   const rawHtml = fs.readFileSync(path.resolve(__dirname, '../public/index.html'), 'utf8');
-  const indexHtml = rawHtml.replace('</main>', `${renderHomepagePseoHubHtml()}\n  </main>`);
-  res.status(200).type('html').send(indexHtml);
+  res.status(200).type('html').send(rawHtml);
 });
 
 // Serve static files from /public
