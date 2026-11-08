@@ -295,6 +295,10 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <details style="margin:0;">
           <summary id="eb-growth-fix1-cta" style="cursor:pointer;font-size:13px;font-weight:600;color:${escXml(t.textPrimary)};">Get free Fix #1 snippet for ${escXml(item.target)} &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
           <code id="eb-growth-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "${escXml(item.target)}", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
+            <button type="button" id="eb-growth-copy-fix1-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:12px;font-weight:600;" onclick="var c=document.getElementById('eb-growth-fix1-code');if(navigator.clipboard&&c)navigator.clipboard.writeText(c.textContent);this.textContent='✓ Copied Step-1 Rule — Get All 3 Files ($29) ↓';this.style.color='#047857';">Copy Free Fix #1 Snippet</button>
+            <span style="font-size:11.5px;color:#64748B;">Step 1 of 3 &middot; Full 3-file bundle in $29 pack</span>
+          </div>
         </details>
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:8px;border-top:1px solid ${escXml(t.border)};">
           <div>

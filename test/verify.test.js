@@ -98,6 +98,7 @@ function runTests() {
   assert.ok(scanHtml.includes('id="eb-scan-roi-proof"') && scanHtml.includes('id="eb-scan-fix1-cta"') && rawGrowthJs.includes('id="eb-growth-roi-proof"') && rawGrowthJs.includes('id="eb-growth-fix1-cta"'), '/scan/*, /compare/*, and /tools/* must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
   assert.ok(lpHtml.includes('id="lp-roi-proof"') && lpHtml.includes('id="lp-fix1-cta"') && sampleHtml.includes('id="sample-roi-proof"') && sampleHtml.includes('id="sample-fix1-cta"'), '/lp and /sample must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
   assert.ok(lbHtml.includes('id="lb-roi-proof"') && lbHtml.includes('id="lb-fix1-cta"'), '/leaderboard must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
+  assert.ok(html.includes('id="pseo-copy-fix1-btn"') && rawGrowthJs.includes('id="eb-growth-copy-fix1-btn"') && scanHtml.includes('id="eb-scan-copy-fix1-btn"') && lpHtml.includes('id="lp-copy-fix1-btn"') && sampleHtml.includes('id="sample-copy-fix1-btn"') && lbHtml.includes('id="lb-copy-fix1-btn"'), 'All subpages must provide 1-click Copy Free Fix #1 Snippet with Step 1 of 3 upgrade framing');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

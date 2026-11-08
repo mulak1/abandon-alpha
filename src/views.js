@@ -300,7 +300,11 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           </div>
           <details style="margin:0;">
             <summary id="pseo-fix1-summary-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo lift &middot; $0) &rarr;</summary>
-            <code style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "${escapeHtml(page.declineOrSignal)}", webhook: "${escapeHtml(page.webhookEvent)}", retryWindow: "${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday')}", expectedLiftPct: ${page.recoverableLiftPct} };</code>
+            <code id="pseo-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "${escapeHtml(page.declineOrSignal)}", webhook: "${escapeHtml(page.webhookEvent)}", retryWindow: "${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday')}", expectedLiftPct: ${page.recoverableLiftPct} };</code>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
+              <button type="button" id="pseo-copy-fix1-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:12px;font-weight:600;" onclick="var c=document.getElementById('pseo-fix1-code');if(navigator.clipboard&&c)navigator.clipboard.writeText(c.textContent);this.textContent='✓ Copied Step-1 Rule — Get All 3 Files ($29) ↓';this.style.color='#047857';">Copy Free Fix #1 Snippet</button>
+              <span style="font-size:11.5px;color:#64748B;">Step 1 of 3 &middot; Full 3-file bundle in $29 pack</span>
+            </div>
           </details>
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;">
             <span id="pseo-roi-proof" style="font-size:13px;color:#475569;">Pays for $29 pack in &lt; 1 recovered order (${Math.max(10, Math.round(page.monthlyRecoveredUsd / 29)).toLocaleString()}x ROI) &middot; 0% commission:</span>
@@ -686,6 +690,10 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
           <details style="margin:0;">
             <summary id="lp-fix1-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for Gymshark &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
             <code id="lp-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "Gymshark", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
+              <button type="button" id="lp-copy-fix1-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:12px;font-weight:600;" onclick="var c=document.getElementById('lp-fix1-code');if(navigator.clipboard&&c)navigator.clipboard.writeText(c.textContent);this.textContent='✓ Copied Step-1 Rule — Get All 3 Files ($29) ↓';this.style.color='#047857';">Copy Free Fix #1 Snippet</button>
+              <span style="font-size:11.5px;color:#64748B;">Step 1 of 3 &middot; Full 3-file bundle in $29 pack</span>
+            </div>
           </details>
           <div id="lp-roi-proof" style="font-size:12.5px;color:#475569;font-weight:500;">Pays for $29 pack in &lt; 1 recovered order (1,263x ROI) &middot; 0% commission &middot; 30-day guarantee</div>
           <a id="lp-buy-29" href="/buy/playbook_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
