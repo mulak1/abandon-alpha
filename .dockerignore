@@ -1,0 +1,7 @@
+node_modules
+.git
+.colony
+screenshots
+test
+*.md
+.env
