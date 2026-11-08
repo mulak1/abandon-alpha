@@ -320,20 +320,32 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       <p class="pseo-lead" style="margin:0 0 8px 0;color:${esc(t.textSecondary)};font-size:14.5px;line-height:1.45;">
         <strong style="color:${esc(t.textPrimary)};">Why you are here (<span id="eb-scan-lead-target">${esc(scan.target)}</span> &bull; <span id="eb-scan-lead-grade">Grade ${esc(scan.grade)} ${scan.score}/100</span>):</strong> ${esc(vCopy.goalText)}
       </p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;padding:12px 16px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;border-left:3px solid #059669;font-size:13px;color:${esc(t.textSecondary)};line-height:1.45;width:100%;box-sizing:border-box;">
-        <div><strong style="color:#047857;">● Verified Source:</strong> ${esc(vCopy.sourceProvenance)}</div>
-        <div><strong style="color:#047857;">● Last Verified:</strong> ${esc(vCopy.dataFreshness)}</div>
-        <div><strong style="color:#047857;">● Always Current:</strong> ${esc(vCopy.updateCadence)}</div>
-      </div>
     </div>
 
-    <script>window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → Grade '+s.grade+' ('+s.score+'/100)';var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' : ${esc(cfg.brandName)} Scorecard & Action Report';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val'),cg=document.getElementById('eb-card-grade-big'),ck=document.getElementById('eb-card-kpi-big'),cks=document.getElementById('eb-card-kpi-sub'),cf=document.getElementById('eb-card-finding-big'),ci=document.getElementById('eb-card-issue-sub'),s3=document.getElementById('eb-scan-step3-title'),bm=document.getElementById('eb-scan-buy-micro'),bf=document.getElementById('eb-scan-buy-flash');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.score>=86?'Verified Leader':'Action Recommended';if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(cg)cg.textContent='Grade '+s.grade+' ('+s.score+'/100)';if(ck)ck.textContent=s.kpi1;if(cks)cks.textContent='${esc(vCopy.card2SubPrefix)} '+s.kpi2;if(cf)cf.textContent=s.cnnReadout;if(ci)ci.textContent='Key Takeaway: '+s.issue;if(s3)s3.textContent='Step 3 · Download the Ready-to-Use Action Pack for '+s.target;if(bm)bm.href='/buy/micro_pass?target='+encodeURIComponent(s.target);if(bf)bf.href='/buy/flash_pass?target='+encodeURIComponent(s.target);if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};</script>
+    <script>
+      window.__ebRunScanWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → Grade '+s.grade+' ('+s.score+'/100)';var h1=document.getElementById('eb-scan-h1');if(h1)h1.textContent=s.target+' : ${esc(cfg.brandName)} Scorecard & Action Report';var b=document.getElementById('eb-scan-badge-img');if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';var r1=document.getElementById('eb-scan-r1-val'),r1a=document.getElementById('eb-scan-r1-act'),r1s=document.getElementById('eb-scan-r1-st'),r2=document.getElementById('eb-scan-r2-val'),r3=document.getElementById('eb-scan-r3-val'),cg=document.getElementById('eb-card-grade-big'),ck=document.getElementById('eb-card-kpi-big'),cks=document.getElementById('eb-card-kpi-sub'),cf=document.getElementById('eb-card-finding-big'),ci=document.getElementById('eb-card-issue-sub'),s3=document.getElementById('eb-scan-step3-title'),bp=document.getElementById('eb-scan-buy-playbook'),bf=document.getElementById('eb-scan-buy-flash');if(r1)r1.textContent=s.grade+' ('+s.score+'/100)';if(r1a)r1a.textContent=s.issue;if(r1s)r1s.textContent=s.score>=86?'Verified Leader':'Action Recommended';if(r2)r2.textContent=s.kpi1+' • '+s.kpi2;if(r3)r3.textContent=s.cnnReadout;if(cg)cg.textContent='Grade '+s.grade+' ('+s.score+'/100)';if(ck)ck.textContent=s.kpi1;if(cks)cks.textContent='${esc(vCopy.card2SubPrefix)} '+s.kpi2;if(cf)cf.textContent=s.cnnReadout;if(ci)ci.textContent='Key takeaway: '+s.issue;if(s3)s3.textContent='Ready-to-use recovery pack for '+s.target;if(bp)bp.href='/buy/playbook_pass?target='+encodeURIComponent(s.target);if(bf)bf.href='/buy/flash_pass?target='+encodeURIComponent(s.target);if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(s.target));});};
+      window.__ebRecalcScanVolume=function(){
+        var sess=Number((document.getElementById('eb-scan-vol-sessions')||{}).value||3200);
+        var aov=Number((document.getElementById('eb-scan-vol-aov')||{}).value||92);
+        var code=(document.getElementById('eb-scan-vol-decline')||{}).value||'insufficient_funds';
+        var tgt=(document.getElementById('eb-scan-h1')&&document.getElementById('eb-scan-h1').getAttribute('data-entity-name'))||'${esc(scan.target)}';
+        fetch('/api/audit-leakage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({storeName:tgt,monthlySessions:sess,aovUsd:aov,primaryDeclineCode:code})}).then(function(r){return r.json()}).then(function(d){
+          if(!d||!d.totalRecoverableUsd)return;
+          var rec='+$'+Math.round(d.totalRecoverableUsd).toLocaleString()+'/mo Recoverable';
+          var ann='+$'+Math.round(d.annualRecoverableUsd||d.totalRecoverableUsd*12).toLocaleString()+'/yr ('+code+')';
+          var ck=document.getElementById('eb-card-kpi-big'),cks=document.getElementById('eb-card-kpi-sub'),r2=document.getElementById('eb-scan-r2-val');
+          if(ck)ck.textContent=rec;
+          if(cks)cks.textContent='Annual Impact: '+ann;
+          if(r2)r2.textContent=rec+' • '+ann;
+        });
+      };
+    </script>
 
     <!-- VERIFIED SCORECARD & KEY METRICS -->
     <section id="eb-onnx-cnn-workbench" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">
         <div>
-          <h2 style="font-size:18px;font-weight:700;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Verified scorecard &amp; key metrics</h2>
+          <h2 style="font-size:18px;font-weight:700;margin:0;color:${esc(t.textPrimary)};line-height:1.25;">Verified scorecard &amp; custom volume calculator</h2>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:#F8FAFC;padding:6px 10px;border-radius:10px;border:1px solid #E2E8F0;">
           <span style="font-size:12.5px;font-weight:600;color:#475569;margin-right:2px;">Compare:</span>
@@ -341,6 +353,19 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           <input id="eb-cnn-wb-input" type="text" placeholder="Or type another..." aria-label="Custom scan target" style="padding:5px 9px;border-radius:8px;border:1px solid #CBD5E1;background:#FFFFFF;color:${esc(t.textPrimary)};font-size:12.5px;width:145px;" />
           <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunScanWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${esc(scan.target)}')" style="padding:5px 11px;border-radius:999px;border:none;background:${esc(primaryBtnBg)};color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;">Check &rarr;</button>
           <span id="eb-live-cnn-readout" style="display:none;">${esc(scan.target)} → Grade ${esc(scan.grade)} (${scan.score}/100)</span>
+        </div>
+      </div>
+      <div id="eb-scan-volume-adjuster" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:10px 12px;margin-top:10px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+        <span style="font-size:13px;font-weight:600;color:#0F172A;">Customize for your store volume:</span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <label style="font-size:12.5px;color:#475569;display:inline-flex;align-items:center;gap:5px;">Checkouts/mo <input id="eb-scan-vol-sessions" type="number" value="3200" min="50" max="500000" oninput="window.__ebRecalcScanVolume()" style="width:82px;padding:4px 8px;border-radius:6px;border:1px solid #CBD5E1;font-size:12.5px;" /></label>
+          <label style="font-size:12.5px;color:#475569;display:inline-flex;align-items:center;gap:5px;">Avg order ($) <input id="eb-scan-vol-aov" type="number" value="92" min="5" max="10000" oninput="window.__ebRecalcScanVolume()" style="width:68px;padding:4px 8px;border-radius:6px;border:1px solid #CBD5E1;font-size:12.5px;" /></label>
+          <select id="eb-scan-vol-decline" aria-label="Decline code" onchange="window.__ebRecalcScanVolume()" style="padding:4px 8px;border-radius:6px;border:1px solid #CBD5E1;font-size:12.5px;background:#FFFFFF;color:#0F172A;">
+            <option value="insufficient_funds">insufficient_funds (Payday Sync)</option>
+            <option value="do_not_honor">do_not_honor (24h Cooldown)</option>
+            <option value="expired_card">expired_card (1-Tap Updater)</option>
+          </select>
+          <button type="button" onclick="window.__ebRecalcScanVolume()" style="padding:5px 11px;border-radius:999px;border:none;background:#0F172A;color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;">Calculate my recovery</button>
         </div>
       </div>
       ${renderScanSummaryCardsHtml(cfg, scan, primaryBtnBg)}
@@ -454,12 +479,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:24px;">
     ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml('Free Store Recovery Benchmarks ($0) + $29 Complete Recovery Kit', 'Send Free Recovery Rules ($0) →', '') : ''}
     <h1 style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
-    <p class="pseo-lead" style="margin:0 0 12px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;padding:12px 16px;margin-bottom:18px;border-radius:12px;background:#FFFFFF;border:1px solid #E2E8F0;border-left:3px solid #059669;font-size:13px;color:${esc(t.textSecondary)};line-height:1.45;">
-      <div><strong style="color:#047857;">● Verified Source:</strong> ${esc(vCopyLb.sourceProvenance)}</div>
-      <div><strong style="color:#047857;">● Last Verified:</strong> ${esc(vCopyLb.dataFreshness)}</div>
-      <div><strong style="color:#047857;">● Always Current:</strong> ${esc(vCopyLb.updateCadence)}</div>
-    </div>
+    <p class="pseo-lead" style="margin:0 0 16px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
     <div id="leaderboard-filter-bar" style="background:#FFFFFF;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">

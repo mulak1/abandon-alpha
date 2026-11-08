@@ -83,6 +83,9 @@ function runTests() {
   assert.ok(lpHtml.includes('class="site-header"'), '/lp must share the unified 70px site-header');
   assert.ok(scanHtml.includes('max-width:1320px') && lbHtml.includes('max-width:1320px'), '/scan and /leaderboard must use the unified 1320px container width');
 
+  assert.ok(scanHtml.includes('id="eb-scan-volume-adjuster"'), 'Public scan pages must include inline custom store volume calculator');
+  assert.ok(!scanHtml.includes('● Verified Source:') && !lbHtml.includes('● Verified Source:'), 'Scan and leaderboard pages must not have 3-column green-dot provenance banner clutter');
+
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
 

@@ -235,15 +235,45 @@ function renderGrowthPageHtml(cfg, item, kind) {
     </nav>
     <h1 style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.18;margin:0 0 8px 0;">${escXml(item.title)}</h1>
     <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;">${escXml(item.summary)}</p>
-    <script>window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};</script>
-    <section id="eb-onnx-cnn-workbench" style="background:#FFFFFF;color:${escXml(t.textPrimary)};border-radius:14px;padding:14px 18px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:13px;font-weight:800;color:${escXml(g.badgeColor)};">Live Interactive Calculator:</span>
-        <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:8px;border:1px solid ${escXml(t.border)};background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-size:13.5px;width:155px;" />
-        <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:8px;border:none;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:700;cursor:pointer;">Check Score ↗</button>
-        <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:${escXml(t.textSecondary)};text-decoration:underline;padding:2px 6px;">Full Report ↗</a>
+    <script>
+      window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout');if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn');if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(pl)pl.href='/scan/'+encodeURIComponent(s.target);});};
+      window.__ebRecalcGrowthVolume=function(){
+        var sess=Number((document.getElementById('eb-growth-vol-sessions')||{}).value||3200);
+        var aov=Number((document.getElementById('eb-growth-vol-aov')||{}).value||92);
+        var code=(document.getElementById('eb-growth-vol-decline')||{}).value||'insufficient_funds';
+        var tgt=(document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}';
+        fetch('/api/audit-leakage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({storeName:tgt,monthlySessions:sess,aovUsd:aov,primaryDeclineCode:code})}).then(function(r){return r.json()}).then(function(d){
+          if(!d||!d.totalRecoverableUsd)return;
+          var rec='+$'+Math.round(d.totalRecoverableUsd).toLocaleString()+'/mo Recoverable ('+code+')';
+          var el=document.getElementById('eb-live-cnn-readout'),k1=document.getElementById('eb-growth-r1-kpi');
+          if(el)el.textContent=tgt+' → '+rec;
+          if(k1)k1.textContent=rec;
+        });
+      };
+    </script>
+    <section id="eb-onnx-cnn-workbench" style="background:#FFFFFF;color:${escXml(t.textPrimary)};border:1px solid ${escXml(t.border)};border-radius:14px;padding:14px 18px;margin-top:14px;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:13px;font-weight:700;color:${escXml(g.badgeColor)};">Store / domain check:</span>
+          <input id="eb-cnn-wb-input" type="text" value="${escXml(item.target)}" placeholder="Enter your own..." aria-label="Custom scan target" style="padding:6px 11px;border-radius:8px;border:1px solid ${escXml(t.border)};background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-size:13.5px;width:155px;" />
+          <button id="eb-cnn-wb-submit" type="button" onclick="window.__ebRunGrowthWb((document.getElementById('eb-cnn-wb-input')||{}).value||'${escXml(item.target)}')" style="padding:6px 13px;border-radius:8px;border:none;background:${escXml(g.badgeColor)};color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer;">Check score ↗</button>
+          <a id="eb-growth-permalink-btn" href="/scan/${escXml(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:${escXml(t.textSecondary)};text-decoration:underline;padding:2px 6px;">Full report ↗</a>
+        </div>
+        <div id="eb-live-cnn-readout" style="font-variant-numeric:tabular-nums;font-size:13.5px;color:${escXml(t.safeColor)};font-weight:700;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
       </div>
-      <div id="eb-live-cnn-readout" style="font-variant-numeric:tabular-nums;font-size:13px;color:${escXml(t.safeColor)};font-weight:700;">${escXml(item.target)} → ${escXml(item.metricA || item.scoreA)}</div>
+      <div id="eb-growth-volume-adjuster" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:10px;border-top:1px solid ${escXml(t.border)};">
+        <span style="font-size:13px;font-weight:600;color:${escXml(t.textPrimary)};">Calculate your store's monthly recovery:</span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <label style="font-size:12.5px;color:${escXml(t.textSecondary)};display:inline-flex;align-items:center;gap:5px;">Checkouts/mo <input id="eb-growth-vol-sessions" type="number" value="3200" min="50" max="500000" oninput="window.__ebRecalcGrowthVolume()" style="width:82px;padding:4px 8px;border-radius:6px;border:1px solid ${escXml(t.border)};font-size:12.5px;" /></label>
+          <label style="font-size:12.5px;color:${escXml(t.textSecondary)};display:inline-flex;align-items:center;gap:5px;">Avg order ($) <input id="eb-growth-vol-aov" type="number" value="92" min="5" max="10000" oninput="window.__ebRecalcGrowthVolume()" style="width:68px;padding:4px 8px;border-radius:6px;border:1px solid ${escXml(t.border)};font-size:12.5px;" /></label>
+          <select id="eb-growth-vol-decline" aria-label="Decline code" onchange="window.__ebRecalcGrowthVolume()" style="padding:4px 8px;border-radius:6px;border:1px solid ${escXml(t.border)};font-size:12.5px;background:#FFFFFF;color:${escXml(t.textPrimary)};">
+            <option value="insufficient_funds">insufficient_funds (Payday Sync)</option>
+            <option value="do_not_honor">do_not_honor (24h Cooldown)</option>
+            <option value="expired_card">expired_card (1-Tap Updater)</option>
+          </select>
+          <button type="button" onclick="window.__ebRecalcGrowthVolume()" style="padding:5px 11px;border-radius:999px;border:none;background:#0F172A;color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;">Calculate</button>
+        </div>
+      </div>
     </section>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
