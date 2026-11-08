@@ -119,22 +119,16 @@
                 </div>
               </div>
 
-              <div class="form-row-2" style="gap:16px;">
-                <div>
-                  <label class="field-label" for="input-aov">Average order value ($)</label>
-                  <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" required />
-                </div>
-                <div>
-                  <label class="field-label" for="input-decline-focus">Top card decline reason</label>
-                  <select id="input-decline-focus" class="field-input" onchange="onDeclineFocusChange(this.value)">
-                    <option value="auto_weighted" selected>All decline codes (auto)</option>
-                    <option value="insufficient_funds">insufficient_funds (payday retry)</option>
-                    <option value="do_not_honor">do_not_honor (24h cooldown)</option>
-                    <option value="expired_card">expired_card (1-tap updater)</option>
-                    <option value="authentication_required">authentication_required (3DS2)</option>
-                    <option value="processing_error">processing_error (backoff)</option>
-                  </select>
-                </div>
+              <div>
+                <label class="field-label" for="input-decline-focus">Top card decline reason</label>
+                <select id="input-decline-focus" class="field-input" onchange="onDeclineFocusChange(this.value)">
+                  <option value="auto_weighted" selected>All decline codes (auto)</option>
+                  <option value="insufficient_funds">insufficient_funds (payday retry)</option>
+                  <option value="do_not_honor">do_not_honor (24h cooldown)</option>
+                  <option value="expired_card">expired_card (1-tap updater)</option>
+                  <option value="authentication_required">authentication_required (3DS2)</option>
+                  <option value="processing_error">processing_error (backoff)</option>
+                </select>
               </div>
 
               <div>
@@ -146,8 +140,12 @@
             </div>
 
             <div style="display:flex;flex-direction:column;gap:10px;">
-              <details style="padding:10px 12px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
-                <summary style="cursor:pointer;font-size:0.8125rem;font-weight:600;color:#475569;">Optional: scan domain or fine-tune rates</summary>
+              <details style="padding:10px 12px;border-radius:10px;background:#F8FAFC;">
+                <summary style="cursor:pointer;font-size:0.8125rem;font-weight:600;color:#475569;">Optional: fine-tune order value, scan domain, or rates</summary>
+                <div style="margin-top:10px;margin-bottom:10px;">
+                  <label class="field-label" for="input-aov">Average order value ($)</label>
+                  <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" style="background:#FFFFFF;" required />
+                </div>
                 <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:10px;">
                   <input id="input-store-url" type="text" class="field-input" placeholder="e.g. gymshark.com, linear.app..." style="flex:1;padding:8px 12px;font-size:0.875rem;background:#FFFFFF;" onkeydown="if(event.key==='Enter'){event.preventDefault();probeLiveMerchantStore();}" />
                   <button type="button" id="btn-probe-store" class="btn btn-ghost btn-sm" style="padding:8px 14px;font-weight:600;background:#FFFFFF;white-space:nowrap;" onclick="probeLiveMerchantStore()">Scan domain</button>
@@ -197,7 +195,7 @@
               </div>
 
               <div class="metric-duo" style="margin-bottom:16px;gap:14px;">
-                <div class="metric-tile" style="padding:16px 18px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;">
+                <div class="metric-tile" style="padding:16px 18px;background:#F8FAFC;border-radius:12px;">
                   <span class="tile-label" style="color:#64748B;">Monthly leaked revenue</span>
                   <strong id="out-total-leaked" class="tile-value" style="color:#0F172A;">$214,523</strong>
                   <span id="out-leaked-sub" class="tile-sub" style="color:#64748B;">$210,496 Cart + $4,027 Failed Cards</span>
@@ -252,33 +250,36 @@
               </ul>
               <!-- LIVE 3-STEP SMART RETRY & SMS/EMAIL RECOVERY FLOW IN FOLD 1 -->
               <div id="aa-fold1-3step-flow" style="margin-top:12px;padding-top:10px;border-top:1px solid #E2E8F0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;">
-                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+                <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
                   <strong style="display:block;color:#0F172A;">Step 1 &middot; T+0s Webhook</strong>
                   <span style="color:#475569;"><code>invoice.payment_failed</code> &amp; exit counter-offer</span>
                 </div>
-                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+                <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
                   <strong style="display:block;color:#0F172A;">Step 2 &middot; 1st/15th Payday</strong>
                   <span style="color:#475569;">06:00 local deposit retry + Specimen #1 email</span>
                 </div>
-                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+                <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
                   <strong style="display:block;color:#0F172A;">Step 3 &middot; T+72h Rescue</strong>
                   <span style="color:#475569;">1-Tap Apple Pay / Link updater &amp; 14d pause</span>
                 </div>
               </div>
             </div>
 
-            <!-- SINGLE CALM ACTION FOOTER (MAX 1 EMAIL SAVE + 1 PAID PACK LINK) -->
-            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:10px;background:#F8FAFC;padding:16px;border-radius:12px;border:1px solid #E2E8F0;">
+            <!-- SINGLE CALM ACTION FOOTER -->
+            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:10px;background:#F8FAFC;padding:16px;border-radius:12px;">
               <div id="aa-unmasked-subject-line-1" style="font-size:13px;line-height:1.45;color:#0F172A;">
                 <span style="color:#475569;font-weight:600;">Unmasked Step-1 webhook &amp; Specimen #1 (<span id="aa-spark-brand-label">Gymshark</span>):</span>
-                <code id="aa-unmasked-subject-quote" style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;border:1px solid #E2E8F0;font-size:12.5px;">"Quick heads-up on your Gymshark billing settings"</code>
+                <code id="aa-unmasked-subject-quote" style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;font-size:12.5px;">"Quick heads-up on your Gymshark billing settings"</code>
                 <span id="aa-unmasked-subject-meta" style="color:#64748B;">(41.8% open rate &middot; 1st/15th payday retry)</span>
                 <span id="aa-spark-split-nums" style="display:none;"></span>
               </div>
-              <form id="aa-inline-sample-unlock-form" onsubmit="return window.__aaUnlockSampleSnippet(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
-                <input type="email" id="aa-inline-sample-email" required placeholder="Work email to reveal Fix #1 snippet ($0)..." aria-label="Enter work email ($0) to unmask Fix #1 Copy-Paste Checkout Fix &amp; save Audit" style="flex:1 1 190px;min-width:0;max-width:100%;padding:8px 12px;min-height:38px;border-radius:8px;border:1px solid #CBD5E1;background:#FFFFFF;color:#0F172A;font-size:13.5px;" />
-                <button type="submit" id="aa-inline-sample-btn" class="btn btn-indigo btn-sm" style="padding:8px 14px;min-height:38px;font-size:13.5px;white-space:nowrap;">Reveal Fix #1 ($0)</button>
-              </form>
+              <details style="margin:0;">
+                <summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:#475569;">Optional: email yourself the free Fix #1 snippet ($0)</summary>
+                <form id="aa-inline-sample-unlock-form" onsubmit="return window.__aaUnlockSampleSnippet(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 0;">
+                  <input type="email" id="aa-inline-sample-email" required placeholder="Work email to reveal Fix #1 snippet ($0)..." aria-label="Enter work email ($0) to unmask Fix #1 Copy-Paste Checkout Fix &amp; save Audit" style="flex:1 1 190px;min-width:0;max-width:100%;padding:8px 12px;min-height:38px;border-radius:8px;background:#FFFFFF;color:#0F172A;font-size:13.5px;border:none;" />
+                  <button type="submit" id="aa-inline-sample-btn" class="btn btn-indigo btn-sm" style="padding:8px 14px;min-height:38px;font-size:13.5px;white-space:nowrap;">Reveal Fix #1 ($0)</button>
+                </form>
+              </details>
               <div id="aa-inline-sample-status" style="display:none;font-size:13px;color:#047857;font-weight:600;"></div>
               <div id="out-sdk-unmasked-preview" style="display:none;"></div>
               <div id="out-sdk-snippet-wrap" style="display:none;flex-direction:column;gap:6px;">
@@ -296,6 +297,15 @@
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- BESPOKE EDITORIAL PHOTO BREAK #1 -->
+        <div class="editorial-break-card">
+          <img src="/editorial-fintech-desk.jpg" alt="Minimalist payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+          <div>
+            <h2 class="section-h2" style="margin-bottom:6px;">Zero-commission recovery built for modern payment stacks</h2>
+            <p class="section-sub" style="margin:0;">Traditional retention platforms charge 10%–15% revenue share on every recovered subscription and train full-price shoppers to wait for a coupon. AbandonAlpha deploys directly into your Stripe Billing and Shopify checkout as a self-hosted 3-file recovery kit.</p>
           </div>
         </div>
       </div>
@@ -345,7 +355,7 @@
               </div>
             </div>
 
-            <div class="code-snippet-box" id="bandit-selected-offer-box" style="margin-top:0;padding:16px 18px;border:1px solid #E2E8F0;background:#F8FAFC;border-radius:10px;">
+            <div class="code-snippet-box" id="bandit-selected-offer-box" style="margin-top:0;padding:16px 18px;background:#F8FAFC;border-radius:10px;">
               <div style="font-size:0.8125rem;font-weight:500;color:#64748B;margin-bottom:4px;">Matched counter-offer</div>
               <h3 id="bandit-offer-headline" style="font-size:1rem; margin:0 0 6px; color:#0F172A; font-weight:600;">Unlock 15% Instant Founders Rebate on This Order</h3>
               <p id="bandit-offer-subtext" style="font-size:0.875rem; line-height:1.5; margin:0; color:#475569;">Applies code ALPHA15 automatically to your active Stripe Checkout session for the next 15 minutes without showing a coupon box to full-price buyers.</p>
@@ -380,6 +390,15 @@
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+        <!-- BESPOKE EDITORIAL PHOTO BREAK #2 -->
+        <div class="editorial-break-card">
+          <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing checkout retention metrics in studio" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+          <div>
+            <h2 class="section-h2" style="margin-bottom:6px;">Tailored exit rescues instead of blanket coupon codes</h2>
+            <p class="section-sub" style="margin:0;">When a buyer hesitates over team approval or subscription lock-in, a 10%-off popup wastes margin without solving the objection. Matching the exact counter-offer—such as a 14-day pause or net-30 invoice link—lifts checkout completion by 18%–31%.</p>
           </div>
         </div>
       </div>
@@ -420,18 +439,21 @@
               </select>
             </div>
 
-            <div class="form-row-2">
-              <div>
-                <label class="field-label" for="wh-email">Customer email</label>
-                <input id="wh-email" type="text" class="field-input" value="alex@scaleops.io" required />
+            <details style="padding:10px 12px;border-radius:10px;background:#F8FAFC;margin-bottom:12px;">
+              <summary style="cursor:pointer;font-size:0.8125rem;font-weight:600;color:#475569;">Optional: customize customer email &amp; invoice amount</summary>
+              <div class="form-row-2" style="margin-top:10px;">
+                <div>
+                  <label class="field-label" for="wh-email">Customer email</label>
+                  <input id="wh-email" type="text" class="field-input" value="alex@scaleops.io" style="background:#FFFFFF;" required />
+                </div>
+                <div>
+                  <label class="field-label" for="wh-amount">Invoice amount ($)</label>
+                  <input id="wh-amount" type="number" class="field-input" value="149" min="5" max="25000" style="background:#FFFFFF;" required />
+                </div>
               </div>
-              <div>
-                <label class="field-label" for="wh-amount">Invoice amount ($)</label>
-                <input id="wh-amount" type="number" class="field-input" value="149" min="5" max="25000" required />
-              </div>
-            </div>
+            </details>
 
-            <button type="submit" id="wh-submit-btn" class="btn btn-indigo btn-block" style="margin-top:12px;">
+            <button type="submit" id="wh-submit-btn" class="btn btn-indigo btn-block" style="margin-top:4px;">
               <span>Simulate retry schedule</span>
             </button>
             <div id="wh-form-status" class="mono-status" aria-live="polite" style="margin-top:8px;"></div>
@@ -443,7 +465,7 @@
               <span id="wh-out-recovery-rate" style="font-size:0.8125rem;color:#047857;font-weight:600;">Expected recovery: 62.4%</span>
             </div>
 
-            <div id="wh-out-network-rule" style="font-size:0.8125rem; color:#475569; background:#F8FAFC; border:1px solid #E2E8F0; padding:10px 12px; border-radius:8px; margin-bottom:12px;">
+            <div id="wh-out-network-rule" style="font-size:0.8125rem; color:#475569; background:#F8FAFC; padding:10px 12px; border-radius:8px; margin-bottom:12px;">
               Card network rule: max 4 retries in 30 days; never retry within 1 hour.
             </div>
 
@@ -462,7 +484,7 @@
               </div>
             </div>
 
-            <div class="code-snippet-box" style="display:flex;flex-direction:column;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;">
+            <div class="code-snippet-box" style="display:flex;flex-direction:column;gap:8px;background:#F8FAFC;">
               <div>
                 <div style="font-size:0.75rem;color:#64748B;font-weight:500;">Recovery email preview (<span id="wh-out-model">Stripe dunning</span>)</div>
                 <p id="wh-out-subject" style="font-size:0.875rem; font-weight:600; color:#0F172A; margin:4px 0;">Subject: [Action Required] Gymshark payment ($149): Soft Decline Detected</p>
@@ -481,6 +503,15 @@
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- BESPOKE EDITORIAL PHOTO BREAK #3 -->
+        <div class="editorial-break-card">
+          <img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+          <div>
+            <h2 class="section-h2" style="margin-bottom:6px;">Visa &amp; Mastercard retry-limit compliance out of the box</h2>
+            <p class="section-sub" style="margin:0;">Blind daily cron retries burn through Visa's 4-attempt 30-day window before customer balances replenish. AbandonAlpha schedules soft declines on Friday and 1st/15th ACH payday windows while routing expired cards directly to 1-tap Apple Pay update links.</p>
           </div>
         </div>
       </div>

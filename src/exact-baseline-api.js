@@ -311,7 +311,7 @@ const VERTICAL_CONFIGS = {
       border: '#E2E8F0', accentBorder: '#CBD5E1', textPrimary: '#0A2540', textSecondary: '#334155', textMuted: '#475569',
       brandPrimary: '#0F172A', brandSoftBg: '#F1F5F9', brandText: '#0A2540',
       safeColor: '#047857', safeSoftBg: '#ECFDF5', safeBorder: '#A7F3D0', warnColor: '#B45309',
-      fontDisplay: "'Playfair Display', Georgia, serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+      fontDisplay: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif", fontSans: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
       radiusCard: '8px', radiusPill: '8px', shadow: 'none'
     },
     flashPriceEnv: 'STRIPE_PRICE_FLASH_199', flashPriceDefault: 'price_1UQjMtIaoGnkXxS8fAEYjqnp',

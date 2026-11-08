@@ -265,7 +265,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <span style="font-size:13px;font-weight:600;color:${escXml(t.textPrimary)};">Calculate your store's monthly recovery:</span>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <label style="font-size:12.5px;color:${escXml(t.textSecondary)};display:inline-flex;align-items:center;gap:5px;">Checkouts/mo <input id="eb-growth-vol-sessions" type="number" value="3200" min="50" max="500000" oninput="window.__ebRecalcGrowthVolume()" style="width:82px;padding:4px 8px;border-radius:6px;border:1px solid ${escXml(t.border)};font-size:12.5px;" /></label>
-          <label style="font-size:12.5px;color:${escXml(t.textSecondary)};display:inline-flex;align-items:center;gap:5px;">Avg order ($) <input id="eb-growth-vol-aov" type="number" value="92" min="5" max="10000" oninput="window.__ebRecalcGrowthVolume()" style="width:68px;padding:4px 8px;border-radius:6px;border:1px solid ${escXml(t.border)};font-size:12.5px;" /></label>
+          <input id="eb-growth-vol-aov" type="hidden" value="92" />
           <select id="eb-growth-vol-decline" aria-label="Decline code" onchange="window.__ebRecalcGrowthVolume()" style="padding:4px 8px;border-radius:6px;border:1px solid ${escXml(t.border)};font-size:12.5px;background:#FFFFFF;color:${escXml(t.textPrimary)};">
             <option value="insufficient_funds">insufficient_funds (Payday Sync)</option>
             <option value="do_not_honor">do_not_honor (24h Cooldown)</option>
@@ -275,6 +275,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
         </div>
       </div>
     </section>
+    <div class="editorial-break-card"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:6px;">Self-hosted recovery rules with 0% revenue share</h2><p class="section-sub" style="margin:0;">Deploy bank-timed Stripe retry schedules, exit counter-offers, and 1-tap billing links directly into your stack without monthly subscriptions or commission fees.</p></div></div>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
         <h2 style="font-size:18px;margin:0;">Side-by-side results &amp; action plan</h2>

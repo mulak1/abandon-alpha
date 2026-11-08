@@ -355,11 +355,11 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           <span id="eb-live-cnn-readout" style="display:none;">${esc(scan.target)} → Grade ${esc(scan.grade)} (${scan.score}/100)</span>
         </div>
       </div>
-      <div id="eb-scan-volume-adjuster" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:10px 12px;margin-top:10px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;">
+      <div id="eb-scan-volume-adjuster" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:10px 12px;margin-top:10px;border-radius:10px;background:#F8FAFC;">
         <span style="font-size:13px;font-weight:600;color:#0F172A;">Customize for your store volume:</span>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <label style="font-size:12.5px;color:#475569;display:inline-flex;align-items:center;gap:5px;">Checkouts/mo <input id="eb-scan-vol-sessions" type="number" value="3200" min="50" max="500000" oninput="window.__ebRecalcScanVolume()" style="width:82px;padding:4px 8px;border-radius:6px;border:1px solid #CBD5E1;font-size:12.5px;" /></label>
-          <label style="font-size:12.5px;color:#475569;display:inline-flex;align-items:center;gap:5px;">Avg order ($) <input id="eb-scan-vol-aov" type="number" value="92" min="5" max="10000" oninput="window.__ebRecalcScanVolume()" style="width:68px;padding:4px 8px;border-radius:6px;border:1px solid #CBD5E1;font-size:12.5px;" /></label>
+          <input id="eb-scan-vol-aov" type="hidden" value="92" />
           <select id="eb-scan-vol-decline" aria-label="Decline code" onchange="window.__ebRecalcScanVolume()" style="padding:4px 8px;border-radius:6px;border:1px solid #CBD5E1;font-size:12.5px;background:#FFFFFF;color:#0F172A;">
             <option value="insufficient_funds">insufficient_funds (Payday Sync)</option>
             <option value="do_not_honor">do_not_honor (24h Cooldown)</option>
@@ -370,6 +370,14 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       </div>
       ${renderScanSummaryCardsHtml(cfg, scan, primaryBtnBg)}
     </section>
+
+    <div class="editorial-break-card">
+      <img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+      <div>
+        <h2 class="section-h2" style="margin-bottom:6px;">Bank-aligned retry schedules &amp; exit counter-offers</h2>
+        <p class="section-sub" style="margin:0;">Stop losing renewal revenue to naive 24-hour cron retries. Deploy payday-synced Stripe webhook retries and tailored checkout counter-offers with zero revenue-share commission.</p>
+      </div>
+    </div>
 
     <!-- DIAGNOSTIC BREAKDOWN -->
     <section class="table-wrap" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;">
@@ -478,9 +486,10 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   ${renderFlywheelHeaderHtml(cfg, 'PUBLIC BENCHMARK LEADERBOARD', '/leaderboard')}
   <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:24px;">
     ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml('Free Store Recovery Benchmarks ($0) + $29 Complete Recovery Kit', 'Send Free Recovery Rules ($0) →', '') : ''}
-    <h1 style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
+    <h1 style="margin:0 0 8px 0;font-size:clamp(1.8rem,2.5vw,2.25rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
     <p class="pseo-lead" style="margin:0 0 16px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
+    <div class="editorial-break-card" style="margin:0 0 16px 0;"><img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing retention leaderboard" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:6px;">Verified checkout &amp; failed-payment benchmarks across 140+ stores</h2><p class="section-sub" style="margin:0;">Top-ranked stores pair payday-synced Stripe retry schedules with objection-matched checkout counter-offers—recovering 18%–31% of otherwise lost revenue with 0% commission.</p></div></div>
     <div id="leaderboard-filter-bar" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">
