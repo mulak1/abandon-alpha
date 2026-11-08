@@ -97,6 +97,7 @@ function runTests() {
   const rawGrowthJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'autonomous-growth-engine.js'), 'utf8');
   assert.ok(scanHtml.includes('id="eb-scan-roi-proof"') && scanHtml.includes('id="eb-scan-fix1-cta"') && rawGrowthJs.includes('id="eb-growth-roi-proof"') && rawGrowthJs.includes('id="eb-growth-fix1-cta"'), '/scan/*, /compare/*, and /tools/* must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
   assert.ok(lpHtml.includes('id="lp-roi-proof"') && lpHtml.includes('id="lp-fix1-cta"') && sampleHtml.includes('id="sample-roi-proof"') && sampleHtml.includes('id="sample-fix1-cta"'), '/lp and /sample must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
+  assert.ok(lbHtml.includes('id="lb-roi-proof"') && lbHtml.includes('id="lb-fix1-cta"'), '/leaderboard must surface live 1-order payback ROI proof and Fix #1 snippet reveal');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

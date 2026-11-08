@@ -513,18 +513,22 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           <button type="submit" style="padding:8px 16px;border-radius:8px;border:none;background:${esc(badgeColor)};color:#FFFFFF;font-size:14px;font-weight:700;cursor:pointer;">Check &amp; Rank →</button>
         </form>
       </div>
-      <div id="lb-instant-preview-card" style="display:none;padding:12px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <div>
+      <div id="lb-instant-preview-card" style="display:flex;padding:12px 16px;border-radius:10px;background:#F8FAFC;border:1px solid #E2E8F0;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;min-width:260px;">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <strong id="lb-prev-target" style="font-size:15px;color:#0F172A;">store.com</strong>
-            <span id="lb-prev-grade" style="padding:2px 8px;border-radius:999px;background:#ECFDF5;color:#047857;font-size:12px;font-weight:700;">Grade B (78/100)</span>
-            <span id="lb-prev-kpi" style="font-size:13.5px;font-weight:700;color:#047857;">+$14,200/mo Recoverable</span>
+            <strong id="lb-prev-target" style="font-size:15px;color:#0F172A;">gymshark.com</strong>
+            <span id="lb-prev-grade" style="padding:2px 8px;border-radius:999px;background:#ECFDF5;color:#047857;font-size:12px;font-weight:700;">Grade A (88/100)</span>
+            <span id="lb-prev-kpi" style="font-size:13.5px;font-weight:700;color:#047857;">+$36,722/mo Recoverable</span>
           </div>
-          <div id="lb-prev-finding" style="font-size:12.5px;color:#475569;margin-top:3px;">Payday-timed retry schedule &amp; exit counter-offer ready</div>
+          <div id="lb-roi-proof" style="font-size:12.5px;color:#475569;margin-top:3px;">Pays for $29 pack in &lt; 1 recovered order (1,263x ROI) &middot; 0% commission &middot; 30-day guarantee</div>
+          <details style="margin-top:4px;">
+            <summary id="lb-fix1-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for gymshark.com &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
+            <code id="lb-fix1-code" style="display:block;margin-top:6px;padding:8px 10px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "gymshark.com", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+          </details>
         </div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <a id="lb-prev-buy-29" href="/buy/playbook_pass" rel="nofollow" style="padding:7px 14px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
-          <a id="lb-prev-buy-199" href="/buy/flash_pass" rel="nofollow" style="font-size:12.5px;color:#475569;text-decoration:underline;">$1.99 patch</a>
+          <a id="lb-prev-buy-29" href="/buy/playbook_pass?target=gymshark.com" rel="nofollow" style="padding:7px 14px;border-radius:999px;background:#0F172A;color:#FFFFFF;font-size:13px;font-weight:600;text-decoration:none;">Get Complete Pack ($29) →</a>
+          <a id="lb-prev-buy-199" href="/buy/flash_pass?target=gymshark.com" rel="nofollow" style="font-size:12.5px;color:#475569;text-decoration:underline;">$1.99 patch</a>
           <a id="lb-prev-report-link" href="/scan/gymshark.com" style="font-size:12.5px;font-weight:600;color:#0F172A;text-decoration:underline;">Full scorecard →</a>
         </div>
       </div>
@@ -541,14 +545,15 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           if(!d||!d.scan){window.location.href='/scan/'+encodeURIComponent(v);return;}
           var s=d.scan,card=document.getElementById('lb-instant-preview-card');
           if(card)card.style.display='flex';
-          var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),pf=document.getElementById('lb-prev-finding'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),rl=document.getElementById('lb-prev-report-link');
+          var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),rl=document.getElementById('lb-prev-report-link'),fc=document.getElementById('lb-fix1-cta'),fk=document.getElementById('lb-fix1-code');
           if(pt)pt.textContent=s.target;
           if(pg)pg.textContent='Grade '+s.grade+' ('+s.score+'/100)';
           if(pk)pk.textContent=s.kpi1+' • '+s.kpi2;
-          if(pf)pf.textContent=s.cnnReadout+' — '+s.issue;
           if(b29)b29.href='/buy/playbook_pass?target='+encodeURIComponent(s.target);
           if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(s.target);
           if(rl)rl.href='/scan/'+encodeURIComponent(s.target);
+          if(fc)fc.textContent='Get free Fix #1 snippet for '+s.target+' · insufficient_funds (+$2,098/mo lift · $0) →';
+          if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+s.target+'", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };';
         }).catch(function(){window.location.href='/scan/'+encodeURIComponent(v);});
         return false;
       };
