@@ -281,6 +281,8 @@ function applyPreset(presetKey, btnEl) {
   document.getElementById('input-aov').value = p.aovUsd;
   document.getElementById('input-abandon').value = p.abandonRatePct;
   document.getElementById('input-fail').value = p.failedCardRatePct;
+  const whAmtEl = document.getElementById('wh-amount');
+  if (whAmtEl && p.aovUsd) whAmtEl.value = p.aovUsd;
 
   try {
     const u = new URL(window.location.href);
@@ -290,6 +292,7 @@ function applyPreset(presetKey, btnEl) {
 
   saveAaWorkspaceState();
   runAuditRequest(presetKey, false, true, true);
+  if (typeof runWebhookSimulation === 'function') runWebhookSimulation();
 }
 
 function onDeclineFocusChange(declineCode) {
@@ -299,6 +302,7 @@ function onDeclineFocusChange(declineCode) {
     if (hasOpt) whSelect.value = declineCode;
   }
   runAuditRequest(currentPreset, false, true, true);
+  if (typeof runWebhookSimulation === 'function') runWebhookSimulation();
 }
 
 async function submitLeakageAudit(e) {
