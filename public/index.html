@@ -66,7 +66,7 @@
         <a href="/#webhook-lab">Stripe Retry Lab</a>
         <a href="/leaderboard">Leaderboard</a>
         <a href="/directory">Playbooks (60)</a>
-        <a href="/#pricing">Pricing</a>
+        <a href="/#in-card-unlock-bar">Pricing</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
           <span>Calculate Revenue</span>
           <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
@@ -78,58 +78,21 @@
       <a href="/#bandit-lab">Exit Simulator</a>
       <a href="/leaderboard">Leaderboard</a>
       <a href="/directory">60 Playbooks</a>
-      <a href="/#pricing">Pricing</a>
+      <a href="/#in-card-unlock-bar">Pricing</a>
     </nav>
   </header>
 
   <main>
-    <!-- ABOVE THE FOLD: CLEAR 2-STEP VALUE PROPOSITION & REVENUE RECOVERY CALCULATOR -->
-    <section id="grader" class="hero-section" style="padding:12px 0 36px;">
+    <!-- ABOVE THE FOLD: CALM EDITORIAL HEADER + 2-COLUMN DIAGNOSTIC WORKBENCH -->
+    <section id="grader" class="hero-section" style="padding:28px 0 36px;">
       <div class="container">
-        <div id="home-executive-brief" style="width:100%;margin-bottom:26px;padding:20px 22px;border-radius:18px;background:#FFFFFF;border:1px solid #CBD5E1;display:flex;flex-direction:column;gap:12px;box-sizing:border-box;">
-          <div id="aa-screen1-group1" style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-              <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;background:#ECFDF5;color:#047857;font-size:13px;font-weight:700;">For Shopify Stores, Stripe SaaS &amp; Subscription Apps</span>
-              <span style="font-size:13px;color:#047857;font-weight:700;">&#9679; 140+ Stores Verified &middot; Q4 2026</span>
-            </div>
-            <h1 class="hero-h1" style="font-size:clamp(1.38rem,2.3vw,1.95rem);line-height:1.18;margin:0;">See How Much Lost Checkout Revenue You Can Recover</h1>
-            <div id="aa-spark-preset-bar" class="preset-bar" role="group" aria-label="1-Tap Store &amp; Failed-Card Benchmark Presets" style="margin:0;gap:6px;display:flex;flex-wrap:wrap;">
-              <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)" style="padding:6px 11px;font-size:13px;">Gymshark (Store)</button>
-              <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)" style="padding:6px 11px;font-size:13px;">Linear (SaaS)</button>
-              <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)" style="padding:6px 11px;font-size:13px;">Whoop (Membership)</button>
-              <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)" style="padding:6px 11px;font-size:13px;">MasterClass</button>
-            </div>
+        <div id="home-executive-brief" style="max-width:780px;margin:0 0 28px 0;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;background:#ECFDF5;color:#047857;font-size:13px;font-weight:700;">For Shopify Stores, Stripe SaaS &amp; Subscription Apps</span>
+            <span style="font-size:13px;color:#475569;font-weight:600;">&#9679; 140+ Stores Verified &middot; 0% Revenue-Share Commission</span>
           </div>
-
-          <div id="aa-screen1-group2" style="padding:15px 18px;border-radius:14px;background:#F8FAFC;border:1px solid #E2E8F0;display:flex;flex-direction:column;gap:7px;">
-            <div id="aa-failed-card-leak-split" style="font-size:13.5px;line-height:1.38;color:#0A2540;">
-              <strong style="color:#047857;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Failed-Card Revenue Leak (<span id="aa-spark-brand-label">Gymshark</span>):</strong> <span id="aa-spark-split-nums">$210,496 Cart Abandon + $4,027 Failed Cards &rarr; <strong>+$36,722/mo Recoverable</strong> (62.4% Soft-Decline Lift)</span>
-            </div>
-            <div id="aa-unmasked-subject-line-1" style="font-size:13.5px;line-height:1.38;color:#0A2540;">
-              <strong style="color:#0A2540;">&#10003; Unmasked Specimen #1 Subject Line:</strong> <code style="font-weight:700;color:#047857;background:#ECFDF5;padding:2px 6px;border-radius:6px;font-size:13px;">"Quick heads-up on your [Brand] billing settings"</code> &mdash; <strong>41.8% Open Rate &middot; Visa 4-Retry Compliant</strong>
-            </div>
-            <div id="aa-clean-locked-badges-row" style="display:flex;flex-direction:column;gap:6px;margin-top:2px;">
-              <button type="button" id="aa-locked-badge-leak2" class="aa-locked-spec-badge" onclick="(function(){var el=document.getElementById('aa-inline-sample-email');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}})()" style="display:inline-flex;align-items:center;gap:6px;width:100%;text-align:left;padding:7px 11px;border-radius:8px;background:#FEF3C7;border:1px solid #F59E0B;color:#92400E;font-size:12.5px;font-weight:700;cursor:pointer;filter:none!important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Recovery Leak #2 &amp; Fix #1 Copy-Paste Checkout Snippet &mdash; Enter Email to Reveal Free ($0) &uarr;</button>
-              <div id="aa-unmasked-leak-2" style="display:none;padding:7px 11px;border-radius:8px;background:#ECFDF5;border:1px solid #10B981;color:#065F46;font-size:12.5px;font-weight:700;filter:none!important;">&#10003; Recovery Leak #2 Unmasked: Payday-Synced Soft-Decline Retry (+62.4% Lift on <code>insufficient_funds</code>) + Exit Bandit Copy-Paste Checkout Fix Ready Below!</div>
-              <button type="button" id="aa-locked-badge-pack" class="aa-locked-spec-badge" onclick="initiateStripeCheckout('dunning_29')" style="display:inline-flex;align-items:center;gap:6px;width:100%;text-align:left;padding:7px 11px;border-radius:8px;background:#EEF2FF;border:1px solid #6366F1;color:#312E81;font-size:12.5px;font-weight:700;cursor:pointer;filter:none!important;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:4px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>All 8 Drop-In Recovery Patches + 20 Bank Decline Schedules ($29 Pack &middot; 30-Day 5x ROI Guarantee) &rarr;</button>
-            </div>
-          </div>
-
-          <div id="aa-screen1-group3" style="padding:15px 18px;border-radius:14px;background:#ECFDF5;border:1px solid #A7F3D0;display:flex;flex-direction:column;gap:9px;">
-            <form id="aa-inline-sample-unlock-form" onsubmit="return window.__aaUnlockSampleSnippet(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
-              <input type="email" id="aa-inline-sample-email" required placeholder="Enter work email for free Fix #1 snippet ($0)..." aria-label="Enter work email ($0) to unmask Fix #1 Copy-Paste Checkout Fix &amp; save Audit" style="flex:1 1 200px;min-width:0;max-width:100%;padding:8px 12px;min-height:38px;border-radius:8px;border:1px solid #A7F3D0;background:#FFFFFF;color:#0A2540;font-size:13.5px;" />
-              <button type="submit" id="aa-inline-sample-btn" class="btn btn-indigo btn-sm" style="padding:8px 14px;min-height:38px;font-size:13.5px;white-space:nowrap;">Unmask Fix #1 Snippet ($0) &rarr;</button>
-            </form>
-            <div id="aa-inline-sample-status" style="display:none;font-size:13px;color:#047857;font-weight:700;"></div>
-            <div id="out-sdk-unmasked-preview" style="display:none;"></div>
-            <code id="out-sdk-snippet" style="display:none;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:13px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">export const AbandonAlphaConfig = { merchant: "gymshark" };</code>
-            <div id="aa-screen1-paid-cta-row" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-              <button type="button" id="aa-screen1-buy-29" class="btn btn-emerald btn-sm" style="padding:9px 16px;min-height:40px;font-size:14px;" onclick="initiateStripeCheckout('dunning_29')">
-                <span>Unlock $29 Complete Store Recovery Pack &rarr;</span>
-              </button>
-              <span id="aa-competitor-price-anchor" style="font-size:13px;color:#0A2540;font-weight:700;">$29 One-Time Store Pack &middot; or $1.99 Single-Store 3-File Patch (0% Commission)</span>
-            </div>
-          </div>
+          <h1 class="hero-h1" style="font-size:clamp(1.75rem,3vw,2.45rem);line-height:1.15;margin:0;letter-spacing:-0.025em;color:#0A2540;">See How Much Lost Checkout Revenue You Can Recover</h1>
+          <p class="hero-sub" style="font-size:1.05rem;line-height:1.55;color:#475569;margin:0;">Enter your store numbers below to diagnose checkout drop-off and failed Stripe card renewals, inspect a real unmasked recovery subject line, and export your drop-in recovery patch.</p>
         </div>
 
         <div class="hero-split" style="align-items:stretch;gap:28px;">
@@ -139,15 +102,15 @@
             <div style="display:flex;flex-direction:column;gap:18px;">
               <div class="card-header-bar" style="margin-bottom:0;padding-bottom:12px;border-bottom:1px solid #E2E8F0;gap:8px;flex-wrap:wrap;">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                  <span style="background:#0A2540;color:#FFFFFF;font-size:0.75rem;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.04em;white-space:nowrap;flex-shrink:0;">STEP 1 OF 3</span>
+                  <span style="background:#0A2540;color:#FFFFFF;font-size:0.75rem;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.04em;white-space:nowrap;flex-shrink:0;">STEP 1 OF 2</span>
                   <span class="mono-label" style="color:#0A2540;font-weight:800;font-size:0.95rem;">Enter Your Checkout Numbers (Free)</span>
                 </div>
                 <span id="probed-stack-badge" class="badge-live" style="font-size:0.8125rem;padding:4px 10px;white-space:nowrap;">● Instant Estimate</span>
               </div>
 
               <div>
-                <div style="font-size:0.875rem;font-weight:700;color:#475569;margin-bottom:8px;">Click a Well-Known Benchmark or Enter Your Own Below:</div>
-                <div class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:0;gap:8px;">
+                <div style="font-size:0.875rem;font-weight:700;color:#475569;margin-bottom:8px;">Click a Store Benchmark or Enter Your Own Below:</div>
+                <div id="aa-spark-preset-bar" class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:0;gap:8px;">
                   <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)" style="padding:7px 13px;font-size:0.875rem;">Gymshark (Store)</button>
                   <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)" style="padding:7px 13px;font-size:0.875rem;">Linear (SaaS)</button>
                   <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)" style="padding:7px 13px;font-size:0.875rem;">Whoop (Membership)</button>
@@ -235,12 +198,12 @@
             </div>
           </form>
 
-          <!-- RIGHT CARD: STEP 2 OF 3 (FREE DIAGNOSIS & BREAKDOWN) -->
+          <!-- RIGHT CARD: STEP 2 OF 2 (FREE DIAGNOSIS, UNMASKED SPECIMEN #1 & EXPORT) -->
           <div class="telemetry-card" id="aa-step2-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px;padding:28px;height:100%;transition:box-shadow 260ms ease, border-color 260ms ease;">
             <div>
               <div class="card-header-bar" style="margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #E2E8F0;gap:8px;flex-wrap:wrap;">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                  <span style="background:#047857;color:#FFFFFF;font-size:0.75rem;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.04em;white-space:nowrap;flex-shrink:0;">STEP 2 OF 3</span>
+                  <span style="background:#047857;color:#FFFFFF;font-size:0.75rem;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.04em;white-space:nowrap;flex-shrink:0;">STEP 2 OF 2</span>
                   <span class="mono-label" style="color:#0A2540;font-weight:800;font-size:0.95rem;">Free Diagnosis &amp; Recovery Breakdown</span>
                 </div>
                 <span id="out-grade-badge" class="badge-live" style="white-space:nowrap;flex-shrink:0;">Grade: C (65/100)</span>
@@ -311,15 +274,24 @@
               </ul>
             </div>
 
-            <!-- INLINE COPY & STEP 3 HANDOFF -->
-            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:8px;background:#ECFDF5;padding:14px 16px;border-radius:12px;border:1px solid #A7F3D0;">
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-                <strong style="font-size:13.5px;color:#0A2540;">$29 Declined-Card &amp; Cart Recovery Pack &middot; vs. $99/mo Retention SaaS</strong>
-                <button type="button" id="copy-sdk-btn" class="btn btn-emerald btn-sm" style="padding:7px 14px;font-size:13.5px;flex-shrink:0;" onclick="copySdkSnippet()">Copy Fix #1 Snippet</button>
+            <!-- SINGLE CALM ACTION FOOTER (MAX 1 EMAIL SAVE + 1 PAID PACK LINK) -->
+            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:10px;background:#F8FAFC;padding:16px;border-radius:12px;border:1px solid #E2E8F0;">
+              <div id="aa-unmasked-subject-line-1" style="font-size:13px;line-height:1.4;color:#0A2540;">
+                <strong style="color:#047857;">&#10003; Unmasked Specimen #1 Subject Line (<span id="aa-spark-brand-label">Gymshark</span>):</strong>
+                <code style="font-weight:700;color:#0A2540;background:#FFFFFF;padding:2px 6px;border-radius:5px;border:1px solid #CBD5E1;font-size:12.5px;">"Quick heads-up on your [Brand] billing settings"</code>
+                <span style="color:#475569;">(41.8% Open Rate)</span>
+                <span id="aa-spark-split-nums" style="display:none;"></span>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding-top:2px;font-size:13px;color:#334155;">
-                <span>Managing multiple client stores?</span>
-                <button type="button" onclick="initiateStripeCheckout('starter')" style="background:transparent;border:none;color:#047857;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;white-space:normal;text-align:left;">For CRO &amp; Shopify Agencies: White-Label Client Audit &amp; Multi-Store Patch Kit ($49) &rarr;</button>
+              <form id="aa-inline-sample-unlock-form" onsubmit="return window.__aaUnlockSampleSnippet(event)" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
+                <input type="email" id="aa-inline-sample-email" required placeholder="Work email to reveal Fix #1 snippet ($0)..." aria-label="Enter work email ($0) to unmask Fix #1 Copy-Paste Checkout Fix &amp; save Audit" style="flex:1 1 190px;min-width:0;max-width:100%;padding:8px 12px;min-height:38px;border-radius:8px;border:1px solid #CBD5E1;background:#FFFFFF;color:#0A2540;font-size:13.5px;" />
+                <button type="submit" id="aa-inline-sample-btn" class="btn btn-indigo btn-sm" style="padding:8px 14px;min-height:38px;font-size:13.5px;white-space:nowrap;">Reveal Fix #1 Free ($0) &rarr;</button>
+              </form>
+              <div id="aa-inline-sample-status" style="display:none;font-size:13px;color:#047857;font-weight:700;"></div>
+              <div id="out-sdk-unmasked-preview" style="display:none;"></div>
+              <code id="out-sdk-snippet" style="display:none;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12.5px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">export const AbandonAlphaConfig = { merchant: "gymshark" };</code>
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:4px;border-top:1px solid #E2E8F0;font-size:13px;color:#475569;">
+                <span>Need all 3 production files &amp; 20 bank retry schedules?</span>
+                <button type="button" id="aa-screen1-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#047857;font-weight:700;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">Unlock 3-File Patch ($1.99) or Complete Store Pack ($29) &rarr;</button>
               </div>
             </div>
           </div>
@@ -559,46 +531,7 @@
     <!-- SINGLE SELF-SERVE STRIPE EXPRESS CHECKOUT -->
     <section id="pricing" class="lab-section">
       <div class="container">
-        <div class="pricing-card featured" style="max-width:860px; margin:0 auto;">
-          <div>
-            <h2 class="section-h2" style="margin-bottom:8px;">Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Abandoned Cart Flow Templates + CFO Revenue Recovery Forecast</h2>
-            <p class="section-sub" style="margin-bottom:18px;">Unblur all bank-code recovery schedules and download your production-ready <strong>Complete Drop-In Checkout Recovery Code Patch</strong> (<code>stripe-retry-rules.json</code> + <code>exit-bandit-c1-c6.js</code>), <strong>3-Part Klaviyo/Shopify Abandoned Cart Flow Templates</strong>, and <strong>CFO Revenue Recovery Forecast</strong> in 1 click.</p>
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:20px 22px; border-radius:14px; background:#F1F5F9;">
-              <div>
-                <div class="price-tag" style="margin:0;">$1.99<span> USD single audit</span></div>
-                <div style="font-size:0.9375rem; color:var(--text-slate); margin-top:4px;">Complete Drop-In Checkout Recovery Code Patch + 3-Part Klaviyo/Shopify Flow Templates + CFO Forecast &bull; Instant Browser Unlock</div>
-              </div>
-              <a href="/buy/flash_pass" rel="nofollow" onclick="if(window.__ebQuickBuy){window.__ebQuickBuy('flash_pass');return false;}" class="btn btn-indigo" style="padding:13px 22px; font-size:1rem; text-decoration:none;">
-                <span>Unlock Recovery Code Patch + 3-Part Flows ($1.99)</span>
-                <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-
-            <div style="margin-top:14px; padding:14px 18px; border-radius:12px; background:#ECFDF5; border:1px solid #A7F3D0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-              <div>
-                <strong style="color:#0A2540; font-size:0.95rem; display:block;">For CRO &amp; Shopify Agencies: White-Label Client Audit &amp; Multi-Store Patch Kit ($49)</strong>
-                <span style="font-size:0.85rem; color:#334155;">Includes white-label client CFO audit exports, multi-store copy-paste checkout fixes, and all 20 Stripe bank decline schedules.</span>
-              </div>
-              <button type="button" id="checkout-starter-btn" class="btn btn-emerald" onclick="initiateStripeCheckout('starter')" style="white-space:normal;">
-                <span>Get White-Label Agency Patch Kit ($49) &rarr;</span>
-              </button>
-            </div>
-
-            <details open style="margin-top:16px; font-size:0.9375rem; color:var(--text-slate); padding:14px 16px; border-radius:12px; background:#F1F5F9;">
-              <summary style="cursor:pointer; font-weight:700; color:var(--text-navy);">Need the Complete Store Recovery Pack ($29 One-Time) or Enterprise Multi-Store Fleet License ($149)?</summary>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:14px;">
-                <a href="/buy/playbook_pass" rel="nofollow" id="btn-buy-playbook-29" class="btn btn-ghost btn-block" onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{'value':29.00,'currency':'USD'});}" style="text-decoration:none; background:#FFFFFF;">
-                  <span>Complete Store Recovery Pack ($29 One-Time)</span>
-                </a>
-                <button type="button" id="checkout-growth-btn" class="btn btn-indigo btn-block" onclick="initiateStripeCheckout('growth')">
-                  <span>Multi-Store Fleet License ($149)</span>
-                </button>
-              </div>
-            </details>
-          </div>
-        </div>
-
-        <div id="checkout-status-banner" class="telemetry-card" style="display:none; margin-top:20px;">
+        <div id="checkout-status-banner" class="telemetry-card" style="display:none; margin-top:8px;">
           <div class="card-header-bar">
             <span class="mono-label text-emerald">Self-Serve Stripe Checkout Fulfillment</span>
             <span id="checkout-session-badge" class="badge-live">Active</span>

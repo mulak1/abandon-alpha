@@ -515,7 +515,7 @@ function buildClientRuntimeScript(cfg) {
       }
     } else {
       var homeSubLead = document.querySelector('.hero-sub, .subhead, .editorial-subhead, .hero-lead, main h1 ~ p');
-      if (homeSubLead && homeSubLead.parentNode && !window.__ebIsUnlocked && CFG.moduleId !== 'sponsor_radar' && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
+      if (homeSubLead && homeSubLead.parentNode && !window.__ebIsUnlocked && CFG.moduleId !== 'sponsor_radar' && CFG.moduleId !== 'abandon_alpha' && !document.getElementById('eb-mobile-firstfold-bar')) homeSubLead.parentNode.insertBefore(buildQBar('eb-mobile-firstfold-bar'), homeSubLead.nextSibling);
       var nativePhotoShell = document.querySelector('.editorial-photo-shell');
       var customHeroMount = document.getElementById('eb-hero-visual-mount');
       if (nativePhotoShell && !document.getElementById('eb-hero-sparkline-pill')) {
@@ -540,7 +540,7 @@ function buildClientRuntimeScript(cfg) {
         if (window.__ebPaywallObserver) window.__ebPaywallObserver.observe(pcCta);
       }
     }
-    var wbAnchor = document.getElementById('eb-onnx-cnn-workbench'), tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = (CFG.moduleId === 'citation_forge' && pName === '/' && document.getElementById('matrix')) ? document.getElementById('matrix') : document.querySelector('main .bento-grid, main .checker-split, main .hero-split, main .hero-grid');
+    var wbAnchor = document.getElementById('eb-onnx-cnn-workbench'), tBarAnchor = document.getElementById('eb-tanstack-table-bar'), homeFullGrid = (CFG.moduleId === 'citation_forge' && pName === '/' && document.getElementById('matrix')) ? document.getElementById('matrix') : ((CFG.moduleId === 'abandon_alpha' && pName === '/' && document.getElementById('webhook-lab')) ? document.getElementById('webhook-lab') : document.querySelector('main .bento-grid, main .checker-split, main .hero-split, main .hero-grid'));
     var seoTargetEl = isPseoOrDir ? ((CFG.moduleId === 'sponsor_radar' && document.getElementById('sr-biz-model-proof-bar')) || document.getElementById('eb-inline-row4-unlock') || document.getElementById('sr-seo-quote-auditor') || document.getElementById('sr-seo-kpi-strip') || document.getElementById('leaderboard-filter-bar') || existingHeroSplit || document.getElementById('eb-pseo-hero-split') || homeFullGrid || document.querySelector('main .table-wrap, article .table-wrap, main .posterior-table-wrap') || tBarAnchor || targetEl || document.getElementById('in-card-unlock-bar') || h1Node) : null;
     var mountAnchor = isPseoOrDir ? seoTargetEl : (wbAnchor || homeFullGrid || tBarAnchor || targetEl || document.getElementById('eb-doppelrand-hero-card') || document.getElementById('in-card-unlock-bar'));
     if (!mountAnchor) return;
@@ -927,7 +927,7 @@ function renderExactBaselineEnhancements(html, cfg, reqPath) {
   const styles = buildExactBaselineStyles(cfg), bottomSuite = buildBottomConversionSuiteHtml(cfg, reqPath), clientJs = buildClientRuntimeScript(cfg);
   out = out.includes('</head>') ? out.replace('</head>', () => `${styles}\n</head>`) : styles + out;
   const isHomeRoute = !reqPath || reqPath === '/' || reqPath === '/index.html';
-  if (isHomeRoute && !out.includes('eb-leaderboard-home-showcase')) {
+  if (isHomeRoute && !out.includes('eb-leaderboard-home-showcase') && cfg.moduleId !== 'abandon_alpha') {
     const podiumHtml = buildTopLeaderboardPodiumShowcaseHtml(cfg);
     if (/<main[\s\S]*?<\/section>/i.test(out)) out = out.replace(/(<main[\s\S]*?<\/section>)/i, (m) => `${m}\n${podiumHtml}`);
     else if (/<\/main>/i.test(out)) out = out.replace(/<\/main>/i, (m) => `${podiumHtml}\n${m}`);
