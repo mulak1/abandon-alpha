@@ -130,6 +130,7 @@ function runTests() {
   assert.ok(rawEbApiJs.includes('const merchant = ${JSON.stringify(qTgt)};') && renderedHome.includes('id="cmdk-dl-csv"') && renderedHome.includes('id="cmdk-dl-txt"') && renderedHome.includes('id="wh-dl-worker"'), 'Cmd+K modal, Webhook Retry Lab, and downloadable Stripe worker endpoint must dynamically personalize store and decline parameters');
   assert.ok(rawEbApiJs.includes('Step 1 (T+0m): Webhook intercept') && rawEbApiJs.includes('const totRec = (qSess > 0 || qAov > 0)') && renderedHome.includes('id="cmdk-dl-js"'), 'Exported .CSV and .TXT bundles must compute custom volume KPIs and 3-step recovery schedule, and Cmd+K must expose .JS worker download');
   assert.ok(sampleHtml.includes('id="sample-dl-worker"') && sampleHtml.includes('id="sample-dl-bundle"') && sampleHtml.includes('id="sample-dl-csv"') && renderedHome.includes('id="cmdk-sample-link"'), '/sample must provide live personalized download links for all 3 files and hydrate from URL query params');
+  assert.ok(lpHtml.includes("'&decline=' + encodeURIComponent(code)") && lpHtml.includes('if (qt || qd || qs || qa) runLpAudit(null, false)'), '/lp must hydrate store, decline, sessions, and aov from URL query params and forward decline code into $29/$1.99 buy links');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

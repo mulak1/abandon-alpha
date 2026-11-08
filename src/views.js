@@ -802,7 +802,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       }
     }
 
-    function updateLpFlowPreview() {
+    function updateLpFlowPreview(openDet) {
       var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark';
       var code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
       var s1 = document.getElementById('lp-s1-desc');
@@ -825,7 +825,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       var sessVal = Number((document.getElementById('lp-sessions') && document.getElementById('lp-sessions').value) || 3200);
       var aovVal = Number((document.getElementById('lp-aov') && document.getElementById('lp-aov').value) || 92);
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
-      var qSuffix = '&target=' + encodeURIComponent(store) + '&sessions=' + sessVal + '&aov=' + aovVal + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
+      var qSuffix = '&target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
       if (b29) {
         b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
         b29.textContent = 'Get Complete ' + store + ' Recovery Pack ($29 one-time) →';
@@ -848,12 +848,12 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         fixCode.textContent = 'window.AbandonAlphaRules = { merchant: "' + store + '", declineCode: "' + code + '", retryAfterHours: ' + rHrs + ', allowPromoStacking: false };';
       }
       var lpDet = document.getElementById('lp-fix1-details');
-      if (lpDet && !lpDet.open) lpDet.open = true;
+      if (lpDet && openDet !== false && !lpDet.open) lpDet.open = true;
     }
 
-    async function runLpAudit(e) {
+    async function runLpAudit(e, openDet) {
       if (e && e.preventDefault) e.preventDefault();
-      updateLpFlowPreview();
+      updateLpFlowPreview(openDet);
       var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark';
       var code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
       var sessions = Number(document.getElementById('lp-sessions').value || 3200);
@@ -863,14 +863,7 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       var res = await fetch('/api/audit-leakage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          storeName: store,
-          monthlySessions: sessions,
-          aovUsd: aov,
-          abandonRatePct: abandon,
-          failedCardRatePct: fail,
-          primaryDeclineCode: code
-        })
+        body: JSON.stringify({ storeName: store, monthlySessions: sessions, aovUsd: aov, abandonRatePct: abandon, failedCardRatePct: fail, primaryDeclineCode: code })
       }).then(function(r) { return r.json(); });
       document.getElementById('lp-leaked-out').textContent = '$' + Math.round(res.totalMonthlyLeakedUsd).toLocaleString();
       document.getElementById('lp-rec-out').textContent = '+$' + Math.round(res.totalRecoverableUsd).toLocaleString() + '/mo';
@@ -883,30 +876,25 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       if (fixCta && res.recoverableDunningUsd) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + Math.round(res.recoverableDunningUsd).toLocaleString() + '/mo lift · $0) →';
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
       if (em && em.indexOf('@') > 0) {
-        fetch('/api/leads', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: em, pageUrl: '/lp', utmSource: 'meta_lp_calculator' })
-        }).catch(function() {});
+        fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: em, pageUrl: '/lp', utmSource: 'meta_lp_calculator' }) }).catch(function() {});
       }
       await fireCapi('Lead', res.totalRecoverableUsd);
     }
 
-    async function startLpCheckout(tier) {
-      var email = document.getElementById('lp-email').value || 'founder@dtcstore.io';
-      var val = tier === 'flash_199' ? 1.99 : 49;
-      await fireCapi('StartTrial', val);
-      var res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planTier: tier, customerEmail: email })
-      }).then(function(r) { return r.json(); });
-      if (res && res.checkoutUrl) {
-        document.getElementById('lp-capi-status').textContent = 'Stripe Checkout Session Created: ' + res.stripeSessionId + ' (' + res.planLabel + ')';
-      }
-    }
-
     window.addEventListener('DOMContentLoaded', function() {
+      try {
+        var sp = new URLSearchParams(window.location.search || '');
+        var qt = (sp.get('target') || sp.get('store') || sp.get('q') || '').trim(), qd = (sp.get('decline') || '').trim(), qs = Number(sp.get('sessions') || 0), qa = Number(sp.get('aov') || 0);
+        if (qt && document.getElementById('lp-store')) document.getElementById('lp-store').value = qt;
+        if (qs >= 50 && document.getElementById('lp-sessions')) document.getElementById('lp-sessions').value = qs;
+        if (qa >= 5 && document.getElementById('lp-aov')) document.getElementById('lp-aov').value = qa;
+        if (qd && document.getElementById('lp-decline')) {
+          var dIn = document.getElementById('lp-decline');
+          if (!Array.from(dIn.options).some(function(o) { return o.value === qd; })) { var o = document.createElement('option'); o.value = qd; o.textContent = qd + ' (Targeted Recovery)'; dIn.appendChild(o); }
+          dIn.value = qd;
+        }
+        if (qt || qd || qs || qa) runLpAudit(null, false);
+      } catch (_) {}
       fireCapi('ViewContent', 0, 'evt_lp_view_initial');
     });
   </script>
