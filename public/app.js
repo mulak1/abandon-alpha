@@ -103,6 +103,17 @@ const SPECIMEN_SUBJECT_BY_DECLINE = {
   }
 };
 
+function buildDeclineSpecificFix1Snippet(storeName, aovUsd, activeRule, specObj) {
+  const retryHrs = activeRule === 'expired_card' ? 0 : (activeRule === 'do_not_honor' ? 24 : (activeRule === 'authentication_required' ? 1 : (activeRule === 'processing_error' ? 4 : 72)));
+  const windowKey = activeRule === 'expired_card' ? 'ZERO_RETRY_1TAP_UPDATER' : (activeRule === 'do_not_honor' ? '24H_ISSUER_COOLDOWN' : (activeRule === 'authentication_required' ? 'INSTANT_3DS2_LINK' : (activeRule === 'processing_error' ? '4H_EXP_BACKOFF' : '1ST_15TH_0600_LOCAL')));
+  const subj = (specObj || SPECIMEN_SUBJECT_BY_DECLINE[activeRule] || SPECIMEN_SUBJECT_BY_DECLINE.insufficient_funds).tpl(storeName);
+  return [
+    `/* Fix #1 Copy-Paste Checkout & Stripe Retry Rule (${storeName} · ${activeRule}) */`,
+    `<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(storeName)}" data-aov="${aovUsd}" data-decline-focus="${activeRule}" async></script>`,
+    `<script>window.AbandonAlphaRules = { declineCode: "${activeRule}", retryAfterHours: ${retryHrs}, window: "${windowKey}", subjectLine: ${subj}, allowPromoStacking: false };</script>`
+  ].join('\n');
+}
+
 function updateUnmaskedSdkPreview(auditRes) {
   const storeName = document.getElementById('input-store')?.value?.trim() || 'Gymshark';
   const rawUrl = document.getElementById('input-store-url')?.value || storeName;
@@ -149,6 +160,16 @@ function updateUnmaskedSdkPreview(auditRes) {
     const totalRec = Number(auditRes?.totalRecoverableUsd || 36722);
     const roiMult = Math.max(10, Math.round(totalRec / 29)).toLocaleString();
     roiProofEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission:';
+  }
+  const fix1SummaryEl = document.getElementById('aa-fix1-summary-cta');
+  if (fix1SummaryEl) {
+    fix1SummaryEl.textContent = 'Get free Fix #1 snippet for ' + storeName + ' · ' + activeRule + ' (' + dunningUsd + ' lift · $0) →';
+  }
+  const aovVal = Number(document.getElementById('input-aov')?.value || auditRes?.aovUsd || 92);
+  const liveSnippetEl = document.getElementById('out-sdk-snippet');
+  const isUnlockedNow = Boolean(window.__aaSampleEmailUnlocked || window.__ebIsUnlocked || (typeof localStorage !== 'undefined' && (localStorage.getItem('aa_captured_email') || localStorage.getItem('eb_captured_email'))));
+  if (liveSnippetEl && isUnlockedNow) {
+    liveSnippetEl.textContent = buildDeclineSpecificFix1Snippet(storeName, aovVal, activeRule, specObj);
   }
   const fold1WhLine = document.getElementById('aa-fold1-wh-line');
   if (fold1WhLine) {
@@ -392,8 +413,9 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
   const snippetEl = document.getElementById('out-sdk-snippet');
   const snippetWrapEl = document.getElementById('out-sdk-snippet-wrap');
   if (snippetEl) {
+    const activeRule = primaryDeclineCode === 'auto_weighted' ? 'insufficient_funds' : primaryDeclineCode;
     snippetEl.textContent = isSampleUnlocked
-      ? (res.sdkSnippet || `/* Fix #1 Copy-Paste Checkout Fix (${res.storeName}) */\n<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(res.storeName)}" data-aov="${res.aovUsd}" data-velocity-threshold="-0.80" async></script>`)
+      ? buildDeclineSpecificFix1Snippet(res.storeName || 'Gymshark', res.aovUsd || 92, activeRule)
       : '/* [LOCKED PREVIEW]: Enter your work email ($0) above to unmask Fix #1 Copy-Paste Checkout Fix, or unlock the $1.99 Complete Recovery Code Patch */';
     if (isSampleUnlocked) {
       snippetEl.style.display = 'block';
@@ -445,11 +467,8 @@ window.__aaUnlockSampleSnippet = function(ev) {
   const storeName = document.getElementById('input-store')?.value || 'Gymshark';
   const aovUsd = Number(document.getElementById('input-aov')?.value || 92);
   const declineCode = document.getElementById('input-decline-focus')?.value || 'insufficient_funds';
-  const unmaskedCode = (window.__LAST_AUDIT_RES__ && window.__LAST_AUDIT_RES__.sdkSnippet) || [
-    `{% comment %} Fix #1 Copy-Paste Checkout Fix for ${storeName} {% endcomment %}`,
-    `<script src="https://cdn.abandonalpha.com/sdk/v2/exit-bandit-c1-c6.js" data-merchant="${cleanMerchantDomain(storeName)}" data-aov="${aovUsd}" data-decline-focus="${declineCode}" data-velocity-threshold="-0.80" async></script>`,
-    `<script>window.AbandonAlphaRules = { retryDecline: "${declineCode}", fridayPaydaySync: "09:05_LOCAL", allowPromoStacking: false };</script>`
-  ].join('\n');
+  const activeRule = declineCode === 'auto_weighted' ? 'insufficient_funds' : declineCode;
+  const unmaskedCode = buildDeclineSpecificFix1Snippet(storeName, aovUsd, activeRule);
   const snippetEl = document.getElementById('out-sdk-snippet');
   const snippetWrapEl = document.getElementById('out-sdk-snippet-wrap');
   if (snippetEl) {

@@ -93,6 +93,7 @@ function runTests() {
   const dirHtml = renderDirectoryHtml('https://www.abandonalpha.com');
   assert.ok(dirHtml.includes('id="dir-empty-scan-link"') && dirHtml.includes('id="dir-empty-calc-link"'), '/directory must wire dynamic scan and calculator links when a custom store or query is typed');
   assert.ok(renderedHome.includes('id="aa-pack-roi-proof"') && html.includes('id="pseo-roi-proof"'), 'Fold 1 diagnosis card on / and /seo/* must surface live 1-order payback ROI proof');
+  assert.ok(renderedHome.includes('id="aa-fix1-summary-cta"') && rawAppJs.includes('buildDeclineSpecificFix1Snippet') && html.includes('id="pseo-fix1-summary-cta"'), 'Fold 1 diagnosis card on / and /seo/* must surface dynamic store & decline-specific Fix #1 snippet unlock');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

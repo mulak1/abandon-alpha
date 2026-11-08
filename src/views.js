@@ -298,6 +298,10 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
             <span style="color:#475569;font-weight:600;">Unmasked Step-1 webhook &amp; Specimen #1:</span>
             <code style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;font-size:12.5px;">"Quick heads-up on your ${escapeHtml(page.declineOrSignal)} billing settings"</code>
           </div>
+          <details style="margin:0;">
+            <summary id="pseo-fix1-summary-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo lift &middot; $0) &rarr;</summary>
+            <code style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "${escapeHtml(page.declineOrSignal)}", webhook: "${escapeHtml(page.webhookEvent)}", retryWindow: "${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday')}", expectedLiftPct: ${page.recoverableLiftPct} };</code>
+          </details>
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;">
             <span id="pseo-roi-proof" style="font-size:13px;color:#475569;">Pays for $29 pack in &lt; 1 recovered order (${Math.max(10, Math.round(page.monthlyRecoveredUsd / 29)).toLocaleString()}x ROI) &middot; 0% commission:</span>
             <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -383,6 +387,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('pseo-ann-val').textContent = '+$' + (rec * 12).toLocaleString() + '/yr';
       var roiEl = document.getElementById('pseo-roi-proof');
       if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + Math.max(2, Math.round(rec / 29)).toLocaleString() + 'x ROI) · 0% commission:';
+      var fix1El = document.getElementById('pseo-fix1-summary-cta');
+      if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ${escapeHtml(page.declineOrSignal)} (+$' + rec.toLocaleString() + '/mo lift · $0) →';
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {
