@@ -400,6 +400,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ' + ${JSON.stringify(page.declineOrSignal)} + ' (+$' + rec.toLocaleString() + '/mo lift · $0) →';
       var fix1Det = document.getElementById('pseo-fix1-details');
       if (fix1Det && !fix1Det.open) fix1Det.open = true;
+      var pseoCopyBtn = document.getElementById('pseo-copy-fix1-btn');
+      if (pseoCopyBtn) { pseoCopyBtn.removeAttribute('data-copied'); pseoCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; pseoCopyBtn.style.color = ''; }
       var fix1Code = document.getElementById('pseo-fix1-code');
       if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
       var b29 = document.getElementById('pseo-buy-29'), b199 = document.getElementById('pseo-buy-199'), grLnk = document.getElementById('pseo-open-grader-link'), whLnk = document.getElementById('pseo-open-wh-link');
@@ -805,8 +807,10 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       }
       var b29 = document.getElementById('lp-buy-29');
       var b199 = document.getElementById('lp-buy-199');
+      var sessVal = Number((document.getElementById('lp-sessions') && document.getElementById('lp-sessions').value) || 3200);
+      var aovVal = Number((document.getElementById('lp-aov') && document.getElementById('lp-aov').value) || 92);
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
-      var qSuffix = '&target=' + encodeURIComponent(store) + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
+      var qSuffix = '&target=' + encodeURIComponent(store) + '&sessions=' + sessVal + '&aov=' + aovVal + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
       if (b29) {
         b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
         b29.textContent = 'Get Complete ' + store + ' Recovery Pack ($29 one-time) →';
@@ -815,6 +819,8 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
         b199.textContent = 'Or get ' + store + ' 3-File Patch ($1.99)';
       }
+      var lpCopyBtn = document.getElementById('lp-copy-fix1-btn');
+      if (lpCopyBtn) { lpCopyBtn.removeAttribute('data-copied'); lpCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; lpCopyBtn.style.color = ''; }
       var uSub = document.getElementById('in-card-unlock-sub');
       var fBtn = document.getElementById('btn-prog-full-dossier');
       if (uSub) uSub.textContent = 'Compiled for ' + store + ' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
