@@ -448,11 +448,12 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       </div>
     </div>
 
-    <div id="dir-empty-state" style="display:none;padding:24px;border-radius:14px;background:#FFFFFF;border:1px solid #E2E8F0;margin-top:20px;text-align:center;">
-      <p style="margin:0 0 10px;font-size:15px;font-weight:600;color:#0F172A;">No exact playbook matched that filter. Try a Decline Code or run a custom store check:</p>
+    <div id="dir-empty-state" style="display:none;padding:20px;border-radius:14px;background:#FFFFFF;border:1px solid #E2E8F0;margin-top:16px;text-align:center;">
+      <p id="dir-empty-title" style="margin:0 0 12px;font-size:15px;font-weight:600;color:#0F172A;">No exact playbook matched that filter. Run a live store scorecard or custom recovery check:</p>
       <div style="display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-        <button type="button" class="btn btn-ghost" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='';filterDirectory('');}">Reset Filter (Show All ${PSEO_PAGES.length})</button>
-        <a href="/#grader" class="btn btn-indigo"><span>Open Live Revenue &amp; Retry Calculator</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span></a>
+        <a id="dir-empty-scan-link" href="/scan/gymshark.com" class="btn btn-indigo"><span>Run live store scorecard &rarr;</span></a>
+        <a id="dir-empty-calc-link" href="/#grader" class="btn btn-ghost"><span>Open revenue &amp; retry calculator &rarr;</span></a>
+        <button type="button" class="btn btn-ghost" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='';filterDirectory('');}">Reset filter (show all ${PSEO_PAGES.length})</button>
       </div>
     </div>
 
@@ -515,6 +516,19 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       if (st) st.textContent = !tokens.length ? ('Showing all ' + cards.length + ' Playbooks') : ('Showing ' + matchedCount + ' of ' + cards.length + ' Playbooks');
       var emp = document.getElementById('dir-empty-state');
       if (emp) emp.style.display = matchedCount === 0 ? 'block' : 'none';
+      if (matchedCount === 0 && q && q.trim()) {
+        var cleanQ = q.trim();
+        var sLink = document.getElementById('dir-empty-scan-link');
+        if (sLink) {
+          sLink.href = '/scan/' + encodeURIComponent(cleanQ);
+          sLink.textContent = 'Run live store scorecard for "' + cleanQ + '" →';
+        }
+        var cLink = document.getElementById('dir-empty-calc-link');
+        if (cLink) {
+          cLink.href = '/?store=' + encodeURIComponent(cleanQ) + '#grader';
+          cLink.textContent = 'Calculate recovery for "' + cleanQ + '" →';
+        }
+      }
     }
   </script>
 </body>

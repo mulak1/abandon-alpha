@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { computeLeakageAudit, selectBanditArm } = require('../src/engine');
 const { getAllPseoPages, getPseoPageBySlug } = require('../src/pseo-data');
-const { renderPseoPageHtml, renderMetaLandingPageHtml, renderLegalPageHtml } = require('../src/views');
+const { renderPseoPageHtml, renderDirectoryHtml, renderMetaLandingPageHtml, renderLegalPageHtml } = require('../src/views');
 const { VERTICAL_CONFIGS } = require('../src/exact-baseline-api');
 const { renderExactBaselineEnhancements, renderSampleDossierHtml } = require('../src/exact-baseline-ui');
 const { evaluateScanTarget, renderPublicScanPageHtml, renderLeaderboardPageHtml } = require('../src/public-scan-flywheel');
@@ -90,6 +90,8 @@ function runTests() {
   const sampleHtml = renderSampleDossierHtml(cfg);
   assert.ok(sampleHtml.includes('id="sample-decline"') && sampleHtml.includes('id="btn-sample-buy-29"'), '/sample must include interactive 2-column sample flow customizer and $29 Complete Pack button');
   assert.ok(lbHtml.includes('id="lb-instant-preview-card"') && lbHtml.includes('id="lb-empty-row"'), '/leaderboard must include inline store check preview card and empty-filter live check fallback');
+  const dirHtml = renderDirectoryHtml('https://www.abandonalpha.com');
+  assert.ok(dirHtml.includes('id="dir-empty-scan-link"') && dirHtml.includes('id="dir-empty-calc-link"'), '/directory must wire dynamic scan and calculator links when a custom store or query is typed');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
