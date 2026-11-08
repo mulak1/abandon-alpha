@@ -123,6 +123,8 @@ function runTests() {
   assert.ok(lpHtml.includes("'&sessions=' + sessVal + '&aov=' + aovVal") && sampleHtml.includes("b199.textContent='Or unlock '+st+' 3-File Patch ($1.99)'") && html.includes("pseoCopyBtn.removeAttribute('data-copied')"), '/lp, /sample, and /seo/* must reset 2-stage copy buttons on input change and personalize $29/$1.99 links with sessions, aov, and store name');
   assert.ok(dirHtml.includes('id="dir-fix1-details"') && dirHtml.includes('id="dir-copy-fix1-btn"'), '/directory must include a dynamic Fix #1 snippet drawer and 2-stage copy button that updates and opens on filter selection');
   assert.ok(rawAppJs.includes("copySdkBtnEl.removeAttribute('data-copied-fix1')") && rawAppJs.includes("['aa-screen1-buy-199', 'wh-buy-199'].forEach"), 'Homepage calculator must reset copy-sdk-btn 2-stage state and personalize $1.99/$29 status links when store or decline code changes');
+  const rawEbApiJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'exact-baseline-api.js'), 'utf8');
+  assert.ok(renderedHome.includes('#input-sessions, #pseo-sessions, #eb-growth-vol-sessions') && rawEbApiJs.includes("p.set('metadata[sessions]', String(rawSessions))"), '__ebCheckout and handleTierCheckout must collect and forward sessions, aov, and decline into Stripe Checkout metadata and telemetry');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
