@@ -333,6 +333,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
         var tgt=(document.getElementById('eb-scan-h1')&&document.getElementById('eb-scan-h1').getAttribute('data-entity-name'))||'${esc(scan.target)}';
         var bp=document.getElementById('eb-scan-buy-playbook'),bf=document.getElementById('eb-scan-buy-flash'),dw=document.getElementById('eb-scan-dl-worker'),fixCta=document.getElementById('eb-scan-fix1-cta'),fixCode=document.getElementById('eb-scan-fix1-code'),sDet=document.getElementById('eb-scan-fix1-details'),qStr='?target='+encodeURIComponent(tgt)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov+(obj?'&objection='+encodeURIComponent(obj):'');
         if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/scan/'+encodeURIComponent(tgt)+'?decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov+(obj?'&objection='+encodeURIComponent(obj):''));
+        if(openDet!==false){try{ws.storeName=tgt;ws.monthlySessions=sess;ws.aovUsd=aov;ws.declineFocus=code;localStorage.setItem('aa_workspace_state_v1',JSON.stringify(ws));}catch(_){}if(window.__ebSyncNavLinks)window.__ebSyncNavLinks(true);}
         if(bp){bp.textContent='Get Complete '+tgt+' Pack ($29) →';bp.href='/buy/playbook_pass'+qStr;}
         if(bf)bf.href='/buy/flash_pass'+qStr;
         if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;
@@ -578,6 +579,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         if(uSub)uSub.textContent='Compiled for '+v+' ($'+effAov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
         if(fBtn)fBtn.textContent='Complete '+v+' Recovery Pack ($29 — One-Time) →';
         if(lbDet&&openDet!==false&&!lbDet.open)lbDet.open=true;
+        if(openDet!==false){try{ws.storeName=v;localStorage.setItem('aa_workspace_state_v1',JSON.stringify(ws));}catch(_){}if(window.history&&window.history.replaceState)window.history.replaceState(null,'','/leaderboard?target='+encodeURIComponent(v)+qExtra);if(window.__ebSyncNavLinks)window.__ebSyncNavLinks(true);}
         if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_check',target:v});
         fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){
           if(!d||!d.scan)return;
