@@ -544,7 +544,7 @@ window.__aaUnlockSampleSnippet = function(ev) {
   const statusEl = document.getElementById('aa-inline-sample-status');
   if (statusEl) {
     statusEl.style.display = 'block';
-    statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="/buy/flash_pass?email=${encodeURIComponent(email)}" style="color:#047857;text-decoration:underline;">Unlock Full 3-File Patch + Klaviyo Flows ($1.99) &rarr;</a>`;
+    statusEl.innerHTML = `✓ Fix #1 Copy-Paste Checkout Fix Unmasked &amp; Audit Saved for <strong>${escapeUiHtml(email)}</strong> &bull; <a href="/buy/playbook_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}" style="color:#047857;text-decoration:underline;">Get Complete ${escapeUiHtml(storeName)} Pack ($29) &rarr;</a> &middot; <a href="/buy/flash_pass?target=${encodeURIComponent(storeName)}&email=${encodeURIComponent(email)}" style="color:#0F172A;text-decoration:underline;">3-File Patch ($1.99) &rarr;</a>`;
   }
   fetch('/api/leads', {
     method: 'POST',
