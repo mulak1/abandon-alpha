@@ -683,6 +683,11 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         </div>
 
         <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <details style="margin:0;">
+            <summary id="lp-fix1-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for Gymshark &middot; insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
+            <code id="lp-fix1-code" style="display:block;margin-top:8px;padding:10px 12px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { merchant: "Gymshark", declineCode: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+          </details>
+          <div id="lp-roi-proof" style="font-size:12.5px;color:#475569;font-weight:500;">Pays for $29 pack in &lt; 1 recovered order (1,263x ROI) &middot; 0% commission &middot; 30-day guarantee</div>
           <a id="lp-buy-29" href="/buy/playbook_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
           <a id="lp-buy-199" href="/buy/flash_pass?utm_source=meta_lp&amp;target=Gymshark" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
@@ -759,6 +764,13 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       var qSuffix = '&target=' + encodeURIComponent(store) + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
       if (b29) b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
       if (b199) b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
+      var fixCta = document.getElementById('lp-fix1-cta');
+      var fixCode = document.getElementById('lp-fix1-code');
+      if (fixCta) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$2,098/mo lift · $0) →';
+      if (fixCode) {
+        var rHrs = code === 'expired_card' ? 0 : (code === 'do_not_honor' ? 24 : 72);
+        fixCode.textContent = 'window.AbandonAlphaRules = { merchant: "' + store + '", declineCode: "' + code + '", retryAfterHours: ' + rHrs + ', allowPromoStacking: false };';
+      }
     }
 
     async function runLpAudit(e) {
@@ -784,6 +796,10 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       }).then(function(r) { return r.json(); });
       document.getElementById('lp-leaked-out').textContent = '$' + Math.round(res.totalMonthlyLeakedUsd).toLocaleString();
       document.getElementById('lp-rec-out').textContent = '+$' + Math.round(res.totalRecoverableUsd).toLocaleString() + '/mo';
+      var roiEl = document.getElementById('lp-roi-proof');
+      if (roiEl && res.totalRecoverableUsd) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + Math.max(10, Math.round(res.totalRecoverableUsd / 29)).toLocaleString() + 'x ROI) · 0% commission · 30-day guarantee';
+      var fixCta = document.getElementById('lp-fix1-cta');
+      if (fixCta && res.recoverableDunningUsd) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + Math.round(res.recoverableDunningUsd).toLocaleString() + '/mo lift · $0) →';
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
       if (em && em.indexOf('@') > 0) {
         fetch('/api/leads', {
