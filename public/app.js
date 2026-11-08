@@ -211,6 +211,10 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (cmdkBuy29Lbl) {
     cmdkBuy29Lbl.textContent = `Get Complete ${storeName} Recovery Pack`;
   }
+  const whDlWorkerEl = document.getElementById('wh-dl-worker');
+  if (whDlWorkerEl) {
+    whDlWorkerEl.href = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}`;
+  }
   const copySdkBtnEl = document.getElementById('copy-sdk-btn');
   if (copySdkBtnEl) {
     copySdkBtnEl.removeAttribute('data-copied-fix1');
@@ -967,10 +971,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       if (banner) banner.style.display = 'none';
     }
   } catch (_) {}
-  const armsRes = await fetch('/api/bandit-arms').then((r) => r.json()).catch(() => null);
-  if (armsRes && armsRes.arms) {
-    renderPosteriorTable(armsRes.arms, 'arm_c1_price_15off');
-  }
 
   const params = new URLSearchParams(window.location.search);
   if (params.get('checkout') === 'success') {
@@ -1029,6 +1029,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     }
   }
+  updateUnmaskedSdkPreview(window.__LAST_AUDIT_RES__);
+
+  fetch('/api/bandit-arms').then((r) => r.json()).then((armsRes) => {
+    if (armsRes && armsRes.arms) renderPosteriorTable(armsRes.arms, 'arm_c1_price_15off');
+  }).catch(() => null);
 
   if (hasDeepLink || restoredFromStorage) {
     await runAuditRequest(currentPreset, !hasDeepLink, false);
