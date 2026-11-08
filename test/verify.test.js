@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { computeLeakageAudit, selectBanditArm } = require('../src/engine');
 const { getAllPseoPages, getPseoPageBySlug } = require('../src/pseo-data');
-const { renderPseoPageHtml } = require('../src/views');
+const { renderPseoPageHtml, renderMetaLandingPageHtml, renderLegalPageHtml } = require('../src/views');
 const { VERTICAL_CONFIGS } = require('../src/exact-baseline-api');
 const { renderExactBaselineEnhancements } = require('../src/exact-baseline-ui');
 
@@ -20,6 +20,12 @@ function runTests() {
   assert.ok(html.includes('/buy/flash_pass?playbook=') && html.includes('/buy/playbook_pass?playbook='), 'Must offer both $1.99 and $29 pack options on pSEO calculator');
   assert.ok(!html.includes('>Stripe</h1>'), 'Must not truncate pSEO H1 title to a single word');
   assert.ok(!html.includes('tile-rose'), 'Must not use competing neon pink metric tile on pSEO pages');
+
+  const lpHtml = renderMetaLandingPageHtml('https://www.abandonalpha.com');
+  assert.ok(!lpHtml.includes('tile-rose'), 'Must not use competing neon pink metric tile on /lp');
+  assert.ok(lpHtml.includes('/buy/playbook_pass?utm_source=meta_lp'), 'Must wire $29 Complete Store Recovery Pack directly on /lp');
+  const termsHtml = renderLegalPageHtml('terms');
+  assert.ok(termsHtml.includes('$29 Complete Store Recovery Pack'), 'Terms page must match $29 Complete Store Recovery Pack pricing');
 
   const audit = computeLeakageAudit({ monthlySessions: 999999999, aovUsd: 999999999 });
   assert.equal(audit.monthlySessions, 500000, 'Expected monthlySessions clamped to 500000');

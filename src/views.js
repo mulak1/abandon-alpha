@@ -537,93 +537,91 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       <a href="/" class="brand-logo" aria-label="AbandonAlpha Home">
         ${renderBrandLogoSvg('lp')}
         <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
-        <span class="brand-tag">META PARTNER VERIFIED • 5-MIN SETUP</span>
       </a>
-      <div class="lp-guarantee-pill">30-Day 5x ROI Guarantee: Recover 5x Your Plan or Pay $0</div>
+      <div style="font-size:13px;color:#475569;font-weight:500;">30-day money-back guarantee · One-time pack, zero monthly subscription</div>
     </div>
   </header>
 
   <main class="container lp-main">
     <section class="hero-split lp-hero">
       <div class="lp-hero-copy">
-        <div class="status-pill">FOR SHOPIFY BRANDS, SUBSCRIPTION FOUNDERS &amp; STRIPE MERCHANTS</div>
-        <h1 class="lp-h1">71% of Your Checkout Visitors Leave Without Paying: Recover <span class="serif-italic">18%–31%</span> Automatically</h1>
-        <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Launch <strong>Smart Exit Counter-Offers</strong> + <strong>Payday-Timed Stripe Retries</strong> in 60 seconds.</p>
+        <p class="section-kicker" style="margin:0 0 8px;">Checkout &amp; failed-payment recovery</p>
+        <h1 class="lp-h1">71% of checkout visitors leave without paying. Recover 18%–31% automatically.</h1>
+        <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Add exit counter-offers and payday-timed Stripe retries in under five minutes.</p>
 
         <ul class="lp-proof-list">
-          <li><strong>Smart Exit-Intent Counter-Offers:</strong> Detects when a buyer moves to close their checkout tab and offers the right 1-click incentive (discount, trial extension, or team quote) before they leave.</li>
-          <li><strong>Decline-Code Smart Retries:</strong> Aligns <code>insufficient_funds</code> retries with payday deposit windows (62.4% recovery) and halts <code>expired_card</code> retries to avoid Visa/Mastercard fees.</li>
-          <li><strong>Meta Ads Revenue Sync:</strong> Sends every recovered checkout back to Meta Conversions API so your ad campaigns optimize for real buyers.</li>
+          <li><strong>Exit counter-offers:</strong> Detects when a buyer moves to close their checkout tab and offers the right 1-click incentive before they leave.</li>
+          <li><strong>Decline-code retry timing:</strong> Aligns <code>insufficient_funds</code> retries with payday deposit windows (62.4% recovery) and halts <code>expired_card</code> retries to avoid card network fees.</li>
+          <li><strong>Meta Conversions API sync:</strong> Sends recovered checkouts back to Meta so your ad campaigns optimize for real buyers.</li>
         </ul>
 
         <div class="lp-trust-row">
           <div class="trust-stat">
             <strong class="text-emerald">+$14,820/mo</strong>
-            <span>Avg Recovered Cashflow</span>
+            <span>Avg recovered cashflow</span>
           </div>
           <div class="trust-stat">
-            <strong class="text-indigo">62.4%</strong>
-            <span>Soft-Decline Recovery Rate</span>
+            <strong style="color:#0F172A;">62.4%</strong>
+            <span>Soft-decline recovery rate</span>
           </div>
           <div class="trust-stat">
-            <strong class="text-slate">100% Flat Fee</strong>
-            <span>0% Revenue Tax ($49/mo)</span>
+            <strong style="color:#0F172A;">$29 one-time</strong>
+            <span>Zero revenue tax</span>
           </div>
         </div>
       </div>
 
       <div class="telemetry-card lp-calc-card">
         <div class="card-header-bar">
-          <span class="mono-label">INSTANT 10-SECOND RECOVERY CALCULATOR</span>
-          <span class="badge-live">FREE AUDIT</span>
+          <span class="mono-label">10-second recovery calculator</span>
+          <span style="font-size:12px;color:#64748B;font-weight:500;">Instant estimate</span>
         </div>
 
         <form id="lp-audit-form" onsubmit="runLpAudit(event)">
           <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <div class="form-row-2">
             <div>
-              <label class="field-label" for="lp-sessions">Monthly Checkout Visits</label>
+              <label class="field-label" for="lp-sessions">Monthly checkout visits</label>
               <input id="lp-sessions" type="number" class="field-input" value="3200" min="50" required />
             </div>
             <div>
-              <label class="field-label" for="lp-aov">Average Order / Plan ($)</label>
+              <label class="field-label" for="lp-aov">Average order / plan ($)</label>
               <input id="lp-aov" type="number" class="field-input" value="92" min="5" required />
             </div>
           </div>
           <div class="form-row-2">
             <div>
-              <label class="field-label" for="lp-abandon">Checkout Abandonment (%)</label>
+              <label class="field-label" for="lp-abandon">Checkout abandonment (%)</label>
               <input id="lp-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" required />
             </div>
             <div>
-              <label class="field-label" for="lp-fail">Failed Card / Churn (%)</label>
+              <label class="field-label" for="lp-fail">Failed card / churn (%)</label>
               <input id="lp-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="30" required />
             </div>
           </div>
           <div style="margin-top:12px;">
-            <label class="field-label" for="lp-email">Work Email (To Unlock Custom SDK &amp; Start 14-Day Sandbox)</label>
-            <input id="lp-email" type="email" class="field-input" value="founder@dtcstore.io" required />
+            <label class="field-label" for="lp-email">Work email (optional, for free retry schedule)</label>
+            <input id="lp-email" type="email" class="field-input" placeholder="you@company.com" />
           </div>
           <button type="submit" id="lp-submit-btn" class="btn btn-indigo btn-block" style="margin-top:14px;">
-            <span>Calculate My Recoverable Revenue &amp; Unlock SDK</span>
-            <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
+            <span>Calculate recoverable revenue</span>
           </button>
         </form>
 
         <div id="lp-result-panel" class="lp-result-panel">
           <div class="metric-duo">
-            <div class="metric-tile tile-rose">
-              <span class="tile-label">Monthly Leaked Revenue</span>
-              <strong id="lp-leaked-out" class="tile-value text-rose">$214,523</strong>
+            <div class="metric-tile" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;">
+              <span class="tile-label">Monthly leaked revenue</span>
+              <strong id="lp-leaked-out" class="tile-value" style="color:#0F172A;">$214,523</strong>
             </div>
             <div class="metric-tile tile-emerald">
-              <span class="tile-label">Recoverable Every Month</span>
+              <span class="tile-label">Recoverable every month</span>
               <strong id="lp-rec-out" class="tile-value text-emerald">+$36,722/mo</strong>
             </div>
           </div>
           <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;">
-            <a href="/buy/flash_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-emerald btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Unlock Single-Store Stripe Recovery Pass ($1.99 One-Time) &rarr;</a>
-            <button type="button" class="btn btn-ghost btn-block" onclick="startLpCheckout('starter')">Or Start Managed Autonomous Recovery ($49/mo: 30-Day ROI Guarantee)</button>
+            <a href="/buy/playbook_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
+            <a href="/buy/flash_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
           </div>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
         </div>
@@ -739,8 +737,8 @@ function renderLegalPageHtml(type = 'privacy') {
         <h3>3. GDPR &amp; CCPA Data Subject Rights</h3>
         <p>Merchants and end-buyers may request immediate access, export, or deletion of telemetry logs by emailing privacy@abandonalpha.io.</p>
       ` : `
-        <h3>1. Transparent One-Time Packs &amp; Flat-Rate Recovery</h3>
-        <p>AbandonAlpha is licensed via self-serve One-Time Production Engineering Packs ($1.99 Single-Store Audit Pass, $19 Starter Code Pack, $49 Complete Store Recovery Kit) or Multi-Store Agency &amp; SMS Pro ($149) with 0% revenue-share commission on recovered checkouts.</p>
+        <h3>1. Transparent One-Time Packs &amp; Zero Revenue Tax</h3>
+        <p>AbandonAlpha is licensed via self-serve one-time recovery packs ($1.99 Single-Store 3-File Patch, $29 Complete Store Recovery Pack, or $49 Multi-Store Agency Kit) with 0% revenue-share commission on recovered checkouts.</p>
         <h3>2. Card Network Retry Compliance</h3>
         <p>All automated dunning schedules strictly enforce Visa and Mastercard retry limits (maximum 4 retries within 30 days on soft declines; zero automated retries on hard declines).</p>
         <h3>3. 30-Day 5x ROI Guarantee</h3>
