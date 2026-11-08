@@ -137,6 +137,7 @@ function runTests() {
   assert.ok(dirHtml.includes('id="dir-dl-worker"') && dirHtml.includes('filterDirectory(qt, false)') && rawGrowthJs.includes('window.__ebRecalcGrowthVolume(false)'), '/directory, /compare/*, and /tools/* must hydrate URL query parameters on load and expose Preview Worker (.JS) downloads');
   assert.ok(lpHtml.includes('id="lp-dl-worker"') && rawGrowthJs.includes('item.slug}${qs}'), '/lp must expose Preview Worker (.JS) download and /compare/* / /tools/* fallback redirects must preserve query parameters');
   assert.ok(rawAppJs.includes('/scan/${encodeURIComponent(domain)}?decline=') && rawGrowthJs.includes("pl.href='/scan/'+encodeURIComponent(tgt)+'?decline='"), 'Homepage and /compare/* / /tools/* permalink links to /scan/* must carry active decline, sessions, and aov query parameters');
+  assert.ok(lbHtml.includes("var qExtra='&decline='+encodeURIComponent(code)") && html.includes('var pLabel = qTgt ?'), '/leaderboard and /seo/* must synchronously hydrate decline, sessions, aov, and target merchant across Fix #1 snippets, worker downloads, and /scan/* links');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

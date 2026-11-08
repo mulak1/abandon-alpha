@@ -393,20 +393,21 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       var roiMult = Math.max(2, Math.round(rec / 29)).toLocaleString();
       var roiEl = document.getElementById('pseo-roi-proof');
       if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission:';
+      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || '').trim();
+      var pLabel = qTgt ? (qTgt + ' · ' + ${JSON.stringify(page.declineOrSignal)}) : ${JSON.stringify(page.declineOrSignal)};
       var unlockSubEl = document.getElementById('in-card-unlock-sub');
-      if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ' + ${JSON.stringify(page.declineOrSignal)} + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
+      if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ' + pLabel + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
       var fullBtn = document.getElementById('btn-prog-full-dossier');
-      if (fullBtn) fullBtn.textContent = 'Complete ' + ${JSON.stringify(page.declineOrSignal)} + ' Recovery Pack ($29 — One-Time) →';
+      if (fullBtn) fullBtn.textContent = 'Complete ' + (qTgt || ${JSON.stringify(page.declineOrSignal)}) + ' Recovery Pack ($29 — One-Time) →';
       var fix1El = document.getElementById('pseo-fix1-summary-cta');
-      if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ' + ${JSON.stringify(page.declineOrSignal)} + ' (+$' + rec.toLocaleString() + '/mo lift · $0) →';
+      if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ' + pLabel + ' (+$' + rec.toLocaleString() + '/mo lift · $0) →';
       var fix1Det = document.getElementById('pseo-fix1-details');
       if (fix1Det && openDet !== false && !fix1Det.open) fix1Det.open = true;
       var pseoCopyBtn = document.getElementById('pseo-copy-fix1-btn');
       if (pseoCopyBtn) { pseoCopyBtn.removeAttribute('data-copied'); pseoCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; pseoCopyBtn.style.color = ''; }
       var fix1Code = document.getElementById('pseo-fix1-code');
-      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
+      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { ' + (qTgt ? ('merchant: "' + qTgt + '", ') : '') + 'declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
       var b29 = document.getElementById('pseo-buy-29'), b199 = document.getElementById('pseo-buy-199'), grLnk = document.getElementById('pseo-open-grader-link'), whLnk = document.getElementById('pseo-open-wh-link'), dlW = document.getElementById('pseo-dl-worker');
-      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || '').trim();
       var qStr = 'playbook=${encodeURIComponent(page.slug)}&decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '&target=${encodeURIComponent(page.declineOrSignal)}') + '&sessions=' + s + '&aov=' + aov;
       if (b29) { b29.textContent = 'Get ' + (qTgt || ${JSON.stringify(page.declineOrSignal)}) + ' Pack ($29) →'; b29.href = '/buy/playbook_pass?' + qStr; }
       if (b199) b199.href = '/buy/flash_pass?' + qStr;
