@@ -172,6 +172,7 @@ function runTests() {
   assert.ok(lpHtml.includes("if (roiEl) roiEl.textContent = 'Compiled for ' + store + ' ($' + aovVal + ' AOV)") && lpHtml.includes("aovUsd: ' + aovVal"), 'updateLpFlowPreview on /lp must dynamically compute leaked revenue, recoverable revenue, ROI multiple, Fix #1 lift, and worker query parameters from active sessions and aov');
   assert.ok(lbHtml.includes("roi.textContent='Compiled for '+s.target+' ($'+effAov+' AOV)") && lbHtml.includes("aovUsd: '+effAov"), '__lbRunInlineCheck on /leaderboard must dynamically compute ROI multiple, Fix #1 lift, snippet aovUsd, and objection worker parameter from active sessions and aov');
   assert.ok(scanHtml.includes("roiEl.textContent='Compiled for '+tgt+' ($'+aov+' AOV)") && scanHtml.includes("if(window.__ebRecalcScanVolume)window.__ebRecalcScanVolume(true)"), '__ebRecalcScanVolume and __ebRunScanWb on /scan/* must preserve custom volume, aovUsd, ROI multiple, and objection across store checks');
+  assert.ok(rawGrowthJs.includes("roiEl.textContent='Compiled for '+tgt+' ($'+aov+' AOV)") && rawGrowthJs.includes("if(window.__ebRecalcGrowthVolume)window.__ebRecalcGrowthVolume(true)"), '__ebRecalcGrowthVolume and __ebRunGrowthWb on /compare/* and /tools/* must preserve custom volume, aovUsd, ROI multiple, and objection across store checks');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
