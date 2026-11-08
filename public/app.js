@@ -181,14 +181,18 @@ function updateUnmaskedSdkPreview(auditRes) {
   if (flashPassBtn) {
     flashPassBtn.textContent = `Get ${storeName} 3-File Patch ($1.99) →`;
   }
-  ['aa-screen1-buy-29', 'wh-buy-29'].forEach((btnId) => {
+  ['aa-screen1-buy-29', 'wh-buy-29', 'bandit-buy-29'].forEach((btnId) => {
     const b = document.getElementById(btnId);
     if (b) b.textContent = `Complete ${storeName} Pack ($29) →`;
   });
-  ['aa-screen1-buy-199', 'wh-buy-199'].forEach((btnId) => {
+  ['aa-screen1-buy-199', 'wh-buy-199', 'bandit-buy-199'].forEach((btnId) => {
     const b = document.getElementById(btnId);
     if (b) b.textContent = `${storeName} 3-File Patch ($1.99)`;
   });
+  const banditCtxEl = document.getElementById('bandit-store-context');
+  if (banditCtxEl) {
+    banditCtxEl.textContent = `Matched counter-offer for ${storeName} ($${aovVal.toLocaleString()} order)`;
+  }
   const modalBuy29 = document.getElementById('modal-buy-29');
   if (modalBuy29) {
     modalBuy29.textContent = `Deploy Exit Modal on ${storeName} ($29 Pack) →`;
@@ -217,7 +221,7 @@ function updateUnmaskedSdkPreview(auditRes) {
   }
   const sessVal = Number(document.getElementById('input-sessions')?.value || auditRes?.monthlySessions || 42000);
   const workerUrl = `/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(storeName)}&decline=${encodeURIComponent(activeRule)}&sessions=${sessVal}&aov=${aovVal}`;
-  ['wh-dl-worker', 'modal-dl-worker'].forEach((wId) => {
+  ['wh-dl-worker', 'modal-dl-worker', 'bandit-dl-worker'].forEach((wId) => {
     const wEl = document.getElementById(wId);
     if (wEl) wEl.href = workerUrl;
   });
@@ -1071,6 +1075,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     await runAuditRequest(currentPreset, !hasDeepLink, false);
     if (window.location.hash === '#webhook-lab' || qDecline || qStore || qAov) {
       await runWebhookSimulation();
+    }
+    if (qStore || qAov || restoredFromStorage) {
+      const selObjBtn = document.querySelector('#objection-btn-group .objection-btn.selected');
+      await triggerBanditObjection(selObjBtn?.getAttribute('data-obj') || 'C1_PRICE', selObjBtn);
     }
   } else {
     await runAuditRequest('shopify_dtc', true, false);
