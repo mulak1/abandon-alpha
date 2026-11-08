@@ -5,7 +5,7 @@ const { computeLeakageAudit, selectBanditArm } = require('../src/engine');
 const { getAllPseoPages, getPseoPageBySlug } = require('../src/pseo-data');
 const { renderPseoPageHtml, renderMetaLandingPageHtml, renderLegalPageHtml } = require('../src/views');
 const { VERTICAL_CONFIGS } = require('../src/exact-baseline-api');
-const { renderExactBaselineEnhancements } = require('../src/exact-baseline-ui');
+const { renderExactBaselineEnhancements, renderSampleDossierHtml } = require('../src/exact-baseline-ui');
 const { evaluateScanTarget, renderPublicScanPageHtml, renderLeaderboardPageHtml } = require('../src/public-scan-flywheel');
 
 function runTests() {
@@ -87,6 +87,8 @@ function runTests() {
   assert.ok(!scanHtml.includes('● Verified Source:') && !lbHtml.includes('● Verified Source:'), 'Scan and leaderboard pages must not have 3-column green-dot provenance banner clutter');
 
   assert.ok(lpHtml.includes('id="lp-decline"') && !lpHtml.includes('[Brand]'), '/lp must include dynamic decline selector and zero [Brand] placeholders');
+  const sampleHtml = renderSampleDossierHtml(cfg);
+  assert.ok(sampleHtml.includes('id="sample-decline"') && sampleHtml.includes('id="btn-sample-buy-29"'), '/sample must include interactive 2-column sample flow customizer and $29 Complete Pack button');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
