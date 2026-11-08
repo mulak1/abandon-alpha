@@ -393,7 +393,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       var roiMult = Math.max(2, Math.round(rec / 29)).toLocaleString();
       var roiEl = document.getElementById('pseo-roi-proof');
       if (roiEl) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission:';
-      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || window.__pseoTarget || '').trim();
+      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || window.__pseoTarget || '').trim(), qObj = (new URLSearchParams(window.location.search || '').get('objection') || window.__pseoObjection || '').trim(), objSuf = qObj ? ('&objection=' + encodeURIComponent(qObj)) : '';
       var pLabel = qTgt ? (qTgt + ' · ' + ${JSON.stringify(page.declineOrSignal)}) : ${JSON.stringify(page.declineOrSignal)};
       var unlockSubEl = document.getElementById('in-card-unlock-sub');
       if (unlockSubEl) unlockSubEl.textContent = 'Compiled for ' + pLabel + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
@@ -406,17 +406,17 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       var pseoCopyBtn = document.getElementById('pseo-copy-fix1-btn');
       if (pseoCopyBtn) { pseoCopyBtn.removeAttribute('data-copied'); pseoCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; pseoCopyBtn.style.color = ''; }
       var fix1Code = document.getElementById('pseo-fix1-code');
-      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { ' + (qTgt ? ('merchant: "' + qTgt + '", ') : '') + 'declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
+      if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { ' + (qTgt ? ('merchant: "' + qTgt + '", ') : '') + 'declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + (qObj ? (', banditArm: "' + qObj + '"') : '') + ' };';
       var b29 = document.getElementById('pseo-buy-29'), b199 = document.getElementById('pseo-buy-199'), grLnk = document.getElementById('pseo-open-grader-link'), whLnk = document.getElementById('pseo-open-wh-link'), dlW = document.getElementById('pseo-dl-worker');
-      var qStr = 'playbook=${encodeURIComponent(page.slug)}&decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '&target=${encodeURIComponent(page.declineOrSignal)}') + '&sessions=' + s + '&aov=' + aov;
+      var qStr = 'playbook=${encodeURIComponent(page.slug)}&decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '&target=${encodeURIComponent(page.declineOrSignal)}') + '&sessions=' + s + '&aov=' + aov + objSuf;
       if (b29) { b29.textContent = 'Get ' + (qTgt || ${JSON.stringify(page.declineOrSignal)}) + ' Pack ($29) →'; b29.href = '/buy/playbook_pass?' + qStr; }
       if (b199) b199.href = '/buy/flash_pass?' + qStr;
       if (dlW) dlW.href = '/api/github-upgrade/stripe-recovery-worker.js?' + qStr;
-      if (grLnk) grLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + '#grader';
-      if (whLnk) whLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + '#webhook-lab';
-      var relCards = document.querySelectorAll('.related-links-grid a.related-card'), relQs = (qTgt ? 'target=' + encodeURIComponent(qTgt) + '&' : '') + 'sessions=' + s + '&aov=' + aov;
+      if (grLnk) grLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + objSuf + '#grader';
+      if (whLnk) whLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + objSuf + '#webhook-lab';
+      var relCards = document.querySelectorAll('.related-links-grid a.related-card'), relQs = (qTgt ? 'target=' + encodeURIComponent(qTgt) + '&' : '') + 'sessions=' + s + '&aov=' + aov + objSuf;
       relCards.forEach(function(rc) { var bh = rc.getAttribute('data-base-href') || rc.getAttribute('href').split('?')[0]; rc.setAttribute('data-base-href', bh); rc.href = bh + '?' + relQs; });
-      if (openDet !== false && window.history && window.history.replaceState) window.history.replaceState(null, '', window.location.pathname + '?' + relQs);
+      if (openDet !== false) { try { var ws = JSON.parse(localStorage.getItem('aa_workspace_state_v1') || '{}'); ws.monthlySessions = s; ws.aovUsd = aov; localStorage.setItem('aa_workspace_state_v1', JSON.stringify(ws)); } catch (_) {} if (window.history && window.history.replaceState) window.history.replaceState(null, '', window.location.pathname + '?' + relQs); if (window.__ebSyncNavLinks) window.__ebSyncNavLinks(true); }
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {
@@ -426,7 +426,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
         }).catch(function() {});
       }, immediate ? 0 : 350);
     }
-    (function(){try{var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),qs=Number(sp.get('sessions')||ws.monthlySessions||0),qa=Number(sp.get('aov')||ws.aovUsd||0),qt=(sp.get('target')||ws.storeName||'').trim(),qd=(sp.get('decline')||(ws.declineFocus&&ws.declineFocus!=='auto_weighted'?ws.declineFocus:'')||${JSON.stringify(page.declineOrSignal)}).trim();window.__pseoTarget=qt;window.__pseoDecline=qd;if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
+    (function(){try{var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),qs=Number(sp.get('sessions')||ws.monthlySessions||0),qa=Number(sp.get('aov')||ws.aovUsd||0),qt=(sp.get('target')||ws.storeName||'').trim(),qd=(sp.get('decline')||(ws.declineFocus&&ws.declineFocus!=='auto_weighted'?ws.declineFocus:'')||${JSON.stringify(page.declineOrSignal)}).trim(),qo=(sp.get('objection')||ws.selectedObjection||'').trim();window.__pseoTarget=qt;window.__pseoDecline=qd;window.__pseoObjection=qo;if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);else if(qo)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
   </script>
 </body>
 </html>`;
