@@ -309,8 +309,9 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;">
             <span id="pseo-roi-proof" style="font-size:13px;color:#475569;">Pays for $29 pack in &lt; 1 recovered order (${Math.max(10, Math.round(page.monthlyRecoveredUsd / 29)).toLocaleString()}x ROI) &middot; 0% commission:</span>
             <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <a id="pseo-buy-29" href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;padding:7px 14px;font-size:13px;">Get Complete Pack ($29) &rarr;</a>
-              <a id="pseo-buy-199" href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
+              <a id="pseo-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js?target=${encodeURIComponent(page.declineOrSignal)}&amp;decline=${encodeURIComponent(page.declineOrSignal)}" download style="font-size:12.5px;color:#475569;font-weight:500;text-decoration:underline;">Preview Worker (.JS)</a>
+              <a id="pseo-buy-29" href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}&amp;decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;padding:7px 14px;font-size:13px;">Get Complete Pack ($29) &rarr;</a>
+              <a id="pseo-buy-199" href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}&amp;decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
             </div>
           </div>
         </div>
@@ -381,7 +382,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       document.getElementById('pseo-aov').value = aov;
       recalcPseo(lossPct, liftPct, true);
     }
-    function recalcPseo(lossPct, liftPct, immediate) {
+    function recalcPseo(lossPct, liftPct, immediate, openDet) {
       var s = Math.max(10, Number(document.getElementById('pseo-sessions').value || 1000));
       var aov = Math.max(5, Number(document.getElementById('pseo-aov').value || 80));
       var leaked = Math.round(s * (lossPct / 100) * aov);
@@ -399,17 +400,19 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
       var fix1El = document.getElementById('pseo-fix1-summary-cta');
       if (fix1El) fix1El.textContent = 'Get free Fix #1 snippet for ' + ${JSON.stringify(page.declineOrSignal)} + ' (+$' + rec.toLocaleString() + '/mo lift · $0) →';
       var fix1Det = document.getElementById('pseo-fix1-details');
-      if (fix1Det && !fix1Det.open) fix1Det.open = true;
+      if (fix1Det && openDet !== false && !fix1Det.open) fix1Det.open = true;
       var pseoCopyBtn = document.getElementById('pseo-copy-fix1-btn');
       if (pseoCopyBtn) { pseoCopyBtn.removeAttribute('data-copied'); pseoCopyBtn.textContent = 'Copy Free Fix #1 Snippet'; pseoCopyBtn.style.color = ''; }
       var fix1Code = document.getElementById('pseo-fix1-code');
       if (fix1Code) fix1Code.textContent = 'window.AbandonAlphaRules = { declineOrSignal: ' + ${JSON.stringify(JSON.stringify(page.declineOrSignal))} + ', webhook: ' + ${JSON.stringify(JSON.stringify(page.webhookEvent))} + ', retryWindow: ' + ${JSON.stringify(JSON.stringify(page.optimalTimingWindow || '1st & 15th Payday'))} + ', monthlySessions: ' + s + ', aovUsd: ' + aov + ', expectedMonthlyLiftUsd: ' + rec + ' };';
-      var b29 = document.getElementById('pseo-buy-29'), b199 = document.getElementById('pseo-buy-199'), grLnk = document.getElementById('pseo-open-grader-link'), whLnk = document.getElementById('pseo-open-wh-link');
-      var qStr = 'playbook=${encodeURIComponent(page.slug)}&target=${encodeURIComponent(page.declineOrSignal)}&sessions=' + s + '&aov=' + aov;
-      if (b29) { b29.textContent = 'Get ' + ${JSON.stringify(page.declineOrSignal)} + ' Pack ($29) →'; b29.href = '/buy/playbook_pass?' + qStr; }
+      var b29 = document.getElementById('pseo-buy-29'), b199 = document.getElementById('pseo-buy-199'), grLnk = document.getElementById('pseo-open-grader-link'), whLnk = document.getElementById('pseo-open-wh-link'), dlW = document.getElementById('pseo-dl-worker');
+      var qTgt = (new URLSearchParams(window.location.search || '').get('target') || '').trim();
+      var qStr = 'playbook=${encodeURIComponent(page.slug)}&decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '&target=${encodeURIComponent(page.declineOrSignal)}') + '&sessions=' + s + '&aov=' + aov;
+      if (b29) { b29.textContent = 'Get ' + (qTgt || ${JSON.stringify(page.declineOrSignal)}) + ' Pack ($29) →'; b29.href = '/buy/playbook_pass?' + qStr; }
       if (b199) b199.href = '/buy/flash_pass?' + qStr;
-      if (grLnk) grLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}&sessions=' + s + '&aov=' + aov + '#grader';
-      if (whLnk) whLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}&sessions=' + s + '&aov=' + aov + '#webhook-lab';
+      if (dlW) dlW.href = '/api/github-upgrade/stripe-recovery-worker.js?' + qStr;
+      if (grLnk) grLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + '#grader';
+      if (whLnk) whLnk.href = '/?decline=${encodeURIComponent(page.declineOrSignal)}' + (qTgt ? '&target=' + encodeURIComponent(qTgt) : '') + '&sessions=' + s + '&aov=' + aov + '#webhook-lab';
       if (__pseoCalcTimer) clearTimeout(__pseoCalcTimer);
       __pseoCalcTimer = setTimeout(function() {
         fetch('/api/telemetry/event', {
@@ -419,6 +422,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
         }).catch(function() {});
       }, immediate ? 0 : 350);
     }
+    (function(){try{var sp=new URLSearchParams(window.location.search||''),qs=Number(sp.get('sessions')||0),qa=Number(sp.get('aov')||0),qt=(sp.get('target')||'').trim();if(qs>=10)document.getElementById('pseo-sessions').value=qs;if(qa>=5)document.getElementById('pseo-aov').value=qa;if(qs||qa||qt)recalcPseo(${page.baselineAbandonmentOrFailPct},${page.recoverableLiftPct},true,false);}catch(_){}})();
   </script>
 </body>
 </html>`;
