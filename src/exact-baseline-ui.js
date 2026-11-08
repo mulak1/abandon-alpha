@@ -817,6 +817,7 @@ function buildClientRuntimeScript(cfg) {
     var t = e.target; if (!t || !t.id || t.id.indexOf('eb-') === 0 || t.type === 'email') return;
     if (/^(domain-input|category-select|rawInciTextarea|skinTypeSelect|input-sessions|input-aov|input-abandon|input-fail|input-decline-focus|wh-event-type|wh-decline-code|wh-amount)$/.test(t.id)) {
       window.__ebUserInteracted = true;
+      if (CFG.moduleId === 'abandon_alpha') return;
       if (nativeCalcTimer) clearTimeout(nativeCalcTimer);
       nativeCalcTimer = setTimeout(function() { window.__ebTriggerHostCalc(); }, 320);
     }
@@ -883,7 +884,7 @@ function buildClientRuntimeScript(cfg) {
   window.__ebTriggerHostCalc = function() {
     var searchIn = document.getElementById('eb-fuse-search-input'); if (searchIn && searchIn.value.trim().length > 1) { window.__ebRunFuseSearch(searchIn.value); return; }
     window.__ebLogEvent('calculate', { trigger: 'btn_calc' }); window.__ebShowTripwire();
-    var hostBtn = document.querySelector('form button[type="submit"], #run-audit-btn, #analyzeBtn, #btn-run-lookup, #audit-form button'); if (hostBtn) { try { hostBtn.click(); } catch (_) {} }
+    var hostBtn = document.querySelector('#run-audit-btn, form button[type="submit"], #analyzeBtn, #btn-run-lookup, #audit-form button[type="submit"]'); if (hostBtn) { try { hostBtn.click(); } catch (_) {} }
   };
   window.__srFocusFreeCreditBar = function(rowNum, btn) {
     var emIn = document.getElementById('sr-bridge-email') || document.getElementById('eb-scan-row4-email') || document.querySelector('input[type="email"]');
