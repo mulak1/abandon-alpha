@@ -561,18 +561,19 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         var inp=document.getElementById('lb-check-input');
         var v=(inp&&inp.value.trim())||'';
         if(!v)return false;
-        var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),code=(sp.get('decline')||(ws.declineFocus&&ws.declineFocus!=='auto_weighted'?ws.declineFocus:'')||'insufficient_funds').trim(),sess=Number(sp.get('sessions')||ws.monthlySessions||0),aov=Number(sp.get('aov')||ws.aovUsd||0),hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);
-        var qExtra='&decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'');
+        var sp=new URLSearchParams(window.location.search||''),ws=JSON.parse(localStorage.getItem('aa_workspace_state_v1')||'{}'),code=(sp.get('decline')||(ws.declineFocus&&ws.declineFocus!=='auto_weighted'?ws.declineFocus:'')||'insufficient_funds').trim(),sess=Number(sp.get('sessions')||ws.monthlySessions||0),aov=Number(sp.get('aov')||ws.aovUsd||0),obj=(sp.get('objection')||ws.selectedObjection||'').trim(),effSess=sess>=50?sess:3200,effAov=aov>=5?aov:92,totRec=Math.max(250,Math.round(effSess*effAov*0.0095)),dLift=Math.max(120,Math.round(totRec*0.32)),roiMult=Math.max(10,Math.round(totRec/29)).toLocaleString(),hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);
+        var qExtra='&decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'')+(obj?'&objection='+encodeURIComponent(obj):'');
         var pt=document.getElementById('lb-prev-target'),pg=document.getElementById('lb-prev-grade'),pk=document.getElementById('lb-prev-kpi'),b29=document.getElementById('lb-prev-buy-29'),b199=document.getElementById('lb-prev-buy-199'),dw=document.getElementById('lb-prev-dl-worker'),rl=document.getElementById('lb-prev-report-link'),fc=document.getElementById('lb-fix1-cta'),fk=document.getElementById('lb-fix1-code'),roi=document.getElementById('lb-roi-proof'),cBtn=document.getElementById('lb-copy-fix1-btn'),uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),lbDet=document.getElementById('lb-fix1-details');
         if(cBtn){cBtn.removeAttribute('data-copied');cBtn.textContent='Copy Free Fix #1 Snippet';cBtn.style.color='';}
         if(pt)pt.textContent=v;
+        if(roi)roi.textContent='Compiled for '+v+' ($'+effAov+' AOV) · Pays for $29 pack in < 1 recovered order ('+roiMult+'x ROI) · 0% commission · 30-day guarantee';
         if(b29){b29.href='/buy/playbook_pass?target='+encodeURIComponent(v)+qExtra;b29.textContent='Get Complete '+v+' Pack ($29) →';}
         if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(v)+qExtra;
         if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js?target='+encodeURIComponent(v)+qExtra;
         if(rl)rl.href='/scan/'+encodeURIComponent(v)+'?decline='+encodeURIComponent(code)+(sess>=50?'&sessions='+sess:'')+(aov>=5?'&aov='+aov:'');
-        if(fc)fc.textContent='Get free Fix #1 snippet for '+v+' · '+code+' (+$2,098/mo lift · $0) →';
-        if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+v+'", declineCode: "'+code+'", retryAfterHours: '+hrs+', allowPromoStacking: false };';
-        if(uSub)uSub.textContent='Compiled for '+v+' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';
+        if(fc)fc.textContent='Get free Fix #1 snippet for '+v+' · '+code+' (+$'+dLift.toLocaleString()+'/mo lift · $0) →';
+        if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+v+'", declineCode: "'+code+'", aovUsd: '+effAov+', retryAfterHours: '+hrs+', allowPromoStacking: false'+(obj?', banditArm: "'+obj+'"':'')+' };';
+        if(uSub)uSub.textContent='Compiled for '+v+' ($'+effAov+' order) · $29 Pack pays for itself in < 1 recovered order ('+roiMult+'x monthly ROI) · 30-day guarantee';
         if(fBtn)fBtn.textContent='Complete '+v+' Recovery Pack ($29 — One-Time) →';
         if(lbDet&&openDet!==false&&!lbDet.open)lbDet.open=true;
         if(window.__ebTrack)window.__ebTrack('calculate',{source:'leaderboard_check',target:v});
@@ -583,7 +584,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
           if(pt)pt.textContent=s.target;
           if(pg)pg.textContent='Grade '+s.grade+' ('+s.score+'/100)';
           if(pk)pk.textContent=s.kpi1+' • '+s.kpi2;
-          if(roi)roi.textContent='Compiled for '+s.target+' · Pays for $29 pack in < 1 recovered order · 0% commission · 30-day guarantee';
+          if(roi)roi.textContent='Compiled for '+s.target+' ($'+effAov+' AOV) · Pays for $29 pack in < 1 recovered order ('+roiMult+'x ROI) · 0% commission · 30-day guarantee';
           if(b29){b29.href='/buy/playbook_pass?target='+encodeURIComponent(s.target)+qExtra;b29.textContent='Get Complete '+s.target+' Pack ($29) →';}
           if(b199)b199.href='/buy/flash_pass?target='+encodeURIComponent(s.target)+qExtra;
           if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js?target='+encodeURIComponent(s.target)+qExtra;
