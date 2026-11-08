@@ -1,0 +1,85 @@
+{
+  "project": "AbandonAlpha Checkout & Stripe Declined-Card Recovery Engine (abandonalpha.com)",
+  "competitors": "ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster",
+  "ruled_out_pillars": [
+    "1. Visitor Intent & Traffic Hook Fit",
+    "2. Site Appeal, Subpage Coherence & Competitor Visual Parity",
+    "5. Checkout Mechanics & Live Production Parity"
+  ],
+  "primary_bottleneck_pillar": {
+    "pillar_id": "PILLAR_3_REPUTATION_TRUST",
+    "name": "3. Reputation, Authority & Verifiable Proof",
+    "question": "Is it our reputation \u2014 do visitors trust our data/deliverable enough to give an email or card?",
+    "ring": "RING_3_OUTER_FOREST",
+    "status": "ACTIVE_BOTTLENECK_HYPOTHESIS",
+    "evidence_summary": "Visitors engage with the tool but $0 email captures (0) remain below threshold \u2014 indicating either a trust deficit or free-answer cannibalization.",
+    "active_hypothesis": "Elevate instant domain authority to match ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster: show an unmasked, 100%-verifiable Specimen #1 deliverable preview up front, cite verifiable data provenance, and display risk-reversal guarantees.",
+    "falsifiable_test": "Visitors inspecting Specimen #1 submit a $0 email save or click sample preview at >= 5% conversion.",
+    "rule_out_threshold": "$0 Email Capture Rate >= 5% of engaged tool users",
+    "updated_at": 1794123996.4771461
+  },
+  "active_bottleneck_count": 2,
+  "directional_mandate": "STOP beating around the bush on Ruled-Out Pillars (1. Visitor Intent & Traffic Hook Fit, 2. Site Appeal, Subpage Coherence & Competitor Visual Parity, 5. Checkout Mechanics & Live Production Parity). Focus 100% of this cycle on testing & validating [3. Reputation, Authority & Verifiable Proof]: Elevate instant domain authority to match ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster: show an unmasked, 100%-verifiable Specimen #1 deliverable preview up front, cite verifiable data provenance, and display risk-reversal guarantees. (Falsifiable Check: Visitors inspecting Specimen #1 submit a $0 email save or click sample preview at >= 5% conversion.)",
+  "pillars": [
+    {
+      "pillar_id": "PILLAR_1_VISITOR_INTENT",
+      "name": "1. Visitor Intent & Traffic Hook Fit",
+      "question": "Is it our types of visitors or first-3-second hook?",
+      "ring": "RING_3_OUTER_FOREST",
+      "status": "RULED_OUT_VALIDATED",
+      "evidence_summary": "Tool engagement rate is 78% (>= 50% threshold). Visitors understand the hook and actively use the calculator/studio.",
+      "active_hypothesis": "Match top acquisition channels (@mulak X/Twitter, high-intent comparison routes) to high-urgency buyers.",
+      "falsifiable_test": ">= 50% of human visitors trigger a Step-1 calculation/interaction within 15 seconds.",
+      "rule_out_threshold": "Tool Interaction Rate >= 50%",
+      "updated_at": 1794123996.477143
+    },
+    {
+      "pillar_id": "PILLAR_2_SITE_APPEAL",
+      "name": "2. Site Appeal, Subpage Coherence & Competitor Visual Parity",
+      "question": "Is it still our site appeal, spacing, imagery, or inconsistent subpages?",
+      "ring": "RING_2_MIDDLE_PARITY",
+      "status": "RULED_OUT_VALIDATED",
+      "evidence_summary": "Static Ring-2 visual/shell sensor pressure is 0.00 (unified top-nav & width across all subpages, unique uncropped imagery, zero CTA bombardment).",
+      "active_hypothesis": "Maintain 1:1 visual calm, 24px spacing, and unique uncropped photography across all menu routes benchmarked against ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster.",
+      "falsifiable_test": "0.00 Ring-2 visual/shell/imagery sensor pressure + Playwright desktop (1440px) & mobile (390px) parity across all top-menu routes.",
+      "rule_out_threshold": "Ring-2 Sensor Pressure == 0.00 across all routes",
+      "updated_at": 1794123996.477144
+    },
+    {
+      "pillar_id": "PILLAR_3_REPUTATION_TRUST",
+      "name": "3. Reputation, Authority & Verifiable Proof",
+      "question": "Is it our reputation \u2014 do visitors trust our data/deliverable enough to give an email or card?",
+      "ring": "RING_3_OUTER_FOREST",
+      "status": "ACTIVE_BOTTLENECK_HYPOTHESIS",
+      "evidence_summary": "Visitors engage with the tool but $0 email captures (0) remain below threshold \u2014 indicating either a trust deficit or free-answer cannibalization.",
+      "active_hypothesis": "Elevate instant domain authority to match ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster: show an unmasked, 100%-verifiable Specimen #1 deliverable preview up front, cite verifiable data provenance, and display risk-reversal guarantees.",
+      "falsifiable_test": "Visitors inspecting Specimen #1 submit a $0 email save or click sample preview at >= 5% conversion.",
+      "rule_out_threshold": "$0 Email Capture Rate >= 5% of engaged tool users",
+      "updated_at": 1794123996.4771461
+    },
+    {
+      "pillar_id": "PILLAR_4_PRODUCT_OFFERING",
+      "name": "4. Product Offering, Value Holdback & Pricing Wedge",
+      "question": "Is it our product offering \u2014 did we give away 95% for free, or is the paid deliverable not worth paying for?",
+      "ring": "RING_3_OUTER_FOREST",
+      "status": "ACTIVE_BOTTLENECK_HYPOTHESIS",
+      "evidence_summary": "CORE ENTREPRENEURIAL FOCUS: Visitors use the free tool, yet paid checkouts = 0. We must test the Value Holdback & High-Labor Execution Deliverable (Instant Store & Stripe Failed-Card Leakage Diagnosis + Unmasked Specimen #1 Subject Line & Exit Offer -> $0 email Fix #1 Copy-Paste Checkout Snippet & Payday Retry Window transport -> frictionless one-time passes ($1.99 Single-Store 3-File Patch / $29 Complete Store Recovery Pack / $49 Multi-Store Agency Kit) vs. $99/mo retention SaaS.).",
+      "active_hypothesis": "Eliminate the 'Problem Solved Paradox' on AbandonAlpha Checkout & Stripe Declined-Card Recovery Engine (abandonalpha.com): ensure the free step diagnoses & creates sunk-cost customization in <3s, while gating the high-labor execution deliverable behind a $0 functional email transport and frictionless one-time pass ($7/$19/$29).",
+      "falsifiable_test": "Engaged tool users click `$0 Email Save` or `One-Time Pass Checkout` instead of copying raw screen text and leaving.",
+      "rule_out_threshold": ">= 1 Paid Checkout or >= 5% Checkout Initiation per 20 engaged human visits",
+      "updated_at": 1794123996.4771469
+    },
+    {
+      "pillar_id": "PILLAR_5_CHECKOUT_PROD",
+      "name": "5. Checkout Mechanics & Live Production Parity",
+      "question": "Are changes actually live in production and do all interactive/buy buttons work in <500ms?",
+      "ring": "RING_2_MIDDLE_PARITY",
+      "status": "RULED_OUT_VALIDATED",
+      "evidence_summary": "Live production parity & interactive click-through verified.",
+      "active_hypothesis": "Ensure 100% of local commits are deployed to live production and every upload/preset/Stripe checkout button responds in <500ms without freezing.",
+      "falsifiable_test": "Live production URL returns HTTP 200 and creates a valid `checkout.stripe.com` session in <500ms.",
+      "rule_out_threshold": "100% Live Prod Parity + <500ms Stripe Checkout Redirect",
+      "updated_at": 1794123996.4771469
+    }
+  ]
+}

@@ -120,6 +120,16 @@ function updateUnmaskedSdkPreview(auditRes) {
   const subjMetaEl = document.getElementById('aa-unmasked-subject-meta');
   if (subjMetaEl) subjMetaEl.textContent = specObj.meta;
 
+  const fold1S1Desc = document.getElementById('aa-fold1-s1-desc');
+  if (fold1S1Desc) fold1S1Desc.innerHTML = 'Suppresses blind retry on <code>' + escapeUiHtml(activeRule) + '</code>';
+  const fold1WhLine = document.getElementById('aa-fold1-wh-line');
+  if (fold1WhLine) {
+    const whHours = activeRule === 'expired_card' ? '0 (halt retry)' : (activeRule === 'do_not_honor' ? '24' : '72');
+    fold1WhLine.innerHTML = '<code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: ' + whHours + '</code>';
+  }
+  const fold1SubjLine = document.getElementById('aa-fold1-subj-line');
+  if (fold1SubjLine) fold1SubjLine.textContent = specObj.tpl(storeName);
+
   const permalinkEl = document.getElementById('aa-live-scan-permalink');
   if (permalinkEl) {
     permalinkEl.href = '/scan/' + encodeURIComponent(domain);

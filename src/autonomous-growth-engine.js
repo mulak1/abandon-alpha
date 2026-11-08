@@ -229,7 +229,7 @@ function renderGrowthPageHtml(cfg, item, kind) {
 </head>
 <body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:${escXml(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderGrowthHeaderHtml(cfg, kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL')}
-  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
+  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:24px;">
     <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:10px;">
       <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
     </nav>

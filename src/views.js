@@ -247,43 +247,90 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     </nav>
 
     <style>@media(max-width:640px){.inline-calc-grid{grid-template-columns:1fr!important;}.inline-calc-grid>*,.calc-inputs,.calc-output-box,.pseo-section,.code-snippet-box{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important;padding-inline:14px!important;}.btn,#pseo-calc-btn{max-width:100%!important;white-space:normal!important;}}</style>
+    <div style="max-width:760px;margin:0 0 20px 0;">
+      <p class="section-kicker" style="margin:0 0 6px;font-size:13px;color:#64748B;font-weight:500;">${escapeHtml(page.category)} · <code>${escapeHtml(page.declineOrSignal)}</code></p>
+      <h1 class="pseo-h1" style="font-size:clamp(1.65rem, 2.4vw, 2.2rem);line-height:1.14;margin:0 0 8px 0;">${escapeHtml(cleanTitle)}</h1>
+      <p class="pseo-lead" style="margin:0;font-size:1rem;">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
+    </div>
+
     <div class="hero-split pseo-hero" style="align-items:stretch;">
-      <div class="pseo-hero-left" style="display:flex;flex-direction:column;justify-content:flex-start;gap:14px;height:100%;">
-        <div>
-          <p class="section-kicker" style="margin:0 0 8px;">${escapeHtml(page.category)} · <code>${escapeHtml(page.declineOrSignal)}</code></p>
-          <h1 class="pseo-h1" style="font-size:clamp(1.65rem, 2.4vw, 2.25rem);line-height:1.14;max-width:26ch;">${escapeHtml(cleanTitle)}</h1>
-          <p class="pseo-lead">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
-          <div class="cta-row">
-            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#grader" class="btn btn-indigo">
-              <span>Calculate store leakage</span>
-            </a>
-            <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" class="btn btn-ghost">Simulate ${escapeHtml(page.webhookEvent)}</a>
+      <div class="grader-form-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px;height:100%;">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card-header-bar" style="margin-bottom:0;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">
+            <span style="color:#0F172A;font-weight:600;font-size:0.95rem;">Store &amp; decline calculator</span>
+            <code style="font-size:12px;color:#475569;">${escapeHtml(page.declineOrSignal)}</code>
           </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <span class="mono-label" style="font-size:12.5px;color:#475569;font-weight:600;">Preset:</span>
+            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-btn" style="padding:5px 10px;font-size:12.5px;">$25k store</button>
+            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-btn" style="padding:5px 10px;font-size:12.5px;">$120k brand</button>
+            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-btn" style="padding:5px 10px;font-size:12.5px;">$500k scale</button>
+          </div>
+          <div>
+            <label class="field-label" for="pseo-sessions">Monthly checkout or renewal attempts</label>
+            <input id="pseo-sessions" type="number" class="field-input" value="${page.sampleMonthlySessions}" min="50" max="500000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
+          </div>
+          <div>
+            <label class="field-label" for="pseo-aov">Average order or invoice value ($)</label>
+            <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
+          </div>
+          <button type="button" id="pseo-calc-btn" class="btn btn-indigo btn-block" onclick="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})">
+            <span>Recalculate recoverable revenue</span>
+          </button>
+        </div>
+        <div class="cta-row" style="padding-top:10px;border-top:1px solid #E2E8F0;justify-content:space-between;">
+          <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#grader" style="font-size:13px;font-weight:600;color:#0F172A;text-decoration:underline;">Open full store audit &rarr;</a>
+          <a href="/?decline=${encodeURIComponent(page.declineOrSignal)}&amp;sessions=${page.sampleMonthlySessions}&amp;aov=${page.sampleAovUsd}#webhook-lab" style="font-size:13px;font-weight:600;color:#475569;text-decoration:underline;">Simulate ${escapeHtml(page.webhookEvent)}</a>
         </div>
       </div>
 
-      <div class="telemetry-card">
-        <div class="card-header-bar">
-          <span class="mono-label">Recovery benchmark</span>
-          <span style="font-size:12px;color:#64748B;font-weight:500;">2026 Stripe &amp; Shopify data</span>
-        </div>
-        <div class="metric-duo">
-          <div class="metric-tile" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;">
-            <span class="tile-label">Baseline loss / decline share</span>
-            <strong class="tile-value" style="color:#0F172A;">${page.baselineAbandonmentOrFailPct}%</strong>
-            <span class="tile-sub">Unoptimized Stripe / checkout</span>
+      <div class="telemetry-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px;height:100%;">
+        <div>
+          <div class="card-header-bar" style="margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">
+            <span style="color:#0F172A;font-weight:600;font-size:0.95rem;">Live 3-step recovery flow &amp; benchmark</span>
+            <span style="font-size:12px;color:#64748B;font-weight:500;">+${page.recoverableLiftPct}% recovery lift</span>
           </div>
-          <div class="metric-tile tile-emerald">
-            <span class="tile-label">Recovery lift</span>
-            <strong class="tile-value text-emerald">+${page.recoverableLiftPct}%</strong>
-            <span class="tile-sub">Timed retry + exit offer</span>
+          <div class="metric-duo" style="margin-bottom:12px;">
+            <div class="metric-tile" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;">
+              <span class="tile-label">Monthly revenue exposed (${page.baselineAbandonmentOrFailPct}% loss)</span>
+              <strong id="pseo-leaked-val" class="tile-value" style="color:#0F172A;">$${page.monthlyLeakedUsd.toLocaleString()}/mo</strong>
+              <span class="tile-sub">Unoptimized Stripe / checkout</span>
+            </div>
+            <div class="metric-tile tile-emerald" style="padding:14px;">
+              <span class="tile-label">Recoverable revenue (+${page.recoverableLiftPct}% lift)</span>
+              <strong id="pseo-rec-val" class="tile-value text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong>
+              <span id="pseo-ann-val" class="tile-sub">+$${page.annualRecoveredUsd.toLocaleString()}/yr net impact</span>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;margin-bottom:12px;">
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+              <strong style="display:block;color:#0F172A;">Step 1 &middot; Webhook</strong>
+              <span style="color:#475569;"><code>${escapeHtml(page.webhookEvent)}</code> trigger</span>
+            </div>
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+              <strong style="display:block;color:#0F172A;">Step 2 &middot; Retry window</strong>
+              <span style="color:#475569;">${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday (09:05 Local)')}</span>
+            </div>
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+              <strong style="display:block;color:#0F172A;">Step 3 &middot; Counter-offer</strong>
+              <span style="color:#475569;">${escapeHtml(page.winningArm || '1-Click Apple Pay / Pause')}</span>
+            </div>
           </div>
         </div>
-        <div class="playbook-spec-list">
-          <div class="spec-row"><span class="spec-k">Target webhook</span><code class="spec-v">${escapeHtml(page.webhookEvent)}</code></div>
-          <div class="spec-row"><span class="spec-k">Optimal retry timing</span><span class="spec-v" style="color:#0F172A;font-weight:600;">${escapeHtml(page.optimalTimingWindow || '1st & 15th Payday Window (09:05 Local)')}</span></div>
-          <div class="spec-row"><span class="spec-k">Winning counter-offer</span><span class="spec-v" style="color:#0F172A;font-weight:600;">${escapeHtml(page.winningArm || '1-Click Apple Pay / Pause-Instead-of-Cancel')}</span></div>
-          <div class="spec-row"><span class="spec-k">Estimated recovered cashflow</span><strong class="spec-v text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo ($${page.annualRecoveredUsd.toLocaleString()}/yr)</strong></div>
+
+        <div class="code-snippet-box" style="margin-top:0;background:#F8FAFC;border:1px solid #E2E8F0;padding:14px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:13px;color:#0F172A;">
+            <span style="color:#475569;font-weight:600;">Unmasked Step-1 webhook &amp; Specimen #1:</span>
+            <code style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;border:1px solid #E2E8F0;font-size:12.5px;">"Quick heads-up on your ${escapeHtml(page.declineOrSignal)} billing settings"</code>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;">
+            <span style="font-size:13px;color:#475569;">Includes <code>${escapeHtml(page.declineOrSignal)}</code> retry worker &amp; templates:</span>
+            <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;padding:7px 14px;font-size:13px;">Get Complete Pack ($29) &rarr;</a>
+              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;">or $1.99 single-store patch</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -306,41 +353,6 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     </section>
 
     <section class="pseo-section">
-      <h2><code>${escapeHtml(page.declineOrSignal)}</code> recovery calculator</h2>
-      <p class="section-sub">Adjust your monthly checkout attempts and average order value below to model your recoverable cashflow.</p>
-      <div class="inline-calc-grid">
-        <div class="calc-inputs">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-            <span class="mono-label" style="font-size:13px;color:#475569;font-weight:600;">Preset size:</span>
-            <button type="button" onclick="setPseoTier(600, 42, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-chip" style="padding:5px 10px;font-size:13px;">$25k store</button>
-            <button type="button" onclick="setPseoTier(1800, 68, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-chip" style="padding:5px 10px;font-size:13px;">$120k brand</button>
-            <button type="button" onclick="setPseoTier(5200, 95, ${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" class="preset-chip" style="padding:5px 10px;font-size:13px;">$500k scale</button>
-          </div>
-          <label class="field-label" for="pseo-sessions">Monthly checkout or renewal attempts</label>
-          <input id="pseo-sessions" type="number" class="field-input" value="${page.sampleMonthlySessions}" min="50" max="500000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
-          <label class="field-label" for="pseo-aov">Average order or invoice value ($)</label>
-          <input id="pseo-aov" type="number" class="field-input" value="${page.sampleAovUsd}" min="5" max="10000" oninput="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})" />
-          <button type="button" id="pseo-calc-btn" class="btn btn-indigo" onclick="recalcPseo(${page.baselineAbandonmentOrFailPct}, ${page.recoverableLiftPct})">
-            <span>Recalculate recoverable revenue</span>
-          </button>
-        </div>
-        <div class="calc-output-box">
-          <div class="spec-row"><span>Monthly revenue exposed to <code>${escapeHtml(page.declineOrSignal)}</code>:</span><strong id="pseo-leaked-val" style="color:#0F172A;">$${page.monthlyLeakedUsd.toLocaleString()}/mo</strong></div>
-          <div class="spec-row"><span>Monthly cashflow recovered:</span><strong id="pseo-rec-val" class="text-emerald">+$${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong></div>
-          <div class="spec-row"><span>12-month net impact:</span><strong id="pseo-ann-val" class="text-emerald">+$${page.annualRecoveredUsd.toLocaleString()}/yr</strong></div>
-          <div class="code-snippet-box">
-            <div class="mono-label">Complete Recovery Pack ($29 one-time)</div>
-            <p style="font-size:0.9375rem;line-height:1.55;margin-top:6px;">Includes your ready-to-use <code>${escapeHtml(page.declineOrSignal)}</code> Stripe retry schedule, 1-click Apple Pay recovery link template, and exit counter-offer rules.</p>
-            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-              <a href="/buy/playbook_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" class="btn btn-indigo btn-sm" style="display:inline-flex;">Get Complete Pack ($29) &rarr;</a>
-              <a href="/buy/flash_pass?playbook=${encodeURIComponent(page.slug)}" rel="nofollow" style="font-size:13px;color:#64748B;text-decoration:underline;margin-left:4px;">or $1.99 single-store patch</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="pseo-section">
       <h2>Common questions: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
       <div class="faq-grid">
         ${page.faqs.map((f, idx) => `<div class="faq-card"><h3>${idx + 1}. ${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`).join('')}
@@ -350,8 +362,8 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     <section class="pseo-section">
       <h2>Related ${escapeHtml(page.category)} Playbooks</h2>
       <div class="related-links-grid">
-        ${related.map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.declineOrSignal)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
-        ${crossCluster.map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.category)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
+        ${related.slice(0, 3).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.declineOrSignal)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
+        ${crossCluster.slice(0, 3).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.category)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
       </div>
     </section>
   </main>
@@ -447,19 +459,19 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
     ${categories.map((cat) => {
       const items = PSEO_PAGES.filter((p) => p.category === cat);
       return `
-      <section class="pseo-section dir-cluster" data-total="${items.length}">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <h2 style="margin:0;">${escapeHtml(cat)} (<span class="dir-cluster-count">${items.length}</span> Playbooks)</h2>
+      <section class="pseo-section dir-cluster" data-total="${items.length}" style="padding:10px 0;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <h2 style="margin:0;font-size:17px;">${escapeHtml(cat)} (<span class="dir-cluster-count">${items.length}</span> Playbooks)</h2>
         </div>
-        <div class="related-links-grid">
+        <div class="related-links-grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;">
           ${items.map((item) => `
-            <a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword + ' ' + item.webhookEvent + ' ' + item.category + ' ' + item.slug).toLowerCase())}">
-              <div class="dir-card-top">
-                <code class="text-indigo">${escapeHtml(item.declineOrSignal)}</code>
-                <span class="badge-emerald">+${item.recoverableLiftPct}% Recovery</span>
+            <a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" style="padding:9px 11px;" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword + ' ' + item.webhookEvent + ' ' + item.category + ' ' + item.slug).toLowerCase())}">
+              <div class="dir-card-top" style="margin-bottom:3px;">
+                <code class="text-indigo" style="font-size:11.5px;">${escapeHtml(item.declineOrSignal)}</code>
+                <span class="badge-emerald" style="font-size:11px;padding:2px 6px;">+${item.recoverableLiftPct}% Recovery</span>
               </div>
-              <strong>${escapeHtml(item.title.replace(/`/g, ''))}</strong>
-              <p class="dir-card-sub">Webhook: <code>${escapeHtml(item.webhookEvent)}</code> • Est. +$${item.monthlyRecoveredUsd.toLocaleString()}/mo</p>
+              <strong style="font-size:13px;line-height:1.25;">${escapeHtml(item.title.replace(/`/g, ''))}</strong>
+              <p class="dir-card-sub" style="font-size:11.5px;margin:2px 0 0;"><code>${escapeHtml(item.webhookEvent)}</code> • +$${item.monthlyRecoveredUsd.toLocaleString()}/mo</p>
             </a>
           `).join('')}
         </div>
@@ -532,48 +544,19 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body class="lp-body">
-  <header class="lp-topbar">
-    <div class="container lp-topbar-inner">
-      <a href="/" class="brand-logo" aria-label="AbandonAlpha Home">
-        ${renderBrandLogoSvg('lp')}
-        <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
-      </a>
-      <div style="font-size:13px;color:#475569;font-weight:500;">30-day money-back guarantee · One-time pack, zero monthly subscription</div>
+  ${renderUnifiedHeaderHtml('PAID SOCIAL LP')}
+
+  <main class="container lp-main" style="padding:18px 0 28px;">
+    <div style="margin-bottom:16px;">
+      <p class="section-kicker" style="margin:0 0 6px;">Checkout &amp; failed-payment recovery</p>
+      <h1 class="lp-h1" style="margin:0 0 8px;">71% of checkout visitors leave without paying. Recover 18%–31% automatically.</h1>
+      <p class="pseo-lead" style="margin:0;">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Add exit counter-offers and payday-timed Stripe retries in under five minutes.</p>
     </div>
-  </header>
 
-  <main class="container lp-main">
     <section class="hero-split lp-hero">
-      <div class="lp-hero-copy">
-        <p class="section-kicker" style="margin:0 0 8px;">Checkout &amp; failed-payment recovery</p>
-        <h1 class="lp-h1">71% of checkout visitors leave without paying. Recover 18%–31% automatically.</h1>
-        <p class="pseo-lead">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Add exit counter-offers and payday-timed Stripe retries in under five minutes.</p>
-
-        <ul class="lp-proof-list">
-          <li><strong>Exit counter-offers:</strong> Detects when a buyer moves to close their checkout tab and offers the right 1-click incentive before they leave.</li>
-          <li><strong>Decline-code retry timing:</strong> Aligns <code>insufficient_funds</code> retries with payday deposit windows (62.4% recovery) and halts <code>expired_card</code> retries to avoid card network fees.</li>
-          <li><strong>Meta Conversions API sync:</strong> Sends recovered checkouts back to Meta so your ad campaigns optimize for real buyers.</li>
-        </ul>
-
-        <div class="lp-trust-row">
-          <div class="trust-stat">
-            <strong class="text-emerald">+$14,820/mo</strong>
-            <span>Avg recovered cashflow</span>
-          </div>
-          <div class="trust-stat">
-            <strong style="color:#0F172A;">62.4%</strong>
-            <span>Soft-decline recovery rate</span>
-          </div>
-          <div class="trust-stat">
-            <strong style="color:#0F172A;">$29 one-time</strong>
-            <span>Zero revenue tax</span>
-          </div>
-        </div>
-      </div>
-
       <div class="telemetry-card lp-calc-card">
         <div class="card-header-bar">
-          <span class="mono-label">10-second recovery calculator</span>
+          <span class="mono-label">1. Enter store &amp; decline numbers</span>
           <span style="font-size:12px;color:#64748B;font-weight:500;">Instant estimate</span>
         </div>
 
@@ -607,22 +590,60 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
             <span>Calculate recoverable revenue</span>
           </button>
         </form>
+      </div>
 
-        <div id="lp-result-panel" class="lp-result-panel">
-          <div class="metric-duo">
-            <div class="metric-tile" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;">
-              <span class="tile-label">Monthly leaked revenue</span>
-              <strong id="lp-leaked-out" class="tile-value" style="color:#0F172A;">$214,523</strong>
-            </div>
-            <div class="metric-tile tile-emerald">
-              <span class="tile-label">Recoverable every month</span>
-              <strong id="lp-rec-out" class="tile-value text-emerald">+$36,722/mo</strong>
+      <div class="telemetry-card lp-hero-copy" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+        <div>
+          <div class="card-header-bar">
+            <span class="mono-label">2. Live 3-step recovery flow &amp; diagnosis</span>
+            <span style="font-size:12px;color:#047857;font-weight:600;">62.4% Soft-Decline Lift</span>
+          </div>
+
+          <div id="lp-result-panel" class="lp-result-panel" style="margin-top:0;">
+            <div class="metric-duo">
+              <div class="metric-tile" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;">
+                <span class="tile-label">Monthly leaked revenue</span>
+                <strong id="lp-leaked-out" class="tile-value" style="color:#0F172A;">$214,523</strong>
+              </div>
+              <div class="metric-tile tile-emerald">
+                <span class="tile-label">Recoverable every month</span>
+                <strong id="lp-rec-out" class="tile-value text-emerald">+$36,722/mo</strong>
+              </div>
             </div>
           </div>
-          <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;">
-            <a href="/buy/playbook_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
-            <a href="/buy/flash_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
+
+          <div style="margin-top:12px;padding:12px 14px;border-radius:12px;background:#F8FAFC;border:1px solid #E2E8F0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+              <strong style="font-size:13px;color:#0F172A;">Live 3-Step Smart Retry &amp; SMS/Email Recovery Flow</strong>
+              <span style="font-size:11.5px;color:#047857;font-weight:600;">Unmasked Step 1</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;">
+              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                <div style="font-weight:700;color:#047857;">Step 1 · T+0m</div>
+                <div style="color:#0F172A;font-weight:600;margin-top:2px;">Webhook Intercept</div>
+                <div style="color:#64748B;font-size:11.5px;margin-top:2px;">Suppresses blind retry on <code>insufficient_funds</code></div>
+              </div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                <div style="font-weight:700;color:#0F172A;">Step 2 · T+24h</div>
+                <div style="color:#0F172A;font-weight:600;margin-top:2px;">1-Tap Billing Link</div>
+                <div style="color:#64748B;font-size:11.5px;margin-top:2px;">Sends passwordless Apple Pay / Link updater</div>
+              </div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;border:1px solid #E2E8F0;">
+                <div style="font-weight:700;color:#0F172A;">Step 3 · Payday</div>
+                <div style="color:#0F172A;font-weight:600;margin-top:2px;">ACH Deposit Retry</div>
+                <div style="color:#64748B;font-size:11.5px;margin-top:2px;">Retries Friday 09:05 local deposit window</div>
+              </div>
+            </div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;font-size:12px;color:#334155;">
+              <div><strong style="color:#0F172A;">Unmasked Step-1 Dunning Webhook:</strong> <code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: 72</code></div>
+              <div style="margin-top:3px;"><strong style="color:#0F172A;">Subject Line Specimen #1:</strong> <span style="color:#047857;font-weight:600;">"Quick heads-up on your [Brand] billing settings"</span> (41.8% open rate)</div>
+            </div>
           </div>
+        </div>
+
+        <div class="lp-action-bar" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+          <a href="/buy/playbook_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-indigo btn-block" onclick="fireCapi('InitiateCheckout', 29)">Get Complete Store Recovery Pack ($29 one-time) &rarr;</a>
+          <a href="/buy/flash_pass?utm_source=meta_lp" rel="nofollow" class="btn btn-ghost btn-block" onclick="fireCapi('InitiateCheckout', 1.99)">Or get Single-Store 3-File Patch ($1.99)</a>
           <div id="lp-capi-status" class="mono-status">Meta CAPI Event Deduplication Ready (ViewContent Fired)</div>
         </div>
       </div>

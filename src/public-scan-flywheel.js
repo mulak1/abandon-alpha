@@ -310,7 +310,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, `VERIFIED REPORT • GRADE ${scan.grade}`, '/scan')}
-  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:16px 24px 36px;display:flex;flex-direction:column;gap:12px;">
+  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:16px 24px 36px;display:flex;flex-direction:column;gap:12px;">
     ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml(`Free ${scan.target} Recovery Rules ($0) + $29 Complete Recovery Kit`, 'Send Free Recovery Rules ($0) →', scan.target) : ''}
     <div>
       <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:4px;">
@@ -451,7 +451,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, 'PUBLIC BENCHMARK LEADERBOARD', '/leaderboard')}
-  <main id="main-content" style="max-width:1240px;margin:0 auto;padding:24px;">
+  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:24px;">
     ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml('Free Store Recovery Benchmarks ($0) + $29 Complete Recovery Kit', 'Send Free Recovery Rules ($0) →', '') : ''}
     <h1 style="margin:0 0 8px 0;font-size:clamp(2rem,3vw,2.6rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
     <p class="pseo-lead" style="margin:0 0 12px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>

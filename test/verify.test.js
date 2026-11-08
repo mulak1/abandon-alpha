@@ -78,6 +78,10 @@ function runTests() {
 
   const lbHtml = renderLeaderboardPageHtml(cfg, '#0F172A');
   assert.ok(!lbHtml.includes('#E11D48') && !lbHtml.includes('#D97706'), 'Leaderboard page must not use rainbow orange/red row bars');
+  assert.ok(renderedHome.includes('id="aa-fold1-3step-flow"'), 'Homepage Fold 1 must include the Live 3-Step Smart Retry & SMS/Email Recovery Flow + Unmasked Step-1 Webhook');
+  assert.ok(html.includes('Live 3-step recovery flow &amp; benchmark'), 'pSEO Fold 1 must include the 2-column Live 3-Step Recovery Flow & Benchmark');
+  assert.ok(lpHtml.includes('class="site-header"'), '/lp must share the unified 70px site-header');
+  assert.ok(scanHtml.includes('max-width:1320px') && lbHtml.includes('max-width:1320px'), '/scan and /leaderboard must use the unified 1320px container width');
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }

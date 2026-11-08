@@ -250,12 +250,27 @@
                   </ul>
                 </li>
               </ul>
+              <!-- LIVE 3-STEP SMART RETRY & SMS/EMAIL RECOVERY FLOW IN FOLD 1 -->
+              <div id="aa-fold1-3step-flow" style="margin-top:12px;padding-top:10px;border-top:1px solid #E2E8F0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;">
+                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+                  <strong style="display:block;color:#0F172A;">Step 1 &middot; T+0s Webhook</strong>
+                  <span style="color:#475569;"><code>invoice.payment_failed</code> &amp; exit counter-offer</span>
+                </div>
+                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+                  <strong style="display:block;color:#0F172A;">Step 2 &middot; 1st/15th Payday</strong>
+                  <span style="color:#475569;">06:00 local deposit retry + Specimen #1 email</span>
+                </div>
+                <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;">
+                  <strong style="display:block;color:#0F172A;">Step 3 &middot; T+72h Rescue</strong>
+                  <span style="color:#475569;">1-Tap Apple Pay / Link updater &amp; 14d pause</span>
+                </div>
+              </div>
             </div>
 
             <!-- SINGLE CALM ACTION FOOTER (MAX 1 EMAIL SAVE + 1 PAID PACK LINK) -->
             <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:10px;background:#F8FAFC;padding:16px;border-radius:12px;border:1px solid #E2E8F0;">
               <div id="aa-unmasked-subject-line-1" style="font-size:13px;line-height:1.45;color:#0F172A;">
-                <span style="color:#475569;font-weight:600;">Sample recovery subject (<span id="aa-spark-brand-label">Gymshark</span>):</span>
+                <span style="color:#475569;font-weight:600;">Unmasked Step-1 webhook &amp; Specimen #1 (<span id="aa-spark-brand-label">Gymshark</span>):</span>
                 <code id="aa-unmasked-subject-quote" style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;border:1px solid #E2E8F0;font-size:12.5px;">"Quick heads-up on your Gymshark billing settings"</code>
                 <span id="aa-unmasked-subject-meta" style="color:#64748B;">(41.8% open rate &middot; 1st/15th payday retry)</span>
                 <span id="aa-spark-split-nums" style="display:none;"></span>
