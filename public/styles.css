@@ -181,11 +181,11 @@ p { max-width: 65ch; }
   color: #FFFFFF;
 }
 .btn-emerald:hover { background: var(--emerald-bright); transform: translateY(-1px); }
-.btn-indigo {
+.btn-indigo, .btn-primary {
   background: var(--blurple);
   color: #FFFFFF;
 }
-.btn-indigo:hover { background: var(--blurple-hover); transform: translateY(-1px); }
+.btn-indigo:hover, .btn-primary:hover { background: var(--blurple-hover); transform: translateY(-1px); }
 .btn-ghost {
   background: #F1F5F9;
   color: var(--text-navy);
