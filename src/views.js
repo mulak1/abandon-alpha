@@ -33,20 +33,20 @@ function renderUnifiedHeaderHtml(tagText = '') {
         <span class="brand-wordmark">Abandon<span class="brand-wordmark-accent">Alpha</span></span>
       </a>
       <nav class="main-nav" aria-label="Primary Navigation">
-        <a href="/#grader">Calculator</a>
-        <a href="/#bandit-lab">Simulators</a>
-        <a href="/directory">Playbooks</a>
-        <a href="/#in-card-unlock-bar">Pricing</a>
+        <a href="/#grader">1. Estimate Lost Sales</a>
+        <a href="/#bandit-lab">2. Preview Exit Offers</a>
+        <a href="/directory">3. Recovery Guides</a>
+        <a href="/#in-card-unlock-bar">Pricing ($29)</a>
         <a href="/#grader" id="nav-calc-mrr-btn" class="btn btn-indigo btn-sm" onclick="if(typeof triggerHeaderMrrCalc==='function'){return triggerHeaderMrrCalc(event);}">
-          <span>Calculate Revenue</span>
+          <span>Calculate Lost Sales</span>
         </a>
       </nav>
     </div>
     <nav class="mobile-nav-strip" aria-label="Mobile Navigation">
-      <a href="/#grader">Calculator</a>
-      <a href="/#bandit-lab">Simulators</a>
-      <a href="/directory">Playbooks</a>
-      <a href="/#in-card-unlock-bar">Pricing</a>
+      <a href="/#grader">1. Estimate Sales</a>
+      <a href="/#bandit-lab">2. Exit Offers</a>
+      <a href="/directory">3. Guides</a>
+      <a href="/#in-card-unlock-bar">Pricing ($29)</a>
     </nav>
   </header>`;
 }
