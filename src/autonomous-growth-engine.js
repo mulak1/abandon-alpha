@@ -225,16 +225,29 @@ function renderGrowthPageHtml(cfg, item, kind) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escXml(item.title)}" />
   <meta name="twitter:description" content="${escXml(item.summary.slice(0, 156))}" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
 </head>
 <body style="margin:0;background:${escXml(t.canvasBg)};color:${escXml(t.textPrimary)};font-family:${escXml(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderGrowthHeaderHtml(cfg, kind === 'compare' ? 'SIDE-BY-SIDE COMPARISON' : 'FREE INTERACTIVE TOOL')}
-  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:24px;">
-    <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:10px;">
-      <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
-    </nav>
-    <h1 style="font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.18;margin:0 0 8px 0;">${escXml(item.title)}</h1>
-    <p class="pseo-lead" style="font-size:16px;color:${escXml(t.textSecondary)};margin:0 0 14px 0;">${escXml(item.summary)}</p>
+  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:16px 24px 28px;">
+    <div class="aa-sunlit-hero-banner">
+      <div>
+        <nav aria-label="Breadcrumb" style="font-size:12.5px;color:#64748B;margin-bottom:6px;">
+          <a href="/" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Home</a> / <a href="/directory" style="color:${escXml(g.badgeColor)};text-decoration:none;font-weight:600;">Directory</a> / <span>${escXml(item.slug)}</span>
+        </nav>
+        <h1 style="font-size:clamp(1.6rem,2.4vw,2.15rem);line-height:1.15;margin:0 0 6px 0;">${escXml(item.title)}</h1>
+        <p class="pseo-lead" style="font-size:14px;color:${escXml(t.textSecondary)};margin:0 0 8px 0;">${escXml(item.summary)}</p>
+        <div class="aa-focus-pill-row">
+          <span class="aa-focus-pill">⚡ ${escXml(item.metricA || item.scoreA || '+56.2% Lift')}</span>
+          <span class="aa-focus-pill">💳 ${escXml(item.metricB || item.winnerLift || 'Zero Discount Bleed')}</span>
+          <span class="aa-focus-pill">🛡️ $29 One-Time &middot; 0% Commission</span>
+        </div>
+      </div>
+      <div class="aa-hero-photo-frame">
+        <img src="/editorial-segment-1.jpg" alt="Sunlit checkout comparison benchmark studio" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
+        <span class="aa-hero-photo-badge">✦ Side-by-Side Benchmark &middot; 2026</span>
+      </div>
+    </div>
     <script>
       window.__ebRunGrowthWb=function(v){if(!v)return;fetch('/api/cnn/inspect?target='+encodeURIComponent(v)).then(function(r){return r.json()}).then(function(d){if(!d||!d.scan)return;var s=d.scan,el=document.getElementById('eb-live-cnn-readout'),inp=document.getElementById('eb-cnn-wb-input');if(inp)inp.value=s.target;if(el)el.textContent=s.target+' → '+s.grade+' ('+s.score+'/100) • '+s.cnnReadout;var n=document.getElementById('eb-growth-r1-name'),k1=document.getElementById('eb-growth-r1-kpi'),k2=document.getElementById('eb-growth-r2-kpi'),b=document.getElementById('eb-growth-badge-img'),pl=document.getElementById('eb-growth-permalink-btn'),fc=document.getElementById('eb-growth-fix1-cta'),fk=document.getElementById('eb-growth-fix1-code'),uSub=document.getElementById('in-card-unlock-sub'),fBtn=document.getElementById('btn-prog-full-dossier'),gDet=document.getElementById('eb-growth-fix1-details'),b29=document.getElementById('eb-growth-buy-29'),b199=document.getElementById('eb-growth-buy-199'),dw=document.getElementById('eb-growth-dl-worker'),cBtn=document.getElementById('eb-growth-copy-fix1-btn');if(gDet&&!gDet.open)gDet.open=true;if(cBtn){cBtn.removeAttribute('data-copied');cBtn.textContent='Copy Free Fix #1 Snippet';cBtn.style.color='';}if(n)n.textContent=s.target+' : Live Check';if(k1)k1.textContent=s.grade+' ('+s.score+'/100) • '+s.kpi1;if(k2)k2.textContent=s.kpi2+' • '+s.cnnReadout;if(b)b.src='/badge/'+encodeURIComponent(s.target)+'.svg';if(uSub)uSub.textContent='Compiled for '+s.target+' · $29 Pack pays for itself in < 1 recovered order · 30-day guarantee';if(fBtn)fBtn.textContent='Complete '+s.target+' Recovery Pack ($29 — One-Time) →';var code=(document.getElementById('eb-growth-vol-decline')||{}).value||'insufficient_funds',sess=Number((document.getElementById('eb-growth-vol-sessions')||{}).value||3200),aov=Number((document.getElementById('eb-growth-vol-aov')||{}).value||92),qStr='?target='+encodeURIComponent(s.target)+'&decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;if(pl)pl.href='/scan/'+encodeURIComponent(s.target)+'?decline='+encodeURIComponent(code)+'&sessions='+sess+'&aov='+aov;if(b29){b29.textContent='Get Complete '+s.target+' Pack ($29) →';b29.href='/buy/playbook_pass'+qStr;}if(b199)b199.href='/buy/flash_pass'+qStr;if(dw)dw.href='/api/github-upgrade/stripe-recovery-worker.js'+qStr;var hrs=code==='expired_card'?0:(code==='do_not_honor'?24:72);if(fc)fc.textContent='Get free Fix #1 snippet for '+s.target+' · '+code+' (+$2,098/mo lift · $0) →';if(fk)fk.textContent='window.AbandonAlphaRules = { merchant: "'+s.target+'", declineCode: "'+code+'", aovUsd: '+aov+', retryAfterHours: '+hrs+', allowPromoStacking: false };';if(window.__ebRecalcGrowthVolume)window.__ebRecalcGrowthVolume(true);});};
       window.__ebRecalcGrowthVolume=function(openDet){
@@ -296,7 +309,10 @@ function renderGrowthPageHtml(cfg, item, kind) {
         </div>
       </div>
     </section>
-    <div class="editorial-break-card"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:6px;">Self-hosted recovery rules with 0% revenue share</h2><p class="section-sub" style="margin:0;">Deploy bank-timed Stripe retry schedules, exit counter-offers, and 1-tap billing links directly into your stack without monthly subscriptions or commission fees.</p></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:12px;">
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Self-hosted recovery rules</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">💳 +56.2% Soft-Decline Lift</span><span class="aa-focus-pill">🛡️ 0% Revenue Share</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">1-tap card updater &amp; exit saves</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">⚡ +18%–31% Exit Saves</span><span class="aa-focus-pill">⚡ 10-Min Setup</span></div></div></div>
+    </div>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
         <h2 style="font-size:18px;margin:0;">Side-by-side results &amp; action plan</h2>

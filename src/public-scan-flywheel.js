@@ -306,20 +306,31 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   <meta property="og:url" content="${esc(canonicalUrl)}" />
   <meta property="og:image" content="https://${esc(cfg.domain)}/api/og/scorecard?target=${esc(encodeURIComponent(scan.target))}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, `VERIFIED REPORT • GRADE ${scan.grade}`, '/scan')}
-  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:16px 24px 36px;display:flex;flex-direction:column;gap:12px;">
+  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:14px 24px 28px;display:flex;flex-direction:column;gap:10px;">
     ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml(`Free ${scan.target} Recovery Rules ($0) + $29 Complete Recovery Kit`, 'Send Free Recovery Rules ($0) →', scan.target) : ''}
-    <div>
-      <nav aria-label="Breadcrumb" style="font-size:13px;color:#64748B;margin-bottom:4px;">
-        <a href="/" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:700;">Home</a> / <a href="/leaderboard" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:700;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
-      </nav>
-      <h1 id="eb-scan-h1" data-entity-name="${esc(scan.target)}" style="margin:0 0 4px 0;font-size:clamp(1.65rem,2.4vw,2.1rem);line-height:1.15;color:${esc(t.textPrimary)};">${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard &amp; Action Report</h1>
-      <p class="pseo-lead" style="margin:0 0 8px 0;color:${esc(t.textSecondary)};font-size:14.5px;line-height:1.45;">
-        <strong style="color:${esc(t.textPrimary)};">Why you are here (<span id="eb-scan-lead-target">${esc(scan.target)}</span> &bull; <span id="eb-scan-lead-grade">Grade ${esc(scan.grade)} ${scan.score}/100</span>):</strong> ${esc(vCopy.goalText)}
-      </p>
+    <div class="aa-sunlit-hero-banner">
+      <div>
+        <nav aria-label="Breadcrumb" style="font-size:12.5px;color:#64748B;margin-bottom:4px;">
+          <a href="/" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:700;">Home</a> / <a href="/leaderboard" style="color:${esc(primaryBtnBg)};text-decoration:none;font-weight:700;">Leaderboard</a> / <span id="eb-scan-bc-target">${esc(scan.target)}</span>
+        </nav>
+        <h1 id="eb-scan-h1" data-entity-name="${esc(scan.target)}" style="margin:0 0 6px 0;font-size:clamp(1.5rem,2.3vw,1.95rem);line-height:1.15;color:${esc(t.textPrimary)};">${esc(scan.target)} : ${esc(cfg.brandName)} Scorecard &amp; Action Report</h1>
+        <p class="pseo-lead" style="margin:0 0 8px 0;color:${esc(t.textSecondary)};font-size:13.5px;line-height:1.4;">
+          <strong style="color:${esc(t.textPrimary)};">Why you are here (<span id="eb-scan-lead-target">${esc(scan.target)}</span> &bull; <span id="eb-scan-lead-grade">Grade ${esc(scan.grade)} ${scan.score}/100</span>):</strong> ${esc(vCopy.goalText)}
+        </p>
+        <div class="aa-focus-pill-row">
+          <span class="aa-focus-pill">⚡ Grade ${esc(scan.grade)} (${scan.score}/100)</span>
+          <span class="aa-focus-pill">💳 ${esc(scan.kpi1)}</span>
+          <span class="aa-focus-pill">🛡️ $29 One-Time &middot; 0% Commission</span>
+        </div>
+      </div>
+      <div class="aa-hero-photo-frame">
+        <img src="/editorial-segment-2.jpg" alt="Sunlit checkout telemetry studio for ${esc(scan.target)}" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
+        <span class="aa-hero-photo-badge">✦ Live Store Scorecard &middot; Verified</span>
+      </div>
     </div>
 
     <script>
@@ -391,12 +402,9 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
       ${renderScanSummaryCardsHtml(cfg, scan, primaryBtnBg)}
     </section>
 
-    <div class="editorial-break-card">
-      <img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
-      <div>
-        <h2 class="section-h2" style="margin-bottom:6px;">Bank-aligned retry schedules &amp; exit counter-offers</h2>
-        <p class="section-sub" style="margin:0;">Stop losing renewal revenue to naive 24-hour cron retries. Deploy payday-synced Stripe webhook retries and tailored checkout counter-offers with zero revenue-share commission.</p>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Bank-aligned retry schedules</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">💳 +56.2% Soft-Decline Lift</span><span class="aa-focus-pill">⚡ Payday Sync</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Zero-discount exit counter-offers</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">⚡ +18%–31% Saved</span><span class="aa-focus-pill">🛡️ 0% Commission</span></div></div></div>
     </div>
 
     <!-- DIAGNOSTIC BREAKDOWN -->
@@ -491,12 +499,12 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
     const barColor = isTop ? '#047857' : '#64748B';
     const rowTier = isTop ? 'fame' : 'fix';
     return `<tr data-lb-tier="${rowTier}" data-lb-text="${esc((item.target + ' ' + item.kpi1 + ' ' + item.kpi2 + ' ' + item.cnnReadout + ' ' + item.issue).toLowerCase())}">
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;">#${idx + 1}</td>
-    <th scope="row" style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:14px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:#0F172A;font-weight:700;text-decoration:none;">${esc(item.target)} →</a></th>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};min-width:150px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;color:${isTop ? '#047857' : '#0F172A'};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:56px;height:6px;background:#E2E8F0;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};font-size:13.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>
-    <td style="padding:12px 14px;border-bottom:1px solid ${esc(t.border)};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13.5px;font-weight:600;color:#0F172A;text-decoration:underline;">${isTop ? 'View report' : 'View fix plan'} →</a></td>
+    <td style="padding:7px 11px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-weight:600;font-size:13px;">#${idx + 1}</td>
+    <th scope="row" style="padding:7px 11px;border-bottom:1px solid ${esc(t.border)};text-align:left;font-size:13.5px;"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="color:#0F172A;font-weight:700;text-decoration:none;">${esc(item.target)} →</a></th>
+    <td style="padding:7px 11px;border-bottom:1px solid ${esc(t.border)};min-width:140px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;color:${isTop ? '#047857' : '#0F172A'};">${esc(item.grade)} (${item.score})</span><div style="flex:1;min-width:50px;height:6px;background:#E2E8F0;border-radius:999px;overflow:hidden;"><div style="width:${item.score}%;height:100%;background:${barColor};"></div></div></div></td>
+    <td style="padding:7px 11px;border-bottom:1px solid ${esc(t.border)};font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;">${esc(item.kpi1)} • ${esc(item.kpi2)}</td>
+    <td style="padding:7px 11px;border-bottom:1px solid ${esc(t.border)};font-size:12.5px;color:${esc(t.textSecondary)};">${esc(item.cnnReadout)}</td>
+    <td style="padding:7px 11px;border-bottom:1px solid ${esc(t.border)};"><a href="/scan/${esc(encodeURIComponent(item.target))}" style="font-size:13px;font-weight:600;color:#0F172A;text-decoration:underline;">${isTop ? 'View report' : 'View fix plan'} →</a></td>
   </tr>`;
   }).join('');
 
@@ -509,16 +517,32 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   <title>${esc(cfg.brandName)} Public Leaderboard : Top Rated (A+) &amp; Needs Improvement (2026)</title>
   <meta name="description" content="Live public benchmark leaderboard for ${esc(cfg.brandName)}. Compare Grade A+ leaders, spot common mistakes, or check any target for an instant public report." />
   <link rel="canonical" href="https://${esc(cfg.domain)}/leaderboard" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, 'PUBLIC BENCHMARK LEADERBOARD', '/leaderboard')}
-  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:24px;">
+  <main id="main-content" class="container" style="max-width:1320px;margin:0 auto;padding:16px 24px 28px;">
     ${(AA_VIEWS && typeof AA_VIEWS.renderTopSubpageEmailBarHtml === 'function') ? AA_VIEWS.renderTopSubpageEmailBarHtml('Free Store Recovery Benchmarks ($0) + $29 Complete Recovery Kit', 'Send Free Recovery Rules ($0) →', '') : ''}
-    <h1 style="margin:0 0 8px 0;font-size:clamp(1.8rem,2.5vw,2.25rem);line-height:1.18;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
-    <p class="pseo-lead" style="margin:0 0 16px 0;font-size:16px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks, filter between Hall of Fame leaders and Needs-Fix examples, or test any target below to generate a shareable public report.</p>
-    <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">${podiumHtml}</section>
-    <div class="editorial-break-card" style="margin:0 0 16px 0;"><img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing retention leaderboard" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:6px;">Verified checkout &amp; failed-payment benchmarks across 140+ stores</h2><p class="section-sub" style="margin:0;">Top-ranked stores pair payday-synced Stripe retry schedules with objection-matched checkout counter-offers—recovering 18%–31% of otherwise lost revenue with 0% commission.</p></div></div>
+    <div class="aa-sunlit-hero-banner" style="margin-bottom:12px;">
+      <div>
+        <h1 style="margin:0 0 6px 0;font-size:clamp(1.6rem,2.3vw,2.05rem);line-height:1.15;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
+        <p class="pseo-lead" style="margin:0 0 8px 0;font-size:14px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks or test any store below for an instant recovery scorecard.</p>
+        <div class="aa-focus-pill-row">
+          <span class="aa-focus-pill">🏆 140+ Stores Benchmarked</span>
+          <span class="aa-focus-pill">💳 +56.2% Failed-Card Lift</span>
+          <span class="aa-focus-pill">🛡️ $29 One-Time &middot; 0% Commission</span>
+        </div>
+      </div>
+      <div class="aa-hero-photo-frame">
+        <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing retention leaderboard" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
+        <span class="aa-hero-photo-badge">✦ 2026 Verified Store Index</span>
+      </div>
+    </div>
+    <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px;">${podiumHtml}</section>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin:0 0 12px 0;">
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Payday-synced Stripe retries</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">💳 62.4% Soft-Decline Lift</span><span class="aa-focus-pill">⚡ 1st &amp; 15th Sync</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Margin-safe exit counter-offers</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">⚡ +18%–31% Saved</span><span class="aa-focus-pill">🛡️ Zero Margin Bleed</span></div></div></div>
+    </div>
     <div id="leaderboard-filter-bar" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;" role="tablist" aria-label="Filter Leaderboard Categories">

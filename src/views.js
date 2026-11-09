@@ -594,6 +594,8 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
         var secCards = sec.querySelectorAll('.dir-item'), secVis = 0;
         secCards.forEach(function(c) { if (c.style.display !== 'none') secVis++; });
         sec.style.display = secVis > 0 ? '' : 'none';
+        var drw = sec.querySelector('.dir-more-drawer');
+        if (drw) drw.open = tokens.length > 0;
         var cntEl = sec.querySelector('.dir-cluster-count');
         if (cntEl) cntEl.textContent = String(secVis);
       });
@@ -648,16 +650,30 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:description" content="Calculate your store's monthly checkout leakage in 10 seconds. Backed by our 30-Day 5x ROI Guarantee." />
   <meta name="twitter:image" content="${baseUrl}/api/og?slug=lp" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
 </head>
 <body class="lp-body">
   ${renderUnifiedHeaderHtml('PAID SOCIAL LP')}
 
-  <main class="container lp-main" style="padding:18px 0 28px;">
-    <div style="margin-bottom:16px;">
-      <p class="section-kicker" style="margin:0 0 6px;">Checkout &amp; failed-payment recovery</p>
-      <h1 class="lp-h1" style="margin:0 0 8px;">71% of checkout visitors leave without paying. Recover 18%–31% automatically.</h1>
-      <p class="pseo-lead" style="margin:0;">Stop losing warm buyers to tab closes and <code>insufficient_funds</code> card declines. Add exit counter-offers and payday-timed Stripe retries in under five minutes.</p>
+  <main class="container lp-main" style="padding:14px 0 20px;">
+    <div class="aa-sunlit-hero-banner">
+      <div>
+        <p class="section-kicker" style="margin:0 0 4px;color:#047857;font-weight:700;">✦ Sunlit Checkout &amp; Failed-Payment Recovery</p>
+        <h1 class="lp-h1" style="margin:0 0 6px;font-size:clamp(1.6rem,2.3vw,2.1rem);">71% of checkout visitors leave without paying. Recover 18%–31% automatically.</h1>
+        <p class="pseo-lead" style="margin:0;font-size:0.92rem;">Add smart exit counter-offers and payday-timed Stripe retries in under five minutes.</p>
+        <div class="aa-focus-pill-row">
+          <span class="aa-focus-pill">⚡ <strong>+18%–31%</strong> Exit Saves</span>
+          <span class="aa-focus-pill">💳 <strong>62.4%</strong> Soft-Decline Lift</span>
+          <span class="aa-focus-pill">🛡️ <strong>$29 One-Time</strong> · 0% Commission</span>
+        </div>
+      </div>
+      <div class="aa-hero-photo-frame">
+        <img src="/editorial-segment-3.jpg" alt="Sunlit founders reviewing recovered Shopify and Stripe checkouts" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
+        <div class="aa-hero-photo-badge">
+          <span>Verified 140+ Stores</span>
+          <span style="color:#047857;">30-Day 5x ROI Guarantee</span>
+        </div>
+      </div>
     </div>
 
     <section class="hero-split lp-hero">
@@ -670,14 +686,8 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
         <form id="lp-audit-form" onsubmit="runLpAudit(event)">
           <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <div class="form-row-2">
-            <div>
-              <label class="field-label" for="lp-store">Store or SaaS name</label>
-              <input id="lp-store" type="text" class="field-input" value="Gymshark" oninput="updateLpFlowPreview()" required />
-            </div>
-            <div>
-              <label class="field-label" for="lp-sessions">Monthly checkout visits</label>
-              <input id="lp-sessions" type="number" class="field-input" value="3200" min="50" oninput="updateLpFlowPreview()" required />
-            </div>
+            <div><label class="field-label" for="lp-store">Store or SaaS name</label><input id="lp-store" type="text" class="field-input" value="Gymshark" oninput="updateLpFlowPreview()" required /></div>
+            <div><label class="field-label" for="lp-sessions">Monthly checkout visits</label><input id="lp-sessions" type="number" class="field-input" value="3200" min="50" oninput="updateLpFlowPreview()" required /></div>
           </div>
           <div style="margin-top:10px;">
             <label class="field-label" for="lp-decline">Top card decline reason</label>
@@ -690,29 +700,15 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
           <details style="margin-top:10px;padding:10px 12px;border-radius:10px;background:#F8FAFC;">
             <summary style="cursor:pointer;font-size:0.8125rem;font-weight:600;color:#475569;">Optional: fine-tune order value, rates &amp; work email</summary>
             <div class="form-row-2" style="margin-top:10px;">
-              <div>
-                <label class="field-label" for="lp-aov">Average order / plan ($)</label>
-                <input id="lp-aov" type="number" class="field-input" value="92" min="5" style="background:#FFFFFF;" oninput="updateLpFlowPreview()" required />
-              </div>
-              <div>
-                <label class="field-label" for="lp-abandon">Checkout abandonment (%)</label>
-                <input id="lp-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" style="background:#FFFFFF;" required />
-              </div>
+              <div><label class="field-label" for="lp-aov">Average order / plan ($)</label><input id="lp-aov" type="number" class="field-input" value="92" min="5" style="background:#FFFFFF;" oninput="updateLpFlowPreview()" required /></div>
+              <div><label class="field-label" for="lp-abandon">Checkout abandonment (%)</label><input id="lp-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" style="background:#FFFFFF;" required /></div>
             </div>
             <div class="form-row-2" style="margin-top:10px;">
-              <div>
-                <label class="field-label" for="lp-fail">Failed card / churn (%)</label>
-                <input id="lp-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="30" style="background:#FFFFFF;" required />
-              </div>
-              <div>
-                <label class="field-label" for="lp-email">Work email (optional)</label>
-                <input id="lp-email" type="email" class="field-input" placeholder="you@company.com" style="background:#FFFFFF;" />
-              </div>
+              <div><label class="field-label" for="lp-fail">Failed card / churn (%)</label><input id="lp-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="30" style="background:#FFFFFF;" required /></div>
+              <div><label class="field-label" for="lp-email">Work email (optional)</label><input id="lp-email" type="email" class="field-input" placeholder="you@company.com" style="background:#FFFFFF;" /></div>
             </div>
           </details>
-          <button type="submit" id="lp-submit-btn" class="btn btn-indigo btn-block" style="margin-top:12px;">
-            <span>Calculate recoverable revenue</span>
-          </button>
+          <button type="submit" id="lp-submit-btn" class="btn btn-indigo btn-block" style="margin-top:12px;"><span>Calculate recoverable revenue</span></button>
         </form>
       </div>
 
@@ -722,41 +718,18 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
             <span class="mono-label">2. Live 3-step recovery flow &amp; diagnosis</span>
             <span id="lp-lift-badge" style="font-size:12px;color:#047857;font-weight:600;">62.4% Soft-Decline Lift</span>
           </div>
-
           <div id="lp-result-panel" class="lp-result-panel" style="margin-top:0;">
             <div class="metric-duo">
-              <div class="metric-tile" style="background:#F8FAFC;border-radius:12px;">
-                <span class="tile-label">Monthly leaked revenue</span>
-                <strong id="lp-leaked-out" class="tile-value" style="color:#0F172A;">$214,523</strong>
-              </div>
-              <div class="metric-tile tile-emerald">
-                <span class="tile-label">Recoverable every month</span>
-                <strong id="lp-rec-out" class="tile-value text-emerald">+$36,722/mo</strong>
-              </div>
+              <div class="metric-tile" style="background:#F8FAFC;border-radius:12px;"><span class="tile-label">Monthly leaked revenue</span><strong id="lp-leaked-out" class="tile-value" style="color:#0F172A;">$214,523</strong></div>
+              <div class="metric-tile tile-emerald"><span class="tile-label">Recoverable every month</span><strong id="lp-rec-out" class="tile-value text-emerald">+$36,722/mo</strong></div>
             </div>
           </div>
-
-          <div style="margin-top:12px;padding:12px 14px;border-radius:12px;background:#F8FAFC;">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-              <strong style="font-size:13px;color:#0F172A;">Live 3-Step Smart Retry &amp; SMS/Email Recovery Flow</strong>
-              <span style="font-size:11.5px;color:#047857;font-weight:600;">Unmasked Step 1</span>
-            </div>
+          <div style="margin-top:10px;padding:10px 12px;border-radius:12px;background:#F8FAFC;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;"><strong style="font-size:13px;color:#0F172A;">Live 3-Step Smart Retry &amp; SMS/Email Recovery Flow</strong><span style="font-size:11.5px;color:#047857;font-weight:600;">Unmasked Step 1</span></div>
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;">
-              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;">
-                <div style="font-weight:700;color:#047857;">Step 1 · T+0m</div>
-                <div style="color:#0F172A;font-weight:600;margin-top:2px;">Webhook Intercept</div>
-                <div id="lp-s1-desc" style="color:#64748B;font-size:11.5px;margin-top:2px;">Suppresses blind retry on <code>insufficient_funds</code></div>
-              </div>
-              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;">
-                <div style="font-weight:700;color:#0F172A;">Step 2 · T+24h</div>
-                <div style="color:#0F172A;font-weight:600;margin-top:2px;">1-Tap Billing Link</div>
-                <div style="color:#64748B;font-size:11.5px;margin-top:2px;">Sends passwordless Apple Pay / Link updater</div>
-              </div>
-              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;">
-                <div style="font-weight:700;color:#0F172A;">Step 3 · Payday</div>
-                <div style="color:#0F172A;font-weight:600;margin-top:2px;">ACH Deposit Retry</div>
-                <div id="lp-s3-desc" style="color:#64748B;font-size:11.5px;margin-top:2px;">Retries Friday 09:05 local deposit window</div>
-              </div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;"><div style="font-weight:700;color:#047857;">Step 1 · T+0m</div><div style="color:#0F172A;font-weight:600;margin-top:2px;">Webhook Intercept</div><div id="lp-s1-desc" style="color:#64748B;font-size:11.5px;margin-top:2px;">Suppresses blind retry on <code>insufficient_funds</code></div></div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;"><div style="font-weight:700;color:#0F172A;">Step 2 · T+24h</div><div style="color:#0F172A;font-weight:600;margin-top:2px;">1-Tap Billing Link</div><div style="color:#64748B;font-size:11.5px;margin-top:2px;">Apple Pay / Link updater</div></div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FFFFFF;"><div style="font-weight:700;color:#0F172A;">Step 3 · Payday</div><div style="color:#0F172A;font-weight:600;margin-top:2px;">ACH Deposit Retry</div><div id="lp-s3-desc" style="color:#64748B;font-size:11.5px;margin-top:2px;">Friday 09:05 local retry</div></div>
             </div>
             <div style="margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;font-size:12px;color:#334155;">
               <div><strong style="color:#0F172A;">Unmasked Step-1 Dunning Webhook:</strong> <span id="lp-wh-line"><code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: 72</code></span></div>
@@ -785,11 +758,20 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       </div>
     </section>
 
-    <div class="editorial-break-card">
-      <img src="/editorial-checkout-hardware.jpg" alt="Payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
-      <div>
-        <h2 class="section-h2" style="margin-bottom:6px;">Self-hosted recovery with 0% revenue-share commission</h2>
-        <p class="section-sub" style="margin:0;">Stop paying 10%–15% commission on every recovered checkout. Deploy the exit-intent counter-offer script, payday Stripe retry worker, and 1-tap billing links for a flat one-time fee.</p>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0;">
+      <div class="editorial-break-card" style="margin:0;">
+        <img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="142" loading="eager" decoding="async" />
+        <div>
+          <h2 class="section-h2" style="margin-bottom:4px;font-size:1.05rem;">0% revenue-share commission</h2>
+          <div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>$29</strong> One-Time</span><span class="aa-focus-pill"><strong>&lt;10 Min</strong> Setup</span></div>
+        </div>
+      </div>
+      <div class="editorial-break-card" style="margin:0;">
+        <img src="/editorial-checkout-hardware.jpg" alt="Payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="142" loading="eager" decoding="async" />
+        <div>
+          <h2 class="section-h2" style="margin-bottom:4px;font-size:1.05rem;">Payday &amp; 1-Tap Apple Pay rescue</h2>
+          <div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>62.4%</strong> Card Lift</span><span class="aa-focus-pill"><strong>1-Tap</strong> Updater</span></div>
+        </div>
       </div>
     </div>
   </main>
@@ -797,73 +779,22 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
   ${renderCookieAndFooterHtml()}
 
   <script>
-    function getUtmParams() {
-      var p = new URLSearchParams(window.location.search);
-      return {
-        utmSource: p.get('utm_source') || 'meta_ads',
-        utmMedium: p.get('utm_medium') || 'paid_social',
-        utmCampaign: p.get('utm_campaign') || 'abandon_alpha_cold_q4',
-        utmContent: p.get('utm_content') || 'angle_1_71pct_leakage'
-      };
-    }
-
+    function getUtmParams() { var p = new URLSearchParams(window.location.search); return { utmSource: p.get('utm_source') || 'meta_ads', utmMedium: p.get('utm_medium') || 'paid_social', utmCampaign: p.get('utm_campaign') || 'abandon_alpha_cold_q4', utmContent: p.get('utm_content') || 'angle_1_71pct_leakage' }; }
     async function fireCapi(eventName, valueUsd, extraId) {
-      var utms = getUtmParams();
-      var eventId = extraId || ('evt_' + eventName.toLowerCase() + '_' + Date.now());
-      var res = await fetch('/api/meta-capi', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventName: eventName,
-          eventId: eventId,
-          utmSource: utms.utmSource,
-          utmMedium: utms.utmMedium,
-          utmCampaign: utms.utmCampaign,
-          utmContent: utms.utmContent,
-          valueUsd: valueUsd || 0,
-          pageUrl: window.location.href
-        })
-      }).then(function(r) { return r.json(); }).catch(function() { return null; });
-      if (res && res.eventId) {
-        var el = document.getElementById('lp-capi-status');
-        if (el) el.textContent = 'Meta CAPI Logged: ' + eventName + ' (event_id: ' + res.eventId + ', dedup: ' + res.deduplicated + ')';
-      }
+      var utms = getUtmParams(), eventId = extraId || ('evt_' + eventName.toLowerCase() + '_' + Date.now());
+      var res = await fetch('/api/meta-capi', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ eventName: eventName, eventId: eventId, utmSource: utms.utmSource, utmMedium: utms.utmMedium, utmCampaign: utms.utmCampaign, utmContent: utms.utmContent, valueUsd: valueUsd || 0, pageUrl: window.location.href }) }).then(function(r) { return r.json(); }).catch(function() { return null; });
+      if (res && res.eventId) { var el = document.getElementById('lp-capi-status'); if (el) el.textContent = 'Meta CAPI Logged: ' + eventName + ' (event_id: ' + res.eventId + ', dedup: ' + res.deduplicated + ')'; }
     }
-
     function updateLpFlowPreview(openDet) {
-      var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark';
-      var code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
-      var s1 = document.getElementById('lp-s1-desc');
-      if (s1) s1.innerHTML = 'Suppresses blind retry on <code>' + code + '</code>';
-      var wh = document.getElementById('lp-wh-line');
-      if (wh) {
-        var hrs = code === 'expired_card' ? '0 (halt retry)' : (code === 'do_not_honor' ? '24' : '72');
-        wh.innerHTML = '<code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: ' + hrs + '</code>';
-      }
-      var subj = document.getElementById('lp-subj-line');
-      if (subj) {
-        subj.textContent = code === 'expired_card'
-          ? ('"Update your expired card to keep your ' + store + ' access"')
-          : (code === 'do_not_honor'
-            ? ('"Action needed: verify your ' + store + ' payment method"')
-            : ('"Quick heads-up on your ' + store + ' billing settings"'));
-      }
-      var b29 = document.getElementById('lp-buy-29');
-      var b199 = document.getElementById('lp-buy-199');
-      var sessVal = Number((document.getElementById('lp-sessions') && document.getElementById('lp-sessions').value) || 3200);
-      var aovVal = Number((document.getElementById('lp-aov') && document.getElementById('lp-aov').value) || 92);
-      var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
+      var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark', code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
+      var s1 = document.getElementById('lp-s1-desc'); if (s1) s1.innerHTML = 'Suppresses blind retry on <code>' + code + '</code>';
+      var wh = document.getElementById('lp-wh-line'); if (wh) { var hrs = code === 'expired_card' ? '0 (halt retry)' : (code === 'do_not_honor' ? '24' : '72'); wh.innerHTML = '<code>POST /webhooks/stripe</code> &rarr; <code>retry_after_hours: ' + hrs + '</code>'; }
+      var subj = document.getElementById('lp-subj-line'); if (subj) subj.textContent = code === 'expired_card' ? ('"Update your expired card to keep your ' + store + ' access"') : (code === 'do_not_honor' ? ('"Action needed: verify your ' + store + ' payment method"') : ('"Quick heads-up on your ' + store + ' billing settings"'));
+      var b29 = document.getElementById('lp-buy-29'), b199 = document.getElementById('lp-buy-199'), sessVal = Number((document.getElementById('lp-sessions') && document.getElementById('lp-sessions').value) || 3200), aovVal = Number((document.getElementById('lp-aov') && document.getElementById('lp-aov').value) || 92), em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
       var spLp = new URLSearchParams(window.location.search || ''), wsLp = {}; try { wsLp = JSON.parse(localStorage.getItem('aa_workspace_state_v1') || '{}'); } catch (_) {}
-      var objLp = (spLp.get('objection') || wsLp.selectedObjection || '').trim(), objSufLp = objLp ? ('&objection=' + encodeURIComponent(objLp)) : '';
-      var qSuffix = '&target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal + objSufLp + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
-      if (b29) {
-        b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix;
-        b29.textContent = 'Get Complete ' + store + ' Recovery Pack ($29 one-time) →';
-      }
-      if (b199) {
-        b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix;
-        b199.textContent = 'Or get ' + store + ' 3-File Patch ($1.99)';
-      }
+      var objLp = (spLp.get('objection') || wsLp.selectedObjection || '').trim(), objSufLp = objLp ? ('&objection=' + encodeURIComponent(objLp)) : '', qSuffix = '&target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal + objSufLp + (em.indexOf('@') > 0 ? '&email=' + encodeURIComponent(em) : '');
+      if (b29) { b29.href = '/buy/playbook_pass?utm_source=meta_lp' + qSuffix; b29.textContent = 'Get Complete ' + store + ' Recovery Pack ($29 one-time) →'; }
+      if (b199) { b199.href = '/buy/flash_pass?utm_source=meta_lp' + qSuffix; b199.textContent = 'Or get ' + store + ' 3-File Patch ($1.99)'; }
       var lpw = document.getElementById('lp-dl-worker'), totRec = Math.max(250, Math.round(sessVal * aovVal * 0.124735)), dLift = Math.max(120, Math.round(totRec * 0.06)), roiMult = Math.max(10, Math.round(totRec / 29)).toLocaleString(), roiEl = document.getElementById('lp-roi-proof'), lOut = document.getElementById('lp-leaked-out'), rOut = document.getElementById('lp-rec-out');
       if (lpw) lpw.href = '/api/github-upgrade/stripe-recovery-worker.js?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal + objSufLp;
       if (lOut) lOut.textContent = '$' + Math.round(sessVal * aovVal * 0.715).toLocaleString();
@@ -875,53 +806,31 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
       if (fBtn) fBtn.textContent = 'Complete ' + store + ' Recovery Pack ($29 — One-Time) →';
       if (fixCta) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + dLift.toLocaleString() + '/mo lift · $0) →';
       if (fixCode) { var rHrs = code === 'expired_card' ? 0 : (code === 'do_not_honor' ? 24 : 72); fixCode.textContent = 'window.AbandonAlphaRules = { merchant: "' + store + '", declineCode: "' + code + '", aovUsd: ' + aovVal + ', retryAfterHours: ' + rHrs + ', allowPromoStacking: false' + (objLp ? ', banditArm: "' + objLp + '"' : '') + ' };'; }
-      var lpDet = document.getElementById('lp-fix1-details');
-      if (lpDet && openDet !== false && !lpDet.open) lpDet.open = true;
+      var lpDet = document.getElementById('lp-fix1-details'); if (lpDet && openDet !== false && !lpDet.open) lpDet.open = true;
       if (openDet !== false) { try { wsLp.storeName = store; wsLp.monthlySessions = sessVal; wsLp.aovUsd = aovVal; wsLp.declineFocus = code; localStorage.setItem('aa_workspace_state_v1', JSON.stringify(wsLp)); } catch (_) {} if (window.history && window.history.replaceState) window.history.replaceState(null, '', '/lp?target=' + encodeURIComponent(store) + '&decline=' + encodeURIComponent(code) + '&sessions=' + sessVal + '&aov=' + aovVal + objSufLp); if (window.__ebSyncNavLinks) window.__ebSyncNavLinks(true); }
     }
-
     async function runLpAudit(e, openDet) {
       if (e && e.preventDefault) e.preventDefault();
       updateLpFlowPreview(openDet);
-      var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark';
-      var code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds';
-      var sessions = Number(document.getElementById('lp-sessions').value || 3200);
-      var aov = Number(document.getElementById('lp-aov').value || 92);
-      var abandon = Number(document.getElementById('lp-abandon').value || 71.5);
-      var fail = Number(document.getElementById('lp-fail').value || 4.8);
-      var res = await fetch('/api/audit-leakage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ storeName: store, monthlySessions: sessions, aovUsd: aov, abandonRatePct: abandon, failedCardRatePct: fail, primaryDeclineCode: code })
-      }).then(function(r) { return r.json(); });
+      var store = (document.getElementById('lp-store') && document.getElementById('lp-store').value.trim()) || 'Gymshark', code = (document.getElementById('lp-decline') && document.getElementById('lp-decline').value) || 'insufficient_funds', sessions = Number(document.getElementById('lp-sessions').value || 3200), aov = Number(document.getElementById('lp-aov').value || 92), abandon = Number(document.getElementById('lp-abandon').value || 71.5), fail = Number(document.getElementById('lp-fail').value || 4.8);
+      var res = await fetch('/api/audit-leakage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ storeName: store, monthlySessions: sessions, aovUsd: aov, abandonRatePct: abandon, failedCardRatePct: fail, primaryDeclineCode: code }) }).then(function(r) { return r.json(); });
       document.getElementById('lp-leaked-out').textContent = '$' + Math.round(res.totalMonthlyLeakedUsd).toLocaleString();
       document.getElementById('lp-rec-out').textContent = '+$' + Math.round(res.totalRecoverableUsd).toLocaleString() + '/mo';
-      var roiEl = document.getElementById('lp-roi-proof');
-      var roiMult = Math.max(10, Math.round((res.totalRecoverableUsd || 36722) / 29)).toLocaleString();
+      var roiEl = document.getElementById('lp-roi-proof'), roiMult = Math.max(10, Math.round((res.totalRecoverableUsd || 36722) / 29)).toLocaleString();
       if (roiEl && res.totalRecoverableUsd) roiEl.textContent = 'Pays for $29 pack in < 1 recovered order (' + roiMult + 'x ROI) · 0% commission · 30-day guarantee';
-      var uSub = document.getElementById('in-card-unlock-sub');
-      if (uSub) uSub.textContent = 'Compiled for ' + store + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
-      var fixCta = document.getElementById('lp-fix1-cta');
-      if (fixCta && res.recoverableDunningUsd) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + Math.round(res.recoverableDunningUsd).toLocaleString() + '/mo lift · $0) →';
+      var uSub = document.getElementById('in-card-unlock-sub'); if (uSub) uSub.textContent = 'Compiled for ' + store + ' ($' + aov + ' order) · $29 Pack pays for itself in < 1 recovered order (' + roiMult + 'x monthly ROI) · 30-day guarantee';
+      var fixCta = document.getElementById('lp-fix1-cta'); if (fixCta && res.recoverableDunningUsd) fixCta.textContent = 'Get free Fix #1 snippet for ' + store + ' · ' + code + ' (+$' + Math.round(res.recoverableDunningUsd).toLocaleString() + '/mo lift · $0) →';
       var em = (document.getElementById('lp-email') && document.getElementById('lp-email').value.trim()) || '';
-      if (em && em.indexOf('@') > 0) {
-        fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: em, pageUrl: '/lp', utmSource: 'meta_lp_calculator' }) }).catch(function() {});
-      }
+      if (em && em.indexOf('@') > 0) fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: em, pageUrl: '/lp', utmSource: 'meta_lp_calculator' }) }).catch(function() {});
       await fireCapi('Lead', res.totalRecoverableUsd);
     }
-
     window.addEventListener('DOMContentLoaded', function() {
       try {
-        var sp = new URLSearchParams(window.location.search || '');
-        var qt = (sp.get('target') || sp.get('store') || sp.get('q') || '').trim(), qd = (sp.get('decline') || '').trim(), qs = Number(sp.get('sessions') || 0), qa = Number(sp.get('aov') || 0);
+        var sp = new URLSearchParams(window.location.search || ''), qt = (sp.get('target') || sp.get('store') || sp.get('q') || '').trim(), qd = (sp.get('decline') || '').trim(), qs = Number(sp.get('sessions') || 0), qa = Number(sp.get('aov') || 0);
         if (qt && document.getElementById('lp-store')) document.getElementById('lp-store').value = qt;
         if (qs >= 50 && document.getElementById('lp-sessions')) document.getElementById('lp-sessions').value = qs;
         if (qa >= 5 && document.getElementById('lp-aov')) document.getElementById('lp-aov').value = qa;
-        if (qd && document.getElementById('lp-decline')) {
-          var dIn = document.getElementById('lp-decline');
-          if (!Array.from(dIn.options).some(function(o) { return o.value === qd; })) { var o = document.createElement('option'); o.value = qd; o.textContent = qd + ' (Targeted Recovery)'; dIn.appendChild(o); }
-          dIn.value = qd;
-        }
+        if (qd && document.getElementById('lp-decline')) { var dIn = document.getElementById('lp-decline'); if (!Array.from(dIn.options).some(function(o) { return o.value === qd; })) { var o = document.createElement('option'); o.value = qd; o.textContent = qd + ' (Targeted Recovery)'; dIn.appendChild(o); } dIn.value = qd; }
         if (qt || qd || qs || qa) runLpAudit(null, false);
       } catch (_) {}
       fireCapi('ViewContent', 0, 'evt_lp_view_initial');
@@ -932,75 +841,12 @@ function renderMetaLandingPageHtml(baseUrl = 'https://www.abandonalpha.com') {
 }
 
 function renderLegalPageHtml(type = 'privacy') {
-  const isPrivacy = type === 'privacy';
-  const title = isPrivacy ? 'Privacy Policy & GDPR Telemetry Compliance' : 'Terms of Service & 30-Day ROI Guarantee';
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} | AbandonAlpha</title>
-  <meta name="description" content="${title} for AbandonAlpha Autonomous Checkout & Stripe Dunning Recovery Engine." />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  ${renderUnifiedHeaderHtml('LEGAL & COMPLIANCE')}
-  <main class="container pseo-main" style="max-width:860px;">
-    <div class="status-pill">INSTITUTIONAL FINTECH COMPLIANCE</div>
-    <h1 class="pseo-h1">${title}</h1>
-    <p class="pseo-lead">Last Updated: October 14, 2026 • AbandonAlpha Autonomous Recovery Systems</p>
-    <div class="faq-card" style="margin-top:24px; display:flex; flex-direction:column; gap:14px;">
-      ${isPrivacy ? `
-        <h3>1. Ephemeral Mouse-Velocity &amp; Tab-Visibility Telemetry</h3>
-        <p>AbandonAlpha computes cursor trajectory vectors (<code>v_y, θ, τ</code>) strictly in browser memory to detect checkout exit intent. Zero keystrokes or raw credit card numbers (card numbers or security codes) ever touch AbandonAlpha servers.</p>
-        <h3>2. Stripe Webhook &amp; Billing Portal Processing</h3>
-        <p>We process Stripe webhook events (<code>checkout.session.expired</code> and <code>invoice.payment_failed</code>) using scoped restricted API keys to schedule compliant retries and generate Stripe-hosted Billing Portal links.</p>
-        <h3>3. GDPR &amp; CCPA Data Subject Rights</h3>
-        <p>Merchants and end-buyers may request immediate access, export, or deletion of telemetry logs by emailing privacy@abandonalpha.io.</p>
-      ` : `
-        <h3>1. Transparent One-Time Packs &amp; Zero Revenue Tax</h3>
-        <p>AbandonAlpha is licensed via self-serve one-time recovery packs ($1.99 Single-Store 3-File Patch, $29 Complete Store Recovery Pack, or $49 Multi-Store Agency Kit) with 0% revenue-share commission on recovered checkouts.</p>
-        <h3>2. Card Network Retry Compliance</h3>
-        <p>All automated dunning schedules strictly enforce Visa and Mastercard retry limits (maximum 4 retries within 30 days on soft declines; zero automated retries on hard declines).</p>
-        <h3>3. 30-Day 5x ROI Guarantee</h3>
-        <p>If AbandonAlpha does not recover at least 5x your monthly subscription fee within your first 30 days, you may cancel in 1 click for a full refund.</p>
-      `}
-    </div>
-  </main>
-  ${renderCookieAndFooterHtml()}
-</body>
-</html>`;
+  const isPrivacy = type === 'privacy', title = isPrivacy ? 'Privacy Policy & GDPR Telemetry Compliance' : 'Terms of Service & 30-Day ROI Guarantee';
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${title} | AbandonAlpha</title><meta name="description" content="${title} for AbandonAlpha Autonomous Checkout & Stripe Dunning Recovery Engine." /><link rel="icon" type="image/svg+xml" href="/favicon.svg" /><link rel="stylesheet" href="/styles.css?v=20261108b" /></head><body>${renderUnifiedHeaderHtml('LEGAL & COMPLIANCE')}<main class="container pseo-main" style="max-width:860px;"><div class="status-pill">INSTITUTIONAL FINTECH COMPLIANCE</div><h1 class="pseo-h1">${title}</h1><p class="pseo-lead">Last Updated: October 14, 2026 • AbandonAlpha Autonomous Recovery Systems</p><div class="faq-card" style="margin-top:24px; display:flex; flex-direction:column; gap:14px;">${isPrivacy ? `<h3>1. Ephemeral Mouse-Velocity &amp; Tab-Visibility Telemetry</h3><p>AbandonAlpha computes cursor trajectory vectors (<code>v_y, θ, τ</code>) strictly in browser memory to detect checkout exit intent. Zero keystrokes or raw credit card numbers ever touch AbandonAlpha servers.</p><h3>2. Stripe Webhook &amp; Billing Portal Processing</h3><p>We process Stripe webhook events (<code>checkout.session.expired</code> and <code>invoice.payment_failed</code>) using scoped restricted API keys to schedule compliant retries and generate Stripe-hosted Billing Portal links.</p><h3>3. GDPR &amp; CCPA Data Subject Rights</h3><p>Merchants and end-buyers may request immediate access, export, or deletion of telemetry logs by emailing privacy@abandonalpha.io.</p>` : `<h3>1. Transparent One-Time Packs &amp; Zero Revenue Tax</h3><p>AbandonAlpha is licensed via self-serve one-time recovery packs ($1.99 Single-Store 3-File Patch, $29 Complete Store Recovery Pack, or $49 Multi-Store Agency Kit) with 0% revenue-share commission on recovered checkouts.</p><h3>2. Card Network Retry Compliance</h3><p>All automated dunning schedules strictly enforce Visa and Mastercard retry limits (maximum 4 retries within 30 days on soft declines; zero automated retries on hard declines).</p><h3>3. 30-Day 5x ROI Guarantee</h3><p>If AbandonAlpha does not recover at least 5x your monthly subscription fee within your first 30 days, you may cancel in 1 click for a full refund.</p>`}</div></main>${renderCookieAndFooterHtml()}</body></html>`;
 }
 
 function renderNotFoundHtml() {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404: Route Not Found | AbandonAlpha</title>
-  <meta name="description" content="Page not found on AbandonAlpha." />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  ${renderUnifiedHeaderHtml('404 RECOVERY')}
-  <main class="container pseo-main" style="text-align:center; padding-top:72px;">
-    <div class="status-pill">HTTP 404 • SESSION NOT FOUND</div>
-    <h1 class="pseo-h1" style="margin-top:12px;">Even This 404 Page Refuses to Let Visitors <span class="serif-italic">Abandon</span></h1>
-    <p class="pseo-lead" style="margin:12px auto 28px;">The route you requested does not exist, or the checkout link has expired.</p>
-    <div class="cta-row" style="justify-content:center;">
-      <a href="/" class="btn btn-indigo">
-        <span>Return to AbandonAlpha Sandbox</span>
-        <span class="btn-icon-circle" aria-hidden="true">&rarr;</span>
-      </a>
-      <a href="/directory" class="btn btn-ghost">Browse 60 Recovery Playbooks</a>
-    </div>
-  </main>
-  ${renderCookieAndFooterHtml()}
-</body>
-</html>`;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>404: Route Not Found | AbandonAlpha</title><meta name="description" content="Page not found on AbandonAlpha." /><link rel="icon" type="image/svg+xml" href="/favicon.svg" /><link rel="stylesheet" href="/styles.css?v=20261108b" /></head><body>${renderUnifiedHeaderHtml('404 RECOVERY')}<main class="container pseo-main" style="text-align:center; padding-top:72px;"><div class="status-pill">HTTP 404 • SESSION NOT FOUND</div><h1 class="pseo-h1" style="margin-top:12px;">Even This 404 Page Refuses to Let Visitors <span class="serif-italic">Abandon</span></h1><p class="pseo-lead" style="margin:12px auto 28px;">The route you requested does not exist, or the checkout link has expired.</p><div class="cta-row" style="justify-content:center;"><a href="/" class="btn btn-indigo"><span>Return to AbandonAlpha Sandbox</span><span class="btn-icon-circle" aria-hidden="true">&rarr;</span></a><a href="/directory" class="btn btn-ghost">Browse 60 Recovery Playbooks</a></div></main>${renderCookieAndFooterHtml()}</body></html>`;
 }
 
 module.exports = {
