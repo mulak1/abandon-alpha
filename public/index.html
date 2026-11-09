@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="Recover 18%–31% of abandoned checkouts and 56%+ of failed Stripe renewals automatically." />
   <meta name="twitter:image" content="https://www.abandonalpha.com/api/og?slug=home" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css?v=20261105a" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -79,36 +79,50 @@
   </header>
 
   <main>
-    <!-- ABOVE THE FOLD: CALM EDITORIAL HEADER + 2-COLUMN DIAGNOSTIC WORKBENCH -->
-    <section id="grader" class="hero-section" style="padding:32px 0 40px;">
+    <!-- ABOVE THE FOLD: SUNLIT VISUAL HERO + 2-COLUMN DIAGNOSTIC WORKBENCH -->
+    <section id="grader" class="hero-section" style="padding:14px 0 12px;">
       <div class="container">
-        <div id="home-executive-brief" style="max-width:680px;margin:0 0 28px 0;display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:0.875rem;color:#64748B;font-weight:500;">Checkout &amp; failed-payment recovery for Shopify &amp; Stripe</div>
-          <h1 class="hero-h1" style="font-size:clamp(1.75rem,2.8vw,2.35rem);line-height:1.15;margin:0;letter-spacing:-0.025em;color:#0F172A;">See how much lost checkout revenue you can recover</h1>
-          <p class="hero-sub" style="font-size:1rem;line-height:1.55;color:#475569;margin:0;">Enter your store numbers to estimate recoverable checkout and failed-card revenue.</p>
+        <div id="home-executive-brief" class="aa-sunlit-hero-banner">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:0.8125rem;color:#047857;font-weight:700;letter-spacing:0.01em;">✦ Sunlit Checkout &amp; Failed-Payment Recovery Studio</div>
+            <h1 class="hero-h1" style="font-size:clamp(1.7rem,2.6vw,2.2rem);line-height:1.14;margin:0;letter-spacing:-0.025em;color:#0F172A;">See how much lost checkout revenue you can recover</h1>
+            <p class="hero-sub" style="font-size:0.95rem;line-height:1.45;color:#475569;margin:0;">Enter your store numbers to unlock your instant recovery diagnosis and self-hosted 3-file pack.</p>
+            <div class="aa-focus-pill-row">
+              <span class="aa-focus-pill"><strong>+18%–31%</strong> Exit Saves</span>
+              <span class="aa-focus-pill"><strong>+56.2%</strong> Failed-Card Lift</span>
+              <span class="aa-focus-pill"><strong>$29 One-Time</strong> · 0% Commission</span>
+            </div>
+          </div>
+          <div class="aa-hero-photo-frame">
+            <img src="/editorial-segment-3.jpg" alt="Sunlit founders reviewing live Shopify and Stripe checkout recovery lift" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
+            <div class="aa-hero-photo-badge">
+              <span>Verified 140+ Shopify &amp; Stripe Stores</span>
+              <span style="color:#047857;">+$11,453/mo Avg Lift</span>
+            </div>
+          </div>
         </div>
 
-        <div class="hero-split" style="align-items:stretch;gap:28px;">
+        <div class="hero-split" style="align-items:stretch;gap:20px;">
           <!-- LEFT CARD: STORE & CHECKOUT INPUTS -->
-          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="display:flex;flex-direction:column;justify-content:space-between;gap:18px;padding:28px;height:100%;">
+          <form id="audit-form" class="grader-form-card" onsubmit="submitLeakageAudit(event)" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:20px;height:100%;">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <div style="display:flex;flex-direction:column;gap:18px;">
-              <div class="card-header-bar" style="margin-bottom:0;padding-bottom:12px;border-bottom:1px solid #E2E8F0;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="card-header-bar" style="margin-bottom:0;padding-bottom:8px;border-bottom:1px solid #E2E8F0;gap:8px;flex-wrap:wrap;">
                 <span style="color:#0F172A;font-weight:600;font-size:0.95rem;">Store &amp; checkout inputs</span>
-                <span id="probed-stack-badge" style="font-size:0.8125rem;color:#64748B;font-weight:500;">Instant estimate</span>
+                <span id="probed-stack-badge" style="font-size:0.8125rem;color:#047857;font-weight:600;">Instant estimate</span>
               </div>
 
               <div>
-                <div style="font-size:0.8125rem;font-weight:500;color:#64748B;margin-bottom:8px;">Sample benchmarks</div>
-                <div id="aa-spark-preset-bar" class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:0;gap:8px;">
-                  <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)" style="padding:7px 13px;font-size:0.875rem;">Gymshark (Store)</button>
-                  <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)" style="padding:7px 13px;font-size:0.875rem;">Linear (SaaS)</button>
-                  <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)" style="padding:7px 13px;font-size:0.875rem;">Whoop (Membership)</button>
-                  <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)" style="padding:7px 13px;font-size:0.875rem;">MasterClass</button>
+                <div style="font-size:0.8125rem;font-weight:500;color:#64748B;margin-bottom:6px;">Sample benchmarks</div>
+                <div id="aa-spark-preset-bar" class="preset-bar" role="group" aria-label="Industry Store Presets" style="margin-bottom:0;gap:6px;">
+                  <button type="button" class="preset-btn active" data-preset="shopify_dtc" onclick="applyPreset('shopify_dtc', this)" style="padding:6px 12px;font-size:0.85rem;">Gymshark (Store)</button>
+                  <button type="button" class="preset-btn" data-preset="b2b_saas" onclick="applyPreset('b2b_saas', this)" style="padding:6px 12px;font-size:0.85rem;">Linear (SaaS)</button>
+                  <button type="button" class="preset-btn" data-preset="subscription_app" onclick="applyPreset('subscription_app', this)" style="padding:6px 12px;font-size:0.85rem;">Whoop (Membership)</button>
+                  <button type="button" class="preset-btn" data-preset="creator_info" onclick="applyPreset('creator_info', this)" style="padding:6px 12px;font-size:0.85rem;">MasterClass</button>
                 </div>
               </div>
 
-              <div class="form-row-2" style="gap:16px;">
+              <div class="form-row-2" style="gap:12px;">
                 <div>
                   <label class="field-label" for="input-store">Store or SaaS name</label>
                   <input id="input-store" type="text" class="field-input" value="Gymshark" required />
@@ -132,25 +146,25 @@
               </div>
 
               <div>
-                <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block" style="padding:13px 18px;font-size:1rem;">
+                <button type="submit" id="run-audit-btn" class="btn btn-indigo btn-block" style="padding:11px 16px;font-size:0.95rem;">
                   <span>Calculate recoverable revenue</span>
                 </button>
-                <div id="audit-form-status" class="mono-status" aria-live="polite" style="margin-top:8px;"></div>
+                <div id="audit-form-status" class="mono-status" aria-live="polite" style="margin-top:6px;"></div>
               </div>
             </div>
 
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <details style="padding:10px 12px;border-radius:10px;background:#F8FAFC;">
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <details style="padding:8px 10px;border-radius:10px;background:#F8FAFC;">
                 <summary style="cursor:pointer;font-size:0.8125rem;font-weight:600;color:#475569;">Optional: fine-tune order value, scan domain, or rates</summary>
-                <div style="margin-top:10px;margin-bottom:10px;">
+                <div style="margin-top:8px;margin-bottom:8px;">
                   <label class="field-label" for="input-aov">Average order value ($)</label>
                   <input id="input-aov" type="number" class="field-input" value="92" min="5" max="25000" style="background:#FFFFFF;" required />
                 </div>
-                <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:10px;">
-                  <input id="input-store-url" type="text" class="field-input" placeholder="e.g. gymshark.com, linear.app..." style="flex:1;padding:8px 12px;font-size:0.875rem;background:#FFFFFF;" onkeydown="if(event.key==='Enter'){event.preventDefault();probeLiveMerchantStore();}" />
-                  <button type="button" id="btn-probe-store" class="btn btn-ghost btn-sm" style="padding:8px 14px;font-weight:600;background:#FFFFFF;white-space:nowrap;" onclick="probeLiveMerchantStore()">Scan domain</button>
+                <div style="display:flex;gap:8px;margin-top:8px;margin-bottom:8px;">
+                  <input id="input-store-url" type="text" class="field-input" placeholder="e.g. gymshark.com, linear.app..." style="flex:1;padding:7px 11px;font-size:0.85rem;background:#FFFFFF;" onkeydown="if(event.key==='Enter'){event.preventDefault();probeLiveMerchantStore();}" />
+                  <button type="button" id="btn-probe-store" class="btn btn-ghost btn-sm" style="padding:7px 12px;font-weight:600;background:#FFFFFF;white-space:nowrap;" onclick="probeLiveMerchantStore()">Scan domain</button>
                 </div>
-                <div class="form-row-2" style="gap:12px;">
+                <div class="form-row-2" style="gap:10px;">
                   <div>
                     <label class="field-label" for="input-abandon">Cart abandonment (%)</label>
                     <input id="input-abandon" type="number" class="field-input" value="71.5" step="0.1" min="10" max="98" style="background:#FFFFFF;" required />
@@ -160,20 +174,20 @@
                     <input id="input-fail" type="number" class="field-input" value="4.8" step="0.1" min="0.5" max="35" style="background:#FFFFFF;" required />
                   </div>
                 </div>
-                <div id="aa-endowment-customizer" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;">
-                  <select id="custom-stack" aria-label="Target Checkout Stack" class="field-input" style="padding:7px 9px;font-size:0.8125rem;background:#FFFFFF;" onchange="onCustomizerChange()">
+                <div id="aa-endowment-customizer" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px;">
+                  <select id="custom-stack" aria-label="Target Checkout Stack" class="field-input" style="padding:6px 8px;font-size:0.8rem;background:#FFFFFF;" onchange="onCustomizerChange()">
                     <option value="Shopify + Stripe">Shopify + Stripe</option>
                     <option value="Next.js + Stripe">Next.js + Stripe</option>
                     <option value="Stripe Billing SaaS">Stripe Billing</option>
                     <option value="WooCommerce + Stripe">Woo + Stripe</option>
                   </select>
-                  <select id="custom-max-rebate" aria-label="Max Exit Rebate Cap" class="field-input" style="padding:7px 9px;font-size:0.8125rem;background:#FFFFFF;" onchange="onCustomizerChange()">
+                  <select id="custom-max-rebate" aria-label="Max Exit Rebate Cap" class="field-input" style="padding:6px 8px;font-size:0.8rem;background:#FFFFFF;" onchange="onCustomizerChange()">
                     <option value="15% Founders Cap">15% Max Rebate</option>
                     <option value="10% Margin Guard">10% Margin Cap</option>
                     <option value="0% Free Shipping Only">Free Shipping Only</option>
                     <option value="14-Day Pause Option">14-Day Pause</option>
                   </select>
-                  <select id="custom-payday-sync" aria-label="Retry Cadence Window" class="field-input" style="padding:7px 9px;font-size:0.8125rem;background:#FFFFFF;" onchange="onCustomizerChange()">
+                  <select id="custom-payday-sync" aria-label="Retry Cadence Window" class="field-input" style="padding:6px 8px;font-size:0.8rem;background:#FFFFFF;" onchange="onCustomizerChange()">
                     <option value="1st & 15th 06:00 Local">1st &amp; 15th Payday</option>
                     <option value="+72h Liquidity + SMS">+72h Retry + SMS</option>
                     <option value="Zero-Retry 1-Tap ApplePay">1-Tap Apple Pay</option>
@@ -187,37 +201,37 @@
           </form>
 
           <!-- RIGHT CARD: RECOVERY DIAGNOSIS & SINGLE BRIGHT METRIC -->
-          <div class="telemetry-card" id="aa-step2-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:28px;height:100%;">
+          <div class="telemetry-card" id="aa-step2-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:20px;height:100%;">
             <div>
-              <div class="card-header-bar" style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2E8F0;gap:8px;flex-wrap:wrap;">
+              <div class="card-header-bar" style="margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E2E8F0;gap:8px;flex-wrap:wrap;">
                 <span style="color:#0F172A;font-weight:600;font-size:0.95rem;">Recovery diagnosis</span>
-                <span id="out-grade-badge" style="font-size:0.8125rem;color:#64748B;font-weight:500;">Score: 65/100</span>
+                <span id="out-grade-badge" style="font-size:0.8125rem;color:#047857;font-weight:600;">Score: 65/100</span>
               </div>
 
-              <div class="metric-duo" style="margin-bottom:16px;gap:14px;">
-                <div class="metric-tile" style="padding:16px 18px;background:#F8FAFC;border-radius:12px;">
+              <div class="metric-duo" style="margin-bottom:12px;gap:12px;">
+                <div class="metric-tile" style="padding:12px 14px;background:#F8FAFC;border-radius:12px;">
                   <span class="tile-label" style="color:#64748B;">Monthly leaked revenue</span>
                   <strong id="out-total-leaked" class="tile-value" style="color:#0F172A;">$214,523</strong>
                   <span id="out-leaked-sub" class="tile-sub" style="color:#64748B;">$210,496 Cart + $4,027 Failed Cards</span>
                 </div>
-                <div class="metric-tile tile-emerald" id="recoverable-mrr-tile" style="padding:16px 18px;">
+                <div class="metric-tile tile-emerald" id="recoverable-mrr-tile" style="padding:12px 14px;">
                   <span class="tile-label">Recoverable revenue</span>
                   <strong id="out-total-recovered" class="tile-value text-emerald">+$36,722/mo</strong>
                   <span id="out-annual-recovered" class="tile-sub">+$440,669/yr Net Impact</span>
                 </div>
               </div>
 
-              <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
-                <li class="spec-row" style="padding:8px 0;gap:10px;border-bottom:1px solid #E2E8F0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
+              <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;">
+                <li class="spec-row" style="padding:6px 0;gap:10px;border-bottom:1px solid #E2E8F0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
                   <span class="spec-k" style="font-weight:600;color:#0F172A;font-size:0.875rem;">Exit counter-offer recovery (16.4% lift)</span>
                   <strong id="out-exit-recovered" class="spec-v" style="color:#0F172A;font-size:0.9375rem;">+$34,521/mo (375 orders)</strong>
                 </li>
-                <li style="padding:4px 0 0 0;">
-                  <div class="spec-row" style="padding:4px 0 6px 0;gap:10px;border-bottom:none;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
+                <li style="padding:2px 0 0 0;">
+                  <div class="spec-row" style="padding:2px 0 4px 0;gap:10px;border-bottom:none;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
                     <span class="spec-k" style="font-weight:600;color:#0F172A;font-size:0.875rem;">Declined-card recovery (56.2% lift)</span>
                     <strong id="out-dunning-recovered" class="spec-v" style="color:#0F172A;font-size:0.9375rem;">+$2,201/mo</strong>
                   </div>
-                  <ul id="out-dunning-breakdown" style="list-style:none;margin:2px 0 0 0;padding:0;display:flex;flex-direction:column;gap:4px;">
+                  <ul id="out-dunning-breakdown" style="list-style:none;margin:2px 0 0 0;padding:0;display:flex;flex-direction:column;gap:3px;">
                     <li>
                       <a href="/seo/stripe-decline-code-insufficient-funds-recovery" style="display:flex;justify-content:space-between;align-items:center;gap:6px;text-decoration:none;padding:2px 0;">
                         <span style="font-size:0.8125rem;color:#475569;">
@@ -249,27 +263,27 @@
                 </li>
               </ul>
               <!-- LIVE 3-STEP SMART RETRY & SMS/EMAIL RECOVERY FLOW IN FOLD 1 -->
-              <div id="aa-fold1-3step-flow" style="margin-top:12px;padding-top:10px;border-top:1px solid #E2E8F0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;line-height:1.35;">
-                <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
+              <div id="aa-fold1-3step-flow" style="margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:11.5px;line-height:1.3;">
+                <div style="background:#F8FAFC;border-radius:8px;padding:6px 8px;">
                   <strong style="display:block;color:#0F172A;">Step 1 &middot; T+0s Webhook</strong>
                   <span id="aa-fold1-s1-desc" style="color:#475569;">Suppresses blind retry on <code>insufficient_funds</code></span>
                 </div>
-                <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
+                <div style="background:#F8FAFC;border-radius:8px;padding:6px 8px;">
                   <strong id="aa-fold1-s2-title" style="display:block;color:#0F172A;">Step 2 &middot; 1st/15th Payday</strong>
-                  <span id="aa-fold1-s2-desc" style="color:#475569;">06:00 local deposit retry + Specimen #1 email</span>
+                  <span id="aa-fold1-s2-desc" style="color:#475569;">06:00 local deposit retry + Specimen #1</span>
                 </div>
-                <div style="background:#F8FAFC;border-radius:8px;padding:8px 10px;">
+                <div style="background:#F8FAFC;border-radius:8px;padding:6px 8px;">
                   <strong style="display:block;color:#0F172A;">Step 3 &middot; T+72h Rescue</strong>
-                  <span id="aa-fold1-s3-desc" style="color:#475569;">1-Tap Apple Pay / Link updater &amp; 14d pause</span>
+                  <span id="aa-fold1-s3-desc" style="color:#475569;">1-Tap Apple Pay / Link updater</span>
                 </div>
               </div>
             </div>
 
             <!-- SINGLE CALM ACTION FOOTER -->
-            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:10px;background:#F8FAFC;padding:16px;border-radius:12px;">
-              <div id="aa-unmasked-subject-line-1" style="font-size:13px;line-height:1.45;color:#0F172A;">
+            <div class="code-snippet-box" style="margin-top:0;display:flex;flex-direction:column;gap:8px;background:#F8FAFC;padding:12px 14px;border-radius:12px;">
+              <div id="aa-unmasked-subject-line-1" style="font-size:12.5px;line-height:1.4;color:#0F172A;">
                 <span style="color:#475569;font-weight:600;">Unmasked Step-1 webhook &amp; Specimen #1 (<span id="aa-spark-brand-label">Gymshark</span>):</span>
-                <code id="aa-unmasked-subject-quote" style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;font-size:12.5px;">"Quick heads-up on your Gymshark billing settings"</code>
+                <code id="aa-unmasked-subject-quote" style="font-weight:600;color:#0F172A;background:#FFFFFF;padding:2px 6px;border-radius:4px;font-size:12px;">"Quick heads-up on your Gymshark billing settings"</code>
                 <span id="aa-unmasked-subject-meta" style="color:#64748B;">(41.8% open rate &middot; 1st/15th payday retry)</span>
                 <span id="aa-spark-split-nums" style="display:none;"></span>
               </div>
@@ -289,24 +303,54 @@
               </details>
               <div id="aa-inline-sample-status" style="display:none;font-size:12.5px;color:#047857;font-weight:600;"></div>
               <div id="out-sdk-unmasked-preview" style="display:none;"></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;font-size:13px;color:#64748B;">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:6px;border-top:1px solid #E2E8F0;font-size:12.5px;color:#64748B;">
                 <span id="aa-pack-roi-proof">Pays for $29 pack in &lt; 1 recovered order (1,266x ROI) &middot; 0% commission:</span>
                 <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                  <button type="button" id="aa-screen1-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0F172A;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">3-File Patch ($1.99)</button>
+                  <button type="button" id="aa-screen1-buy-199" onclick="if(window.__ebCheckout){window.__ebCheckout('flash_pass');}else{initiateStripeCheckout('flash_199');}" style="background:transparent;border:none;color:#0F172A;font-weight:600;text-decoration:underline;cursor:pointer;font-size:12.5px;padding:0;">3-File Patch ($1.99)</button>
                   <span style="color:#CBD5E1;" aria-hidden="true">|</span>
-                  <button type="button" id="aa-screen1-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('playbook_pass');}else{initiateStripeCheckout('starter');}" style="background:transparent;border:none;color:#047857;font-weight:600;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;">Complete Store Pack ($29) &rarr;</button>
+                  <button type="button" id="aa-screen1-buy-29" onclick="if(window.__ebCheckout){window.__ebCheckout('playbook_pass');}else{initiateStripeCheckout('starter');}" style="background:transparent;border:none;color:#047857;font-weight:600;text-decoration:underline;cursor:pointer;font-size:12.5px;padding:0;">Complete Store Pack ($29) &rarr;</button>
                 </span>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- SUNLIT 3-CARD VISUAL SHOWCASE RIGHT BELOW FOLD 1 -->
+        <div id="aa-home-visual-showcase" class="aa-visual-trio-grid">
+          <figure class="aa-visual-card" style="margin:0;">
+            <img src="/banana-saas-war-room.jpg" alt="Fintech engineering war room reviewing Stripe payment recovery telemetry" width="380" height="148" loading="eager" decoding="async" />
+            <figcaption class="aa-visual-card-meta">
+              <strong class="aa-visual-card-title">Payday Retry Worker (.JS)</strong>
+              <span class="aa-visual-card-tag">+38% Soft-Decline Lift</span>
+            </figcaption>
+          </figure>
+          <figure class="aa-visual-card" style="margin:0;">
+            <img src="/banana-payment-recovery-flow.jpg" alt="Apple Pay and Stripe 1-tap card update flow on mobile and desktop" width="380" height="148" loading="eager" decoding="async" />
+            <figcaption class="aa-visual-card-meta">
+              <strong class="aa-visual-card-title">1-Tap Apple Pay Card Update</strong>
+              <span class="aa-visual-card-tag">Zero Password Login</span>
+            </figcaption>
+          </figure>
+          <figure class="aa-visual-card" style="margin:0;">
+            <img src="/editorial-hero.jpg" alt="E-commerce checkout conversion studio and dunning workflow" width="380" height="148" loading="eager" decoding="async" />
+            <figcaption class="aa-visual-card-meta">
+              <strong class="aa-visual-card-title">Smart Exit-Intent Script (.JS)</strong>
+              <span class="aa-visual-card-tag">0% Margin Dilution</span>
+            </figcaption>
+          </figure>
+        </div>
+
         <!-- BESPOKE EDITORIAL PHOTO BREAK #1 -->
         <div class="editorial-break-card">
-          <img src="/editorial-fintech-desk.jpg" alt="Minimalist payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+          <img src="/editorial-fintech-desk.jpg" alt="Minimalist payment card and laptop on travertine desk" class="editorial-break-img" width="280" height="144" loading="eager" decoding="async" />
           <div>
-            <h2 class="section-h2" style="margin-bottom:6px;">Zero-commission recovery built for modern payment stacks</h2>
-            <p class="section-sub" style="margin:0;">Traditional retention platforms charge 10%–15% revenue share on every recovered subscription and train full-price shoppers to wait for a coupon. AbandonAlpha deploys directly into your Stripe Billing and Shopify checkout as a self-hosted 3-file recovery kit.</p>
+            <h2 class="section-h2" style="margin-bottom:4px;font-size:1.15rem;">Zero-commission recovery built for modern payment stacks</h2>
+            <p class="section-sub" style="margin:0 0 4px 0;font-size:0.9rem;">Deploy directly into Stripe Billing and Shopify checkout as a self-hosted 3-file kit with zero revenue share.</p>
+            <div class="aa-focus-pill-row">
+              <span class="aa-focus-pill"><strong>0%</strong> Revenue Share vs. 15% Legacy Tax</span>
+              <span class="aa-focus-pill"><strong>&lt;10 Min</strong> Drop-In Setup</span>
+              <span class="aa-focus-pill"><strong>No</strong> Full-Price Coupon Leakage</span>
+            </div>
           </div>
         </div>
       </div>
@@ -406,10 +450,15 @@
 
         <!-- BESPOKE EDITORIAL PHOTO BREAK #2 -->
         <div class="editorial-break-card">
-          <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing checkout retention metrics in studio" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+          <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing checkout retention metrics in studio" class="editorial-break-img" width="280" height="144" loading="eager" decoding="async" />
           <div>
-            <h2 class="section-h2" style="margin-bottom:6px;">Tailored exit rescues instead of blanket coupon codes</h2>
-            <p class="section-sub" style="margin:0;">When a buyer hesitates over team approval or subscription lock-in, a 10%-off popup wastes margin without solving the objection. Matching the exact counter-offer—such as a 14-day pause or net-30 invoice link—lifts checkout completion by 18%–31%.</p>
+            <h2 class="section-h2" style="margin-bottom:4px;font-size:1.15rem;">Tailored exit rescues instead of blanket coupon codes</h2>
+            <p class="section-sub" style="margin:0 0 4px 0;font-size:0.9rem;">Match the exact counter-offer—such as a 14-day pause or net-30 invoice link—without training full-price buyers to wait for a discount.</p>
+            <div class="aa-focus-pill-row">
+              <span class="aa-focus-pill"><strong>23.1%</strong> Price Save Rate</span>
+              <span class="aa-focus-pill"><strong>26.4%</strong> Team Approval Lift</span>
+              <span class="aa-focus-pill"><strong>21.8%</strong> 14-Day Pause Rescue</span>
+            </div>
           </div>
         </div>
       </div>
@@ -426,12 +475,12 @@
         <div class="webhook-grid">
           <form id="webhook-form" class="telemetry-card" onsubmit="runWebhookSimulation(event)">
             <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <div class="card-header-bar" style="padding-bottom:12px;border-bottom:1px solid #E2E8F0;margin-bottom:16px;">
+            <div class="card-header-bar" style="padding-bottom:10px;border-bottom:1px solid #E2E8F0;margin-bottom:12px;">
               <span style="font-size:0.95rem;font-weight:600;color:#0F172A;">Webhook event parameters</span>
               <span style="font-size:0.8125rem;color:#64748B;">Stripe billing</span>
             </div>
 
-            <div style="margin-bottom:14px;">
+            <div style="margin-bottom:12px;">
               <label class="field-label" for="wh-event-type">Webhook event type</label>
               <select id="wh-event-type" class="field-select">
                 <option value="invoice.payment_failed">invoice.payment_failed (declined card)</option>
@@ -439,7 +488,7 @@
               </select>
             </div>
 
-            <div style="margin-bottom:14px;">
+            <div style="margin-bottom:12px;">
               <label class="field-label" for="wh-decline-code">Bank decline code (<code>decline_code</code>)</label>
               <select id="wh-decline-code" class="field-select">
                 <option value="insufficient_funds">insufficient_funds (payday window)</option>
@@ -450,9 +499,9 @@
               </select>
             </div>
 
-            <details style="padding:10px 12px;border-radius:10px;background:#F8FAFC;margin-bottom:12px;">
+            <details style="padding:8px 10px;border-radius:10px;background:#F8FAFC;margin-bottom:10px;">
               <summary style="cursor:pointer;font-size:0.8125rem;font-weight:600;color:#475569;">Optional: customize customer email &amp; invoice amount</summary>
-              <div class="form-row-2" style="margin-top:10px;">
+              <div class="form-row-2" style="margin-top:8px;">
                 <div>
                   <label class="field-label" for="wh-email">Customer email</label>
                   <input id="wh-email" type="text" class="field-input" value="alex@scaleops.io" style="background:#FFFFFF;" required />
@@ -467,16 +516,16 @@
             <button type="submit" id="wh-submit-btn" class="btn btn-indigo btn-block" style="margin-top:4px;">
               <span>Simulate retry schedule</span>
             </button>
-            <div id="wh-form-status" class="mono-status" aria-live="polite" style="margin-top:8px;"></div>
+            <div id="wh-form-status" class="mono-status" aria-live="polite" style="margin-top:6px;"></div>
           </form>
 
           <div class="telemetry-card">
-            <div class="card-header-bar" style="padding-bottom:12px;border-bottom:1px solid #E2E8F0;margin-bottom:14px;">
+            <div class="card-header-bar" style="padding-bottom:10px;border-bottom:1px solid #E2E8F0;margin-bottom:10px;">
               <span id="wh-out-classification" style="font-size:0.95rem;font-weight:600;color:#0F172A;">Soft decline (temporary liquidity)</span>
               <span id="wh-out-recovery-rate" style="font-size:0.8125rem;color:#047857;font-weight:600;">Expected recovery: 62.4%</span>
             </div>
 
-            <div id="wh-out-network-rule" style="font-size:0.8125rem; color:#475569; background:#F8FAFC; padding:10px 12px; border-radius:8px; margin-bottom:12px;">
+            <div id="wh-out-network-rule" style="font-size:0.8125rem; color:#475569; background:#F8FAFC; padding:8px 10px; border-radius:8px; margin-bottom:10px;">
               Card network rule: max 4 retries in 30 days; never retry within 1 hour.
             </div>
 
@@ -491,7 +540,7 @@
               <div>
                 <div style="font-size:0.75rem;color:#64748B;font-weight:500;">Unmasked Step-1 recovery email (<span id="wh-out-model">Stripe dunning</span>)</div>
                 <p id="wh-out-subject" style="font-size:0.875rem; font-weight:600; color:#0F172A; margin:4px 0;">Subject: [Action Required] Gymshark payment ($92): Soft Decline (Liquidity / Payday Timing)</p>
-                <p id="wh-out-body" style="white-space:pre-wrap; font-family:var(--font-sans); font-size:0.8125rem; line-height:1.5; margin:0; color:#475569;">Hi alex — your $92 Gymshark payment returned bank code "insufficient_funds" (Soft Decline). Step 1 (T + 4 Hours): Silent Stripe PaymentIntent retry before customer notification.</p>
+                <p id="wh-out-body" style="white-space:pre-wrap; font-family:var(--font-sans); font-size:0.8125rem; line-height:1.45; margin:0; color:#475569;">Hi alex — your $92 Gymshark payment returned bank code "insufficient_funds" (Soft Decline). Step 1 (T + 4 Hours): Silent Stripe PaymentIntent retry before customer notification.</p>
               </div>
               <form id="wh-inline-unlock-form" onsubmit="return window.__aaUnlockWebhookSample(event)" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;margin:0;">
                 <input type="email" id="wh-inline-sample-email" placeholder="Work email ($0)..." />
@@ -513,36 +562,16 @@
 
         <!-- BESPOKE EDITORIAL PHOTO BREAK #3 -->
         <div class="editorial-break-card">
-          <img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+          <img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="280" height="144" loading="eager" decoding="async" />
           <div>
-            <h2 class="section-h2" style="margin-bottom:6px;">Visa &amp; Mastercard retry-limit compliance out of the box</h2>
-            <p class="section-sub" style="margin:0;">Blind daily cron retries burn through Visa's 4-attempt 30-day window before customer balances replenish. AbandonAlpha schedules soft declines on Friday and 1st/15th ACH payday windows while routing expired cards directly to 1-tap Apple Pay update links.</p>
+            <h2 class="section-h2" style="margin-bottom:4px;font-size:1.15rem;">Visa &amp; Mastercard retry-limit compliance out of the box</h2>
+            <p class="section-sub" style="margin:0 0 4px 0;font-size:0.9rem;">Schedule soft declines on Friday and 1st/15th ACH payday windows while routing expired cards directly to 1-tap Apple Pay update links.</p>
+            <div class="aa-focus-pill-row">
+              <span class="aa-focus-pill"><strong>Max 4</strong> Retries / 30d Compliant</span>
+              <span class="aa-focus-pill"><strong>1st &amp; 15th</strong> Payday Sync</span>
+              <span class="aa-focus-pill"><strong>Zero</strong> $15 Excess-Retry Penalties</span>
+            </div>
           </div>
-        </div>
-
-        <!-- GEMINI NANO BANANA 3-CARD RECOVERY VISUAL SHOWCASE -->
-        <div id="aa-home-visual-showcase" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;margin:16px 0 8px;">
-          <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
-            <img src="/banana-saas-war-room.jpg" alt="Fintech engineering war room reviewing Stripe payment recovery telemetry" width="380" height="165" loading="eager" decoding="async" style="width:100%;height:165px;object-fit:cover;border-radius:10px;display:block;" />
-            <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
-              <strong style="color:#0F172A;">Payday Retry Worker (.JS)</strong>
-              <span style="color:#047857;font-weight:700;">+38% Soft-Decline Lift</span>
-            </figcaption>
-          </figure>
-          <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
-            <img src="/banana-payment-recovery-flow.jpg" alt="Apple Pay and Stripe 1-tap card update flow on mobile and desktop" width="380" height="165" loading="eager" decoding="async" style="width:100%;height:165px;object-fit:cover;border-radius:10px;display:block;" />
-            <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
-              <strong style="color:#0F172A;">1-Tap Apple Pay Card Update</strong>
-              <span style="color:#4F46E5;font-weight:700;">Zero Password Login</span>
-            </figcaption>
-          </figure>
-          <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
-            <img src="/editorial-hero.jpg" alt="E-commerce checkout conversion studio and dunning workflow" width="380" height="165" loading="eager" decoding="async" style="width:100%;height:165px;object-fit:cover;border-radius:10px;display:block;" />
-            <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
-              <strong style="color:#0F172A;">Smart Exit-Intent Script (.JS)</strong>
-              <span style="color:#047857;font-weight:700;">0% Margin Dilution</span>
-            </figcaption>
-          </figure>
         </div>
       </div>
     </section>
@@ -637,7 +666,7 @@
     </div>
   </footer>
 
-  <script src="/sdk/abandon-alpha-sdk.js?v=20261105a" data-merchant="abandon-alpha-sandbox" data-aov="92" async></script>
-  <script src="/app.js?v=20261105a"></script>
+  <script src="/sdk/abandon-alpha-sdk.js?v=20261108b" data-merchant="abandon-alpha-sandbox" data-aov="92" async></script>
+  <script src="/app.js?v=20261108b"></script>
 </body>
 </html>

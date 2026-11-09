@@ -1,10 +1,10 @@
 # Stigmergic V3.3 Entrepreneurial Diagnostic Elimination Tree — AbandonAlpha Checkout & Stripe Declined-Card Recovery Engine (abandonalpha.com)
 
-> **Directional Mandate:** STOP beating around the bush on Ruled-Out Pillars (1. Visitor Intent & Traffic Hook Fit, 2. Site Appeal, Subpage Coherence & Competitor Visual Parity, 5. Checkout Mechanics & Live Production Parity). Focus 100% of this cycle on testing & validating [3. Reputation, Authority & Verifiable Proof]: Elevate instant domain authority to match ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster: show an unmasked, 100%-verifiable Specimen #1 deliverable preview up front, cite verifiable data provenance, and display risk-reversal guarantees. (Falsifiable Check: Visitors inspecting Specimen #1 submit a $0 email save or click sample preview at >= 5% conversion.)
+> **Directional Mandate:** STOP beating around the bush on Ruled-Out Pillars (1. Visitor Intent & Traffic Hook Fit, 2. P0 Full-Site & All-Subpages Competitor Architecture Revision (Stop Tweaking Around the Edges), 5. Checkout Mechanics & Live Production Parity). Focus 100% of this cycle on testing & validating [3. Reputation, Authority & Verifiable Proof]: Elevate instant domain authority to match ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster: show an unmasked, 100%-verifiable Specimen #1 deliverable preview up front, cite verifiable data provenance, and display risk-reversal guarantees. (Falsifiable Check: Visitors inspecting Specimen #1 submit a $0 email save or click sample preview at >= 5% conversion.)
 
 ## 1. Ruled-Out Variables (Do Not Thrash Here)
 - **[RULED OUT / VALIDATED]** 1. Visitor Intent & Traffic Hook Fit
-- **[RULED OUT / VALIDATED]** 2. Site Appeal, Subpage Coherence & Competitor Visual Parity
+- **[RULED OUT / VALIDATED]** 2. P0 Full-Site & All-Subpages Competitor Architecture Revision (Stop Tweaking Around the Edges)
 - **[RULED OUT / VALIDATED]** 5. Checkout Mechanics & Live Production Parity
 
 ## 2. 5-Pillar Business Bottleneck Status
@@ -15,12 +15,12 @@
 - **Falsifiable Validation Check:** >= 50% of human visitors trigger a Step-1 calculation/interaction within 15 seconds.
 - **Rule-Out Threshold:** `Tool Interaction Rate >= 50%`
 
-### 2. Site Appeal, Subpage Coherence & Competitor Visual Parity — `RULED_OUT_VALIDATED` (`RING_2_MIDDLE_PARITY`)
-- **Diagnostic Question:** *Is it still our site appeal, spacing, imagery, or inconsistent subpages?*
-- **Current Telemetry / Sensor Evidence:** Static Ring-2 visual/shell sensor pressure is 0.00 (unified top-nav & width across all subpages, unique uncropped imagery, zero CTA bombardment).
-- **Testable Hypothesis:** Maintain 1:1 visual calm, 24px spacing, and unique uncropped photography across all menu routes benchmarked against ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster.
-- **Falsifiable Validation Check:** 0.00 Ring-2 visual/shell/imagery sensor pressure + Playwright desktop (1440px) & mobile (390px) parity across all top-menu routes.
-- **Rule-Out Threshold:** `Ring-2 Sensor Pressure == 0.00 across all routes`
+### 2. P0 Full-Site & All-Subpages Competitor Architecture Revision (Stop Tweaking Around the Edges) — `RULED_OUT_VALIDATED` (`RING_2_MIDDLE_PARITY`)
+- **Diagnostic Question:** *Have we revised the ENTIRE site and ALL subpages to look and operate like category-leading competitors (instead of bolting small tweaks onto a generic template)?*
+- **Current Telemetry / Sensor Evidence:** Full-site & all-subpage competitor architecture verified (unified 70px brand header, 1320px grid, 2-column live workbench, zero cross-brand farm links).
+- **Testable Hypothesis:** STOP tweaking around the edges or appending micro-widgets! Execute a complete end-to-end site & subpage revision modeled directly on ChurnKey, Baremetrics Recover, ProfitWell Retain, OptinMonster: (1) Replace cookie-cutter vertical forms with a 2-Column Interactive Competitor Workbench in Fold 1 (controls on left, live visual deliverable/chart on right); (2) Enforce the exact same 70px brand `<header>`, 1320px container width, and typography across EVERY route and subpage (landing, `/dossier/sample/*`, `/directory`, `/seo/*`, `/compare/*`, `/tools/*`, `/studio/*`); (3) Strip all cross-brand 'All Calculators' farm links and cap page height to <= 3,800px.
+- **Falsifiable Validation Check:** Playwright verification confirms EVERY top-menu route and subpage shares the identical 70px brand header, 1320px width, and 2-Column Competitor Workbench with 0 cross-brand leaks.
+- **Rule-Out Threshold:** `100% Full-Site & All-Subpages Competitor Parity == 0.00 gaps`
 
 ### 3. Reputation, Authority & Verifiable Proof — `ACTIVE_BOTTLENECK_HYPOTHESIS` (`RING_3_OUTER_FOREST`)
 - **Diagnostic Question:** *Is it our reputation — do visitors trust our data/deliverable enough to give an email or card?*

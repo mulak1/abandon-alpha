@@ -199,32 +199,40 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:description" content="${escapeHtml(metaDesc)}" />
   <meta name="twitter:image" content="${ogImageUrl}" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
   <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}</script>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18526471751"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-18526471751');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18526471751');</script>
 </head>
 <body>
   ${renderUnifiedHeaderHtml('FINOPS TELEMETRY v4.2')}
 
-  <main class="container pseo-main">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+  <main class="container pseo-main" style="padding-top:14px;">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:8px;">
       <a href="/">AbandonAlpha Home</a> <span>/</span>
       <a href="/directory">Playbook Directory</a> <span>/</span>
       <span>${escapeHtml(page.category)}</span>
     </nav>
 
     <style>@media(max-width:640px){.inline-calc-grid{grid-template-columns:1fr!important;}.inline-calc-grid>*,.calc-inputs,.calc-output-box,.pseo-section,.code-snippet-box{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important;padding-inline:14px!important;}.btn,#pseo-calc-btn{max-width:100%!important;white-space:normal!important;}}</style>
-    <div style="max-width:760px;margin:0 0 20px 0;">
-      <p class="section-kicker" style="margin:0 0 6px;font-size:13px;color:#64748B;font-weight:500;">${escapeHtml(page.category)} · <code>${escapeHtml(page.declineOrSignal)}</code></p>
-      <h1 class="pseo-h1" style="font-size:clamp(1.65rem, 2.4vw, 2.2rem);line-height:1.14;margin:0 0 8px 0;">${escapeHtml(cleanTitle)}</h1>
-      <p class="pseo-lead" style="margin:0;font-size:1rem;">${escapeHtml(page.summary.replace(/`/g, ''))}</p>
+    <div class="aa-sunlit-hero-banner">
+      <div>
+        <p class="section-kicker" style="margin:0 0 4px;font-size:12.5px;color:#047857;font-weight:700;">✦ ${escapeHtml(page.category)} · <code>${escapeHtml(page.declineOrSignal)}</code></p>
+        <h1 class="pseo-h1" style="font-size:clamp(1.55rem, 2.2vw, 2.05rem);line-height:1.14;margin:0 0 6px 0;">${escapeHtml(cleanTitle)}</h1>
+        <p class="pseo-lead" style="margin:0;font-size:0.92rem;line-height:1.45;">${escapeHtml(page.summary.replace(/`/g, '').slice(0, 145))}</p>
+        <div class="aa-focus-pill-row">
+          <span class="aa-focus-pill"><strong>+${page.recoverableLiftPct}%</strong> Recovery Lift</span>
+          <span class="aa-focus-pill"><strong>+${page.monthlyRecoveredUsd.toLocaleString()}/mo</strong> Benchmark</span>
+          <span class="aa-focus-pill"><strong>$29 One-Time</strong> · 0% Commission</span>
+        </div>
+      </div>
+      <div class="aa-hero-photo-frame">
+        <img src="/editorial-segment-2.jpg" alt="Sunlit retention lead reviewing Stripe decline recovery schedule" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
+        <div class="aa-hero-photo-badge">
+          <span><code>${escapeHtml(page.declineOrSignal)}</code> Playbook</span>
+          <span style="color:#047857;">+${page.recoverableLiftPct}% Verified Lift</span>
+        </div>
+      </div>
     </div>
 
     <div class="hero-split pseo-hero" style="align-items:stretch;">
@@ -319,56 +327,56 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
     </div>
 
     <div class="editorial-break-card">
-      <img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine stone desk" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+      <img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine stone desk" class="editorial-break-img" width="280" height="144" loading="eager" decoding="async" />
       <div>
-        <h2 class="section-h2" style="margin-bottom:6px;">Bank-aligned retry timing for <code>${escapeHtml(page.declineOrSignal)}</code></h2>
-        <p class="section-sub" style="margin:0;">Suppressing blind 24-hour cron retries on <code>${escapeHtml(page.declineOrSignal)}</code> preserves your 4-retry Visa/Mastercard allowance and schedules recovery for the exact deposit window when customer balances clear.</p>
+        <h2 class="section-h2" style="margin-bottom:4px;font-size:1.1rem;">Bank-aligned retry timing for <code>${escapeHtml(page.declineOrSignal)}</code></h2>
+        <div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>Max 4</strong> Retries / 30d Safe</span><span class="aa-focus-pill"><strong>Payday</strong> Deposit Sync</span><span class="aa-focus-pill"><strong>Zero</strong> Lockout Risk</span></div>
       </div>
     </div>
 
-    <section class="pseo-section">
-      <h2 class="section-h2">Recovery benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
-      <p class="section-sub">Empirical 2026 recovery performance comparing naive 24-hour retries, standard platform retries, and payday-timed recovery windows.</p>
+    <section class="pseo-section" style="padding:8px 0;">
+      <h2 class="section-h2" style="margin-bottom:6px;font-size:1.15rem;">Recovery benchmark: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
       <div class="posterior-table-wrap">
         <table class="posterior-table">
           <thead><tr><th>Recovery architecture</th><th>Recovery rate</th><th>Avg time to recover</th><th>Churn risk</th><th>Net revenue lift</th></tr></thead>
           <tbody>
-            <tr><td><strong>1. Naive 24h cron retry</strong></td><td>${naiveRecRate}%</td><td>14.2 days (issuer lockout risk)</td><td>High (${page.baselineAbandonmentOrFailPct}% unrecovered)</td><td>Baseline (+0.0%)</td></tr>
-            <tr><td><strong>2. Standard platform retry</strong></td><td>${standardRecRate}%</td><td>5.8 days (generic reminder)</td><td>Moderate</td><td>+${standardRecRate}%</td></tr>
-            <tr style="background: rgba(16, 185, 129, 0.06);"><td><strong>3. Payday-timed window + counter-offer</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><strong>&lt; 4.2 hours (payday deposit sync)</strong></td><td class="text-emerald"><strong>Low (Visa/MC safe limit)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
+            <tr><td><strong>1. Naive 24h cron retry</strong></td><td>${naiveRecRate}%</td><td>14.2 days (lockout risk)</td><td>High (${page.baselineAbandonmentOrFailPct}% lost)</td><td>Baseline (+0.0%)</td></tr>
+            <tr><td><strong>2. Standard platform retry</strong></td><td>${standardRecRate}%</td><td>5.8 days (generic email)</td><td>Moderate</td><td>+${standardRecRate}%</td></tr>
+            <tr style="background: rgba(16, 185, 129, 0.08);"><td><strong>3. Payday-timed window + counter-offer</strong></td><td><strong class="text-emerald">${page.recoverableLiftPct}%</strong></td><td><strong>&lt; 4.2 hours (payday sync)</strong></td><td class="text-emerald"><strong>Low (Visa/MC safe)</strong></td><td class="text-emerald"><strong>+${page.recoverableLiftPct}% (+$${page.monthlyRecoveredUsd.toLocaleString()}/mo)</strong></td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <div class="editorial-break-card">
-      <img src="/editorial-studio-founder.jpg" alt="Founder reviewing retention telemetry on tablet" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
-      <div>
-        <h2 class="section-h2" style="margin-bottom:6px;">Self-hosted 3-file implementation with 0% revenue share</h2>
-        <p class="section-sub" style="margin:0;">Drop the webhook worker, checkout exit script, and customer billing-link templates directly into your stack without paying 10%–15% commission on recovered renewals.</p>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:8px 0;">
+      <div class="editorial-break-card" style="margin:0;">
+        <img src="/editorial-studio-founder.jpg" alt="Founder reviewing retention telemetry on tablet" class="editorial-break-img" width="260" height="140" loading="eager" decoding="async" />
+        <div>
+          <h2 class="section-h2" style="margin-bottom:4px;font-size:1.05rem;">Self-hosted 3-file setup</h2>
+          <div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>0%</strong> Commission</span><span class="aa-focus-pill"><strong>&lt;10 Min</strong> Deploy</span></div>
+        </div>
+      </div>
+      <div class="editorial-break-card" style="margin:0;">
+        <img src="/editorial-checkout-hardware.jpg" alt="Payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="140" loading="eager" decoding="async" />
+        <div>
+          <h2 class="section-h2" style="margin-bottom:4px;font-size:1.05rem;">1-Tap Apple Pay card updater</h2>
+          <div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>15 Sec</strong> Update</span><span class="aa-focus-pill"><strong>No</strong> Password Login</span></div>
+        </div>
       </div>
     </div>
 
-    <section class="pseo-section">
-      <h2 class="section-h2">Common questions: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
-      <div class="faq-grid">
-        ${page.faqs.map((f, idx) => `<div class="faq-card"><h3>${idx + 1}. ${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`).join('')}
+    <section class="pseo-section" style="padding:8px 0;">
+      <h2 class="section-h2" style="margin-bottom:6px;font-size:1.15rem;">Common questions: <code>${escapeHtml(page.declineOrSignal)}</code></h2>
+      <div class="faq-grid" style="gap:10px;">
+        ${page.faqs.slice(0, 3).map((f, idx) => `<div class="faq-card" style="padding:12px 14px;"><h3 style="font-size:0.95rem;margin-bottom:4px;">${idx + 1}. ${escapeHtml(f.q)}</h3><p style="font-size:0.875rem;margin:0;line-height:1.45;">${escapeHtml(f.a)}</p></div>`).join('')}
       </div>
     </section>
 
-    <div class="editorial-break-card">
-      <img src="/editorial-checkout-hardware.jpg" alt="Payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
-      <div>
-        <h2 class="section-h2" style="margin-bottom:6px;">1-Tap Apple Pay &amp; Google Pay card updater links</h2>
-        <p class="section-sub" style="margin:0;">When an issuer requires a new payment method or biometric verification, customers receive a passwordless Stripe Billing Portal link that updates their card in under 15 seconds.</p>
-      </div>
-    </div>
-
-    <section class="pseo-section">
-      <h2 class="section-h2">Related ${escapeHtml(page.category)} Playbooks</h2>
-      <div class="related-links-grid">
-        ${related.slice(0, 3).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.declineOrSignal)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
-        ${crossCluster.slice(0, 3).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card"><span class="mono-label">${escapeHtml(r.category)} • +${r.recoverableLiftPct}% Lift</span><strong>${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
+    <section class="pseo-section" style="padding:8px 0;">
+      <h2 class="section-h2" style="margin-bottom:6px;font-size:1.15rem;">Related ${escapeHtml(page.category)} Playbooks</h2>
+      <div class="related-links-grid" style="gap:8px;">
+        ${related.slice(0, 3).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card" style="padding:10px 12px;"><span class="mono-label" style="font-size:11.5px;">${escapeHtml(r.declineOrSignal)} • +${r.recoverableLiftPct}% Lift</span><strong style="font-size:13px;">${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
+        ${crossCluster.slice(0, 3).map((r) => `<a href="/seo/${escapeHtml(r.slug)}" class="related-card" style="padding:10px 12px;"><span class="mono-label" style="font-size:11.5px;">${escapeHtml(r.category)} • +${r.recoverableLiftPct}% Lift</span><strong style="font-size:13px;">${escapeHtml(r.title.replace(/`/g, ''))}</strong></a>`).join('')}
       </div>
     </section>
   </main>
@@ -458,30 +466,34 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
   <meta name="twitter:description" content="${dirDesc}" />
   <meta name="twitter:image" content="${baseUrl}/api/og?slug=directory" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261108b" />
 </head>
 <body>
   ${renderUnifiedHeaderHtml('60 PSEO PLAYBOOKS')}
 
-  <main class="container pseo-main">
-    <div class="editorial-break-card" style="margin-top:0;">
-      <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing Stripe recovery playbooks" class="editorial-break-img" width="300" height="168" loading="eager" decoding="async" />
+  <main class="container pseo-main" style="padding-top:14px;">
+    <div class="aa-sunlit-hero-banner" style="margin-top:0;">
       <div class="directory-header">
-        <h1 class="pseo-h1" style="margin:0 0 8px;">Stripe Recovery Playbooks</h1>
-        <p class="pseo-lead" style="margin:0 0 12px;">Browse ${PSEO_PAGES.length} verified checkout recovery guides covering Stripe card decline codes, payday retry timing, and smart exit offers for Shopify and Subscription Stores.</p>
+        <div style="font-size:12.5px;color:#047857;font-weight:700;margin-bottom:4px;">✦ Verified Stripe &amp; Checkout Recovery Library</div>
+        <h1 class="pseo-h1" style="margin:0 0 6px;font-size:clamp(1.6rem,2.3vw,2.1rem);">Stripe Recovery Playbooks</h1>
+        <div class="aa-focus-pill-row" style="margin:0 0 10px;">
+          <span class="aa-focus-pill"><strong>${PSEO_PAGES.length}</strong> Verified Playbooks</span>
+          <span class="aa-focus-pill"><strong>+56.2%</strong> Failed-Card Lift</span>
+          <span class="aa-focus-pill"><strong>$29 Pack</strong> · 0% Commission</span>
+        </div>
         <div class="filter-bar" style="margin-top:0;max-width:100%;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
-            <label for="dir-search" class="field-label" style="margin:0;">Filter ${PSEO_PAGES.length} Playbooks by Decline Code, Webhook, or Platform</label>
-            <span id="dir-match-status" style="font-size:13px;font-weight:700;color:#047857;">Showing all ${PSEO_PAGES.length} Playbooks</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+            <label for="dir-search" class="field-label" style="margin:0;">Filter by Decline Code, Webhook, or Platform</label>
+            <span id="dir-match-status" style="font-size:12.5px;font-weight:700;color:#047857;">Showing all ${PSEO_PAGES.length} Playbooks</span>
           </div>
-          <input id="dir-search" type="search" class="field-input" placeholder="e.g. do_not_honor, insufficient_funds, shopify, checkout.session.expired..." oninput="filterDirectory(this.value)" />
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px;">
-            <span style="font-size:12.5px;font-weight:700;color:#475569;">Quick Filter:</span>
-            ${['All', 'do_not_honor', 'insufficient_funds', 'expired_card', 'generic_decline', 'Shopify', 'invoice.payment_failed'].map((tag) => `<button type="button" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='${tag === 'All' ? '' : tag}';filterDirectory(inp.value);}" style="padding:4px 10px;border-radius:999px;border:none;background:#F1F5F9;color:#0F172A;font-size:12.5px;font-weight:600;cursor:pointer;">${tag}</button>`).join('')}
+          <input id="dir-search" type="search" class="field-input" style="background:#FFFFFF;" placeholder="e.g. do_not_honor, insufficient_funds, shopify, checkout.session.expired..." oninput="filterDirectory(this.value)" />
+          <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px;">
+            <span style="font-size:12px;font-weight:700;color:#475569;">Quick Filter:</span>
+            ${['All', 'do_not_honor', 'insufficient_funds', 'expired_card', 'generic_decline', 'Shopify', 'invoice.payment_failed'].map((tag) => `<button type="button" onclick="var inp=document.getElementById('dir-search');if(inp){inp.value='${tag === 'All' ? '' : tag}';filterDirectory(inp.value);}" style="padding:3px 9px;border-radius:999px;border:1px solid #D1FAE5;background:#FFFFFF;color:#0F172A;font-size:12px;font-weight:600;cursor:pointer;">${tag}</button>`).join('')}
           </div>
-          <div id="dir-inline-action-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #E2E8F0;font-size:12.5px;color:#475569;">
-            <span id="dir-roi-proof">All 60 recovery playbooks included &middot; Pays for $29 pack in &lt; 1 recovered order (0% commission):</span>
-            <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div id="dir-inline-action-bar" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:6px;padding-top:6px;border-top:1px solid #D1FAE5;font-size:12px;color:#475569;">
+            <span id="dir-roi-proof">Pays for $29 pack in &lt; 1 recovered order (0% commission):</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;">
               <a id="dir-dl-worker" href="/api/github-upgrade/stripe-recovery-worker.js?target=Shopify&amp;decline=insufficient_funds" download style="color:#475569;font-weight:500;text-decoration:underline;">Preview Worker (.JS)</a>
               <span style="color:#CBD5E1;" aria-hidden="true">|</span>
               <a id="dir-buy-29" href="/buy/playbook_pass?utm_source=directory" rel="nofollow" style="color:#047857;font-weight:700;text-decoration:underline;">Get All 60 Playbooks ($29 Pack) &rarr;</a>
@@ -489,20 +501,27 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
               <a id="dir-buy-199" href="/buy/flash_pass?utm_source=directory" rel="nofollow" style="color:#0F172A;font-weight:600;text-decoration:underline;">3-File Patch ($1.99)</a>
             </span>
           </div>
-          <details id="dir-fix1-details" style="margin-top:6px;">
-            <summary id="dir-fix1-cta" style="cursor:pointer;font-size:12.5px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
-            <code id="dir-fix1-code" style="display:block;margin-top:6px;padding:8px 10px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.45;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;">
+          <details id="dir-fix1-details" style="margin-top:4px;">
+            <summary id="dir-fix1-cta" style="cursor:pointer;font-size:12px;font-weight:600;color:#0F172A;">Get free Fix #1 snippet for insufficient_funds (+$2,098/mo lift &middot; $0) &rarr;</summary>
+            <code id="dir-fix1-code" style="display:block;margin-top:6px;padding:8px 10px;border-radius:8px;background:#0F172A;color:#F8FAFC;font-size:12px;line-height:1.4;white-space:pre-wrap;overflow-x:auto;">window.AbandonAlphaRules = { declineOrSignal: "insufficient_funds", retryAfterHours: 72, allowPromoStacking: false };</code>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px;">
               <button type="button" id="dir-copy-fix1-btn" class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:12px;font-weight:600;" onclick="if(this.getAttribute('data-copied')==='1'){var b29=document.getElementById('dir-buy-29');window.location.href=(b29&&b29.href)||'/buy/playbook_pass?utm_source=directory';return;}var c=document.getElementById('dir-fix1-code');if(navigator.clipboard&&c)navigator.clipboard.writeText(c.textContent);this.setAttribute('data-copied','1');this.textContent='✓ Copied Step-1 Rule — Get All 60 Playbooks ($29) →';this.style.color='#047857';">Copy Free Fix #1 Snippet</button>
               <span style="font-size:11.5px;color:#64748B;">Step 1 of 3 &middot; All 60 playbooks in $29 pack</span>
             </div>
           </details>
         </div>
       </div>
+      <div class="aa-hero-photo-frame">
+        <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing Stripe recovery playbooks" class="aa-hero-photo-img" width="420" height="190" style="height:190px;" loading="eager" fetchpriority="high" decoding="async" />
+        <div class="aa-hero-photo-badge">
+          <span>60 Ready-to-Deploy Rules</span>
+          <span style="color:#047857;">JS + Worker + CSV</span>
+        </div>
+      </div>
     </div>
 
-    <div id="dir-empty-state" style="display:none;padding:20px;border-radius:14px;background:#FFFFFF;margin-top:16px;text-align:center;">
-      <p id="dir-empty-title" style="margin:0 0 12px;font-size:15px;font-weight:600;color:#0F172A;">No exact playbook matched that filter. Run a live store scorecard or custom recovery check:</p>
+    <div id="dir-empty-state" style="display:none;padding:16px;border-radius:14px;background:#FFFFFF;margin-top:12px;text-align:center;">
+      <p id="dir-empty-title" style="margin:0 0 10px;font-size:14.5px;font-weight:600;color:#0F172A;">No exact playbook matched that filter. Run a live store scorecard or custom recovery check:</p>
       <div style="display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;">
         <a id="dir-empty-scan-link" href="/scan/gymshark.com" class="btn btn-indigo"><span>Run live store scorecard &rarr;</span></a>
         <a id="dir-empty-calc-link" href="/#grader" class="btn btn-ghost"><span>Open revenue &amp; retry calculator &rarr;</span></a>
@@ -510,54 +529,40 @@ function renderDirectoryHtml(baseUrl = 'https://www.abandonalpha.com') {
       </div>
     </div>
 
-    <div id="aa-dir-visual-showcase" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin:12px 0 14px;">
-      <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
-        <img src="/banana-saas-war-room.jpg" alt="Fintech engineering war room reviewing Stripe payment recovery telemetry" width="380" height="162" loading="eager" decoding="async" style="width:100%;height:162px;object-fit:cover;border-radius:10px;display:block;" />
-        <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
-          <strong style="color:#0F172A;">60 Decline &amp; Exit Playbooks</strong>
-          <span style="color:#047857;font-weight:700;">Payday-Synced Retries</span>
+    <div id="aa-dir-visual-showcase" class="aa-visual-trio-grid">
+      <figure class="aa-visual-card" style="margin:0;">
+        <img src="/banana-saas-war-room.jpg" alt="Fintech engineering war room reviewing Stripe payment recovery telemetry" width="380" height="146" loading="eager" decoding="async" />
+        <figcaption class="aa-visual-card-meta">
+          <strong class="aa-visual-card-title">60 Decline &amp; Exit Playbooks</strong>
+          <span class="aa-visual-card-tag">Payday-Synced Retries</span>
         </figcaption>
       </figure>
-      <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
-        <img src="/banana-payment-recovery-flow.jpg" alt="Apple Pay and Stripe 1-tap card update flow on mobile and desktop" width="380" height="162" loading="eager" decoding="async" style="width:100%;height:162px;object-fit:cover;border-radius:10px;display:block;" />
-        <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
-          <strong style="color:#0F172A;">1-Tap Billing Portal Flow</strong>
-          <span style="color:#4F46E5;font-weight:700;">Expired Card Rescue</span>
+      <figure class="aa-visual-card" style="margin:0;">
+        <img src="/banana-payment-recovery-flow.jpg" alt="Apple Pay and Stripe 1-tap card update flow on mobile and desktop" width="380" height="146" loading="eager" decoding="async" />
+        <figcaption class="aa-visual-card-meta">
+          <strong class="aa-visual-card-title">1-Tap Billing Portal Flow</strong>
+          <span class="aa-visual-card-tag">Expired Card Rescue</span>
         </figcaption>
       </figure>
-      <figure style="margin:0;background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:10px;box-shadow:0 4px 14px -4px rgba(15,23,42,0.05);">
-        <img src="/editorial-hero.jpg" alt="E-commerce checkout conversion studio and dunning workflow" width="380" height="162" loading="eager" decoding="async" style="width:100%;height:162px;object-fit:cover;border-radius:10px;display:block;" />
-        <figcaption style="padding:8px 4px 2px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;">
-          <strong style="color:#0F172A;">3-File Drop-In Bundle</strong>
-          <span style="color:#047857;font-weight:700;">$1.99 Single / $29 Pack</span>
+      <figure class="aa-visual-card" style="margin:0;">
+        <img src="/editorial-hero.jpg" alt="E-commerce checkout conversion studio and dunning workflow" width="380" height="146" loading="eager" decoding="async" />
+        <figcaption class="aa-visual-card-meta">
+          <strong class="aa-visual-card-title">3-File Drop-In Bundle</strong>
+          <span class="aa-visual-card-tag">$1.99 Single / $29 Pack</span>
         </figcaption>
       </figure>
     </div>
 
     ${categories.map((cat, cIdx) => {
       const items = PSEO_PAGES.filter((p) => p.category === cat);
+      const topItems = items.slice(0, 4), moreItems = items.slice(4);
+      const renderCard = (item) => `<a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" style="padding:7px 10px;" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword + ' ' + item.webhookEvent + ' ' + item.category + ' ' + item.slug).toLowerCase())}"><div class="dir-card-top" style="margin-bottom:2px;"><code class="text-indigo" style="font-size:11px;">${escapeHtml(item.declineOrSignal)}</code><span class="badge-emerald" style="font-size:10.5px;padding:1px 6px;">+${item.recoverableLiftPct}% Lift</span></div><strong style="font-size:12.5px;line-height:1.22;">${escapeHtml(item.title.replace(/`/g, ''))}</strong></a>`;
       const breakHtml = cIdx === 1
-        ? `<div class="editorial-break-card" style="margin:12px 0;padding:12px 16px;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="300" height="158" style="height:158px;min-height:158px;" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;">Payday-synced retry schedules for soft declines</h2><p class="section-sub" style="margin:0;">Each decline playbook includes the exact retry delay, webhook payload filter, and customer billing-portal email copy.</p></div></div>`
+        ? `<div class="editorial-break-card" style="margin:10px 0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="280" height="142" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:1.05rem;">Payday-synced retry schedules for soft declines</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>62.4%</strong> Payday Lift</span><span class="aa-focus-pill"><strong>Max 4</strong> Retries / 30d</span></div></div></div>`
         : (cIdx === 3
-          ? `<div class="editorial-break-card" style="margin:12px 0;padding:12px 16px;"><img src="/editorial-checkout-hardware.jpg" alt="Wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="300" height="158" style="height:158px;min-height:158px;" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;">Deploy all 60 recovery rules in one bundle</h2><p class="section-sub" style="margin:0;">Unlock the Complete Store Recovery Pack ($29 one-time) or Single-Store 3-File Patch ($1.99) with zero revenue-share commission.</p></div></div>`
+          ? `<div class="editorial-break-card" style="margin:10px 0;"><img src="/editorial-checkout-hardware.jpg" alt="Wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="280" height="142" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:1.05rem;">Deploy all 60 recovery rules in one bundle</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill"><strong>0%</strong> Commission</span><span class="aa-focus-pill"><strong>30-Day</strong> Guarantee</span></div></div></div>`
           : '');
-      return `
-      <section class="pseo-section dir-cluster" data-total="${items.length}" style="padding:6px 0;margin-top:10px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <h2 class="section-h2" style="margin:0;">${escapeHtml(cat)} (<span class="dir-cluster-count">${items.length}</span> Playbooks)</h2>
-        </div>
-        <div class="related-links-grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;margin-top:6px;">
-          ${items.map((item) => `
-            <a href="/seo/${escapeHtml(item.slug)}" class="related-card dir-item" style="padding:7px 10px;" data-search="${escapeHtml((item.title + ' ' + item.declineOrSignal + ' ' + item.targetKeyword + ' ' + item.webhookEvent + ' ' + item.category + ' ' + item.slug).toLowerCase())}">
-              <div class="dir-card-top" style="margin-bottom:2px;">
-                <code class="text-indigo" style="font-size:11px;">${escapeHtml(item.declineOrSignal)}</code>
-                <span class="badge-emerald" style="font-size:10.5px;padding:1px 6px;">+${item.recoverableLiftPct}% Lift</span>
-              </div>
-              <strong style="font-size:12.5px;line-height:1.22;">${escapeHtml(item.title.replace(/`/g, ''))}</strong>
-            </a>
-          `).join('')}
-        </div>
-      </section>${breakHtml}`;
+      return `<section class="pseo-section dir-cluster" data-total="${items.length}" style="padding:4px 0;margin-top:8px;"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px;"><h2 class="section-h2" style="margin:0;font-size:1.1rem;">${escapeHtml(cat)} (<span class="dir-cluster-count">${items.length}</span> Playbooks)</h2></div><div class="related-links-grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;margin-top:4px;">${topItems.map(renderCard).join('')}</div>${moreItems.length ? `<details class="dir-more-drawer" style="margin-top:6px;"><summary style="cursor:pointer;font-size:12.5px;font-weight:700;color:#047857;padding:4px 0;">View all ${items.length} ${escapeHtml(cat)} playbooks (+${moreItems.length} more) ▾</summary><div class="related-links-grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;margin-top:6px;">${moreItems.map(renderCard).join('')}</div></details>` : ''}</section>${breakHtml}`;
     }).join('')}
   </main>
 

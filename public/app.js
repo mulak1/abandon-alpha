@@ -693,10 +693,9 @@ function renderPosteriorTable(arms, selectedId) {
     const barWidth = Math.min(100, Math.max(12, Math.round(arm.posterior_mean_pct * 3.2)));
     const humanTitle = HUMAN_OBJECTION_TITLES[arm.objection_code] || arm.objection_label;
     return `
-      <tr data-objection="${arm.objection_code}" style="cursor:pointer;${isWin ? 'background: #F8FAFC;' : ''}" onclick="triggerBanditObjection('${arm.objection_code}')">
+      <tr data-objection="${arm.objection_code}" style="cursor:pointer;${isWin ? 'background: #ECFDF5;' : ''}" onclick="triggerBanditObjection('${arm.objection_code}')">
         <td>
-          <strong style="color:#0F172A;font-weight:600;">${humanTitle}</strong>
-          <div style="font-size:0.8125rem; color:#64748B;">${arm.objection_label}</div>
+          <strong style="color:#0F172A;font-weight:600;font-size:0.875rem;">${humanTitle}</strong>
         </td>
         <td><code style="color:#0F172A;font-weight:600;">${arm.offer_code}</code> <span style="color:#64748B;font-size:0.8125rem;">(-${arm.discount_pct}%)</span></td>
         <td style="color:#334155;">${arm.alpha}</td>
