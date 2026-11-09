@@ -238,14 +238,14 @@ function renderGrowthPageHtml(cfg, item, kind) {
         <h1 style="font-size:clamp(1.6rem,2.4vw,2.15rem);line-height:1.15;margin:0 0 6px 0;">${escXml(item.title)}</h1>
         <p class="pseo-lead" style="font-size:14px;color:${escXml(t.textSecondary)};margin:0 0 8px 0;">${escXml(item.summary)}</p>
         <div class="aa-focus-pill-row">
-          <span class="aa-focus-pill">⚡ ${escXml(item.metricA || item.scoreA || '+56.2% Lift')}</span>
-          <span class="aa-focus-pill">💳 ${escXml(item.metricB || item.winnerLift || 'Zero Discount Bleed')}</span>
-          <span class="aa-focus-pill">🛡️ $29 One-Time &middot; 0% Commission</span>
+          <span class="aa-focus-pill">${escXml(item.metricA || item.scoreA || '+56.2% Lift')}</span>
+          <span class="aa-focus-pill">${escXml(item.metricB || item.winnerLift || 'Zero Discount Bleed')}</span>
+          <span class="aa-focus-pill">$29 One-Time &middot; 0% Commission</span>
         </div>
       </div>
       <div class="aa-hero-photo-frame">
         <img src="/editorial-segment-1.jpg" alt="Sunlit checkout comparison benchmark studio" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
-        <span class="aa-hero-photo-badge">✦ Side-by-Side Benchmark &middot; 2026</span>
+        <span class="aa-hero-photo-badge">Side-by-Side Benchmark &middot; 2026</span>
       </div>
     </div>
     <script>
@@ -310,8 +310,8 @@ function renderGrowthPageHtml(cfg, item, kind) {
       </div>
     </section>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:12px;">
-      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Self-hosted recovery rules</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">💳 +56.2% Soft-Decline Lift</span><span class="aa-focus-pill">🛡️ 0% Revenue Share</span></div></div></div>
-      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">1-tap card updater &amp; exit saves</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">⚡ +18%–31% Exit Saves</span><span class="aa-focus-pill">⚡ 10-Min Setup</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Self-hosted recovery rules</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">+56.2% Soft-Decline Lift</span><span class="aa-focus-pill">0% Revenue Share</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">1-tap card updater &amp; exit saves</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">+18%–31% Exit Saves</span><span class="aa-focus-pill">10-Min Setup</span></div></div></div>
     </div>
     <section class="table-wrap" style="background:#FFFFFF;border-radius:14px;padding:18px;margin-top:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">

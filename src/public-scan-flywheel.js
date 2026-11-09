@@ -322,14 +322,14 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
           <strong style="color:${esc(t.textPrimary)};">Why you are here (<span id="eb-scan-lead-target">${esc(scan.target)}</span> &bull; <span id="eb-scan-lead-grade">Grade ${esc(scan.grade)} ${scan.score}/100</span>):</strong> ${esc(vCopy.goalText)}
         </p>
         <div class="aa-focus-pill-row">
-          <span class="aa-focus-pill">⚡ Grade ${esc(scan.grade)} (${scan.score}/100)</span>
-          <span class="aa-focus-pill">💳 ${esc(scan.kpi1)}</span>
-          <span class="aa-focus-pill">🛡️ $29 One-Time &middot; 0% Commission</span>
+          <span class="aa-focus-pill">Grade ${esc(scan.grade)} (${scan.score}/100)</span>
+          <span class="aa-focus-pill">${esc(scan.kpi1)}</span>
+          <span class="aa-focus-pill">$29 One-Time &middot; 0% Commission</span>
         </div>
       </div>
       <div class="aa-hero-photo-frame">
         <img src="/editorial-segment-2.jpg" alt="Sunlit checkout telemetry studio for ${esc(scan.target)}" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
-        <span class="aa-hero-photo-badge">✦ Live Store Scorecard &middot; Verified</span>
+        <span class="aa-hero-photo-badge">Live Store Scorecard &middot; Verified</span>
       </div>
     </div>
 
@@ -403,8 +403,8 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
     </section>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
-      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Bank-aligned retry schedules</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">💳 +56.2% Soft-Decline Lift</span><span class="aa-focus-pill">⚡ Payday Sync</span></div></div></div>
-      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Zero-discount exit counter-offers</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">⚡ +18%–31% Saved</span><span class="aa-focus-pill">🛡️ 0% Commission</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Bank-aligned retry schedules</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">+56.2% Soft-Decline Lift</span><span class="aa-focus-pill">Payday Sync</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Zero-discount exit counter-offers</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">+18%–31% Saved</span><span class="aa-focus-pill">0% Commission</span></div></div></div>
     </div>
 
     <!-- DIAGNOSTIC BREAKDOWN -->
@@ -528,20 +528,20 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
         <h1 style="margin:0 0 6px 0;font-size:clamp(1.6rem,2.3vw,2.05rem);line-height:1.15;">${esc(cfg.brandName)} Industry Leaderboard: Top Performers (A+) &amp; Common Mistakes</h1>
         <p class="pseo-lead" style="margin:0 0 8px 0;font-size:14px;color:${esc(t.textSecondary)};">Compare verified grades side-by-side across top industry benchmarks or test any store below for an instant recovery scorecard.</p>
         <div class="aa-focus-pill-row">
-          <span class="aa-focus-pill">🏆 140+ Stores Benchmarked</span>
-          <span class="aa-focus-pill">💳 +56.2% Failed-Card Lift</span>
-          <span class="aa-focus-pill">🛡️ $29 One-Time &middot; 0% Commission</span>
+          <span class="aa-focus-pill">140+ Stores Benchmarked</span>
+          <span class="aa-focus-pill">+56.2% Failed-Card Lift</span>
+          <span class="aa-focus-pill">$29 One-Time &middot; 0% Commission</span>
         </div>
       </div>
       <div class="aa-hero-photo-frame">
         <img src="/editorial-studio-founder.jpg" alt="Ecommerce founder reviewing retention leaderboard" class="aa-hero-photo-img" width="420" height="166" loading="eager" fetchpriority="high" decoding="async" />
-        <span class="aa-hero-photo-badge">✦ 2026 Verified Store Index</span>
+        <span class="aa-hero-photo-badge">2026 Verified Store Index</span>
       </div>
     </div>
     <section id="leaderboard-podium-grid" aria-label="Top 3 Verified Leaders" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px;">${podiumHtml}</section>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin:0 0 12px 0;">
-      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Payday-synced Stripe retries</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">💳 62.4% Soft-Decline Lift</span><span class="aa-focus-pill">⚡ 1st &amp; 15th Sync</span></div></div></div>
-      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Margin-safe exit counter-offers</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">⚡ +18%–31% Saved</span><span class="aa-focus-pill">🛡️ Zero Margin Bleed</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-fintech-desk.jpg" alt="Payment card and laptop on travertine desk" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Payday-synced Stripe retries</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">62.4% Soft-Decline Lift</span><span class="aa-focus-pill">1st &amp; 15th Sync</span></div></div></div>
+      <div class="editorial-break-card" style="margin:0;"><img src="/editorial-checkout-hardware.jpg" alt="Modern wireless payment terminal and smartphone on oak counter" class="editorial-break-img" width="260" height="146" loading="eager" decoding="async" /><div><h2 class="section-h2" style="margin-bottom:4px;font-size:15px;">Margin-safe exit counter-offers</h2><div class="aa-focus-pill-row"><span class="aa-focus-pill">+18%–31% Saved</span><span class="aa-focus-pill">Zero Margin Bleed</span></div></div></div>
     </div>
     <div id="leaderboard-filter-bar" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">

@@ -185,6 +185,13 @@ function runTests() {
   assert.ok(rawEbApiJs.includes('const buildBuyLinks = (email, extraQs = \'\')') && rawEbApiJs.includes('Est. +$${estRec.toLocaleString()}/mo recovery (${roiMult}x ROI') && rawAppJs.includes('target: storeName, decline: activeRule, sessions: sessVal, aov: aovUsd, objection: selObj'), 'Lead capture (/api/leads) and handleTierCheckout must include custom target, decline, sessions, aov, objection, and calculated ROI multiple in direct_buy_links and Stripe Checkout descriptions');
   assert.ok(renderedHome.includes("if (fDetT) fDetT.open = true;") && renderedHome.includes('href="/buy/playbook_pass\' + tQs + \'&email=\' + encodeURIComponent(email)') && renderedHome.includes('wsL.storeName'), 'window.__ebSendExitSummary and window.__ebCaptureEmailLead must auto-open Fix #1 snippet drawers on subpages and forward custom target, decline, sessions, aov, and objection into lead capture and toast buy links');
   assert.ok(rawEbApiJs.includes("app.get('/api/github-upgrade/abandon-alpha-bandit-sdk.js'") && rawEbApiJs.includes("app.get('/api/github-upgrade/payday-retry-schedule.csv'") && rawEbApiJs.includes('projected_monthly_recovery_usd: projectedMonthlyRecoveryUsd, roi_vs_29_pack_x: roiMult'), 'All 3 deliverable endpoints (stripe-recovery-worker.js, abandon-alpha-bandit-sdk.js, payday-retry-schedule.csv) must embed store-personalized sessions, AOV, projected monthly recovery, ROI multiple, and $29 pack links');
+  assert.equal((dirHtml.match(/class="related-card dir-item"/g) || []).length, 60, '/directory must render all 60 pSEO playbooks across all 4 categories');
+  assert.ok(!html.includes('insufficient_funds billing settings') && !html.includes('deposit wind</p>'), '/seo/:slug must not cut off summary mid-word or put raw decline code where store name belongs');
+  assert.ok(lpHtml.includes('id="lp-capi-status" class="mono-status" style="display:none;"'), '/lp must hide internal CAPI debug log from customer view');
+  assert.ok(!sampleHtml.includes('id="eb-subpage-visual-showcase"'), '/sample must not stack duplicate 3-card subpage visual strip below its editorial cards');
+  [renderedHome, html, scanHtml, lpHtml, sampleHtml, dirHtml, lbHtml].forEach((pageHtml, idx) => {
+    assert.ok(!pageHtml.includes('/banana-saas-war-room.jpg'), `Page index ${idx} must not use dark night-time /banana-saas-war-room.jpg image`);
+  });
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
 }
