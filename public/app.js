@@ -557,11 +557,8 @@ async function runAuditRequest(presetType, isAutoInit, isManualTrigger, isExplic
       return `
       <li>
         <a href="${seoHref}" style="display:flex;justify-content:space-between;align-items:center;gap:6px;text-decoration:none;padding:2px 0;">
-          <span style="font-size:0.8125rem;color:#475569;">
-            <code style="font-weight:600;color:#0F172A;">${d.declineCode}</code>
-            <span style="color:#64748B;font-size:0.75rem;"> (${d.recoveryRatePct}% recoverable &middot; ${d.sharePct}% share)</span>
-          </span>
-          <span style="font-size:0.8125rem;color:#334155;font-weight:600;white-space:nowrap;">+${formatUsd(d.recoveredUsd)}/mo</span>
+          <span style="color:#475569;"><code style="font-weight:600;color:#0F172A;">${d.declineCode}</code> (${d.recoveryRatePct}% lift)</span>
+          <span style="color:#0F172A;font-weight:600;white-space:nowrap;">+${formatUsd(d.recoveredUsd)}/mo</span>
         </a>
       </li>`;
     }).join('');
@@ -695,11 +692,11 @@ function renderPosteriorTable(arms, selectedId) {
     return `
       <tr data-objection="${arm.objection_code}" style="cursor:pointer;${isWin ? 'background: #ECFDF5;' : ''}" onclick="triggerBanditObjection('${arm.objection_code}')">
         <td>
-          <strong style="color:#0F172A;font-weight:600;font-size:0.875rem;">${humanTitle}</strong>
+          <strong style="color:#0F172A;font-weight:600;">${humanTitle}</strong>
         </td>
-        <td><code style="color:#0F172A;font-weight:600;">${arm.offer_code}</code> <span style="color:#64748B;font-size:0.8125rem;">(-${arm.discount_pct}%)</span></td>
-        <td style="color:#334155;">${arm.alpha}</td>
-        <td style="color:#64748B;">${Number(arm.alpha || 0) + Number(arm.beta || 0)}</td>
+        <td><code style="color:#0F172A;font-weight:600;">${arm.offer_code}</code> <span style="color:#64748B;">(-${arm.discount_pct}%)</span></td>
+        <td style="display:none;">${arm.alpha}</td>
+        <td style="display:none;">${Number(arm.alpha || 0) + Number(arm.beta || 0)}</td>
         <td>
           <strong style="color:#0F172A;font-weight:600;">${arm.posterior_mean_pct}%</strong>
           <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${barWidth}%"></div></div>

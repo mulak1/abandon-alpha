@@ -36,10 +36,10 @@
   --amber-soft: #FFFBEB;
   --amber-border: #FDE68A;
 
-  /* Strict 2-Font Discipline: 1 Clean Sans + 1 Monospace Code Font */
+  /* Strict 1-Font Discipline: 100% Unified Plus Jakarta Sans */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
   --font-serif: var(--font-sans);
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: var(--font-sans);
 
   /* Zero Resting Box-Shadows */
   --shadow-stripe: none;
@@ -739,7 +739,80 @@ body:has(#aa-inline-sample-unlock-form) #eb-save-scorecard-bar { display: none !
   padding: 12px 0 !important;
   margin-top: 8px !important;
 }
+
+/* ==========================================================================
+   TYPOGRAPHIC & VISUAL HARMONY SYSTEM (1 FONT FAMILY, 5-STEP TYPE SCALE)
+   ========================================================================== */
+body, body *, code, pre, kbd, samp, button, input, select, textarea {
+  font-family: var(--font-sans) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Step 2 Default (14px): Body, Inputs, Buttons, Tables, Lists, Code Snippets */
+body, body * {
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+}
+
+/* Step 1 Micro (13px): Badges, Focus Pills, Captions, Breadcrumbs, Summaries, Footers */
+.aa-focus-pill, .aa-focus-pill *, .aa-visual-card-tag, .aa-hero-photo-badge, .aa-hero-photo-badge *,
+.breadcrumb, .breadcrumb *, .site-footer, .site-footer *, .aa-clean-drawer summary,
+details summary, .posterior-table th, .table-wrap th, #out-grade-badge, #probed-stack-badge,
+#bandit-velocity-pill, #bandit-total-recovered, #wh-out-recovery-rate, .store-preview-pill {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+
+/* Step 3 Headings (18px): Section H2, Card Titles, Subheadings */
+h2, h2 *, h3, h3 *, .section-h2, #in-card-unlock-title, .card-header-bar > span:first-child,
+#bandit-offer-headline {
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Step 4 KPI & Pricing Numbers (28px) */
+.tile-value, .tile-value *, .matrix-price, .price-tag {
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+.matrix-price span, .price-tag span {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+/* Step 5 Page H1 (32px Desktop / 24px Mobile) */
+h1, h1 *, .hero-h1, .pseo-h1, .lp-h1 {
+  font-size: 32px !important;
+  line-height: 1.15 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em !important;
+}
+
+/* Unified Card Borders & Radii */
+.grader-form-card, .telemetry-card, .eb-panel-card, .table-wrap, .faq-card, .related-card {
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  background: #FFFFFF !important;
+}
+.objection-btn {
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #F8FAFC !important;
+}
+.objection-btn.selected, .objection-btn:hover {
+  background: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+}
+
 @media (max-width: 920px) {
+  h1, .hero-h1, .pseo-h1, .lp-h1 {
+    font-size: 24px !important;
+  }
   .aa-sunlit-hero-banner,
   .aa-visual-trio-grid {
     grid-template-columns: minmax(0, 1fr) !important;

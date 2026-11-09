@@ -306,7 +306,7 @@ function renderPublicScanPageHtml(cfg, scan, badgeColor) {
   <meta property="og:url" content="${esc(canonicalUrl)}" />
   <meta property="og:image" content="https://${esc(cfg.domain)}/api/og/scorecard?target=${esc(encodeURIComponent(scan.target))}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/styles.css?v=20261108b" />
+  <link rel="stylesheet" href="/styles.css?v=20261108c" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, `VERIFIED REPORT • GRADE ${scan.grade}`, '/scan')}
@@ -517,7 +517,7 @@ function renderLeaderboardPageHtml(cfg, badgeColor) {
   <title>${esc(cfg.brandName)} Public Leaderboard : Top Rated (A+) &amp; Needs Improvement (2026)</title>
   <meta name="description" content="Live public benchmark leaderboard for ${esc(cfg.brandName)}. Compare Grade A+ leaders, spot common mistakes, or check any target for an instant public report." />
   <link rel="canonical" href="https://${esc(cfg.domain)}/leaderboard" />
-  <link rel="stylesheet" href="/styles.css?v=20261108b" />
+  <link rel="stylesheet" href="/styles.css?v=20261108c" />
 </head>
 <body style="margin:0;background:${esc(t.canvasBg)};color:${esc(t.textPrimary)};font-family:${esc(t.fontSans || 'Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,sans-serif')};font-size:16px;line-height:1.6;">
   ${renderFlywheelHeaderHtml(cfg, 'PUBLIC BENCHMARK LEADERBOARD', '/leaderboard')}
