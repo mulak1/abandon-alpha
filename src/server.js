@@ -51,6 +51,23 @@ app.use((req, res, next) => {
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; connect-src 'self' https:;");
 
+  const _origSend = res.send.bind(res);
+  res.send = function(body) {
+    if (typeof body === 'string' && body.includes('<html')) {
+      body = body.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\uFE0F?\s*/gu, '');
+      body = body
+        .replace(/&#10003;\s*/g, '')
+        .replace(/&check;\s*/g, '')
+        .replace(/✓\s*/g, '')
+        .replace(/✔\s*/g, '')
+        .replace(/&#10022;\s*/g, '')
+        .replace(/✦\s*/g, '')
+        .replace(/★+/g, '5.0/5 ')
+        .replace(/✕/g, 'Close');
+    }
+    return _origSend(body);
+  };
+
   const ip = req.ip || '127.0.0.1';
   const now = Date.now();
   if (rateBuckets.size > 5000) rateBuckets.clear();
