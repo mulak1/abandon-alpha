@@ -169,7 +169,7 @@ function renderPseoPageHtml(page, baseUrl = 'https://www.abandonalpha.com') {
   const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: `AbandonAlpha: ${cleanTitle}`, url: canonicalUrl, applicationCategory: 'BusinessApplication', operatingSystem: 'Web, Stripe, Shopify, Next.js', offers: { '@type': 'Offer', price: '49.00', priceCurrency: 'USD' }, description: metaDesc },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: page.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
-    { '@context': 'https://schema.org', '@type': 'Dataset', name: `${page.targetKeyword} Telemetry Benchmark (2026)`, url: canonicalUrl, description: metaDesc, variableMeasured: ['Checkout Abandonment Rate', 'Stripe Decline Recovery Lift', 'Thompson Sampling Posterior Mean'] },
+    { '@context': 'https://schema.org', '@type': 'Dataset', name: `${page.targetKeyword} Telemetry Benchmark (2026)`, url: canonicalUrl, description: metaDesc, license: 'https://creativecommons.org/licenses/by/4.0/', isAccessibleForFree: true, creator: { '@type': 'Organization', name: 'AbandonAlpha', url: baseUrl, logo: `${baseUrl}/favicon.svg` }, variableMeasured: ['Checkout Abandonment Rate', 'Stripe Decline Recovery Lift', 'Thompson Sampling Posterior Mean'], distribution: [{ '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${baseUrl}/api/github-upgrade/export.csv` }] },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'AbandonAlpha Home', item: `${baseUrl}/` },
       { '@type': 'ListItem', position: 2, name: 'Playbook Directory', item: `${baseUrl}/directory` },

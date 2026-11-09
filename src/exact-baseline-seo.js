@@ -888,7 +888,8 @@ function enhanceHtmlForSearchAndAiBots(html, cfg, reqPath) {
         name: `${pageTitle}: Verified 2026 Dataset`,
         description: pageDesc,
         url: canonicalUrl,
-        creator: { '@id': `${hostUrl}/#organization` },
+        isAccessibleForFree: true,
+        creator: { '@type': 'Organization', '@id': `${hostUrl}/#organization`, name: cfg.brandName, url: hostUrl, logo: `${hostUrl}/favicon.svg` },
         license: 'https://creativecommons.org/licenses/by/4.0/',
         variableMeasured: cfg.kpis.map((k) => k.label),
         distribution: [

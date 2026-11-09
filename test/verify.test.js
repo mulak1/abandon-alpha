@@ -191,6 +191,17 @@ function runTests() {
   assert.ok(!sampleHtml.includes('id="eb-subpage-visual-showcase"'), '/sample must not stack duplicate 3-card subpage visual strip below its editorial cards');
   [renderedHome, html, scanHtml, lpHtml, sampleHtml, dirHtml, lbHtml].forEach((pageHtml, idx) => {
     assert.ok(!pageHtml.includes('/banana-saas-war-room.jpg'), `Page index ${idx} must not use dark night-time /banana-saas-war-room.jpg image`);
+    const ldBlocks = Array.from(pageHtml.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi));
+    ldBlocks.forEach((m) => {
+      const parsed = JSON.parse(m[1]);
+      const items = Array.isArray(parsed) ? parsed : (parsed['@graph'] || [parsed]);
+      items.forEach((node) => {
+        if (node && node['@type'] === 'Dataset') {
+          assert.ok(node.license, `Dataset in page index ${idx} must have license field for Google Search Console`);
+          assert.ok(node.creator && node.creator['@type'] === 'Organization' && node.creator.name, `Dataset in page index ${idx} must have inline creator Organization with @type and name for Google Search Console`);
+        }
+      });
+    });
   });
 
   console.log('PASS: abandon-alpha unit, SEO & cross-brand isolation verification tests passed.');
