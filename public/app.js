@@ -766,7 +766,12 @@ async function triggerBanditObjection(objectionCode, btnEl) {
     if (copyOfferBtn) {
       copyOfferBtn.removeAttribute('data-copied');
       copyOfferBtn.textContent = 'Copy Counter-Offer ($0)';
-      copyOfferBtn.style.color = '';
+      if (cid === 'bandit-copy-offer-btn') {
+        copyOfferBtn.style.background = '#0F172A';
+        copyOfferBtn.style.color = '#FFFFFF';
+      } else {
+        copyOfferBtn.style.color = '#0F172A';
+      }
     }
   });
   return res;
@@ -797,7 +802,12 @@ function copyBanditOfferPreview(btnEl) {
   if (btnEl) {
     btnEl.setAttribute('data-copied', '1');
     btnEl.textContent = '✓ Copied Counter-Offer — Get All 6 in $29 Pack →';
-    btnEl.style.color = '#047857';
+    if (btnEl.id === 'bandit-copy-offer-btn') {
+      btnEl.style.background = '#047857';
+      btnEl.style.color = '#FFFFFF';
+    } else {
+      btnEl.style.color = '#047857';
+    }
   }
 }
 
@@ -889,7 +899,8 @@ function renderWebhookOutput(res, payload) {
   if (whCopyBtn) {
     whCopyBtn.removeAttribute('data-copied');
     whCopyBtn.textContent = 'Copy Step-1 Email ($0)';
-    whCopyBtn.style.color = '';
+    whCopyBtn.style.background = '#0F172A';
+    whCopyBtn.style.color = '#FFFFFF';
   }
   const stName = payload.storeName || document.getElementById('input-store')?.value || 'Gymshark';
   const dcName = payload.declineCode || document.getElementById('wh-decline-code')?.value || 'insufficient_funds';
@@ -932,7 +943,8 @@ function copyWebhookEmailPreview(btnEl) {
   if (btnEl) {
     btnEl.setAttribute('data-copied', '1');
     btnEl.textContent = '✓ Copied Step-1 Email — Get SMS + Worker ($29) →';
-    btnEl.style.color = '#047857';
+    btnEl.style.background = '#047857';
+    btnEl.style.color = '#FFFFFF';
   }
 }
 

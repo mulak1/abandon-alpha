@@ -814,6 +814,16 @@ h1, h1 *, .hero-h1, .pseo-h1, .lp-h1 {
   border-color: #A7F3D0 !important;
 }
 
+/* Strict Button Contrast Safeguard: Dark/Primary Buttons Always Render White Text */
+.btn-indigo, .btn-indigo *, .btn-primary, .btn-primary *,
+#bandit-copy-offer-btn, #wh-copy-email-btn, #run-audit-btn, #wh-submit-btn,
+button[style*="background:#0F172A"], button[style*="background: #0F172A"],
+button[style*="background:#047857"], button[style*="background: #047857"],
+a[style*="background:#0F172A"], a[style*="background: #0F172A"],
+a[style*="background:#047857"], a[style*="background: #047857"] {
+  color: #FFFFFF !important;
+}
+
 @media (max-width: 920px) {
   h1, .hero-h1, .pseo-h1, .lp-h1 {
     font-size: 24px !important;
