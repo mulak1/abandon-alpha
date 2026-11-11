@@ -373,6 +373,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
     if (raw === 'shield') return next();
     const info = computeTargetBadgeMetric(cfg, raw);
     res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
+    res.setHeader('X-Robots-Tag', 'noindex');
     res.setHeader('Cache-Control', edgeCacheHdr);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'");
@@ -383,6 +384,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
   // 2. Shields.io Endpoint JSON (`GET /api/badge/shield?target=...`)
   app.get('/api/badge/shield', (req, res) => {
     const info = computeTargetBadgeMetric(cfg, req.query.target || req.query.domain || req.query.q);
+    res.setHeader('X-Robots-Tag', 'noindex');
     res.setHeader('Cache-Control', edgeCacheHdr);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({ schemaVersion: 1, label: info.label, message: info.message, color: info.color.replace('#', ''), namedLogo: 'vercel' });
@@ -391,6 +393,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
   // 3. Dynamic 1200x630 OpenGraph Scorecard (`GET /api/og/scorecard`)
   app.get('/api/og/scorecard', (req, res) => {
     res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
+    res.setHeader('X-Robots-Tag', 'noindex');
     res.setHeader('Cache-Control', edgeCacheHdr);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'");
@@ -472,7 +475,7 @@ function attachAutonomousGrowthEngine(app, cfg, store, renderHtmlFn, classifyFn)
       title: `${cfg.brandName} MCP Server`,
       version: '3.0.0',
       homepage: `https://${cfg.domain}`,
-      repository: `https://github.com/mulak1/${cfg.moduleId.replace(/_/g, '-')}`,
+      repository: `https://${cfg.domain}/openapi.json`,
       transport: { type: 'http-json-rpc', endpoint: `https://${cfg.domain}/api/mcp/rpc` },
       tools: [
         { name: `audit_${cfg.moduleId}`, description: `Run deterministic ${g.categoryTag} audit and return canonical report URL + KPIs`, inputSchema: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] } },

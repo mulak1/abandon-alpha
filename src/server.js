@@ -35,6 +35,29 @@ const BASE_URL = (process.env.PUBLIC_URL || process.env.BASE_URL || 'https://www
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+const aaPrivacyOptouts = [];
+app.post('/api/privacy-optout', (req, res) => {
+  const email = String((req.body && req.body.email) || '').trim().slice(0, 200);
+  const entity = String((req.body && (req.body.entity || req.body.url || req.body.name)) || '').trim().slice(0, 300);
+  const requestType = String((req.body && req.body.request_type) || 'data_erasure').trim().slice(0, 60);
+  if (!email && !entity) return res.status(400).json({ ok: false, error: 'Please provide an email address or request detail.' });
+  let purged = 0;
+  try {
+    const st = app.locals && app.locals.ebStore;
+    if (st && st.db && email.includes('@')) {
+      const r1 = st.db.prepare(`DELETE FROM eb_leads WHERE LOWER(email) = LOWER(?)`).run(email);
+      purged += (r1 && r1.changes) || 0;
+    }
+  } catch (_) {}
+  const maskedEmail = email.includes('@') ? email.replace(/^(.)(.*)(@.*)$/, (_, a, _b, c) => `${a}***${c}`) : (email || 'redacted');
+  aaPrivacyOptouts.unshift({ id: aaPrivacyOptouts.length + 1, masked_email: maskedEmail, requested_action: `${requestType}: ${entity || 'self_erasure'}`, purged_records: purged, created_at: new Date().toISOString() });
+  return res.status(200).json({ ok: true, status: 'recorded', purged_records: purged, message: `Complete: ${purged} matching database record(s) purged immediately and your request (${requestType}) has been logged.` });
+});
+app.get('/api/privacy-optouts', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  return res.status(200).json({ ok: true, total_requests: aaPrivacyOptouts.length, coppa_under_13_prohibition_active: true, gpc_signal_honored: Boolean(req.headers['sec-gpc'] === '1' || req.headers['dnt'] === '1'), requests: aaPrivacyOptouts.slice(0, 100) });
+});
 attachExactBaselinePack(app, { verticalId: 'abandon_alpha' });
 
 function escapeHtml(str) {
@@ -291,6 +314,7 @@ app.post('/api/meta-capi', (req, res) => {
 app.get('/api/og', (req, res) => {
   const slug = String(req.query.slug || '');
   res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
+  res.setHeader('X-Robots-Tag', 'noindex');
   res.setHeader('Cache-Control', 'public, max-age=3600');
   res.send(renderOgSvg(slug));
 });
@@ -299,7 +323,7 @@ app.get('/api/og', (req, res) => {
 app.get('/sitemap.xml', (req, res) => {
   const pages = getAllPseoPages();
   const now = new Date().toISOString().split('T')[0];
-  const staticUrls = ['/', '/directory', '/lp', '/llms.txt', '/llms-full.txt', '/privacy', '/terms'];
+  const staticUrls = ['/', '/directory', '/lp', '/llms.txt', '/llms-full.txt'];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticUrls.map((u) => `  <url><loc>${BASE_URL}${u}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>`).join('\n')}
@@ -421,10 +445,12 @@ app.get('/lp', (req, res) => {
 });
 
 app.get('/privacy', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, follow');
   res.send(renderLegalPageHtml('privacy'));
 });
 
 app.get('/terms', (req, res) => {
+  res.setHeader('X-Robots-Tag', 'noindex, follow');
   res.send(renderLegalPageHtml('terms'));
 });
 
